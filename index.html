@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bumblebee by adsabs</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Bumblebee</h1>
+        <p>Clever face for BEER</p>
+
+        <p class="view"><a href="https://github.com/adsabs/bumblebee">View the Project on GitHub <small>adsabs/bumblebee</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/adsabs/bumblebee/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/adsabs/bumblebee/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/adsabs/bumblebee">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="bumblebee" class="anchor" href="#bumblebee"><span class="octicon octicon-link"></span></a>bumblebee</h1>
+
+<p>This is a new UI for adslabs</p>
+
+<p>A word or two as introduction into this bright new world of perplexity. Mistakes 
+are wonderful gifts to humanity, IT IS OK TO MAKE MISTAKES. Please let no 
+'getting it right' kill your creativity!</p>
+
+<p>Things may change dramatically, be prepared.</p>
+
+<h1>
+<a name="dev-setup---linux" class="anchor" href="#dev-setup---linux"><span class="octicon octicon-link"></span></a>dev setup - linux</h1>
+
+<p>If you don't have node.js, do this (or equivalent of your distribution):</p>
+
+<div class="highlight highlight-bash"><pre>  <span class="nv">$ </span>sudo apt-get install node npm grunt-cli
+</pre></div>
+
+<p>Now (inside the project), run:</p>
+
+<div class="highlight highlight-bash"><pre>  <span class="c"># install the dependencies from package.json</span>
+  <span class="nv">$ </span>npm install
+
+  <span class="c"># setup the project (libraries)</span>
+  <span class="nv">$ </span>grunt setup 
+</pre></div>
+
+<h1>
+<a name="dev-setup---mac-os-x" class="anchor" href="#dev-setup---mac-os-x"><span class="octicon octicon-link"></span></a>dev setup - mac OS X</h1>
+
+<p>If you have mac port installed, this should work:</p>
+
+<div class="highlight highlight-bash"><pre>  <span class="nv">$ </span>sudo port install nodejs nodejs-devel npm
+</pre></div>
+
+<p>(grunt is not available from mac ports, see below)
+Inside the project's working directory, run:</p>
+
+<div class="highlight highlight-bash"><pre>  <span class="nv">$ </span>npm install grunt-cli
+  <span class="nv">$ </span>npm install
+  <span class="nv">$ </span>node_modules/grunt-cli/bin/grunt setup
+</pre></div>
+
+<p>And you are ready to go!</p>
+
+<p>To help you started, explore two demo applications: ./src/example.html (./src/js/apps/example) and 
+./src/todo.html (./src/js/apps/todo)</p>
+
+<h1>
+<a name="typical-dev-cycle" class="anchor" href="#typical-dev-cycle"><span class="octicon octicon-link"></span></a>typical dev-cycle</h1>
+
+<ol>
+<li>write tests</li>
+<li>write code and make sure tests are passing</li>
+<li>
+<code>grunt deploy</code> -- this will prepare the target (note: deploy is not yet ready)</li>
+</ol><p>When applicable, take advantage of the headless testing framework! You can edit code and 
+have it automatically re-tested.</p>
+
+<div class="highlight highlight-bash"><pre>  <span class="c"># run tests (it will reload automatically and report in terminal)</span>
+  <span class="nv">$ </span>grunt <span class="nb">test</span>:watch
+
+  <span class="c"># or if you want to just run it once</span>
+  <span class="nv">$ </span>grunt <span class="nb">test</span>
+</pre></div>
+
+<p>Tests can also be opened in a browser, you can zone-in on certain class of tests when editing,
+but you have to reload in your browser</p>
+
+<div class="highlight highlight-bash"><pre>   <span class="c"># open the test in a browser</span>
+   <span class="nv">$ </span>chrome ./test/mocha/todo.spec.html
+</pre></div>
+
+<p>When you want to interact with the server (and see the application through web):</p>
+
+<div class="highlight highlight-bash"><pre>  <span class="c"># start the webserver (it will automatically reload on code changes)</span>
+  <span class="nv">$ </span>grunt server
+</pre></div>
+
+<h1>
+<a name="explanation-of-the-module-structure" class="anchor" href="#explanation-of-the-module-structure"><span class="octicon octicon-link"></span></a>Explanation of the module structure:</h1>
+
+<p>I have discovered that none of the boilerplate generators are perfect (surprise ;)), hence inspiration was taken from these:</p>
+
+<ul>
+<li><a href="https://github.com/backbone-boilerplate/backbone-boilerplate">https://github.com/backbone-boilerplate/backbone-boilerplate</a></li>
+<li><a href="https://github.com/jkat98/benm">https://github.com/jkat98/benm</a></li>
+<li><a href="https://github.com/artsy/ezel">https://github.com/artsy/ezel</a></li>
+</ul><p>This is the current file/folder structure, with short explanation:  </p>
+
+<div class="highlight highlight-bash"><pre>/bumblebee.
+   <span class="p">|</span>-package.json
+   <span class="p">|</span>-bower.json
+   <span class="p">|</span>-Gruntfile.json
+   <span class="p">|</span>-server.js
+   <span class="p">|</span>   
+   <span class="p">|</span>-/bower_components
+   <span class="p">|</span>-/dist
+   <span class="p">|</span>-/node_modules
+   <span class="p">|</span>-/src/js     &lt;-- our code lives here
+   <span class="p">|</span>---apps
+   <span class="p">|</span>-----discovery
+   <span class="p">|</span>-------img
+   <span class="p">|</span>-------styles
+   <span class="p">|</span>-------templates
+   <span class="p">|</span>---collections
+   <span class="p">|</span>---components
+   <span class="p">|</span>---libs
+   <span class="p">|</span>---modules
+   <span class="p">|</span>---views   
+   <span class="p">|</span>-/src/libs   &lt;-- external dependencies
+   <span class="p">|</span>-/test
+   <span class="p">|</span>---mocha
+   <span class="p">|</span>-----apps
+   <span class="p">|</span>-------discovery
+</pre></div>
+
+<p>We are using bower, because npm (browserify) is not yet ready to package libraries for client development. It works great, but mind the following:</p>
+
+<ul>
+<li>bower.json: specifies libraries that are needed for client-side ie. 
+     inside browser (e.g. backbone)</li>
+<li>package.json: lists libraries that are necessary for server-side, ie. development
+     (e.g. grunt, webserver)</li>
+</ul><h1>
+<a name="contents" class="anchor" href="#contents"><span class="octicon octicon-link"></span></a>Contents</h1>
+
+<h5>
+<a name="serverjs" class="anchor" href="#serverjs"><span class="octicon octicon-link"></span></a>server.js</h5>
+
+<p>Development node.js server - it serves the statics files as well as provides proxy for /api
+  requests.</p>
+
+<h5>
+<a name="gruntfilejson" class="anchor" href="#gruntfilejson"><span class="octicon octicon-link"></span></a>Gruntfile.json</h5>
+
+<p>various instructions and commands, run: grunt --help</p>
+
+<h5>
+<a name="bower_components--node_modules" class="anchor" href="#bower_components--node_modules"><span class="octicon octicon-link"></span></a>/bower_components &amp; /node_modules</h5>
+
+<p>these will be created once you setup your environment</p>
+
+<h5>
+<a name="dist" class="anchor" href="#dist"><span class="octicon octicon-link"></span></a>/dist</h5>
+
+<p>here we export the deployment-ready version of the code (compacted, minified, ready to be included into flask)</p>
+
+<h5>
+<a name="srcjs" class="anchor" href="#srcjs"><span class="octicon octicon-link"></span></a>/src/js</h5>
+
+<ul>
+<li><p>this is the main folder where our code lives</p></li>
+<li>
+<p>./apps: because we want to develop several separate applications (e.g. discovery,
+private libraries) I decided to keep them all here.</p>
+
+<ul>
+<li>
+<p>each application resides in its own folder, eg. ./apps/discovery and
+will have the standardized structure:</p>
+
+<ul>
+<li>config.js = configuration for require.js loader</li>
+<li>main.js = app creator (think: this code bootstraps app.js)</li>
+<li>app.js = application itself</li>
+<li>routes.js = mapping of paths</li>
+</ul>
+</li>
+<li><p>(it seems) that each application may have to carry its own static
+folders, eg. /styles /templates [but maybe we should create
+some mirroring tree just for the static files? Depends on what you
+consider to be a code: templates and css can be viewed as such]</p></li>
+</ul>
+</li>
+<li>
+<div class="highlight highlight-bash"><pre>./modules
+./models
+./collections
+./views
+</pre></div>
+
+<ul>
+<li>these folders should hold the <em>general, reusable</em> code that we develop,
+and that we want to import in our apps</li>
+</ul>
+</li>
+</ul><h5>
+<a name="srclibs" class="anchor" href="#srclibs"><span class="octicon octicon-link"></span></a>/src/libs</h5>
+
+<ul>
+<li>created automatically, when you run grunt setup - contains
+all external dependencies (ie. backbone, requirejs)</li>
+</ul><h5>
+<a name="srcimg-srccss" class="anchor" href="#srcimg-srccss"><span class="octicon octicon-link"></span></a>/src/img, /src/css</h5>
+
+<ul>
+<li>other files (assets) needed for the application (mind that each application
+can also carry within itself some templates and even css; but we should 
+limit that to minimum and stick most of the assets here)</li>
+</ul><h5>
+<a name="test" class="anchor" href="#test"><span class="octicon octicon-link"></span></a>/test</h5>
+
+<ul>
+<li>
+<p>./mocha</p>
+
+<ul>
+<li><p>because we may want to use several javascript testing frameworks, so far we
+keep the standard structure: [framework]/</p></li>
+<li><p>the folder will mirror the code tree, eg.:</p></li>
+</ul>
+<div class="highlight highlight-bash"><pre>  ./mocha
+     <span class="p">|</span>
+     /apps
+     <span class="p">|</span>  <span class="p">|</span>
+     <span class="p">|</span>  /discovery
+     <span class="p">|</span>     <span class="p">|</span>
+     <span class="p">|</span>     router.specs.js
+     <span class="p">|</span>     main.specs.js
+     <span class="p">|</span>  ...   
+     /modules
+         <span class="p">|</span>
+         facets.specs.js
+</pre></div>
+</li>
+</ul><p>You can refer to the following page for more links and discussion: 
+<a href="http://labs.adsabs.harvard.edu/trac/ads-invenio/wiki/BackboneResources">http://labs.adsabs.harvard.edu/trac/ads-invenio/wiki/BackboneResources</a></p>
+
+<h1>
+<a name="miscellanea" class="anchor" href="#miscellanea"><span class="octicon octicon-link"></span></a>miscellanea</h1>
+
+<ul>
+<li>
+<p>you can run server.js from command line.  If you want to connect to our SOLR server, the easiest thing to do is to tunnel to adswhy:9000 like so:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>ssh -N -f -L 9000:adswhy.cfa.harvard.edu:9000 pogo3.cfa.harvard.edu
+<span class="nv">$ </span>env <span class="nv">API_ENDPOINT</span><span class="o">=</span>http://localhost:9000/solr/select <span class="nv">HOMEDIR</span><span class="o">=</span>src node server.js 
+</pre></div>
+</li>
+<li>
+<p>if you want to debug/edit in place node.js code, use supervisor (you need to install it first)</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>env <span class="nv">API_ENDPOINT</span><span class="o">=</span>http://localhost:9000/solr/select <span class="nv">HOMEDIR</span><span class="o">=</span>src supervisor server.js 
+</pre></div>
+</li>
+<li><p>you can see the search being routed to the SOLR api by accessing: http://localhost:3000/api/search, for instance:
+http://localhost:3000/api/search?q=kurtz</p></li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/adsabs">adsabs</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
