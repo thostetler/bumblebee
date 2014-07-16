@@ -10,6 +10,13 @@ define([
 
     // Defining the application router.
     var Router = Backbone.Router.extend({
+
+      initialize : function(options){
+        options = options || {};
+        this.pageControllers = options.pageControllers;
+        this.history = options.history;
+
+      },
       routes: {
         "": "index",
         "search/*query": 'search',
@@ -17,52 +24,37 @@ define([
       },
 
       index: function () {
-        this.switchViews();
-        this.navigate('search/');
+        this.pageControllers.landingPage.showPage();
+        this.history.addEntry({"landingPage": undefined})
+
       },
 
       search: function (query) {
-        this.switchViews('search');
         if (query) {
-          if (_.isString(query))
+          if (_.isString(query)){
+            this.history.addEntry({"resultsPage": query})
             query = new ApiQuery().load(query);
-          var pubsub = this.getBeeHive().Services.get('PubSub');
-          pubsub.publish(pubsub.NEW_QUERY, query);
+            this.pageControllers.resultsPage.showPage();
+
+          }
+
+
         }
       },
 
       viewAbstract: function (bibcode) {
-        this.switchViews('abs');
         if (bibcode) {
-          var pubsub = this.getBeeHive().Services.get('PubSub');
-          pubsub.publish(pubsub.DISPLAY_DOCUMENTS, bibcode);
+          console.log("bib!!", bibcode)
+          this.pageControllers.abstractPage.showPage(bibcode);
+          this.history.addEntry({"abstractPage": bibcode})
+
         }
       },
 
-      onNewQuery: function(apiQuery) {
-        this.switchViews('search');
-        this.navigate('search/' + encodeURI(apiQuery.url()));
-      },
-
-      switchViews: function (name) {
-        switch(name) {
-          case 'abs':
-            $('#middle-column #search-results').addClass('hide');
-            $('#middle-column .multi-view').removeClass('hide');
-            break;
-          case 'search':
-          default:
-            $('#middle-column #search-results').removeClass('hide');
-            $('#middle-column .multi-view').addClass('hide');
-            break;
-        }
-
-      },
 
       activate: function (beehive) {
         this.setBeeHive(beehive);
         var pubsub = this.getBeeHive().Services.get('PubSub');
-        pubsub.subscribe(pubsub.NEW_QUERY, _.bind(this.onNewQuery, this));
       }
 
     });

@@ -221,6 +221,12 @@ define([
         this.resetPagination = true;
       },
 
+//     override this function if you need a way to get data on command on a per-bibcode-basis
+      loadInfo: function (bibcode) {
+
+        this.dispatchRequest(new ApiQuery({'q': 'references(' + bibcode + ")"}));
+      },
+
 
       //will be requested in composeRequest
       defaultQueryArguments: {

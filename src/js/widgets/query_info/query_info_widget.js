@@ -27,7 +27,7 @@ define(['marionette', 'backbone', 'underscore', 'js/components/api_request', 'js
         return this
       },
 
-      template: queryInfoTemplate,
+      template: queryInfoTemplate
     });
 
     var Widget = BaseWidget.extend({
