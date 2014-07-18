@@ -9,7 +9,7 @@ define([
     'hbs!js/widgets/list_of_things/templates/results-container-template',
     'hbs!js/widgets/list_of_things/templates/item-template',
     'js/widgets/list_of_things/widget'
-    ],
+  ],
 
   function (
     _,
@@ -62,7 +62,16 @@ define([
     });
 
 
-    var SimilarWidget = ListOfThingsWidget.extend({
+    var ReferencesWidget = ListOfThingsWidget.extend({
+
+      activate: function (beehive) {
+      this.pubsub = beehive.Services.get('PubSub');
+
+      //custom handleResponse function goes here
+      this.pubsub.subscribe(this.pubsub.DELIVERING_RESPONSE, this.processResponse);
+    },
+
+      solrField : "reference",
 
       ItemModelClass     : ItemModelClass,
       ItemViewClass      : ItemViewClass,
@@ -131,6 +140,6 @@ define([
       }
     });
 
-    return SimilarWidget;
+    return ReferencesWidget;
 
   });

@@ -102,7 +102,7 @@ define(['marionette', 'backbone', 'jquery', 'underscore', 'cache',
       },
 
 
-      loadInfo : function (bibcode) {
+      loadBibcodeData : function (bibcode) {
         if (this._docs[bibcode]) {
           this._current = bibcode;
           this.model.set(this._docs[bibcode]);
@@ -130,7 +130,7 @@ define(['marionette', 'backbone', 'jquery', 'underscore', 'cache',
           });
 
           if (apiResponse.has('responseHeader.params.__show')) {
-            this.loadInfo(apiResponse.get('responseHeader.params.__show'));
+            this.loadBibcodeData(apiResponse.get('responseHeader.params.__show'));
           }
         }
 

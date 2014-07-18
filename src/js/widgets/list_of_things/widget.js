@@ -21,13 +21,13 @@ define([
     'js/mixins/widget_pagination'],
 
   function (Marionette,
-            Backbone,
-            ApiRequest,
-            ApiQuery,
-            PaginatedBaseWidget,
-            ItemTemplate,
-            ResultsContainerTemplate,
-            WidgetPagination) {
+    Backbone,
+    ApiRequest,
+    ApiQuery,
+    PaginatedBaseWidget,
+    ItemTemplate,
+    ResultsContainerTemplate,
+    WidgetPagination) {
 
     var ItemModel = Backbone.Model.extend({
       defaults: function () {
@@ -147,12 +147,14 @@ define([
 
       /**
        * Displays the area where 'show more' button lives; this is needed for
-       * the pagination widged
+       * the pagination widget
        *
        * @param text
        */
       enableShowMore: function(text) {
-        this.$('.load-more:first').removeClass('hide');
+
+          this.$('.load-more:first').removeClass('hide')
+
       },
 
       /**
@@ -202,7 +204,6 @@ define([
 
         PaginatedBaseWidget.prototype.initialize.call(this, options);
 
-
         this.collection = new this.CollectionClass();
 
         this.displayNum = this.displayNum || options.displayNum || 20;
@@ -221,10 +222,33 @@ define([
         this.resetPagination = true;
       },
 
-//     override this function if you need a way to get data on command on a per-bibcode-basis
-      loadInfo: function (bibcode) {
+      //    a way to get data on command on a per-bibcode-basis
+      loadBibcodeData: function (bibcode) {
 
-        this.dispatchRequest(new ApiQuery({'q': 'references(' + bibcode + ")"}));
+        if (bibcode === this._bibcode){
+
+          this.deferredObject =  $.Deferred();
+
+          this.deferredObject.resolve(this.collection);
+
+          return this.deferredObject.promise();
+
+        }
+
+        this._bibcode = bibcode
+
+        if ((!this.solrOperator && !this.solrField) || (this.solrOperator && this.solrField)){
+          throw new Error("Can't call loadInfo without either a solrOperator or a solrField, and can't have both!")
+        }
+
+        var searchTerm = this.solrOperator? this.solrOperator + "(" + bibcode +")" : this.solrField + ":" + bibcode
+
+        this.dispatchRequest(new ApiQuery({'q': searchTerm}));
+
+        this.deferredObject =  $.Deferred();
+
+        return this.deferredObject.promise();
+
       },
 
 
@@ -234,6 +258,9 @@ define([
       },
 
       dispatchRequest: function (apiQuery) {
+
+        //preventing request for data that already is possessed
+          console.warn(apiQuery.toJSON(),this.getCurrentQuery().toJSON())
 
         // by default we consider every request to be new one - unless it is clear
         // that we are paginating
@@ -249,6 +276,13 @@ define([
 
       processResponse: function (apiResponse) {
 
+        //resetting this flag
+        this.showMoreAfterRender = false;
+
+        //this is for layout managers
+        //need to override for the "similar" widget
+        this.collection.numFound = apiResponse.get('response.numFound');
+
         this.setCurrentQuery(apiResponse.getApiQuery());
 
         if (this.paginator.getCycle() <= 1) {
@@ -257,8 +291,11 @@ define([
             parse: true
           });
           this.paginator.setMaxNum(apiResponse.get('response.numFound'));
-          if (this.paginator.maxNum > this.displayNum) {
+          if (this.paginator.maxNum > this.displayNum && this.viewRendered) {
             this.view.enableShowMore();
+          }
+          else if (this.paginator.maxNum > this.displayNum && !this.viewRendered){
+            this.showMoreAfterRender = true;
           }
           else {
             this.view.disableShowMore();
@@ -269,6 +306,10 @@ define([
             parse: true
           })
         }
+        if (this.deferredObject){
+          this.deferredObject.resolve(this.collection)
+        }
+
       },
 
       onAllInternalEvents: function(ev, arg1, arg2) {
@@ -278,6 +319,11 @@ define([
         if (ev == 'composite:rendered') {
           this.view.disableShowMore();
           this.view.toggleDetailsControls(false);
+          if (this.showMoreAfterRender){
+            this.view.enableShowMore()
+          }
+          this.viewRendered = true;
+
         }
         else if (ev == 'reset') {
           var details = _.filter(this.view.collection.models, function(m) {return m.has('details')});

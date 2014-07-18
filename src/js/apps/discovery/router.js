@@ -20,7 +20,7 @@ define([
       routes: {
         "": "index",
         "search/*query": 'search',
-        'abs/:bibcode': 'viewAbstract'
+        'abs/:bibcode(/:subView)': 'viewAbstract'
       },
 
       index: function () {
@@ -34,27 +34,32 @@ define([
           if (_.isString(query)){
             this.history.addEntry({"resultsPage": query})
             query = new ApiQuery().load(query);
+            this.pubsub.publish(this.pubsub.NEW_QUERY, query);
             this.pageControllers.resultsPage.showPage();
 
           }
 
-
         }
       },
 
-      viewAbstract: function (bibcode) {
-        if (bibcode) {
-          console.log("bib!!", bibcode)
-          this.pageControllers.abstractPage.showPage(bibcode);
-          this.history.addEntry({"abstractPage": bibcode})
-
+      viewAbstract: function (bibcode, subView) {
+        console.log("ROUTING")
+        if (!subView) {
+          subView = "abstract"
         }
+
+        if (bibcode){
+          //it's the default abstract view
+          this.pageControllers.abstractPage.showPage(bibcode, subView);
+          this.history.addEntry({"abstractPage": {bibcode: bibcode, subView : subView}})
+        }
+
       },
 
 
       activate: function (beehive) {
         this.setBeeHive(beehive);
-        var pubsub = this.getBeeHive().Services.get('PubSub');
+        this.pubsub = this.getBeeHive().Services.get('PubSub');
       }
 
     });

@@ -4,7 +4,7 @@ define(["config", 'module'], function(config, module) {
   // Kick off the application
   require(["router", 'js/components/application',
       'js/page_managers/abstract_page_controller', 'js/page_managers/results_page_controller',
-      'js/page_managers/landing_page_controller'],
+      'js/page_managers/landing_page_controller', 'bootstrap'],
     function(Router, Application, AbstractController, ResultsController, LandingPageController) {
 
     // load the objects/widgets/modules (as specified inside the main config
@@ -324,32 +324,41 @@ define(["config", 'module'], function(config, module) {
       var references = app.getWidget('References');
       references.activate(beehive.getHardenedInstance())
 
+      var citations = app.getWidget('Citations')
+      citations.activate(beehive.getHardenedInstance())
+
+      var coreads = app.getWidget('Coreads')
+      coreads.activate(beehive.getHardenedInstance())
+
+      var tableOfContents = app.getWidget('TableOfContents')
+      tableOfContents.activate(beehive.getHardenedInstance())
+
+      var similar = app.getWidget('Similar')
+      similar.activate(beehive.getHardenedInstance())
 
 
       var pageControllers = {};
-      var bumblebeeHistory = {history: [],
-        getPriorPage : function(){return _.keys(_.last(this.history, 1)[0])[0]},
-        getPriorPageVal : function(){return _.values(_.last(this.history, 1)[0])[0]},
-        addEntry: function(item){
-          if(this.history.length == 0 || _.keys(item)[0]!== _.keys(_.last(this.history)[0])[0]){
-            this.history.push(item)
-          }
-        }};
+      var bumblebeeHistory = app.getObject("HistoryManager")
 
-      //     all sub-views have their own controllers}
+      //     all sub-views have their own controllers
      pageControllers.resultsPage = new ResultsController({widgetDict : resultsWidgetDict, history : bumblebeeHistory});
 
 
      pageControllers.abstractPage = new AbstractController({widgetDict :
-          {abstract : abstract, references :references },
+          {abstract : abstract,
+            references :references,
+            citations : citations,
+            coreads : coreads,
+            tableOfContents : tableOfContents,
+            similar : similar,
+            searchBar : resultsWidgetDict.searchBar
+          },
      history : bumblebeeHistory});
 
      pageControllers.landingPage  = new LandingPageController({widgetDict : {searchBar: resultsWidgetDict.searchBar},
      history: bumblebeeHistory});
 
-      pageControllers.abstractPage.activate(beehive.getHardenedInstance())
-
-
+     pageControllers.abstractPage.activate(beehive.getHardenedInstance())
 
       app.router = new Router({pageControllers : pageControllers, history : bumblebeeHistory});
       app.router.activate(beehive.getHardenedInstance());
@@ -361,24 +370,33 @@ define(["config", 'module'], function(config, module) {
         histOpts['root'] = conf.root;
       }
       Backbone.history.start(histOpts);
-
-
-      $(document).on("click", "a[href^='/']",  function(e){
-        href = $(e.target).attr('href')
-
-        //Remove leading slashes and hash bangs (backward compatablility)
-        url = href.replace(/^\//,'').replace('\#\!\/','')
-
-        //Instruct Backbone to trigger routing events
-        app.router.navigate(url, { trigger: true })
-
-        return false
-
-      })
-
+//
+//      //      got part of this from online
+//      $(document).on("click", "a[href^='/']",  function(e){
+//        console.log("router", $this.html())
+//
+//        var $this = $(this);
+//
+//        href = $this.attr('href')
+//
+//        //allowing an easy way to disable links
+//        if ($this.hasClass("inactive")){
+//          return
+//        }
+//
+//        //Remove leading slashes and hash bangs (backward compatablility)
+//        url = href.replace(/^\//,'').replace('\#\!\/','')
+//
+//        //Instruct Backbone to trigger routing events
+//        app.router.navigate(url, { trigger: true })
+//
+//        return false
+//
+//      })
+//
       $(document).on("submit", "form", function(e)
       {
-        var action = $(e.target).attr("action")
+        var action = $(this).attr("action")
 
         //Remove leading slashes and hash bangs (backward compatablility)
         action = action.replace(/^\//,'').replace('\#\!\/','')
@@ -390,6 +408,15 @@ define(["config", 'module'], function(config, module) {
 
         return false
 
+      })
+
+      $(document).on("scroll", function(){
+        if ($(window).scrollTop() > 1) {
+          $(".s-search-bar-row").addClass("s-motion-shadow")
+        }
+        else {
+          $(".s-search-bar-row").removeClass("s-motion-shadow")
+        }
       })
 
 

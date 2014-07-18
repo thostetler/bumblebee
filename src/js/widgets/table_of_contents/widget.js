@@ -8,14 +8,14 @@ define([
     'underscore',
     'hbs!js/widgets/list_of_things/templates/results-container-template',
     'hbs!js/widgets/list_of_things/templates/item-template',
-    'js/widgets/list_of_things/widget'
-    ],
+    'js/widgets/list_of_things/widget', 'js/components/api_query'
+  ],
 
   function (
     _,
     ContainerTemplate,
     ItemTemplate,
-    ListOfThingsWidget) {
+    ListOfThingsWidget, ApiQuery) {
 
     var ItemModelClass = ListOfThingsWidget.prototype.ItemModelClass.extend({
       parse: function(doc) {
@@ -62,7 +62,42 @@ define([
     });
 
 
-    var SimilarWidget = ListOfThingsWidget.extend({
+    var TableOfContentsWidget = ListOfThingsWidget.extend({
+
+      activate: function (beehive) {
+      this.pubsub = beehive.Services.get('PubSub');
+
+      //custom handleResponse function goes here
+      this.pubsub.subscribe(this.pubsub.DELIVERING_RESPONSE, this.processResponse);
+    },
+
+
+      //    a way to get data on command on a per-bibcode-basis
+        loadBibcodeData: function (bibcode) {
+
+      if (bibcode === this._bibcode){
+        return
+      }
+
+      this._bibcode = bibcode;
+
+      if (bibcode[13] == 'E'){
+        bibquery = _.first(bibcode, 14)
+
+      }
+      else {
+        bibquery = _.first(bibcode, 13)
+
+      }
+
+      var searchTerm = 'bibcode:' +  bibquery
+
+      this.dispatchRequest(new ApiQuery({'q': searchTerm}));
+
+      this.deferredObject =  $.Deferred();
+
+      return this.deferredObject.promise()
+    },
 
       ItemModelClass     : ItemModelClass,
       ItemViewClass      : ItemViewClass,
@@ -131,6 +166,6 @@ define([
       }
     });
 
-    return SimilarWidget;
+    return TableOfContentsWidget;
 
   });

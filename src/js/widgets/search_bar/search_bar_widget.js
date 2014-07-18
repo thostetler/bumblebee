@@ -67,8 +67,7 @@ define(['marionette',
       events: {
         "click .search-submit": "submitQuery",
         "click #field-options div": "addField",
-        "keypress .q": function (e) {
-          this.checkSubmit(e);
+        "keypress .q": function(e){
           this.highlightFields(e);
         },
         "blur .q": "unHighlightFields",
@@ -188,17 +187,10 @@ define(['marionette',
         this.addField = true;
       },
 
-      checkSubmit: function (e) {
 
-        if (e.keyCode === 13) {
-          e.preventDefault();
-          this.submitQuery();
-        }
-      },
-
-      submitQuery: function () {
+      submitQuery: function() {
         var query = (this.$(".q").val());
-        this.trigger("new_query", query)
+        this.trigger("new_query", query);
       },
 
       setQueryBox: function (val) {
@@ -226,9 +218,24 @@ define(['marionette',
         fl: 'id'
       },
 
-      initialize: function (options) {
+
+      storeQuery : function(query){
+        this.currentQuery = query;
+      },
+
+      initialize: function(options) {
+        this.currentQuery = undefined;
         this.view = new SearchBarView();
-        this.listenTo(this.view, "new_query", this.submitNewQuery);
+        this.listenTo(this.view, "new_query", function(query){
+          this.submitNewQuery(query);
+          this.storeQuery(query);
+        });
+
+        this.listenTo(this.view, "render", function(){
+          if (this.currentQuery){
+            this.view.setQueryBox(this.currentQuery)
+          }
+        })
 
         BaseWidget.prototype.initialize.call(this, options)
       },
@@ -237,6 +244,7 @@ define(['marionette',
         var q = apiResponse.getApiQuery();
         this.setCurrentQuery(q);
         this.view.setQueryBox(q.get('q').join(' '));
+        this.storeQuery(q.get('q'));
       },
 
       submitNewQuery: function (query) {
@@ -245,6 +253,8 @@ define(['marionette',
         });
 
         this.pubsub.publish(this.pubsub.NEW_QUERY, this.customizeQuery(newQuery));
+
+
 
       }
     });
