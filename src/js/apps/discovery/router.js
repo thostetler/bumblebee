@@ -43,14 +43,22 @@ define([
       },
 
       viewAbstract: function (bibcode, subView) {
-        console.log("ROUTING")
+        var fromWithinPage;
+
         if (!subView) {
           subView = "abstract"
+        }
+        //notifies manager if it is just a simple shift from abstract to cited list, for example
+        if (this.history.getPriorPage() === "abstractPage" && this.history.getPriorPageVal() === bibcode){
+         fromWithinPage = true;
+        }
+        else {
+          fromWithinPage = false;
         }
 
         if (bibcode){
           //it's the default abstract view
-          this.pageControllers.abstractPage.showPage(bibcode, subView);
+          this.pageControllers.abstractPage.showPage(bibcode, subView, fromWithinPage);
           this.history.addEntry({"abstractPage": {bibcode: bibcode, subView : subView}})
         }
 

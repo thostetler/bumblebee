@@ -19,16 +19,20 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
       template : abstractTitleTemplate,
 
-      render : function(docs, bibcode){
+      render : function(bibcode, data, queryDocs){
 
-        var title = docs[bibcode]["title"];
+        var queryDocVals;
+
+        var title = data["title"];
 
         var prevBib = undefined,
           nextBib= undefined;
 
-        if (_.size(docs) > 1){
-          prevBib = _.where(docs, {order : docs[bibcode]["order"] - 1})
-          nextBib = _.where(docs, {order : docs[bibcode]["order"] + 1})
+        if (queryDocs){
+
+          queryDocVals = _.values(queryDocs);
+          prevBib = _.where(queryDocVals, {order : data["order"] - 1})
+          nextBib = _.where(queryDocVals, {order : data["order"] + 1})
           prevBib = prevBib.length === 1 ? prevBib[0]["bibcode"] : undefined
           nextBib = nextBib.length === 1 ? nextBib[0]["bibcode"] : undefined
 
@@ -45,7 +49,6 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
       checkLoadMore : function(){
        this.trigger("nextEvent")
       }
-
 
     })
 
@@ -175,7 +178,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         $searchBar.append(this.widgetDict.searchBar.render().el)
         if (this.history.getPriorPage() === "resultsPage" ||this.history.getPriorPage() === "abstractPage" ){
-          $(".opt-nav-button").append("<a href=" + "/search/" + currentSearchVal
+          $(".opt-nav-button").append("<a href=" + "#search/" + currentSearchVal
             + " class=\"btn btn-sm \"> <i class=\"glyphicon glyphicon-arrow-left\"></i> back to results</a>")
         }
 
@@ -206,7 +209,13 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         this.view = new AbstractTitleView();
 
-        this._docs = {};
+        //this widget has two main variables, listed below:
+
+        //refilled only on "new_query"
+        this._current_query_docs = {};
+
+        //represents the current bibcode (always only 1)
+        this._bibcode = undefined;
 
         this.widgetDict = options.widgetDict
 
@@ -229,7 +238,6 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         this.listenTo(this.view, "all", this.onAllInternalEvents)
 
-
         PaginatedBaseWidget.prototype.initialize.apply(this, arguments);
 
       },
@@ -238,15 +246,15 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         if (ev.indexOf("nextEvent")!== -1){
           this.checkLoadMore()
-
         }
 
       },
 
       checkLoadMore : function(){
+        console.log("checkLoadmore!!!")
 
         //first, find position of current bib in this._docs
-        var bibList = _.keys(this._docs);
+        var bibList = _.keys(this._current_query_docs);
         var ind = bibList.indexOf(this._bibcode);
 
         //fetch more if there are 4 or fewer records remaining
@@ -266,53 +274,63 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
         fl: 'title,bibcode'
       },
 
-      renderNewBibcode: function (bibcode) {
-        if (this._docs[bibcode]) {
-          this.view.render(this._docs, bibcode);
+      renderNewBibcode: function (bibcode, data) {
+        //first, check if we have the info in current query docs
+        if (this._current_query_docs[bibcode]) {
 
+          this.view.render(bibcode, this._current_query_docs[bibcode], this._current_query_docs);
+
+        }
+        else if (data){
+          this.view.render(bibcode, data);
         }
         else {
           //we dont have the bibcode
-          //ensure that pagination is reset, docs are reset
-          this.resetWidget();
+          //processResponse will re-call this function, but with the data parameter
           this.dispatchRequest(new ApiQuery({'q': 'bibcode:' + bibcode, '__show': this._bibcode}));
         }
       },
 
       resetWidget : function(){
         this.paginator.reset();
-        this._docs = {};
+        this._current_query_docs = {};
 
       },
 
       processResponse: function (apiResponse) {
-        var q = apiResponse.getApiQuery();
-        this.setCurrentQuery(q);
 
         var r = apiResponse.toJSON();
 
-        if (r.response && r.response.docs) {
+        //it's an individual bibcode, just render it
+        if (apiResponse.has('responseHeader.params.__show')) {
+          //make the dict of associated data
+          var data = r.response.docs[0]
+          var data = {title: data.title, bibcode : data.bibcode}
+          this.renderNewBibcode(this._bibcode, data);
+        }
+        else {
+          //it's from "inviting_request"
+          var q = apiResponse.getApiQuery();
+          this.setCurrentQuery(q);
 
-          var counter = _.size(this._docs);
+          if (r.response && r.response.docs) {
 
-          _.each(r.response.docs, function (doc) {
-            counter++
-            this._docs[doc.bibcode] = {title: doc.title, bibcode: doc.bibcode, order: counter}
+            var counter = _.size(this._current_query_docs);
 
-          }, this);
+            _.each(r.response.docs, function (doc) {
+              counter++
+              this._current_query_docs[doc.bibcode] = {title: doc.title, bibcode : doc.bibcode, order: counter}
 
-          if (apiResponse.has('responseHeader.params.__show')) {
-            this.renderNewBibcode(this._bibcode);
+            }, this);
           }
-
         }
       },
 
       //   called by the router
 
-      showPage : function(bib, subPage){
+      showPage : function(bib, subPage, fromWithinPage){
 
-        if (this._bibcode == bib){
+        if (fromWithinPage){
           //just need to switch out the subPage
           this.showAbstractSubView(subPage)
 
