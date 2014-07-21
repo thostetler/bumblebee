@@ -134,13 +134,6 @@ app.get( /\/discovery\.html\/.*$/, function(req, res) {
 
 });
 
-app.get('/discovery.html', function(req, res) {
-
-  // Prepare the context
-  res.sendfile( home + '/discovery.html')
-
-});
-
 
 app.listen(port);
 

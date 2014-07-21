@@ -2893,8 +2893,8 @@ fieldset[disabled] .btn-success.active {
 }
 .btn-info {
   color: #ffffff;
-  background-color: #9dc0d4;
-  border-color: #8cb5cd;
+  background-color: #2fa4e7;
+  border-color: #1a99e2;
 }
 .btn-info:hover,
 .btn-info:focus,
@@ -2902,8 +2902,8 @@ fieldset[disabled] .btn-success.active {
 .btn-info.active,
 .open > .dropdown-toggle.btn-info {
   color: #ffffff;
-  background-color: #7aaac5;
-  border-color: #619aba;
+  background-color: #178acc;
+  border-color: #1474ac;
 }
 .btn-info:active,
 .btn-info.active,
@@ -2925,11 +2925,11 @@ fieldset[disabled] .btn-info:active,
 .btn-info.disabled.active,
 .btn-info[disabled].active,
 fieldset[disabled] .btn-info.active {
-  background-color: #9dc0d4;
-  border-color: #8cb5cd;
+  background-color: #2fa4e7;
+  border-color: #1a99e2;
 }
 .btn-info .badge {
-  color: #9dc0d4;
+  color: #2fa4e7;
   background-color: #ffffff;
 }
 .btn-warning {
@@ -6460,9 +6460,10 @@ input[type=text]:focus {
   margin-top: 15px;
 }
 .s-results-title {
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 1px;
   margin-bottom: 10px;
+  color: #195e9f;
 }
 .s-results-authors {
   padding-left: .5%;
@@ -6753,7 +6754,7 @@ li.article-author {
   position: relative;
   background: #88b7d5;
   background-color: #c1e4f8;
-  border: 1px solid #ccdee9;
+  border: 1px solid #6abeee;
 }
 .contents-nav-active:after,
 .contents-nav-active:before {
@@ -6774,7 +6775,7 @@ li.article-author {
 }
 .contents-nav-active:before {
   border-color: rgba(204, 204, 204, 0);
-  border-left-color: #4abdff;
+  border-left-color: #0097ed;
   border-width: 21px;
   margin-top: -21px;
 }
