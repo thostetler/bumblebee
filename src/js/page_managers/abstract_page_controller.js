@@ -78,10 +78,12 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
             var promise= v.widget.loadBibcodeData(this._bibcode);
 
               promise.done(function () {
-                if (v.widget.collection.numFound >= 1) {
+                if (v.widget.collection.length >=1) {
                   that.activateNavButton(k, v.showNumFound, v.widget.collection.numFound)
+                  console.log("activating", k)
                 }
                 else {
+                  console.log("deactivating", k)
                   that.deactivateNavButton(k)
                 }
 
@@ -101,7 +103,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
             .find(".num-items").text("("+colLength +")")
         }
         else {
-          $navButton.find("a").off(this, this.deactivateLink)
+          $navButton.parent().off(this, this.deactivateLink)
           $navButton.removeClass("s-abstract-nav-inactive")
         }
 
@@ -119,7 +121,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         $navButton.addClass("s-abstract-nav-inactive")
 
-        $navButton.find("a").on("click", this.deactivateLink)
+        $navButton.parent().on("click", this.deactivateLink)
 
       },
 
@@ -178,7 +180,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         $searchBar.append(this.widgetDict.searchBar.render().el)
         if (this.history.getPriorPage() === "resultsPage" ||this.history.getPriorPage() === "abstractPage" ){
-          $(".opt-nav-button").append("<a href=" + "#search/" + currentSearchVal
+          $(".opt-nav-button").append("<a href=" + "/#search/?" + currentSearchVal
             + " class=\"btn btn-sm \"> <i class=\"glyphicon glyphicon-arrow-left\"></i> back to results</a>")
         }
 
@@ -228,12 +230,13 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
 //      to be explicit, transferring only those widgets considered "sub views" to this dict
         this.abstractSubViews = {
+          //the keys are also the sub-routes
           "abstract": {widget: this.widgetDict.abstract, title:"Abstract", descriptor: "Abstract for:"},
           "references": {widget: this.widgetDict.references, title:"References", descriptor: "References in:", showNumFound : true},
           "citations": {widget: this.widgetDict.citations, title: "Citations", descriptor: "Papers that cite:", showNumFound : true},
-          "coReads" : {widget: this.widgetDict.coreads, title: "Co-Reads", descriptor: "Other papers read by those who read:"},
-          "tableOfContents" : {widget: this.widgetDict.tableOfContents, title: "Table of Contents", descriptor: "Table of Contents for:", showNumFound : true},
-          "similarArticles": {widget : this.widgetDict.similar, title : "Similar Papers", descriptor : "Papers with similar characteristics to:"}
+          "coreads" : {widget: this.widgetDict.coreads, title: "Co-Reads", descriptor: "Other papers read by those who read:"},
+          "tableofcontents" : {widget: this.widgetDict.tableOfContents, title: "Table of Contents", descriptor: "Table of Contents for:", showNumFound : true},
+          "similar": {widget : this.widgetDict.similar, title : "Similar Papers", descriptor : "Papers with similar characteristics to:"}
         };
 
         this.listenTo(this.view, "all", this.onAllInternalEvents)
@@ -305,6 +308,9 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
         if (apiResponse.has('responseHeader.params.__show')) {
           //make the dict of associated data
           var data = r.response.docs[0]
+          if (!data){
+            throw new Error("did not recieve bibcode data")
+          }
           var data = {title: data.title, bibcode : data.bibcode}
           this.renderNewBibcode(this._bibcode, data);
         }

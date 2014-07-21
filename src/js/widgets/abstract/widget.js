@@ -61,7 +61,15 @@ define(['marionette', 'backbone', 'jquery', 'underscore', 'cache',
       },
 
       toggleAffiliation: function () {
-        this.$(".affiliation").toggleClass("hide")
+
+        this.$(".affiliation").toggleClass("hide");
+        if (this.$(".affiliation").hasClass("hide")){
+          this.$("#toggle-aff").text("Show affiliations")
+        }
+        else {
+          this.$("#toggle-aff").text("Hide affiliations")
+        }
+
       },
 
       onClick: function(ev) {

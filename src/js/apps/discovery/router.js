@@ -2,7 +2,8 @@ define([
     'jquery',
     'backbone',
     'js/components/api_query',
-    'js/mixins/dependon'],
+    'js/mixins/dependon',
+     'backbone-query-parameters',],
   function ($, Backbone, ApiQuery, Dependon) {
 
     "use strict";
@@ -19,9 +20,10 @@ define([
       },
       routes: {
         "": "index",
-        "search/*query": 'search',
+        "search/": 'search',
         'abs/:bibcode(/:subView)': 'viewAbstract'
       },
+
 
       index: function () {
         this.pageControllers.landingPage.showPage();
@@ -30,14 +32,13 @@ define([
       },
 
       search: function (query) {
-        if (query) {
-          if (_.isString(query)){
-            this.history.addEntry({"resultsPage": query})
-            query = new ApiQuery().load(query);
-            this.pubsub.publish(this.pubsub.NEW_QUERY, query);
-            this.pageControllers.resultsPage.showPage();
+        var serializedQuery = $.param(query);
 
-          }
+        if (serializedQuery) {
+            this.history.addEntry({"resultsPage": serializedQuery})
+            var q= new ApiQuery().load(serializedQuery);
+            this.pubsub.publish(this.pubsub.NEW_QUERY, q);
+            this.pageControllers.resultsPage.showPage();
 
         }
       },
@@ -49,7 +50,7 @@ define([
           subView = "abstract"
         }
         //notifies manager if it is just a simple shift from abstract to cited list, for example
-        if (this.history.getPriorPage() === "abstractPage" && this.history.getPriorPageVal() === bibcode){
+        if (this.history.getPriorPage() === "abstractPage" && this.history.getPriorPageVal().bibcode === bibcode){
          fromWithinPage = true;
         }
         else {

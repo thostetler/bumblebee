@@ -238,7 +238,7 @@ define([
         this._bibcode = bibcode
 
         if ((!this.solrOperator && !this.solrField) || (this.solrOperator && this.solrField)){
-          throw new Error("Can't call loadInfo without either a solrOperator or a solrField, and can't have both!")
+          throw new Error("Can't call loadBibcodeData without either a solrOperator or a solrField, and can't have both!")
         }
 
         var searchTerm = this.solrOperator? this.solrOperator + "(" + bibcode +")" : this.solrField + ":" + bibcode

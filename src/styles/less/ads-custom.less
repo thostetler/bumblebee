@@ -9,11 +9,16 @@
 
 //bootstrap overrides
 
-
-.form-control:focus {
-  border-color: @brand-info;
-  border-radius : border-radius(0px);
+input[type=text]:focus {
+  border: 1px solid brighten(@brand-primary, 15%);
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -moz-transition: none;
+  -webkit-transition: none;
 }
+
+
 
 // overriding button link focus
 .btn-link:focus {
@@ -43,14 +48,9 @@
 }
 
 #body-template-container {
-  margin-top: 70px;
+  margin-top: 89px;
   min-height: 550px;
 
-}
-
-.s-dynamic-page-body {
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 
@@ -59,41 +59,6 @@
   border-left: 1px solid darken(@gray-lighter, 10%);
 
 }
-
-
-
-// styling three main columns and general layout
-
-//#s-left-col-container {
-//  border-top: 1px solid darken(#f4f4f4, 10%);
-//  min-height: 500px;
-//  -webkit-box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  -moz-box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  z-index: 1;
-//}
-//
-//#s-middle-col-container {
-//  border-top: 1px solid darken(#f4f4f4, 10%);
-//  border-right: 1px solid darken(#f4f4f4, 10%);
-//  border-left: 1px solid darken(#f4f4f4, 10%);
-//
-//  -webkit-box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  -moz-box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//
-//}
-//
-//#s-right-col-container {
-//  border-top: 1px solid darken(#f4f4f4, 10%);
-//  min-height: 500px;
-//  border-top: 1px solid darken(#f4f4f4, 10%);
-//  -webkit-box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  -moz-box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-//  box-shadow: inset 0px 10px 10px -10px fade(darken(#f4f4f4, 10%), 30%);
-////  padding:10px;
-//}
-////
 
 
 // utility classes/ general styling classes
@@ -207,19 +172,23 @@
   }
 
 .s-result-item-buffer {
-  margin-top: 10px;
+  margin-top: 15px;
 
 }
 
+.s-results-title {
+  font-size: 16px;
+  margin-top: 1px;
+  margin-bottom: 10px;
+}
 
-.s-result-item-separator {
-
-
+.s-results-authors {
+  padding-left: .5%;
 }
 
 
 .s-more-info {
-    background-color: @gray-lightest;
+    background-color: darken(@gray-lightest, 2%);
     padding:1%;
 
     em {
@@ -237,12 +206,24 @@
     }
   }
 
+.s-checkbox-col {
+  padding-right: 0px;
+}
+
+.s-results-controls {
+  padding: 3%;
+  background-color: @gray-lighter;
+  border-bottom: 1px solid darken(@gray-lighter, 10%);
 
 
+}
 
-.results-list {
+.s-results-list {
 
-    margin-top: 20px;
+  margin-top: 20px;
+  margin-left:2%;
+  margin-right: 7%;
+
     h4 {
       margin-top: 0px;
       margin-bottom: 10px;
@@ -274,10 +255,6 @@
     padding-left: 2px !important;
     padding-right: 2px !important;
 
-  }
-
-  button#toggle-aff {
-    float: right;
   }
 
   // end results list css
@@ -375,10 +352,6 @@
     }
   }
 }
-
-
-
-
 
 
 .s-logic-dropdown {
@@ -489,6 +462,12 @@
 
 // search bar css
 
+.s-search-bar-input-row {
+  padding-left: 0.5%;
+  width: 73%;
+
+}
+
   .open .show-form {
     background-color: lighten(@brand-warning, 12%) !important
   }
@@ -571,6 +550,10 @@
   .search-form-section {
     padding: 10px;
   }
+
+ .s-quick-add {
+   padding-left: 0.5%;
+ }
 
 .show-form {
   .draw-attention-text {
@@ -791,10 +774,15 @@ div.query-builder > .rules-group-container {
 
 //  styling for abstract page
 
+.s-abstract-nav-col a:hover {
+  text-decoration: none;
+}
+
 .s-abstract-title-info-row {
   font-style: italic;
   font-size: 16px;
   color: @brand-primary;
+  padding-top: 20px;
 }
 
 .abstract-title {
@@ -834,20 +822,16 @@ div.query-builder > .rules-group-container {
 
 .s-abstract-nav-inactive {
   background-color: lighten(@gray-lighter, 5%);
-
-  a {
-    color: lighten(@gray-light, 10%);
-  }
+  color: lighten(@gray-light, 10%) !important;
 }
 
 .s-abstract-nav-active:hover {
   background-color: lighten(@brand-info, 8%);
-
 }
 
 .s-abstract-nav-inactive:hover {
   background-color: lighten(@gray-lighter, 5%);
-
+  cursor: not-allowed;
 }
 
 .s-abstract-title {

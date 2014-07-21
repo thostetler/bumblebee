@@ -1,49 +1,59 @@
 <div class="row">
     <div class="opt-nav-button col-xs-2"></div>
-    <div class="col-xs-8">
-    <form name="main-query" action="search/">
-        <div class="input-group">
-            <div class="input-group-btn">
-                <div type="div" class="btn btn-default dropdown-toggle show-form" data-toggle="dropdown">Search Form
-                    <div class="caret"></div>
-                </div>
-                <div class="dropdown-menu" id="search-form-container"></div>
-            </div>
+    <div class="col-xs-10">
+     <div class="row">
+         <div class="col-xs-12 s-quick-add">
+             <form id="expanded-search-form" class="unselectable" action="">
+                 <div id="field-options">
+                     <span class="search-form-title">Quick add:</span>
+                     <div class="btn btn-link btn-sm" data-field="author">Author</div>
 
-            <input type="text" class="form-control q" name="q" autofocus>
+                     <div class="btn btn-link btn-sm"  data-field="first-author">First Author</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="title">Title</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="full">Full</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="year">Year</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="bibstem">Publication</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="full">Fulltext</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="operator-trending">Trending(...)</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="operator-useful">Useful(...)</div>
+
+                     <div class="btn btn-link btn-sm"  data-field="operator-instructive">Instructive(...)</div>
+                 </div>
+             </form>
+
+         </div>
+     </div>
+     <div class="row">
+         <div class="col-xs-9 s-search-bar-input-row">
+             <form name="main-query" action="/#search/">
+                 <div class="input-group">
+                     <div class="input-group-btn">
+                         <div type="div" class="btn btn-default dropdown-toggle show-form" data-toggle="dropdown">Search Form
+                             <div class="caret"></div>
+                         </div>
+                         <div class="dropdown-menu" id="search-form-container"></div>
+                     </div>
+
+                     <input type="text" class="form-control q" name="q" autofocus>
                   <span class="input-group-btn">
 
             <button type="submit" class= "btn btn-primary search-submit">Submit</button>
                       </span>
 
+                 </div>
+                 <!-- /input-group -->
+             </form>
+
          </div>
-        <!-- /input-group -->
-    </form>
-        <form id="expanded-search-form" class="unselectable" action="">
-            <div class="search-form-section" id="field-options">
-                <span class="search-form-title">Quick add:</span>
-                <div class="btn btn-link btn-sm" data-field="author">Author</div>
+     </div>
 
-                <div class="btn btn-link btn-sm"  data-field="first-author">First Author</div>
-
-                <div class="btn btn-link btn-sm"  data-field="title">Title</div>
-
-                <div class="btn btn-link btn-sm"  data-field="full">Full</div>
-
-                <div class="btn btn-link btn-sm"  data-field="year">Year</div>
-
-                <div class="btn btn-link btn-sm"  data-field="bibstem">Publication</div>
-
-                <div class="btn btn-link btn-sm"  data-field="full">Fulltext</div>
-
-                <div class="btn btn-link btn-sm"  data-field="operator-trending">Trending(...)</div>
-
-                <div class="btn btn-link btn-sm"  data-field="operator-useful">Useful(...)</div>
-
-                <div class="btn btn-link btn-sm"  data-field="operator-instructive">Instructive(...)</div>
-
-            </div>
-        </form>
 
     </div>
 </div>

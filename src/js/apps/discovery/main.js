@@ -363,37 +363,35 @@ define(["config", 'module'], function(config, module) {
       app.router = new Router({pageControllers : pageControllers, history : bumblebeeHistory});
       app.router.activate(beehive.getHardenedInstance());
 
-      // Trigger the initial route and enable HTML5 History API support, set the
-      // root folder to '/' by default.  Change in app.js.
-      var histOpts = {}
-      if (conf.root) {
-        histOpts['root'] = conf.root;
-      }
-      Backbone.history.start(histOpts);
+      // Trigger the initial route and enable HTML5 History API support
+
+
+      Backbone.history.start(conf.routerConf);
 //
-//      //      got part of this from online
-//      $(document).on("click", "a[href^='/']",  function(e){
-//        console.log("router", $this.html())
-//
-//        var $this = $(this);
-//
-//        href = $this.attr('href')
-//
-//        //allowing an easy way to disable links
-//        if ($this.hasClass("inactive")){
-//          return
-//        }
-//
-//        //Remove leading slashes and hash bangs (backward compatablility)
-//        url = href.replace(/^\//,'').replace('\#\!\/','')
-//
-//        //Instruct Backbone to trigger routing events
-//        app.router.navigate(url, { trigger: true })
-//
-//        return false
-//
-//      })
-//
+      //      got part of this from online
+      $(document).on("click", "a[href^='/']",  function(e){
+
+        var $this = $(this);
+        console.log("router", $this.html())
+
+
+        href = $this.attr('href')
+
+        //allowing an easy way to disable links
+        if ($this.hasClass("inactive")){
+          return
+        }
+
+        //Remove leading slashes and hash bangs (backward compatablility)
+        url = href.replace(/^\//,'').replace('\#\!\/','')
+
+        //Instruct Backbone to trigger routing events
+        app.router.navigate(url, { trigger: true })
+
+        return false
+
+      })
+
       $(document).on("submit", "form", function(e)
       {
         var action = $(this).attr("action")
@@ -412,10 +410,12 @@ define(["config", 'module'], function(config, module) {
 
       $(document).on("scroll", function(){
         if ($(window).scrollTop() > 1) {
-          $(".s-search-bar-row").addClass("s-motion-shadow")
+          $(".s-search-bar-row").addClass("s-motion-shadow");
+          $("#field-options").hide()
         }
         else {
           $(".s-search-bar-row").removeClass("s-motion-shadow")
+          $("#field-options").fadeIn()
         }
       })
 

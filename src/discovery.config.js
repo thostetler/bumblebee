@@ -87,7 +87,8 @@ require.config({
     'd3':'libs/d3/d3',
     'hoverIntent': 'libs/jquery-hoverIntent/jquery.hoverIntent',
     'cache': 'libs/dsjslib/lib/Cache',
-    'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder'
+    'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',
+    'backbone-query-parameters': 'libs/backbone-query-parameters/backbone.queryparams'
 
   },
 
