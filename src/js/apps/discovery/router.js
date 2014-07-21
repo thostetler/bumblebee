@@ -21,7 +21,7 @@ define([
       routes: {
         "": "index",
         "search/": 'search',
-        'abs/:bibcode(/:subView)': 'viewAbstract'
+        'abs/:bibcode(/)(:subView)': 'viewAbstract'
       },
 
 
@@ -44,6 +44,7 @@ define([
       },
 
       viewAbstract: function (bibcode, subView) {
+        console.log("viewAbstract", bibcode, subView)
         var fromWithinPage;
 
         if (!subView) {

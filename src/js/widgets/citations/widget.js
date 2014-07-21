@@ -1,6 +1,5 @@
 /**
- * Widget to display list of result hits - it allows to paginate through them
- * and display details
+ * Widget to display list of citations
  *
  */
 

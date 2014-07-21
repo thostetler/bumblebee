@@ -79,7 +79,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
               promise.done(function () {
                 if (v.widget.collection.length >=1) {
-                  that.activateNavButton(k, v.showNumFound, v.widget.collection.numFound)
+                  that.activateNavButton(k, v.showNumFound, v.widget.collection.length)
                   console.log("activating", k)
                 }
                 else {
