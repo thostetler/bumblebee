@@ -44,11 +44,12 @@ define([
       },
 
       viewAbstract: function (bibcode, subView) {
-        console.log("viewAbstract", bibcode, subView)
         var fromWithinPage;
 
         if (!subView) {
           subView = "abstract"
+          //"redirecting" to the abstract page
+          this.navigate("/abs/"+bibcode+"/abstract")
         }
         //notifies manager if it is just a simple shift from abstract to cited list, for example
         if (this.history.getPriorPage() === "abstractPage" && this.history.getPriorPageVal().bibcode === bibcode){

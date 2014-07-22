@@ -81,7 +81,7 @@ define([
 
         this.deferredObject.resolve(this.collection)
         
-        return
+        return this.deferredObject
       }
 
       this._bibcode = bibcode;

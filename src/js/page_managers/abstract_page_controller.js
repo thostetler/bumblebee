@@ -157,6 +157,8 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         var widget = this.abstractSubViews[viewName]["widget"];
 
+
+
         $middleCol.append(widget.render().el);
 
         //also amending the title
@@ -180,7 +182,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         $searchBar.append(this.widgetDict.searchBar.render().el)
         if (this.history.getPriorPage() === "resultsPage" ||this.history.getPriorPage() === "abstractPage" ){
-          $(".opt-nav-button").append("<a href=" + "/search/?" + currentSearchVal
+          $(".opt-nav-button").append("<a href=" + "../../search/?" + currentSearchVal
             + " class=\"btn btn-sm \"> <i class=\"glyphicon glyphicon-arrow-left\"></i> back to results</a>")
         }
 
@@ -249,6 +251,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         if (ev.indexOf("nextEvent")!== -1){
           this.checkLoadMore()
+          console.log("current number of docs: ", _.keys(this._current_query_docs).length)
         }
 
       },

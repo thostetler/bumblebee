@@ -19,6 +19,14 @@ input[type=text]:focus {
 }
 
 
+.tab-content {
+  border-left: 1px solid darken(@gray-lighter, 8%);
+  border-right: 1px solid darken(@gray-lighter, 8%);
+  border-bottom:  1px solid darken(@gray-lighter, 8%);
+  position: relative;
+  top: -10px;
+}
+
 
 // overriding button link focus
 .btn-link:focus {
@@ -177,11 +185,12 @@ input[type=text]:focus {
 }
 
 .s-results-title {
-  font-size: 18px;
-  margin-top: 1px;
+  margin-top: 0px;
   margin-bottom: 10px;
-  color : darken(@brand-primary, 5%)
+  font-size:16px;
+  font-weight:500;
 }
+
 
 .s-results-authors {
   padding-left: .5%;
@@ -214,6 +223,8 @@ input[type=text]:focus {
 .s-results-controls {
   padding: 3%;
   border-bottom: 1px solid darken(@gray-lighter, 10%);
+//  background-image: linear-gradient(to bottom, lighten(@gray-light, 22%) 0, lighten(@gray-lighter, 6%) 100%);
+
 
 
 }
@@ -223,13 +234,6 @@ input[type=text]:focus {
   margin-top: 20px;
   margin-left:2%;
   margin-right: 7%;
-
-    h4 {
-      margin-top: 0px;
-      margin-bottom: 10px;
-      font-size:16px;
-      font-weight:500;
-    }
 
 
     label {
@@ -275,19 +279,14 @@ input[type=text]:focus {
 
   }
 
-
 .size-graphic {
-  display: inline-block;
+  display: block;
   background-color: lighten(@brand-info, 23%);
   overflow-x: visible;
   color: black;
-   font-size : 13px !important;
-  overflow-x:visible
+  font-size : 13px !important;
 }
 
-//.size-graphic-wrapper {
-//  overflow-y: hidden;
-//}
 
 .s-facet-selected {
   .size-graphic {
@@ -469,15 +468,15 @@ input[type=text]:focus {
 }
 
   .open .show-form {
-    background-color: lighten(@brand-warning, 12%) !important
+    background-color: darken(@brand-warning, 5%) !important;
   }
 
   .show-form:hover {
-    background-color: darken(@brand-warning, 10%)
+    background-color: @brand-warning;
   }
 
   .open .show-form:hover {
-    background-color: darken(@brand-warning, 10%) !important
+    background-color: darken(@brand-warning, 5%) !important;
   }
 
   .inactive-style {
@@ -568,6 +567,11 @@ input[type=text]:focus {
     background-color: none;
 
   }
+}
+
+.draw-attention-text:hover {
+  color: @brand-warning !important;
+
 }
 
 

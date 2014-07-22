@@ -368,29 +368,39 @@ define(["config", 'module'], function(config, module) {
 
       Backbone.history.start(conf.routerConf);
 //
-      //      got part of this from online
-      $(document).on("click", "a[href^='/']",  function(e){
+      // from backbone build buddy
+      // All navigation that is relative should be passed through the navigate
+      // method, to be processed by the router. If the link has a `data-bypass`
+      // attribute, bypass the delegation completely.
+      // All navigation that is relative should be passed through the navigate
+      // method, to be processed by the router. If the link has a `data-bypass`
+      // attribute, bypass the delegation completely.
+      $(document).on("click", "a:not([data-bypass])", function(evt) {
+        // Get the absolute anchor href.
 
-        var $this = $(this);
-        console.log("router", $this.html())
+        var url = $(this).prop("href");
 
-
-        href = $this.attr('href')
-
-        //allowing an easy way to disable links
-        if ($this.hasClass("inactive")){
-          return
+          //taking everything in url after this.root
+          var regex = new RegExp(conf.routerConf.root + "(.*)")
+          var match = url.match(regex)
+        if (match){
+          var path = match[1]
+        }
+        else {
+          //it's a relative link starting from root
+          var path = $(this).attr("href")
         }
 
-        //Remove leading slashes and hash bangs (backward compatablility)
-        url = href.replace(/^\//,'').replace('\#\!\/','')
+          // `Backbone.history.navigate` is sufficient for all Routers and will
+          // trigger the correct events. The Router's internal `navigate` method
+          // calls this anyways.  The fragment is sliced from the root.
+          Backbone.history.navigate(path, true);
 
-        //Instruct Backbone to trigger routing events
-        app.router.navigate(url, { trigger: true })
+        evt.preventDefault();
 
-        return false
 
-      })
+      });
+
 
       $(document).on("submit", "form", function(e)
       {
