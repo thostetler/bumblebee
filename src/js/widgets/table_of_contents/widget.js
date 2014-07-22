@@ -73,9 +73,14 @@ define([
 
 
       //    a way to get data on command on a per-bibcode-basis
-        loadBibcodeData: function (bibcode) {
+     loadBibcodeData: function (bibcode) {
+
+       this.deferredObject =  $.Deferred();
 
       if (bibcode === this._bibcode){
+
+        this.deferredObject.resolve(this.collection)
+        
         return
       }
 
@@ -93,8 +98,6 @@ define([
       var searchTerm = 'bibcode:' +  bibquery
 
       this.dispatchRequest(new ApiQuery({'q': searchTerm}));
-
-      this.deferredObject =  $.Deferred();
 
       return this.deferredObject.promise()
     },

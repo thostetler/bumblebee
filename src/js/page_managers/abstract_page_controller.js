@@ -180,7 +180,7 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         $searchBar.append(this.widgetDict.searchBar.render().el)
         if (this.history.getPriorPage() === "resultsPage" ||this.history.getPriorPage() === "abstractPage" ){
-          $(".opt-nav-button").append("<a href=" + "/#search/?" + currentSearchVal
+          $(".opt-nav-button").append("<a href=" + "/search/?" + currentSearchVal
             + " class=\"btn btn-sm \"> <i class=\"glyphicon glyphicon-arrow-left\"></i> back to results</a>")
         }
 
