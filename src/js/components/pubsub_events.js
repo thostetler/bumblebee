@@ -96,7 +96,6 @@ define([], function() {
      */
     DISPLAY_DOCUMENTS: '[Router]-Display-Documents',
 
-
     /**
      * Used by OC to request parsed query tree - to check a query
      * for example

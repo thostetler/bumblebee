@@ -1,13 +1,13 @@
 /**
  * Widget to display list of result hits - it allows to paginate through them
  * and display details
- * 
+ *
  */
 
 define([
     'underscore',
-    'hbs!./templates/results-container-template',
-    'hbs!./templates/item-template',
+    'hbs!js/widgets/list_of_things/templates/results-container-template',
+    'hbs!js/widgets/list_of_things/templates/item-template',
     'js/widgets/list_of_things/widget'
     ],
 
@@ -62,7 +62,7 @@ define([
     });
 
 
-    var ResultsWidget = ListOfThingsWidget.extend({
+    var SimilarWidget = ListOfThingsWidget.extend({
 
       ItemModelClass     : ItemModelClass,
       ItemViewClass      : ItemViewClass,
@@ -131,6 +131,6 @@ define([
       }
     });
 
-    return ResultsWidget;
+    return SimilarWidget;
 
   });

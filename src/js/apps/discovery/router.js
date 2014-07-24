@@ -2,7 +2,8 @@ define([
     'jquery',
     'backbone',
     'js/components/api_query',
-    'js/mixins/dependon'],
+    'js/mixins/dependon',
+     'backbone-query-parameters',],
   function ($, Backbone, ApiQuery, Dependon) {
 
     "use strict";
@@ -10,59 +11,65 @@ define([
 
     // Defining the application router.
     var Router = Backbone.Router.extend({
+
+      initialize : function(options){
+        options = options || {};
+        this.pageControllers = options.pageControllers;
+        this.history = options.history;
+
+      },
       routes: {
         "": "index",
-        "search/*query": 'search',
-        'abs/:bibcode': 'viewAbstract'
+        "search/": 'search',
+        'abs/:bibcode(/)(:subView)': 'viewAbstract'
       },
 
+
       index: function () {
-        this.switchViews();
-        this.navigate('search/');
+        this.pageControllers.landingPage.showPage();
+        this.history.addEntry({"landingPage": undefined})
+
       },
 
       search: function (query) {
-        this.switchViews('search');
-        if (query) {
-          if (_.isString(query))
-            query = new ApiQuery().load(query);
-          var pubsub = this.getBeeHive().Services.get('PubSub');
-          pubsub.publish(pubsub.NEW_QUERY, query);
+        var serializedQuery = $.param(query);
+
+        if (serializedQuery) {
+            this.history.addEntry({"resultsPage": serializedQuery})
+            var q= new ApiQuery().load(serializedQuery);
+            this.pubsub.publish(this.pubsub.NEW_QUERY, q);
+            this.pageControllers.resultsPage.showPage();
+
         }
       },
 
-      viewAbstract: function (bibcode) {
-        this.switchViews('abs');
-        if (bibcode) {
-          var pubsub = this.getBeeHive().Services.get('PubSub');
-          pubsub.publish(pubsub.DISPLAY_DOCUMENTS, bibcode);
+      viewAbstract: function (bibcode, subView) {
+        var fromWithinPage;
+
+        if (!subView) {
+          subView = "abstract"
+          //"redirecting" to the abstract page
+          this.navigate("/abs/"+bibcode+"/abstract")
         }
-      },
+        //notifies manager if it is just a simple shift from abstract to cited list, for example
+        if (this.history.getPriorPage() === "abstractPage" && this.history.getPriorPageVal().bibcode === bibcode){
+         fromWithinPage = true;
+        }
+        else {
+          fromWithinPage = false;
+        }
 
-      onNewQuery: function(apiQuery) {
-        this.switchViews('search');
-        this.navigate('search/' + encodeURI(apiQuery.url()));
-      },
-
-      switchViews: function (name) {
-        switch(name) {
-          case 'abs':
-            $('#middle-column #search-results').addClass('hide');
-            $('#middle-column .multi-view').removeClass('hide');
-            break;
-          case 'search':
-          default:
-            $('#middle-column #search-results').removeClass('hide');
-            $('#middle-column .multi-view').addClass('hide');
-            break;
+        if (bibcode){
+          //it's the default abstract view
+          this.pageControllers.abstractPage.showPage(bibcode, subView, fromWithinPage);
+          this.history.addEntry({"abstractPage": {bibcode: bibcode, subView : subView}})
         }
 
       },
 
       activate: function (beehive) {
         this.setBeeHive(beehive);
-        var pubsub = this.getBeeHive().Services.get('PubSub');
-        pubsub.subscribe(pubsub.NEW_QUERY, _.bind(this.onNewQuery, this));
+        this.pubsub = this.getBeeHive().Services.get('PubSub');
       }
 
     });
