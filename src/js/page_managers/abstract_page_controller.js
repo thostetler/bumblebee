@@ -10,35 +10,30 @@
 
 define(["marionette", "hbs!./templates/abstract-page-layout",
     'js/widgets/base/paginated_base_widget', 'hbs!./templates/abstract-title',
-    'js/components/api_query', 'hbs!./templates/abstract-nav'],
+    'js/components/api_query', 'hbs!./templates/abstract-nav', 'js/widgets/loading/widget'],
   function(Marionette, threeColumnTemplate, PaginatedBaseWidget,
-    abstractTitleTemplate, ApiQuery, abstractNavTemplate){
+    abstractTitleTemplate, ApiQuery, abstractNavTemplate, LoadingWidget){
 
 
     var AbstractTitleView = Backbone.View.extend({
 
       template : abstractTitleTemplate,
 
-      render : function(bibcode, data, queryDocs){
+      render : function(bibcode, data, collection){
+        var prevBib, nextBib;
 
-        var queryDocVals;
-
-        var title = data["title"];
-
-        var prevBib = undefined,
-          nextBib= undefined;
-
-        if (queryDocs){
-
-          queryDocVals = _.values(queryDocs);
-          prevBib = _.where(queryDocVals, {order : data["order"] - 1})
-          nextBib = _.where(queryDocVals, {order : data["order"] + 1})
-          prevBib = prevBib.length === 1 ? prevBib[0]["bibcode"] : undefined
-          nextBib = nextBib.length === 1 ? nextBib[0]["bibcode"] : undefined
+        //only send number to template if it is in a set of results
+        if (collection){
+          var index = collection.indexOf(data);
+          prevBib = collection.filter(function(model, i){return i == index-1})[0]
+          nextBib = collection.filter(function(model, i){return i == index+1})[0]
 
         }
 
-        this.$el.html(this.template({description: "Abstract for:" , title: title, prev: prevBib, next : nextBib}))
+        prevBib = prevBib? prevBib.get("bibcode") : undefined;
+        nextBib = nextBib? nextBib.get("bibcode") : undefined;
+
+        this.$el.html(this.template({index : index+1, description: "Abstract for:" , title: data.get("title"), prev: prevBib, next : nextBib}))
 
         return this
 
@@ -63,12 +58,18 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
       },
 
+      insertLoadingView : function(){
+
+        $("#body-template-container").append(this.loadingWidget.render().el)
+
+      },
+
       loadWidgetData : function(){
         var that = this;
 
         _.each(this.abstractSubViews, function(v, k){
 
-          if(k === "abstract"){
+          if (k === "abstract"){
 
             v.widget.loadBibcodeData(this._bibcode);
             this.activateNavButton(k)
@@ -80,10 +81,8 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
               promise.done(function () {
                 if (v.widget.collection.length >=1) {
                   that.activateNavButton(k, v.showNumFound, v.widget.collection.length)
-                  console.log("activating", k)
                 }
                 else {
-                  console.log("deactivating", k)
                   that.deactivateNavButton(k)
                 }
 
@@ -115,7 +114,6 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
 
       deactivateNavButton : function(k){
-        console.log("deactivating!", k)
 
         var $navButton = $("#"+k);
 
@@ -176,19 +174,39 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
       },
 
       displayTopRow : function(){
+        var currentSearchVal;
         var $searchBar = $("#search-bar-row");
 
-        var currentSearchVal = this.history.getCurrentSearchVal()
+        currentSearchVal = this.getMasterQuery();
 
         $searchBar.append(this.widgetDict.searchBar.render().el)
-        if (this.history.getPriorPage() === "resultsPage" ||this.history.getPriorPage() === "abstractPage" ){
-          $(".opt-nav-button").append("<a href=" + "../../search/?" + currentSearchVal
+        if (currentSearchVal && (this.history.getPriorPage() === "resultsPage") || (this.history.getPriorPage() === "abstractPage")) {
+          $(".opt-nav-button").append("<a href=" + "#search/?" + currentSearchVal.url()
             + " class=\"btn btn-sm \"> <i class=\"glyphicon glyphicon-arrow-left\"></i> back to results</a>")
         }
 
       }
 
     };
+
+    var AbstractControllerModel = Backbone.Model.extend({
+      defaults: function () {
+        return {
+          bibcode: undefined,
+          title: undefined,
+        }
+      },
+
+      parse : function(d){
+        return {title : d.title[0], bibcode: d.bibcode}
+      },
+
+    });
+
+    var AbstractControllerCollection = Backbone.Collection.extend({
+      model: AbstractControllerModel
+    });
+
 
 
     var AbstractController = PaginatedBaseWidget.extend({
@@ -213,10 +231,14 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         this.view = new AbstractTitleView();
 
+        this.collection = new AbstractControllerCollection();
+
         //this widget has two main variables, listed below:
 
         //refilled only on "new_query"
-        this._current_query_docs = {};
+        //always represents the current system query, otherwise if there isnt one,
+        //it's blank
+
 
         //represents the current bibcode (always only 1)
         this._bibcode = undefined;
@@ -226,9 +248,6 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
         _.extend(this, API);
 
         this.history = options.history;
-
-        _.bindAll(this, "processResponse")
-
 
 //      to be explicit, transferring only those widgets considered "sub views" to this dict
         this.abstractSubViews = {
@@ -243,6 +262,9 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         this.listenTo(this.view, "all", this.onAllInternalEvents)
 
+        this.loadingWidget = new LoadingWidget();
+
+
         PaginatedBaseWidget.prototype.initialize.apply(this, arguments);
 
       },
@@ -251,29 +273,38 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
         if (ev.indexOf("nextEvent")!== -1){
           this.checkLoadMore()
-          console.log("current number of docs: ", _.keys(this._current_query_docs).length)
         }
 
       },
 
       checkLoadMore : function(){
-        console.log("checkLoadmore!!!")
 
         //first, find position of current bib in this._docs
-        var bibList = _.keys(this._current_query_docs);
-        var ind = bibList.indexOf(this._bibcode);
+        var ind = this.collection.indexOf(this.collection.findWhere({bibcode: this._bibcode}))
 
-        //fetch more if there are 4 or fewer records remaining
-        if (bibList.length - ind <= 4 ){
+
+        //fetch more if there are 10 or fewer records remaining
+        if (this.collection.length - ind === 10 ){
+
           this.dispatchRequest(this.getCurrentQuery())
 
         }
 
       },
 
-      onNewQuery: function () {
+      getMasterQuery : function(){
+        return this._masterQuery;
+      },
+
+      onNewQuery: function (apiQuery) {
+
+        this.setCurrentQuery(apiQuery);
+
+        //tells you what the people have searched (not the widget's query)
+        this._masterQuery = apiQuery
 
         this.resetWidget();
+
       },
 
       defaultQueryArguments: {
@@ -282,24 +313,28 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
 
       renderNewBibcode: function (bibcode, data) {
         //first, check if we have the info in current query docs
-        if (this._current_query_docs[bibcode]) {
+        if (this.collection.findWhere({bibcode: bibcode})) {
+          console.log("paginator after at least one dispatchRequest", this.paginator)
 
-          this.view.render(bibcode, this._current_query_docs[bibcode], this._current_query_docs);
+          this.view.render(bibcode, this.collection.findWhere({bibcode: bibcode}), this.collection);
 
         }
         else if (data){
-          this.view.render(bibcode, data);
+          this.view.render(bibcode,  new Backbone.Model(data));
         }
         else {
+          console.log("fetching bibcode, bibcode not in data", this.collection.models)
           //we dont have the bibcode
           //processResponse will re-call this function, but with the data parameter
-          this.dispatchRequest(new ApiQuery({'q': 'bibcode:' + bibcode, '__show': this._bibcode}));
+
+          //is there a better way to avoid pagination?
+          var req = this.dispatchRequest(new ApiQuery({'q': 'bibcode:' + bibcode, '__show': this._bibcode}));
         }
       },
 
       resetWidget : function(){
-        this.paginator.reset();
-        this._current_query_docs = {};
+//        this.paginator.reset();
+        this.collection.reset();
 
       },
 
@@ -319,20 +354,23 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
         }
         else {
           //it's from "inviting_request"
-          var q = apiResponse.getApiQuery();
-          this.setCurrentQuery(q);
 
-          if (r.response && r.response.docs) {
-
-            var counter = _.size(this._current_query_docs);
-
-            _.each(r.response.docs, function (doc) {
-              counter++
-              this._current_query_docs[doc.bibcode] = {title: doc.title, bibcode : doc.bibcode, order: counter}
-
-            }, this);
+          if (this.paginator.getCycle() <= 1) {
+            //it's the first set of results
+            this.paginator.setMaxNum(r.response.numFound);
+            this.collection.reset(r.response.docs, {
+              parse: true
+            });
           }
+          else {
+            this.collection.add(r.response.docs, {
+              parse: true
+            });
+
+          }
+
         }
+
       },
 
       //   called by the router
@@ -359,6 +397,14 @@ define(["marionette", "hbs!./templates/abstract-page-layout",
           this.loadWidgetData();
 
           this.showAbstractSubView("abstract");
+
+          if (this.history.getPriorPage()!== "abstractPage"){
+
+            this.insertLoadingView()
+
+          }
+
+
 
         }
 

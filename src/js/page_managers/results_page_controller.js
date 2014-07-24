@@ -91,7 +91,6 @@ define(["marionette", "hbs!./templates/results-page-layout"], function(Marionett
     },
 
     showPage: function (page) {
-              console.log("displaying results")
 
               API.insertTemplate()
               API.displaySearchBar();

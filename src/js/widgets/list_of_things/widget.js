@@ -247,8 +247,8 @@ define([
 
         var searchTerm = this.solrOperator? this.solrOperator + "(" + bibcode +")" : this.solrField + ":" + bibcode
 
-        this.dispatchRequest(new ApiQuery({'q': searchTerm}));
         this.deferredObject =  $.Deferred();
+        this.dispatchRequest(new ApiQuery({'q': searchTerm}));
         return this.deferredObject.promise();
 
       },
@@ -261,7 +261,6 @@ define([
       dispatchRequest: function (apiQuery) {
 
         //preventing request for data that already is possessed
-          console.warn(apiQuery.toJSON(),this.getCurrentQuery().toJSON())
 
         // by default we consider every request to be new one - unless it is clear
         // that we are paginating
@@ -359,22 +358,38 @@ define([
        * @param apiResponse
        * @returns {*}
        */
+
+      defaultQueryArguments: {
+        fl     : 'title,abstract,bibcode,author,keyword,id,citation_count,pub,aff,email,volume,year'
+      },
+
       parseResponse: function (apiResponse, orderNum) {
         var raw = apiResponse.toJSON();
+        var highlights = raw.highlighting;
         orderNum = orderNum || 1;
 
         if (!this.defaultQueryArguments.fl) {
-          return _.map(raw.response.docs, function(d) {orderNum+=1; d['orderNum'] = orderNum; return d});
+          return _.map(raw.response.docs, function (d) {
+            orderNum += 1;
+            d['orderNum'] = orderNum;
+            d['identifier'] = d.bibcode;
+            return d
+          });
         }
 
-        var keys = _.map(this.defaultQueryArguments.fl.split(','), function(v) {return v.trim()});
+        var keys = _.map(this.defaultQueryArguments.fl.split(','), function (v) {
+          return v.trim()
+        });
 
+        var docs = _.map(raw.response.docs, function (doc) {
+          var d = _.pick(doc, keys);
+          d['identifier'] = d.bibcode;
 
-        var docs = _.map(raw.response.docs, function (d) {
+          d['orderNum'] = orderNum;
+
           orderNum += 1;
-          var vals = _.pick(d, keys);
-          vals[orderNum] = orderNum;
-          return vals;
+          return d;
+
         });
 
         return docs;

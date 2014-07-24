@@ -79,8 +79,6 @@ define([
 
           this.deferredObject =  $.Deferred();
 
-          console.log(this.collection)
-
           this.deferredObject.resolve(this.collection);
 
           return this.deferredObject.promise();
@@ -88,14 +86,15 @@ define([
 
         this._bibcode = bibcode;
 
+        this.deferredObject = $.Deferred();
+
         this.dispatchRequest(new ApiQuery({
-          'q'     : this._bibcode,
+          'q'     : "bibcode:"+this._bibcode,
           mlt     : "true",
           "mlt.fl": "title,body",
           fl      : 'title,bibcode,author,id,citation_count,pub,aff,volume,year'
         }));
 
-        this.deferredObject = $.Deferred();
 
         return this.deferredObject.promise();
       },
@@ -107,12 +106,21 @@ define([
 
       parseResponse: function (apiResponse, orderNum) {
         var raw = apiResponse.toJSON();
-        var highlights = raw.highlighting;
         orderNum = orderNum || 1;
 
-        console.log("similar reply ", apiResponse.toJSON(), _.values(raw.moreLikeThis)[0].docs)
+        //adding order numbers
 
-        return _.values(raw.moreLikeThis)[0].docs
+        var docs =  _.values(raw.moreLikeThis)[0].docs
+
+        var docs = _.map(docs, function(doc){
+          doc.identifier = doc.bibcode;
+          doc.orderNum = orderNum;
+          orderNum += 1
+          return doc
+
+        })
+
+        return docs
 
       },
 
@@ -125,7 +133,7 @@ define([
 
         //this is for layout managers
         //need to override for the "similar" widget
-        this.collection.numFound = _.values(apiResponse.get('moreLikeThis')).numFound;
+        var numFound = this.collection.numFound = _.values(apiResponse.get('moreLikeThis'))[0].numFound;
 
         this.setCurrentQuery(apiResponse.getApiQuery());
 
@@ -134,7 +142,7 @@ define([
           this.collection.reset(this.parseResponse(apiResponse, 1), {
             parse: true
           });
-          this.paginator.setMaxNum(apiResponse.get('response.numFound'));
+          this.paginator.setMaxNum(numFound);
           if (this.paginator.maxNum > this.displayNum && this.viewRendered) {
             this.view.enableShowMore();
           }
@@ -150,13 +158,13 @@ define([
             parse: true
           })
         }
+
         if (this.deferredObject){
           this.deferredObject.resolve(this.collection)
         }
 
-      },
+      }
     })
-
 
     return SimilarWidget;
 

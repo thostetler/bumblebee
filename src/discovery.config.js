@@ -25,7 +25,6 @@ require.config({
         },
         modules: {
           FacetFactory: 'js/widgets/facet/factory',
-          LayoutBuilder: 'js/widgets/contents_manager/widget'
         }
       },
       widgets: {

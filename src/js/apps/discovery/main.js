@@ -368,55 +368,6 @@ define(["config", 'module'], function(config, module) {
 
       Backbone.history.start(conf.routerConf);
 //
-      // from backbone build buddy
-      // All navigation that is relative should be passed through the navigate
-      // method, to be processed by the router. If the link has a `data-bypass`
-      // attribute, bypass the delegation completely.
-      // All navigation that is relative should be passed through the navigate
-      // method, to be processed by the router. If the link has a `data-bypass`
-      // attribute, bypass the delegation completely.
-      $(document).on("click", "a:not([data-bypass])", function(evt) {
-        // Get the absolute anchor href.
-
-        var url = $(this).prop("href");
-
-          //taking everything in url after this.root
-          var regex = new RegExp(conf.routerConf.root + "(.*)")
-          var match = url.match(regex)
-        if (match){
-          var path = match[1]
-        }
-        else {
-          //it's a relative link starting from root
-          var path = $(this).attr("href")
-        }
-
-          // `Backbone.history.navigate` is sufficient for all Routers and will
-          // trigger the correct events. The Router's internal `navigate` method
-          // calls this anyways.  The fragment is sliced from the root.
-          Backbone.history.navigate(path, true);
-
-        evt.preventDefault();
-
-
-      });
-
-
-      $(document).on("submit", "form", function(e)
-      {
-        var action = $(this).attr("action")
-
-        //Remove leading slashes and hash bangs (backward compatablility)
-        action = action.replace(/^\//,'').replace('\#\!\/','')
-
-        console.log(action+ $(this).serialize())
-
-        //Instruct Backbone to trigger routing events
-        app.router.navigate(action+ $(this).serialize(), { trigger: true })
-
-        return false
-
-      })
 
       $(document).on("scroll", function(){
         if ($(window).scrollTop() > 1) {

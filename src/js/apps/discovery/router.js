@@ -67,7 +67,6 @@ define([
 
       },
 
-
       activate: function (beehive) {
         this.setBeeHive(beehive);
         this.pubsub = this.getBeeHive().Services.get('PubSub');
