@@ -90,8 +90,6 @@ define([
         this.$(".main-content-container")
           .append(this.widgetDict.results.render().el);
 
-
-
       },
 
       onShow : function(){
