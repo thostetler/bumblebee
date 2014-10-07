@@ -111,9 +111,9 @@ define(['backbone', 'marionette',
           this.pubsub.publish(this.pubsub.DELIVERING_REQUEST, req);
         }
       }
-       if (this.showLoad === true){
-         this.startWidgetLoad()
-       }
+      if (this.showLoad === true){
+        this.startWidgetLoad()
+      }
 
     },
 
