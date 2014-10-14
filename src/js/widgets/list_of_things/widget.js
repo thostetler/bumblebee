@@ -44,6 +44,8 @@ define([
 
       initialize: function(attrs, options){
 
+        //adding defaults at initialization time
+
         this.defaults = options.defaults;
 
         this.attributes = _.result(this, "defaults");
@@ -164,6 +166,8 @@ define([
         var d = $(e.target).data("paginate")
 
         this.model.set("page", d);
+
+        this.trigger("navigate")
 
         return false
 
@@ -459,7 +463,7 @@ define([
           this.defaultQueryArguments.rows = options.perPage
         }
         else {
-          paginationOptions.perPage =  this.defaultQueryArguments.rows;
+          paginationOptions.perPage =  25;
         }
 
         paginationOptions.numFound = undefined;
@@ -490,12 +494,11 @@ define([
         this.collection = new MasterCollection({}, {visibleCollection : this.visibleCollection,
           paginationModel: this.paginationModel});
 
+        this.listenTo(this.paginationModel, "all", this.onAllInternalEvents);
         this.listenTo(this.collection, "all", this.onAllInternalEvents);
         this.on("all", this.onAllInternalEvents);
 
-
         BaseWidget.prototype.initialize.call(this, options);
-
 
       },
 
@@ -509,6 +512,7 @@ define([
         //custom handleResponse function goes here
         this.pubsub.subscribe(this.pubsub.DELIVERING_RESPONSE, this.processResponse);
       },
+
 
       resetWidget : function(){
         //this will trigger paginationModel to reset itself
@@ -587,8 +591,6 @@ define([
       defaultQueryArguments: function(){
         return {
           fl: 'title,abstract,bibcode,author,keyword,citation_count,pub,aff,volume,year',
-          rows : 25,
-          start : 0
         }
       },
 
@@ -679,9 +681,20 @@ define([
 
       onAllInternalEvents: function(ev, arg1, arg2) {
 
+
         if (ev === "pagination:change"){
 
-          this.resetPaginationRequest()
+          this.resetPaginationRequest();
+
+          var q = this.getCurrentQuery().clone();
+          q.unset("fl");
+          q.unset("hl");
+          q.unset("hl.fl")
+          q.set("start", this.getStartVal(this.paginationModel.get("page"), this.paginationModel.get("perPage")));
+          q.set("rows", this.paginationModel.get("perPage"));
+
+          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, "search/" + q.url())
+
         }
 
         if (ev === "dataRequest") {
