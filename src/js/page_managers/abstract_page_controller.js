@@ -62,14 +62,14 @@ define(["marionette",
           .append(this.widgetDict.navView.render().el)
       },
 
-      onShow : function(){
+      onShow : function(currentQuery){
 
         this.displaySearchBar();
 
       },
 
       displaySearchBar: function () {
-        $("#search-bar-row")
+        this.$("#search-bar-row")
           .append(this.widgetDict.searchBar.render().el);
 
       }
@@ -207,7 +207,9 @@ define(["marionette",
 
           dataForRouter = "abs/" + this._bibcode + "/" + viewName;
 
-          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, dataForRouter);
+          //adding true as 3rd arg to prevent this from going into the history
+
+          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, dataForRouter, true);
 
           $middleCol = $("#current-subview");
 
@@ -259,7 +261,7 @@ define(["marionette",
 
         $b.append(this.controllerView.el);
 
-        this.controllerView.triggerMethod("show");
+        this.controllerView.triggerMethod("show", this.getCurrentQuery());
 
       },
 

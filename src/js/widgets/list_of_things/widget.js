@@ -44,6 +44,8 @@ define([
 
       initialize: function(attrs, options){
 
+        //adding defaults at initialization time
+
         this.defaults = options.defaults;
 
         this.attributes = _.result(this, "defaults");
@@ -164,6 +166,8 @@ define([
         var d = $(e.target).data("paginate")
 
         this.model.set("page", d);
+
+        this.trigger("navigate")
 
         return false
 
@@ -452,6 +456,8 @@ define([
 
         this.visibleCollection = new VisibleCollection();
 
+        //setting up defaults for each new query
+
         var paginationOptions = {};
 
         if (options.perPage){
@@ -459,7 +465,8 @@ define([
           this.defaultQueryArguments.rows = options.perPage
         }
         else {
-          paginationOptions.perPage =  this.defaultQueryArguments.rows;
+          paginationOptions.perPage = this.defaultQueryArguments.rows;
+
         }
 
         paginationOptions.numFound = undefined;
@@ -490,12 +497,11 @@ define([
         this.collection = new MasterCollection({}, {visibleCollection : this.visibleCollection,
           paginationModel: this.paginationModel});
 
+        this.listenTo(this.paginationModel, "all", this.onAllInternalEvents);
         this.listenTo(this.collection, "all", this.onAllInternalEvents);
         this.on("all", this.onAllInternalEvents);
 
-
         BaseWidget.prototype.initialize.call(this, options);
-
 
       },
 
@@ -510,6 +516,26 @@ define([
         this.pubsub.subscribe(this.pubsub.DELIVERING_RESPONSE, this.processResponse);
       },
 
+      //overriding customize query
+
+      customizeQuery: function (apiQuery) {
+        var q = apiQuery.clone();
+        q.unlock();
+        if (this.defaultQueryArguments) {
+
+          if (apiQuery.get("start")){
+            this.defaultQueryArguments.start = apiQuery.get("start");
+          }
+          if (apiQuery.get("rows")){
+            this.defaultQueryArguments.rows = apiQuery.get("rows");
+
+          }
+          q = this.composeQuery(this.defaultQueryArguments, q);
+        }
+        return q;
+      },
+
+
       resetWidget : function(){
         //this will trigger paginationModel to reset itself
         var defaults =  _.result(this.paginationModel, 'defaults')
@@ -521,6 +547,9 @@ define([
         //gathered in processResponse, but just to be safe I'm setting it here too.
 
         //also resetting the main collection and the visible collection
+
+        this.defaultQueryArguments.rows = this.paginationModel.get("perPage");
+        this.defaultQueryArguments.start = this.getStartVal(this.paginationModel.get("page"), this.paginationModel.get("perPage"))
 
         this.collection.reset();
         this.visibleCollection.reset();
@@ -587,8 +616,8 @@ define([
       defaultQueryArguments: function(){
         return {
           fl: 'title,abstract,bibcode,author,keyword,citation_count,pub,aff,volume,year',
-          rows : 25,
-          start : 0
+          start : 0,
+          rows : 25
         }
       },
 
@@ -606,7 +635,7 @@ define([
         if (r){
 
           r = $.isArray(r) ? r[0] : r;
-          toSet.perPage = r;
+          toSet.perPage = parseInt(r);
 
         }
 
@@ -617,7 +646,7 @@ define([
           s = $.isArray(s) ? s[0] : s;
 
           //getPageVal comes from the pagination mixin
-          toSet.page= this.getPageVal(s, perPage);
+          toSet.page= this.getPageVal(parseInt(s), perPage);
 
         }
 
@@ -679,9 +708,29 @@ define([
 
       onAllInternalEvents: function(ev, arg1, arg2) {
 
+
         if (ev === "pagination:change"){
 
-          this.resetPaginationRequest()
+          this.resetPaginationRequest();
+
+          var q = this.getCurrentQuery().clone();
+          q.unset("fl");
+          q.unset("hl");
+          q.unset("hl.fl")
+          q.set("start", this.getStartVal(this.paginationModel.get("page"), this.paginationModel.get("perPage")));
+          q.set("rows", this.paginationModel.get("perPage"));
+
+          //adjust url only for search page (resultsWidget) for now
+          //this is probably not the best way to do this
+
+          if (window.location.pathname.match(/\/search\//).length >0){
+
+            this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, "/search/" + q.url())
+
+          }
+
+          this.pubsub.publish(this.pubsub.PAGE_SCROLL, {animate : true});
+
         }
 
         if (ev === "dataRequest") {

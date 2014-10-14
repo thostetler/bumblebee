@@ -104,6 +104,12 @@ define([], function() {
 
     NAVIGATE_WITHOUT_TRIGGER : '[Router]-Navigate-Without-Trigger',
 
+    /* widgets can use this to ask the master page manager
+    * to scroll to top (with options in the form
+    * {yVal : 0, animate : false})*/
+
+    PAGE_SCROLL : "[MasterPageManager]-Page-Scroll",
+
     /*for custom widget-to-widget events*/
 
     CUSTOM_EVENT : '[PubSub]-Custom-Event'

@@ -56,8 +56,31 @@ define([
 
     this.pubsub.subscribe(this.pubsub.START_SEARCH, this.showSearchPage);
 
+    this.pubsub.subscribe(this.pubsub.PAGE_SCROLL, this.scrollPage)
+
     },
 
+    scrollPage : function(options){
+
+      var yVal, animate;
+
+      yVal = options.yVal || 0;
+
+      animate = options.animate || false;
+
+      if (animate){
+
+        $("body").animate({scrollTop: yVal}, '500', 'swing')
+
+      }
+      else {
+
+        window.scrollTo(0, yVal)
+
+      }
+
+
+    },
 
     showPage : function(pageName, options){
 
@@ -67,7 +90,7 @@ define([
 
       if (!options.inDom){
         //scroll up automatically
-        window.scrollTo(0,0);
+        this.scrollPage(0)
       }
         this.currentPage = pageName;
 
