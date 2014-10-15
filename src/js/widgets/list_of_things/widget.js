@@ -590,7 +590,7 @@ define([
       //will be requested in composeRequest
       defaultQueryArguments: function(){
         return {
-          fl: 'title,abstract,bibcode,author,keyword,citation_count,pub,aff,volume,year',
+          fl: 'title,abstract,bibcode,author,keyword,citation_count,pub,aff,volume,year'
         }
       },
 
