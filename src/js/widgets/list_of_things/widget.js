@@ -523,8 +523,6 @@ define([
         q.unlock();
         if (this.defaultQueryArguments) {
 
-          debugger;
-
           if (apiQuery.get("start")){
             this.defaultQueryArguments.start = apiQuery.get("start");
           }
@@ -724,7 +722,6 @@ define([
 
           //adjust url only for search page (resultsWidget) for now
           //this is probably not the best way to do this
-
 
           if (window.location.pathname.match(/\/.*\//)[0] === "/search/"){
 
