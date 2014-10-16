@@ -43,7 +43,6 @@ define([
         this.pubsub.subscribe(this.pubsub.DELIVERING_RESPONSE, this.processResponse);
       },
 
-
       dispatchInitialRequest  : function(){
 
         this.resetWidget();
@@ -58,6 +57,7 @@ define([
           fl     : 'title,abstract,bibcode,author,keyword,id,[citations],pub,aff,email,volume,year',
           rows : 25,
           start : 0
+
         }
       },
 
@@ -113,7 +113,7 @@ define([
         if (r){
 
           r = $.isArray(r) ? r[0] : r;
-          toSet.perPage = r;
+          toSet.perPage = parseInt(r);
 
         }
 
@@ -124,7 +124,7 @@ define([
           s = $.isArray(s) ? s[0] : s;
 
           //getPageVal comes from the pagination mixin
-          toSet.page= this.getPageVal(s, perPage);
+          toSet.page= this.getPageVal(parseInt(s), perPage);
 
         }
 
