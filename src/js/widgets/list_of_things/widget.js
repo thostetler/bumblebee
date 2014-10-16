@@ -743,7 +743,7 @@ define([
           //adjust url only for search page (resultsWidget) for now
           //this is probably not the best way to do this
 
-          if (window.location.pathname.match(/\/.*\//)[0] === "/search/"){
+          if (window.location.pathname.match(/\/search\//).length >0){
 
             this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, "/search/" + q.url())
 
