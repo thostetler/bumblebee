@@ -57,7 +57,6 @@ define([
           fl     : 'title,abstract,bibcode,author,keyword,id,[citations],pub,aff,email,volume,year',
           rows : 25,
           start : 0
-
         }
       },
 
