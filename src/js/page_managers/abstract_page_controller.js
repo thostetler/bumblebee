@@ -214,7 +214,9 @@ define(["marionette",
 
           dataForRouter = "abs/" + this._bibcode + "/" + viewName;
 
-          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, dataForRouter);
+          //adding true as 3rd arg to prevent this from going into the history
+
+          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, dataForRouter, true);
 
           $middleCol = $("#current-subview");
 
