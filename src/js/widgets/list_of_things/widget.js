@@ -25,26 +25,19 @@ define([
     'hbs!./templates/results-container-template',
     'js/mixins/link_generator_mixin',
     'hbs!./templates/pagination-template',
-    'js/mixins/add_stable_index_to_collection',
-    'hbs!./templates/empty-view-template',
-    'hbs!./templates/initial-view-template',
-    'js/mixins/formatter'
+    'js/mixins/add_stable_index_to_collection'
   ],
 
   function (Marionette,
-    Backbone,
-    ApiRequest,
-    ApiQuery,
-    BaseWidget,
-    ItemTemplate,
-    ResultsContainerTemplate,
-    LinkGenerator,
-    PaginationTemplate,
-    WidgetPaginationMixin,
-    EmptyViewTemplate,
-    InitialViewTemplate,
-    FormatMixin
-    ) {
+            Backbone,
+            ApiRequest,
+            ApiQuery,
+            BaseWidget,
+            ItemTemplate,
+            ResultsContainerTemplate,
+            LinkGenerator,
+            PaginationTemplate,
+            WidgetPaginationMixin) {
 
 
     var PaginationModel = Backbone.Model.extend({
@@ -203,14 +196,12 @@ define([
           doi: undefined,
           details: undefined,
           links_data : undefined,
-          "[citations]" : undefined,
           resultsIndex : undefined
         }
       },
       idAttribute : "resultsIndex"
 
     });
-
 
     var VisibleCollection = Backbone.Collection.extend({
       model: ItemModel
@@ -228,9 +219,6 @@ define([
         this.listenTo(this.paginationModel, "change:perPage", this.onPaginationChange);
 
         this.on("collection:augmented", this.onCollectionAugmented);
-
-        //if nothing was found, show the empty view
-        this.on("noneFound", function(){this.visibleCollection.reset()})
 
         this.visibleCollection = options.visibleCollection;
 
@@ -291,8 +279,7 @@ define([
 
         //basically it was able to find a record that corresponded with every needed index
         //probably should be equal rather than greater or equal, but maybe there could be duplicate records??
-        //checking for length to prevent unecessary initial render
-        if (testList.length){
+        if (testList.length  >= indexes.length){
 
           this.visibleCollection.reset(testList);
         }
@@ -318,7 +305,7 @@ define([
        */
       serializeData: function () {
 
-        var data, shownAuthors;
+        var data ,shownAuthors;
         data = this.model.toJSON();
 
         var maxAuthorNames = 3;
@@ -343,14 +330,6 @@ define([
         //if details/highlights
         if (data.details) {
           data.highlights = data.details.highlights
-        }
-
-        if(data["[citations]"] && data["[citations]"]["num_citations"]>0){
-          data.citations = this.formatNum(data["[citations]"]["num_citations"]);
-        }
-        else {
-          //formatNum would return "0" for zero, which would then evaluate to true in the template
-          data.citations = 0
         }
 
         data.orderNum = this.model.get("resultsIndex") + 1;
@@ -382,8 +361,6 @@ define([
 
     });
 
-    _.extend(ItemView.prototype, FormatMixin);
-
     var ListViewModel = Backbone.Model.extend({
 
       defaults : function(){
@@ -397,18 +374,6 @@ define([
 
     });
 
-
-    var VisibleCollectionEmptyView = Marionette.ItemView.extend({
-
-      template :  EmptyViewTemplate
-
-    });
-
-    var VisibleCollectionInitialView = Marionette.ItemView.extend({
-
-      template : InitialViewTemplate
-    })
-
     var ListView = Marionette.CompositeView.extend({
 
       initialize: function (options) {
@@ -420,17 +385,6 @@ define([
 
       className: "list-of-things",
       itemView: ItemView,
-      alreadyRendered : false,
-
-      getEmptyView : function(){
-        if (this.alreadyRendered)
-          return VisibleCollectionEmptyView;
-        else {
-          this.alreadyRendered = true;
-          return VisibleCollectionInitialView;
-
-        }
-      },
 
       itemViewContainer: ".results-list",
       events: {
@@ -438,9 +392,18 @@ define([
       },
 
       //calls to render will render only the model after the 1st time
+
       modelEvents : {
 
         "change" : "render"
+
+      },
+
+      //calls to render will render only the model after the 1st time
+
+      collectionEvents : {
+
+        "reset" : "render"
 
       },
 
@@ -574,7 +537,6 @@ define([
 
 
       resetWidget : function(){
-
         //this will trigger paginationModel to reset itself
         var defaults =  _.result(this.paginationModel, 'defaults')
         //reset pagination model, but prevent the view from immediately re-rendering
@@ -586,14 +548,11 @@ define([
 
         //also resetting the main collection and the visible collection
 
-        this.collection.reset(null, {silent : true});
-
-        //prevent rendering of empty view
-        this.visibleCollection.reset(null, {silent: true});
-
         this.defaultQueryArguments.rows = this.paginationModel.get("perPage");
         this.defaultQueryArguments.start = this.getStartVal(this.paginationModel.get("page"), this.paginationModel.get("perPage"))
 
+        this.collection.reset();
+        this.visibleCollection.reset();
 
       },
 
@@ -656,9 +615,9 @@ define([
       //will be requested in composeRequest
       defaultQueryArguments: function(){
         return {
-          fl: 'title,abstract,bibcode,author,keyword,[citations],pub,aff,volume,year',
-          rows : 25,
-          start : 0
+          fl: 'title,abstract,bibcode,author,keyword,citation_count,pub,aff,volume,year',
+          start : 0,
+          rows : 25
         }
       },
 
@@ -719,12 +678,6 @@ define([
            * */
           this.collection.trigger("collection:augmented");
 
-        }
-
-        else {
-          //used by loading view
-          //and to re-render collection
-          this.collection.trigger("noneFound");
         }
 
         //resolving the promises generated by "loadBibcodeData"
@@ -820,8 +773,23 @@ define([
 
         }
 
-      }
+      },
 
+
+      startWidgetLoad : function(){
+
+        if (this.view.itemViewContainer) {
+          var removeLoadingView = function () {
+            this.view.$el.find(".s-loading").remove();
+          }
+          this.listenToOnce(this.visibleCollection, "reset", removeLoadingView);
+
+        }
+
+        if (this.view.$el.find(".s-loading").length === 0){
+          this.view.$el.append(this.loadingTemplate());
+        }
+      }
 
     });
 
