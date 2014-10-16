@@ -189,17 +189,19 @@ define(['marionette',
 
         var publishStub = sinon.stub(w.pubsub, "publish");
 
+        publishStub.withArgs("[PubSub]-New-Request")
+
         w.paginationModel.set("page", 50);
 
         expect(w.isPaginationPending()).to.eql(true);
 
-        expect(publishStub.callCount).to.eql(1);
+        expect( publishStub.withArgs("[PubSub]-New-Request").callCount).to.eql(1);
 
         w.paginationModel.set("page", 100);
 
         expect(w.isPaginationPending()).to.eql(true);
 
-        expect(publishStub.callCount).to.eql(2)
+        expect( publishStub.withArgs("[PubSub]-New-Request").callCount).to.eql(2)
 
         //now allowing it to fulfill the request
 
@@ -208,7 +210,7 @@ define(['marionette',
         //this only gets reset next time the pagination changes
         expect(w.isPaginationPending()).to.eql(true);
 
-        expect(publishStub.callCount).to.eql(3)
+        expect(publishStub.withArgs("[PubSub]-New-Request").callCount).to.eql(3)
 
 
 

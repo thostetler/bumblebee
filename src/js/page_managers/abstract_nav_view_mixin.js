@@ -78,8 +78,6 @@ define([
 
       data = _.extend(data, {items : this.collection.toJSON()});
 
-      debugger;
-
       return data;
 
     },
