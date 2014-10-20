@@ -172,7 +172,7 @@ define([
 
           if ($rightCol.hasClass("hidden-col") && $leftCol.hasClass("hidden-col")){
             this.$("#results-middle-column")
-              .addC
+              .css({"width": "100%"})
 
           }
           else if ($rightCol.hasClass("hidden-col")){
