@@ -346,8 +346,11 @@ define([
 
       showLinks : function(e){
         $c = $(e.currentTarget);
-        $c.find("i").addClass("s-icon-draw-attention");
-        $c.find(".s-link-details").removeClass("no-display");
+
+        if ($c.find("i").hasClass("active-link")){
+          $c.find("i").addClass("s-icon-draw-attention");
+          $c.find(".s-link-details").removeClass("no-display");
+        }
       },
       hideLinks : function(e){
         $c = $(e.currentTarget);
