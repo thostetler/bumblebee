@@ -130,18 +130,21 @@ define([
           else {
             $rightCol.removeClass("hidden-col");
 
-            $rightCol.find(".right-col-container").width('').fadeIn(500) ;
+            $rightCol.find(".right-col-container").width('').fadeIn(500);
 
           }
 
           if (!$rightCol.hasClass("hidden-col") && !$leftCol.hasClass("hidden-col")){
             this.$("#results-middle-column")
-              .css({"width": ""})
+              .removeClass()
+              .addClass("col-sm-8 col-md-7")
 
           }
           else if ($leftCol.hasClass("hidden-col")){
             this.$("#results-middle-column")
-              .css({"width": "75%"})
+              .removeClass()
+              .addClass("col-sm-")
+              .({"width": "75%"})
           }
           else {
             this.$("#results-middle-column")
@@ -172,7 +175,8 @@ define([
 
           if ($rightCol.hasClass("hidden-col") && $leftCol.hasClass("hidden-col")){
             this.$("#results-middle-column")
-              .css({"width": "100%"})
+              .removeClass()
+              .addClass("col-md-12 col-sm-12")
 
           }
           else if ($rightCol.hasClass("hidden-col")){
