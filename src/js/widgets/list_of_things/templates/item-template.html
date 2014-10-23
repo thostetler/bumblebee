@@ -11,18 +11,17 @@
                 {{identifier}}
             </a>
             </div>
-
             <div class="col-sm-3 col-xs-6" title="citation count">
-                {{#if citations}}
-                cited: {{citations}}
+                {{#if citation_count}}
+                cited: {{citation_count}}
                 {{/if}}
             </div>
             <div class="col-sm-4">
                 {{#if links}}
                 <div class="s-results-links">
                     <div class="letter-icon">
+                        <i class="s-text-icon {{#if links.text}} active-link s-active-link {{/if}}"></i>
                         {{#if links.text}}
-                        <i class="s-text-icon"></i>
                         <div class="hidden s-link-details">
                             <ul class="list-unstyled">
                                 {{#each links.text}}
@@ -33,9 +32,9 @@
                         {{/if}}
                     </div>
                     <div class="letter-icon">
-                        {{#if links.list}}
-                        <i class="s-list-icon"></i>
+                        <i class="s-list-icon {{#if links.list}} active-link s-active-link {{/if}}"></i>
 
+                        {{#if links.list}}
                         <div class="hidden s-link-details">
                             <ul class="list-unstyled">
                                 {{#each links.list}}
@@ -46,9 +45,10 @@
                         {{/if}}
                     </div>
                     <div class="letter-icon">
-                        {{#if links.data}}
-                        <i class="s-data-icon"></i>
 
+                        <i class="s-data-icon{{#if links.data}} active-link s-active-link {{/if}}"></i>
+
+                        {{#if links.data}}
                         <div class="hidden s-link-details">
                             <ul class="list-unstyled">
                                 {{#each links.data}}

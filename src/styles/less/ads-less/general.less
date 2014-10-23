@@ -3,7 +3,7 @@
 @import '../../../../bower_components/lesshat/build/lesshat-prefixed.less';
 
 
-@results-page-background : lighten(@gray-lighter, 2%);
+@results-page-background : lighten(@gray-lighter, 3%);
 
 @default-box-shadow-color : darken(@gray-lighter, 5%);
 
@@ -34,8 +34,9 @@
 
 @z-index-4 : 4;
 
-@z-index-max : 5;
+@z-index-5 : 5;
 
+@z-index-6 : 6;
 
 @transparent : hsla(0, 0, 0, 0);
 
@@ -277,6 +278,14 @@
 
 
 
+}
+
+.ads-column {
+  border-radius: @border-radius-base;
+  background-color : @body-bg;
+  border: 1px solid lighten(@border-light-default-color, 8%);
+  .lh-box-shadow(2px 2px 3px @default-box-shadow-color);
+  min-height: 500px;
 
 
 }
