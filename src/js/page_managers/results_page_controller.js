@@ -25,48 +25,53 @@ define([
     resultsControlRowTemplate) {
 
 
+    ResultsStateModel = Backbone.Model.extend({
+
+       defaults : function(){
+
+         return {
+           left : "open",
+           right : "open",
+           largerThanTablet : true
+
+         }
+       }
+    })
+
+
 
     ResultsControllerView = Marionette.ItemView.extend({
 
-      initialize : function(options){
+      initialize: function (options) {
 
         var options = options || {};
+        this.model = new ResultsStateModel;
         this.widgetDict = options.widgetDict;
 
         //listen to window resize to figure out what we need to do with the 3rd column
         //should this go here?
 
+        var that = this;
+
         $(window).resize(function() {
 
-          if (this.$(".right-expand").css("display") == "none") {
-
-            //move third col to first col if it's not already there
-
-            if (!this.$("#results-left-column").find(".right-col-container").length){
-              this.$("#results-left-column").append(this.$(".right-col-container"))
-            }
-
+          if (that.$(".right-expand").css("display") == "none") {
+            that.model.set("largerThanTablet", false)
           }
           else {
+            that.model.set("largerThanTablet", true)
 
-            //move third col back into third col if it's not already there
-
-            if (!this.$("#results-right-column").find(".right-col-container").length){
-
-              this.$("#results-right-column").append(this.$(".right-col-container"))
-
-            }
           }
 
         });
 
       },
 
-      template : threeColumnTemplate,
+      template: threeColumnTemplate,
 
-      resultsControlRowTemplate  : resultsControlRowTemplate,
+      resultsControlRowTemplate: resultsControlRowTemplate,
 
-      onRender : function(){
+      onRender: function () {
 
         this.displayControlRow();
         this.displayFacets();
@@ -78,9 +83,9 @@ define([
       },
 
 
-      displayFacets: function() {
+      displayFacets: function () {
 
-        this.$(".s-left-col-container")
+        this.$(".left-col-container")
           .append(this.widgetDict.authorFacets.render().el)
           .append(this.widgetDict.database.render().el)
           .append(this.widgetDict.refereed.render().el)
@@ -115,7 +120,7 @@ define([
 
         }
 
-          if (this.$(".right-expand").css("display") == "none" ){
+        if (this.$(".right-expand").css("display") == "none") {
 
           // it's a tablet or smaller
 
@@ -135,7 +140,7 @@ define([
 
       },
 
-      onShow : function(){
+      onShow: function () {
 
         //these functions must be called every time the template is inserted
         this.displaySearchBar();
@@ -148,13 +153,64 @@ define([
 
       },
 
-      events : {
-        "click .btn-expand" : "toggleColumns"
+      modelEvents: {
+        "change:left": "toggleColumns",
+        "change:right": "toggleColumns",
+        "change:largerThanTablet": "updateColumnContent"
       },
 
-      returnBootstrapClasses :  function () {
+      events: {
 
-        var classes = this.classList
+        "click .btn-expand": "toggleStateModel"
+      },
+
+      updateColumnContent: function () {
+
+        var leftHidden = (this.model.get("left") === "closed");
+
+        if (this.model.get("largerThanTablet")) {
+          // it's a three column layout
+
+          this.$("#results-right-column").append(this.$(".right-col-container"))
+
+          if (leftHidden) {
+
+            this.$(".right-col-container").show();
+
+          }
+
+        }
+        else {
+          // two column layout
+          this.$("#results-left-column").append(this.$(".right-col-container"));
+          if (leftHidden) {
+
+            this.$(".right-col-container").show();
+          }
+
+        }
+
+      },
+
+      toggleStateModel: function (e) {
+
+        var name, $button, state;
+
+        $button = $(e.currentTarget);
+
+        $button.toggleClass("btn-reversed");
+
+        name = $button.hasClass("left-expand") ? "left" : "right";
+
+        state = this.model.get(name) === "open" ? "closed" : "open";
+
+        this.model.set(name, state);
+
+      },
+
+      returnBootstrapClasses: function () {
+
+        var classes = this.classList;
         var toRemove = []
         _.each(classes, function (c) {
           if (c.indexOf("col-") !== -1) {
@@ -164,132 +220,95 @@ define([
         return toRemove.join(" ")
       },
 
-      makeCenterFullWidth  : function(){
+      makeCenterFullWidth: function () {
 
-        var $leftCol =  this.$(".s-results-left-column");
-        var $rightCol =  this.$(".s-results-right-column");
+        this.model.set("left", "closed");
 
-        this.$("#results-middle-column")
-          .removeClass(this.returnBootstrapClasses)
-          .addClass("col-md-12 col-sm-12");
-
-        this.$(".btn-expand").addClass("btn-reversed");
-
-        $leftCol.children().width(0).fadeOut(500).hide();
-
-        $leftCol.addClass("hidden-col");
-
-        $rightCol.find(".right-col-container").width(0).hide(500);
-
-        $rightCol.addClass("hidden-col");
+        this.model.set("right", "closed");
 
       },
 
-      returnColWidthsToDefault : function(){
+      returnColWidthsToDefault: function () {
 
-        var $leftCol =  this.$(".s-results-left-column");
-        var $rightCol =  this.$(".s-results-right-column");
+        this.model.set("left", "open");
 
-        this.$("#results-middle-column")
-          .removeClass(this.returnBootstrapClasses)
-          .addClass("col-md-7 col-sm-8 ");
-
-        $leftCol.removeClass("hidden-col");
-        $leftCol.children().width('').fadeIn(500).children().show();
-
-        $rightCol.removeClass("hidden-col");
-        $rightCol.find(".right-col-container").width('').fadeIn(500);
-
+        this.model.set("right", "open");
 
       },
 
 
-      toggleColumns :function(e){
+      toggleColumns: function (e) {
+
+        var leftState, rightState, $leftCol, $rightCol, $middleCol;
+
+        leftState = this.model.get("left");
+
+        rightState = this.model.get("right");
 
         //this will remove all bootstrap column classes, it's used below
 
+        $leftCol = this.$("#results-left-column");
+        $rightCol = this.$("#results-right-column");
+        $middleCol = this.$("#results-middle-column");
 
-        var $t = $(e.currentTarget);
-        var $leftCol =  this.$(".s-results-left-column");
-        var $rightCol =  this.$(".s-results-right-column");
+        if (leftState === "open" && rightState === "open") {
 
-        if ($t.hasClass("btn-reversed")){
+          $leftCol.removeClass("hidden-col")
+            .children().show(500);
 
-          $t.removeClass("btn-reversed");
+          $rightCol.removeClass("hidden-col")
+            .find(".right-col-container").show(500);
 
-          if ($t.hasClass("left-expand")){
+          $middleCol.removeClass(this.returnBootstrapClasses)
+            .addClass("col-md-7 col-sm-8")
 
-            $leftCol.removeClass("hidden-col")
-            $leftCol.children().show(500);
-
-          }
-          else {
-            $rightCol.removeClass("hidden-col");
-
-            $rightCol.find(".right-col-container").show(500);
-
-          }
-
-          if (!$rightCol.hasClass("hidden-col") && !$leftCol.hasClass("hidden-col")){
-            this.$("#results-middle-column")
-              .removeClass(this.returnBootstrapClasses)
-              .addClass("col-md-7 col-sm-8 ")
-
-          }
-          else if ($leftCol.hasClass("hidden-col")){
-            this.$("#results-middle-column")
-              .removeClass(this.returnBootstrapClasses)
-              .addClass("col-md-9 col-sm-12")
-
-          }
-          else {
-            this.$("#results-middle-column")
-              .removeClass(this.returnBootstrapClasses)
-              .addClass("col-md-10 col-sm-8")
-
-          }
 
         }
-        else {
-          $t.addClass("btn-reversed");
+        else if (leftState === "closed" && rightState === "open") {
 
-          if ($t.hasClass("left-expand")){
+          $rightCol.removeClass("hidden-col")
+            .find(".right-col-container").show(500);
 
-            $leftCol.children().hide();
+          $leftCol
+            .addClass("hidden-col")
+            .children().hide();
 
-            $leftCol.addClass("hidden-col")
-
-          }
-          else {
-            //expand to the right
-
-            $rightCol.find(".right-col-container").hide();
-
-            $rightCol.addClass("hidden-col");
-
-
-          }
-
-          if ($rightCol.hasClass("hidden-col") && $leftCol.hasClass("hidden-col")){
-            this.$("#results-middle-column")
-              .removeClass(this.returnBootstrapClasses)
-              .addClass("col-md-12 col-sm-12")
-
-          }
-          else if ($rightCol.hasClass("hidden-col")){
-            this.$("#results-middle-column")
-              .removeClass(this.returnBootstrapClasses)
-              .addClass("col-md-10 col-sm-10")
-          }
-          else {
-            this.$("#results-middle-column")
-              .removeClass(this.returnBootstrapClasses)
-              .addClass("col-md-9 col-sm-12")
-
-          }
+          $middleCol.removeClass(this.returnBootstrapClasses)
+            .addClass("col-md-9 col-sm-12")
 
         }
+
+        else if (leftState === "open" && rightState === "closed") {
+
+          $leftCol.removeClass("hidden-col")
+            .children().show(500);
+
+          $rightCol.addClass("hidden-col")
+            .find(".right-col-container").hide()
+
+          $middleCol.removeClass(this.returnBootstrapClasses)
+            .addClass("col-md-10 col-sm-10")
+
+        }
+
+        else if (leftState === "closed" && rightState === "closed") {
+
+          $rightCol.addClass("hidden-col")
+            .find(".right-col-container")
+            .hide();
+
+          $leftCol.addClass("hidden-col")
+            .children()
+            .hide();
+
+          $middleCol.removeClass(this.returnBootstrapClasses)
+            .addClass("col-md-12 col-sm-12")
+
+        }
+
+
       }
+
 
     });
 
