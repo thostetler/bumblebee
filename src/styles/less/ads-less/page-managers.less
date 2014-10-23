@@ -25,35 +25,38 @@
 .btn-expand {
 
   display:none;
+  margin-top : 15px;
+  .lh-transition(all .5s ease-out, width .5s ease-out, height .5s ease-out, font-size .5s ease-out);
+
+  &:hover {
+    .lh-box-shadow(1 1px 5px darken(@gray-light, 4%));
+
+  }
 
   .descriptor {
     display: none;
   }
 
-  //show in desktops
-  @media (min-width : @screen-md-min){
-    display: inline-block;
-    .lh-transition(all .5s ease-out, width .5s ease-out, height .5s ease-out, font-size .5s ease-out);
-
-
-    &:hover {
-      .lh-box-shadow(1 1px 5px darken(@gray-light, 4%));
-//      width:150px;
-//
-//      .descriptor {
-//        display: inline-block
-//      }
-
-
-    }
-  }
 
 }
 
 .left-expand {
-  margin-top: 15px;
+
+
+  //show in desktops + tablets
+  @media (min-width : @screen-sm-min){
+    display: inline-block;
+  }
 
 }
+
+.right-expand {
+  //show only in desktops
+  @media (min-width: @screen-md-min) {
+    display: inline-block;
+  }
+}
+
 
 .left-expand i {
   color: @gray;
@@ -65,10 +68,7 @@
 
 }
 
-.right-expand {
-  margin-top: 15px;
 
-}
 
 .right-expand i {
   color: @gray;
@@ -82,10 +82,7 @@
 /* Styles for results and abstract page */
 
 .s-main-content-container{
-  border-radius: @border-radius-base;
-  background-color: white;
-  border: 1px solid lighten(@border-light-default-color, 8%);
-  .lh-box-shadow(2px 2px 5px @default-box-shadow-color);
+ .ads-column;
   margin-bottom: 40px;
   min-height: 800px;
   position: relative;
@@ -111,13 +108,9 @@
     }
 
     .s-left-col-container {
-      border-radius: @border-radius-base;
-      background-color: white;
-      border: 1px solid lighten(@border-light-default-color, 8%);
-      .lh-box-shadow(2px 2px 3px @default-box-shadow-color);
-      padding: 10px;
+      .ads-column;
       padding-bottom: 15px;
-      min-height: 500px;
+      margin-bottom : 20px;
       .unselectable;
     }
 
@@ -137,7 +130,7 @@
   }
 
 
-  .btn-upside-down i {
+  .btn-reversed i {
     .lh-transform(rotate(-180deg))
 
   }
@@ -208,5 +201,20 @@
   font-size: 25px;
   
 
+
+}
+
+
+.s-abstract-page-layout {
+
+  .s-right-col-container {
+    .ads-column;
+    margin-left: -15px;
+  }
+
+  #middle-column {
+    position: relative;
+    left : 15px;
+  }
 
 }
