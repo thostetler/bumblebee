@@ -342,11 +342,11 @@ define([
         }
 
         if(data["[citations]"] && data["[citations]"]["num_citations"]>0){
-          data.citations = this.formatNum(data["[citations]"]["num_citations"]);
+          data.citation_count = this.formatNum(data["[citations]"]["num_citations"]);
         }
         else {
           //formatNum would return "0" for zero, which would then evaluate to true in the template
-          data.citations = 0
+          data.citation_count = 0
         }
 
         data.orderNum = this.model.get("resultsIndex") + 1;
