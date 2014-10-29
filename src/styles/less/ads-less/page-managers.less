@@ -24,12 +24,13 @@
 
 .btn-expand {
 
-  display:none;
-  margin-top : 15px;
+  display: none;
+  margin-top: 15px;
   .lh-transition(all .5s ease-out, width .5s ease-out, height .5s ease-out, font-size .5s ease-out);
 
   &:hover {
-    .lh-box-shadow(1 1px 5px darken(@gray-light, 4%));
+
+    .button-hover-shadow;
 
   }
 
@@ -37,11 +38,10 @@
     display: none;
   }
 
-
 }
 
-.left-expand {
 
+.left-expand {
 
   //show in desktops + tablets
   @media (min-width : @screen-sm-min){

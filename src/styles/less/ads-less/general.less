@@ -13,7 +13,6 @@
 
 @border-light-default-color: #dddddd;
 
-
 @facebook-color : rgb(59,89,153);
 
 @twitter-color : rgb(64,153,255);
@@ -132,6 +131,14 @@
 .draw-attention {
   background-color: white;
   .lh-animation(pulseActive 2s linear 0s 3 alternate)
+}
+
+
+.lh-keyframes(~'pulseActivePrimaryFaded, 0%,100% {box-shadow: none;} 50% {box-shadow: 0 0 15px  #4073dd; background-color : #4073dd}');
+
+
+.draw-attention-primary-faded {
+  .lh-animation(pulseActivePrimaryFaded 2s linear 0s 1 alternate)
 }
 
 
@@ -286,6 +293,13 @@
   border: 1px solid lighten(@border-light-default-color, 8%);
   .lh-box-shadow(2px 2px 3px @default-box-shadow-color);
   min-height: 500px;
+
+
+}
+
+.button-hover-shadow {
+
+  .lh-box-shadow(1px 1px 4px @gray-light);
 
 
 }
