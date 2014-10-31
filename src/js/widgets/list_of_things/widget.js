@@ -359,11 +359,13 @@ define([
 
       },
 
+
       events: {
         'change input[name=identifier]': 'toggleSelect',
         'mouseenter .letter-icon' : "showLinks",
         'mouseleave .letter-icon' : "hideLinks",
         'click .letter-icon' : "pinLinks"
+
       },
 
       toggleSelect: function () {
@@ -371,54 +373,53 @@ define([
       },
 
       /*
-      * adding this to make the dropdown
-      * accessible, and so people can click to sticky
-      * open the quick links
-      * */
+       * adding this to make the dropdown
+       * accessible, and so people can click to sticky
+       * open the quick links
+       * */
 
 
-    removeActiveQuickLinkState : function($node){
+      removeActiveQuickLinkState : function($node){
 
-      $node.removeClass("pinned");
-      $node.find("i").removeClass("s-icon-draw-attention")
-      $node.find(".link-details").addClass("hidden");
-      $node.find('ul').attr('aria-expanded', false);
+        $node.removeClass("pinned");
+        $node.find("i").removeClass("s-icon-draw-attention")
+        $node.find(".link-details").addClass("hidden");
+        $node.find('ul').attr('aria-expanded', false);
 
       },
 
-     addActiveQuickLinkState : function($node){
+      addActiveQuickLinkState : function($node){
 
-       $node.find("i").addClass("s-icon-draw-attention")
-       $node.find(".link-details").removeClass("hidden");
-       $node.find('ul').attr('aria-expanded', true);
+        $node.find("i").addClass("s-icon-draw-attention")
+        $node.find(".link-details").removeClass("hidden");
+        $node.find('ul').attr('aria-expanded', true);
 
-     },
+      },
 
-     deactivateOtherQuickLinks: function($c){
+      deactivateOtherQuickLinks: function($c){
 
-       var $hasList = this.$(".letter-icon").filter(function(){
-         if ($(this).find("i").hasClass("s-icon-draw-attention")){
-           return true
-         }
-       }).eq(0);
+        var $hasList = this.$(".letter-icon").filter(function(){
+          if ($(this).find("i").hasClass("s-icon-draw-attention")){
+            return true
+          }
+        }).eq(0);
 
-       //there should be max 1 other icon that is active
+        //there should be max 1 other icon that is active
 
-       if ($hasList.length && $hasList[0] !== $c[0]){
+        if ($hasList.length && $hasList[0] !== $c[0]){
 
-         this.removeActiveQuickLinkState($hasList)
-       }
+          this.removeActiveQuickLinkState($hasList)
+        }
 
-     },
+      },
 
-       pinLinks : function(e){
+      pinLinks : function(e){
 
-         //get parent div of the button
-        $c = $(e.currentTarget).parent();
+        $c = $(e.currentTarget);
 
         if (!$c.find(".active-link").length){
-           return
-         }
+          return
+        }
 
         $c.toggleClass("pinned");
 
@@ -438,7 +439,7 @@ define([
 
       showLinks : function(e){
 
-        $c = $(e.currentTarget).parent();
+        $c = $(e.currentTarget);
 
         if (!$c.find(".active-link").length){
           return
@@ -457,7 +458,7 @@ define([
 
       hideLinks : function(e){
 
-        $c = $(e.currentTarget).parent();
+        $c = $(e.currentTarget);
 
         if ($c.hasClass("pinned")){
           return
