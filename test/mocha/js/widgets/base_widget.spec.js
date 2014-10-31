@@ -79,7 +79,7 @@ define(['marionette', 'backbone',
         var widget = new BaseWidget();
 
         expect(widget.startWidgetLoad).to.be.instanceof(Function);
-        expect(widget.loadingTemplate().trim()).to.eql("<div class=\"s-loading\"></div>");
+        expect(widget.loadingTemplate().trim()).to.eql("<div class=\"s-loading\" aria-label=\"loading indicator\">\n\n</div>");
 
         //test 1: adding and removing a loading view for an item view
 
