@@ -216,7 +216,11 @@ define(["marionette",
 
           //adding true as 3rd arg to prevent this from going into the history
 
-          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, dataForRouter, true);
+          var args = {}
+          args.path  = dataForRouter;
+          args.skipHistory = true;
+
+          this.pubsub.publish(this.pubsub.NAVIGATE_WITHOUT_TRIGGER, args);
 
           $middleCol = $("#current-subview");
 
