@@ -52,11 +52,14 @@ define([
 
     this.pubsub = beehive.Services.get('PubSub');
 
-      _.bindAll(this, "showSearchPage");
+      _.bindAll(this, "showSearchPage", "insertAriaAnnouncement");
 
     this.pubsub.subscribe(this.pubsub.START_SEARCH, this.showSearchPage);
 
-    this.pubsub.subscribe(this.pubsub.PAGE_SCROLL, this.scrollPage)
+    this.pubsub.subscribe(this.pubsub.PAGE_SCROLL, this.scrollPage);
+
+    this.pubsub.subscribe(this.pubsub.ARIA_ANNOUNCEMENT, this.insertAriaAnnouncement);
+
 
     },
 
@@ -79,6 +82,15 @@ define([
 
       }
 
+    },
+
+    insertAriaAnnouncement : function(text){
+
+      var $ac;
+
+      $ac = this.ariaAnnouncmentContainer || $("#aria-announcement-container");
+
+      $ac.html(text);
 
     },
 
