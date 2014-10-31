@@ -361,10 +361,9 @@ define([
 
       events: {
         'change input[name=identifier]': 'toggleSelect',
-        'mouseover .active-link' : "showLinks",
-        'mouseleave .active-link' : "hideLinks",
-        'click .active-link' : "pinLinks"
-
+        'mouseenter .letter-icon' : "showLinks",
+        'mouseleave .letter-icon' : "hideLinks",
+        'click .letter-icon' : "pinLinks"
       },
 
       toggleSelect: function () {
@@ -417,6 +416,10 @@ define([
          //get parent div of the button
         $c = $(e.currentTarget).parent();
 
+        if (!$c.find(".active-link").length){
+           return
+         }
+
         $c.toggleClass("pinned");
 
         if($c.hasClass("pinned")){
@@ -436,6 +439,10 @@ define([
       showLinks : function(e){
 
         $c = $(e.currentTarget).parent();
+
+        if (!$c.find(".active-link").length){
+          return
+        }
 
         if ($c.hasClass("pinned")){
           return
