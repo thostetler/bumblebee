@@ -59,14 +59,22 @@
     color : darken(@gray-lighter, 3%);
   }
 
-  i.s-active-link {
+  .s-active-link {
 
-    cursor: pointer;
-    color : @brand-primary-faded;
+    i {
+
+      cursor: pointer;
+      color : @brand-primary-faded;
+
+    }
 
   }
 
 
+}
+
+.s-display-block {
+  margin-bottom: 10px;
 }
 
 
@@ -112,7 +120,6 @@
 
 .s-top-row {
   font-weight: 300;
-  font-size : 14px;
 }
 
 .s-show-details-container {
@@ -121,12 +128,12 @@
 
 .s-results-title {
 
-  margin-top: -3px;
-  margin-bottom: 0px;
-  font-size:16px;
+  margin-top: -4px;
+  margin-bottom: 3px;
   color: desaturate(@brand-primary, 40%);
   font-weight: 600;
   line-height: 1.2;
+  font-size : 16px;
 
 }
 
@@ -263,3 +270,6 @@ li.article-author {
 
 }
 
+.s-shift-top-row-down {
+  padding-top: 4px;
+}
