@@ -50,12 +50,12 @@ define([
         'mouseleave .letter-icon': "hideLinks",
         'click .orcid-action': "orcidAction",
         'click .letter-icon': "pinLinks"
-
       },
 
       modelEvents: {
         "change:visible": 'render',
-        "change:showDetails" : 'render'
+        "change:showDetails" : 'render',
+        "change:orcid": 'render'
       },
 
       collectionEvents: {
@@ -170,81 +170,27 @@ define([
       },
 
       hideLinks: function (e) {
-        $c = $(e.currentTarget);
+        var $c = $(e.currentTarget);
         if ($c.hasClass("pinned")) {
           return
         }
         this.removeActiveQuickLinkState($c)
       },
 
-      showOrcidActions: function(isWorkInCollection){
-        var $icon = this.$('.mini-orcid-icon');
-        $icon.removeClass('green');
-        $icon.removeClass('gray');
+      orcidAction: function (e) {
+        if (!e) return;
 
-
-        var $orcidActions = this.$('.orcid-actions');
-        $orcidActions.removeClass('hidden');
-        $orcidActions.removeClass('orcid-wait');
-        var $update = $orcidActions.find('.orcid-action-update');
-        var $insert = $orcidActions.find('.orcid-action-insert');
-        var $delete = $orcidActions.find('.orcid-action-delete');
-
-        $update.addClass('hidden');
-        $insert.addClass('hidden');
-        $delete.addClass('hidden');
-
-        if (isWorkInCollection(this.model.attributes)){
-          if (!(this.model.attributes.isFromAds === true))
-          {
-            $update.removeClass('hidden');
-          }
-          $delete.removeClass('hidden');
-          $icon.addClass('green');
-        }
-        else {
-          if (this.model.attributes.isFromAds === false){
-            // the nonAds item from orcid
-            // nothing to do
-          }
-          else {
-            $insert.removeClass('hidden');
-            $icon.addClass('gray');
-          }
-        }
-      },
-
-      hideOrcidActions: function(){
-        var $orcidActions = this.$('.orcid-actions');
-        $orcidActions.addClass('hidden');
-      },
-
-      orcidAction: function(e){
         e.preventDefault();
         e.stopPropagation();
-        var $c = $(e.currentTarget);
-        var $orcidActions = this.$('.orcid-actions');
-        $orcidActions.addClass('orcid-wait');
-
-        var actionType = '';
-
-        if ($c.hasClass('orcid-action-insert')){
-          actionType = 'insert';
-        } else if ($c.hasClass('orcid-action-update')){
-          actionType = 'update';
-        } else if ($c.hasClass('orcid-action-delete')){
-          actionType = 'delete';
-        }
+        var $target = $(e.currentTarget);
 
         var msg = {
-          actionType : actionType,
-          model: this.model.attributes,
-          modelType: 'adsData'
-
+          action: $target.data('action') ? $target.data('action') : $target.text().trim(),
+          model: this.model,
+          view: this,
+          target: $target
         };
-
         this.trigger('OrcidAction', msg);
-
       }
     });
 

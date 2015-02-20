@@ -15,7 +15,9 @@ define(['underscore',
     'js/components/api_response',
     'js/components/api_query_updater',
     'js/components/api_feedback',
-    'js/components/json_response'],
+    'js/components/json_response',
+    'js/components/api_targets'
+  ],
   function(
     _,
     $,
@@ -26,7 +28,9 @@ define(['underscore',
     ApiResponse,
     ApiQueryUpdater,
     ApiFeedback,
-    JsonResponse) {
+    JsonResponse,
+    ApiTargets
+    ) {
 
 
     var QueryMediator = GenericModule.extend({
@@ -72,7 +76,7 @@ define(['underscore',
 
 
       getQTree: function(apiQuery, senderKey) {
-        var apiRequest = new ApiRequest({'query': apiQuery, 'target': 'qtree'});
+        var apiRequest = new ApiRequest({'query': apiQuery, 'target': ApiTargets.QTREE});
         var api = this.getBeeHive().getService('Api');
 
         this._executeRequest(apiRequest, senderKey);
@@ -167,8 +171,8 @@ define(['underscore',
         if (!(ps && api)) return; // application is gone
 
 
-        if (beehive.hasObject('RuntimeConfig')) { // pick a request that will be executed first
-          var runtime = beehive.getObject('RuntimeConfig');
+        if (beehive.hasObject('DynamicConfig')) { // pick a request that will be executed first
+          var runtime = beehive.getObject('DynamicConfig');
           if (runtime.pskToExecuteFirst && cycle.waiting[runtime.pskToExecuteFirst]) {
             data = cycle.waiting[runtime.pskToExecuteFirst];
             delete cycle.waiting[runtime.pskToExecuteFirst];
@@ -180,7 +184,7 @@ define(['underscore',
         }
         if (!data) {
           if (this.debug)
-            console.warn('RuntimeConfig does not tell us which request to execute first (grabbing random one).');
+            console.warn('DynamicConfig does not tell us which request to execute first (grabbing random one).');
 
           var kx;
           data = cycle.waiting[(kx=_.keys(cycle.waiting)[0])];

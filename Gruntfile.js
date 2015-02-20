@@ -181,7 +181,7 @@ module.exports = function(grunt) {
         API_ENDPOINT: '<%= local.api_endpoint || "http://localhost:5000/api/1" %>',
         ORCID_OAUTH_CLIENT_ID: '<%= local.orcid_oauth_cliend_id || ""%>',
         ORCID_OAUTH_CLIENT_SECRET:'<%= local.orcid_oauth_client_secret || "" %>',
-        ORCID_API_ENDPOINT :'<%= local.orcid_oauth_client_secret || "" %>'
+        ORCID_API_ENDPOINT :'<%= local.orcid_api_endpoint || "" %>'
       },
       dev: {
         HOMEDIR: 'src'
@@ -643,6 +643,7 @@ module.exports = function(grunt) {
     paths['backbone.babysitter'] = 'libs/backbone.babysitter/backbone.babysitter.min';
     paths['d3'] = 'libs/d3/d3.min';
     paths['nvd3'] = 'libs/nvd3/nv.d3.min';
+    paths['persist-js'] = 'libs/persist-js/persist-all-min';
 
     // and replace the string
     var firstPart = config.substring(0, m.index);
@@ -685,6 +686,7 @@ module.exports = function(grunt) {
 
   // starts a web server (automatically reloading)
   grunt.registerTask('server', ['env:dev',  "less", 'express:dev', 'concurrent:serverTasks']);
+  grunt.registerTask('server:watch', ['env:dev',  "less", 'express:dev', 'watch:server']);
   grunt.registerTask('server:release', ['env:release',  'express:release', 'watch:release']);
 
   // runs tests in a web server (automatically reloading)

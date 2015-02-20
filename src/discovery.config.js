@@ -14,6 +14,14 @@ require.config({
       url: 'http://adsabs-classic-exports-service.elasticbeanstalk.com',
       target: '/'
     },
+
+    'js/components/persistent_storage': {
+      // the unique namespace under which the local storage will be created
+      // so every new instance of the storage will be saving its data into
+      // <namespace>[other-name]
+      namespace: 'bumblebee'
+    },
+
     'js/apps/discovery/main': {
 
       core: {
@@ -21,16 +29,14 @@ require.config({
           FeedbackMediator: 'js/wraps/discovery_mediator',
           QueryMediator: 'js/components/query_mediator',
           Diagnostics: 'js/bugutils/diagnostics',
-          AlertsController: 'js/components/alerts_mediator'
+          AlertsController: 'js/components/alerts_mediator',
+          Orcid: 'js/modules/orcid/module'
         },
         services: {
-          'Api': 'js/services/api',
-          'PubSub': 'js/services/pubsub',
-          'Navigator': 'js/apps/discovery/navigator',
-          OrcidApi: 'js/modules/orcid/orcid_api',
-          OrcidModelNotifier: 'js/modules/orcid/orcid_model_notifier/module',
-          LocalStorage: 'js/services/localStorage',
-          Json2Xml: 'js/modules/orcid/json2xml'
+          Api: 'js/services/api',
+          PubSub: 'js/services/pubsub',
+          Navigator: 'js/apps/discovery/navigator',
+          PersistentStorage: 'js/services/storage'
         },
         objects: {
           User: 'js/components/user',
@@ -63,9 +69,6 @@ require.config({
 
         Metrics :  'js/widgets/metrics/widget',
 
-        OrcidLogin: 'js/modules/orcid/orcid_login/widget',
-        OrcidWorks: 'js/modules/orcid/orcid_works/widget',
-        //OrcidResults: 'js/modules/orcid/orcid_result_row_extension/widget',
         OrcidBigWidget: 'js/modules/orcid/widget/widget',
 
         AuthorFacet: 'js/wraps/author_facet',
@@ -99,9 +102,6 @@ require.config({
   // application) see http://requirejs.org/docs/api.html#config-map
   map: {
     '*': {
-      'api_query_impl': 'js/components/solr_params',
-      'api_response_impl': 'js/components/solr_response',
-      'api_request_impl': 'js/components/default_request',
       'pubsub_service_impl': 'js/services/default_pubsub',
       'analytics_config': 'discovery.vars'
     }
@@ -142,8 +142,7 @@ require.config({
     // for development use
     //'google-analytics': "//www.google-analytics.com/analytics_debug",
     'google-analytics': "//www.google-analytics.com/analytics",
-    'xml2json': 'libs/jquery-xml2json/xml2json',
-    'localstorage': 'libs/backbone.localStorage/backbone.localStorage',
+    'persist-js': 'libs/persist-js/src/persist',
 
     // only for diagnostics/debugging/testing - wont get loaded otherwise
     'sprintf': 'libs/sprintf/sprintf',
@@ -199,11 +198,11 @@ require.config({
     },
 
     'sprintf': {
-      export: 'sprintf'
+      exports: 'sprintf'
     },
 
-    xml2json: {
-      deps: ['jquery']
+    'persist-js': {
+      exports: 'Persist'
     }
   },
 
