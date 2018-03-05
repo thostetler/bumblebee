@@ -73,6 +73,8 @@ define([
         this.assembled = true;
         this.view.render();
 
+
+
         var that = this, el;
         _.extend(that.widgetDoms, that.getWidgetsFromTemplate(that.view.$el));
 
@@ -108,6 +110,10 @@ define([
             }
             else {
               el = widget.render().el;
+            }
+
+            if (widget.componentParams.debugOnly && !(/debug=true/.test(location.hash))) {
+              return;
             }
             $(that.widgetDoms[widgetName]).empty().append(el);
             that.widgets[widgetName] = widget;

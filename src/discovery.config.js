@@ -101,6 +101,7 @@ require.config({
         ConceptCloud : 'js/widgets/wordcloud/widget',
         BubbleChart : 'js/widgets/bubble_chart/widget',
         AuthorAffiliationTool: 'es6!js/widgets/author_affiliation_tool/widget.jsx',
+        FieldBooster: 'es6!js/widgets/field_booster/widget.jsx',
 
         Metrics :  'js/widgets/metrics/widget',
         CitationHelper: 'js/widgets/citation_helper/widget',

@@ -66,7 +66,7 @@ define([
           'KeywordFacet', 'BibstemFacet', 'BibgroupFacet', 'DataFacet', 'ObjectFacet',
           'NedObjectFacet','VizierFacet', 'GrantsFacet', 'GraphTabs', 'QueryDebugInfo',
           'ExportDropdown', 'VisualizationDropdown', 'SearchWidget',
-          'Sort', 'BreadcrumbsWidget', 'PubtypeFacet'
+          'Sort', 'BreadcrumbsWidget', 'PubtypeFacet', 'FieldBooster'
         ];
 
         var detailsPageAlwaysVisible = [
@@ -322,8 +322,7 @@ define([
 
         this.set('results-page', function(widget, args) {
 
-          app.getObject('MasterPageManager').show('SearchPage',
-            searchPageAlwaysVisible);
+          app.getObject('MasterPageManager').show('SearchPage', searchPageAlwaysVisible);
           //allowing widgets to override appstorage query (so far only used for orcid redirect)
           var q = app.getObject('AppStorage').getCurrentQuery();
           if (q && q.get("__original_url")) {
