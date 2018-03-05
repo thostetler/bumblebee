@@ -125,7 +125,30 @@ define(['underscore',
       getQueryAndStartSearchCycle : function(apiQuery, senderKey){
 
         var that = this,
-            ps = this.getPubSub();
+            ps = this.getPubSub(),
+            currentQuery = this.mostRecentQuery,
+            initiator = this.getApp().getPluginOrWidgetName(senderKey.getId());
+
+        // look for sticky_params in query and make sure those fields persist
+        // only re-apply props if the request is coming from a widget/plugin
+        if (currentQuery && !_.isUndefined(initiator)) {
+
+          var props = {};
+
+          // check the current query, if it's there then apply those
+          if (apiQuery.has('sticky_params')) {
+            props = _.pick(apiQuery.toJSON(),
+              ['sticky_params'].concat(apiQuery.get('sticky_params')));
+
+          // otherwise look in the most recent query
+          } else if (currentQuery.has('sticky_params')) {
+            props = _.pick(currentQuery.toJSON(),
+              ['sticky_params'].concat(currentQuery.get('sticky_params')));
+          }
+
+          // extend the query with the updated props
+          apiQuery = new ApiQuery(_.assign(apiQuery.toJSON(), props));
+        }
 
         //modifies apiQuery in place
         SecondarySort.addSecondarySort(apiQuery);
