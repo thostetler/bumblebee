@@ -45,6 +45,18 @@ module.exports = function (grunt) {
     release_concatenated: {
       options: {
         baseUrl: 'dist/',
+        modules: [
+          {
+            name: 'libs',
+            include: [
+              '../libs'
+            ]
+          },
+          {
+            name: 'app',
+            include: 'apps/discovery/main'
+          }
+        ],
         wrapShim: true,
         include : createIncludePaths(),
         allowSourceOverwrites: true,

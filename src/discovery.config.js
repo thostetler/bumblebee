@@ -58,8 +58,8 @@ require.config({
 
     // Opt for Lo-Dash Underscore compatibility build over Underscore.
     "underscore": [
-      'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min.js',
-      './libs/lodash/lodash.compat'
+      '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min',
+      './libs/lodash/index'
     ],
 
     // 3rd party dependencies
@@ -69,10 +69,10 @@ require.config({
     'babel': './libs/requirejs-babel-plugin/babel-5.8.34.min',
     'backbone': './libs/backbone/backbone',
     'backbone-validation': './libs/backbone-validation/backbone-validation',
-    'backbone.babysitter' : './libs/backbone.babysitter/backbone.babysitter',
-    'backbone.eventbinder' : 'libs/backbone.eventbinder/backbone.eventbinder',
+    // 'backbone.babysitter' : './libs/backbone.babysitter/backbone.babysitter',
+    // 'backbone.eventbinder' : 'libs/backbone.eventbinder/backbone.eventbinder',
     'backbone.stickit' : './libs/backbone.stickit/backbone.stickit',
-    'backbone.wreqr' : './libs/backbone.wreqr/lib/backbone.wreqr',
+    // 'backbone.wreqr' : './libs/backbone.wreqr/lib/backbone.wreqr',
     'bootstrap': './libs/bootstrap/bootstrap',
     'cache': './libs/dsjslib/lib/Cache',
     'chai': '../bower_components/chai/chai',
