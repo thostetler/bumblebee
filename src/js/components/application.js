@@ -128,7 +128,9 @@ define([
      * @param options
      */
     loadModules: function(config, options) {
-
+      var updateProgress = (typeof window.__setAppLoadingProgress === 'function') ?
+        window.__setAppLoadingProgress : function () {};
+      var progress = 50;
       var promises = [];
       var self = this;
       var promise;
@@ -138,8 +140,9 @@ define([
         _.each(['controllers', 'modules', 'services', 'objects'], function(name) {
           if (core[name]) {
             promise = self._loadModules(name, core[name]);
-            if (promise)
+            if (promise) {
               promises.push(promise);
+            }
           }
         });
       }
@@ -158,12 +161,21 @@ define([
           promises.push(promise);
       }
 
-      if (promises.length == 1) {
+      if (promises.length === 1) {
         promises.push(promise); // hack, so that $.when() always returns []
       }
 
+      var progressInterval = 40/promises.length;
+      _.each(promises, function (p) {
+        p.then(function () {
+          updateProgress(progress += progressInterval);
+        });
+      });
+
+      console.time('loading modules');
       var bigPromise = $.when.apply($, promises)
         .then(function () {
+          console.timeEnd('loading modules');
           _.each(arguments, function (promisedValues, idx) {
             if (_.isArray(promisedValues)) {
               if (self.debug) {
