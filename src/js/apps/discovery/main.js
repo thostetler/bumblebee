@@ -13,7 +13,7 @@
  *
  */
 
-define(['config', 'module'], function(config, module) {
+define(['appModules'], function(modules) {
 
   require([
       'router',
@@ -40,7 +40,7 @@ define(['config', 'module'], function(config, module) {
       var app = new (Application.extend(DiscoveryBootstrap))({'debug': debug, timeout: 30000});
 
       // load the objects/widgets/modules (using discovery.config.js)
-      var defer = app.loadModules(module.config());
+      var defer = app.loadModules(modules);
 
       updateProgress(20, 'Starting Application');
 

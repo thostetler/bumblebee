@@ -124,78 +124,16 @@ define([
      *    // .... do something with the application
      * })
      *
-     * @param config
-     * @param options
+     * @param modules
      */
-    loadModules: function(config, options) {
-      var updateProgress = (typeof window.__setAppLoadingProgress === 'function') ?
-        window.__setAppLoadingProgress : function () {};
-      var progress = 50;
-      var promises = [];
-      var self = this;
-      var promise;
+    loadModules: function(modules) {
 
-      var core = config['core'];
-      if (core) {
-        _.each(['controllers', 'modules', 'services', 'objects'], function(name) {
-          if (core[name]) {
-            promise = self._loadModules(name, core[name]);
-            if (promise) {
-              promises.push(promise);
-            }
-          }
-        });
-      }
+      modules = _.pairs(modules.core).concat(_.pairs(_.omit(modules, 'core')));
+      _.each(modules, _.bind(function (m) {
+        this._registerLoadedModules.apply(this, m);
+      }, this));
 
-      var plugins = config['plugins'];
-      if (plugins) {
-        promise = self._loadModules("plugins", plugins);
-        if (promise)
-          promises.push(promise);
-      }
-
-      var widgets = config['widgets'];
-      if (widgets) {
-        promise = self._loadModules("widgets", widgets);
-        if (promise)
-          promises.push(promise);
-      }
-
-      if (promises.length === 1) {
-        promises.push(promise); // hack, so that $.when() always returns []
-      }
-
-      var progressInterval = 40/promises.length;
-      _.each(promises, function (p) {
-        p.then(function () {
-          updateProgress(progress += progressInterval);
-        });
-      });
-
-      console.time('loading modules');
-      var bigPromise = $.when.apply($, promises)
-        .then(function () {
-          console.timeEnd('loading modules');
-          _.each(arguments, function (promisedValues, idx) {
-            if (_.isArray(promisedValues)) {
-              if (self.debug) {
-                console.log('application: registering ' + promisedValues[0]);
-              }
-              self._registerLoadedModules.apply(self, promisedValues);
-            }
-          })
-        })
-        .fail(function () {
-          console.error("Generic error - we were not successul in loading all modules for config", config);
-          if (arguments.length)
-            console.error(arguments);
-          //throw new Error("We are screwed!"); do not throw errors because then .fail() callbacks cannot be used
-        });
-      //.done(function() {
-      //  console.log('DONE loading', this, config);
-      //});
-
-      return bigPromise;
+      return $.Deferred().resolve().promise();
     },
 
     getBeeHive: function() {
@@ -228,34 +166,34 @@ define([
 
       //console.log('registering', section, modules);
 
-      if (section == "controllers") {
+      if (section === "controllers") {
         hasKey = _.bind(this.hasController, this);
         removeKey = _.bind(function(key) {this.__controllers.remove(key)}, this);
         addKey = _.bind(function(key, module) {this.__controllers.add(key, module)}, this);
       }
-      else if (section == "services") {
+      else if (section === "services") {
         hasKey = _.bind(beehive.hasService, beehive);
         removeKey = _.bind(beehive.removeService, beehive);
         addKey = _.bind(beehive.addService, beehive);
       }
-      else if (section == 'objects') {
+      else if (section === 'objects') {
         hasKey = _.bind(beehive.hasObject, beehive);
         removeKey = _.bind(beehive.removeObject, beehive);
         addKey = _.bind(beehive.addObject, beehive);
       }
-      else if (section == 'modules') {
+      else if (section === 'modules') {
         createInstance = function(key, module) {return module};
         hasKey = _.bind(this.hasModule, this);
         removeKey = _.bind(function(key) {this.__modules.remove(key)}, this);
         addKey = _.bind(function(key, module) {this.__modules.add(key, module)}, this);
       }
-      else if (section == 'widgets') {
+      else if (section === 'widgets') {
         hasKey = _.bind(this.hasWidget, this);
         removeKey = _.bind(function(key) {this.__widgets.remove(key)}, this);
         addKey = _.bind(function(key, module) {this.__widgets.add(key, module)}, this);
         createInstance = function(key, module) {return module};
       }
-      else if (section == 'plugins') {
+      else if (section === 'plugins') {
         hasKey = _.bind(this.hasPlugin, this);
         removeKey = _.bind(function(key) {this.__plugins.remove(key)}, this);
         addKey = _.bind(function(key, module) {this.__plugins.add(key, module)}, this);
