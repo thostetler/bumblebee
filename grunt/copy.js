@@ -40,6 +40,15 @@ module.exports = function (grunt) {
           rename: rename('babel')
         },
 
+        // ES5-shim
+        {
+          cwd: 'node_modules/es5-shim',
+          src: 'es5-shim.min.js',
+          dest: 'src/libs/es5-shim/',
+          expand: true,
+          rename: rename('es5-shim.min')
+        },
+
         // Lodash
         {
           cwd: 'node_modules/lodash/dist',
@@ -161,7 +170,7 @@ module.exports = function (grunt) {
         // Backbone
         {
           cwd: 'node_modules/backbone',
-          src: 'backbone-min.js',
+          src: 'backbone.js',
           dest: 'src/libs/backbone/',
           expand: true,
           rename: rename('backbone-min')

@@ -46,17 +46,17 @@ require.config({
     'analytics': './js/components/analytics',
 
     'underscore': [
-      'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min',
+      // 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min',
       './libs/lodash/index'
     ],
 
     'async': [
-      'https://cdnjs.cloudflare.com/ajax/libs/requirejs-plugins/1.0.3/async.min',
+      // 'https://cdnjs.cloudflare.com/ajax/libs/requirejs-plugins/1.0.3/async.min',
       './libs/requirejs/plugins/async/index'
     ],
 
     'react': [
-      'https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.production.min',
+      // 'https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.production.min',
       './libs/react/index'
     ],
 
@@ -137,7 +137,9 @@ require.config({
 
     'redux-thunk': './libs/redux/thunk/index',
 
-    'clipboard': './libs/clipboard/index'
+    'clipboard': './libs/clipboard/index',
+
+    'es5-shim': './libs/es5-shim/index'
   },
 
   hbs: {
@@ -211,7 +213,10 @@ require.config({
     mathjax: {
         exports: 'MathJax',
         init: function () {
+
+          MathJax.Ajax.config.root = 'libs/mathjax';
           MathJax.Hub.Config({
+            messageStyle: 'none',
             HTML: ['input/TeX','output/HTML-CSS'],
             TeX: { extensions: ['AMSmath.js','AMSsymbols.js'],
               equationNumbers: { autoNumber: 'AMS' } },
