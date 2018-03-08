@@ -21,9 +21,6 @@ module.exports = function (grunt) {
             return content
               .replace(/hbs\//g, '')
               .replace('json2', 'hbs.json2');
-          } else if (/mathjax\//.test(src)) {
-            return content
-              .replace(/\[MathJax]/g, 'libs/mathjax');
           }
 
           return content;
@@ -51,11 +48,10 @@ module.exports = function (grunt) {
 
         // Lodash
         {
-          cwd: 'node_modules/lodash/dist',
-          src: 'lodash.min.js',
+          cwd: 'node_modules/lodash',
+          src: 'index.js',
           dest: 'src/libs/lodash/',
-          expand: true,
-          rename: rename('lodash.min')
+          expand: true
         },
 
         // Requirejs
@@ -173,7 +169,7 @@ module.exports = function (grunt) {
           src: 'backbone.js',
           dest: 'src/libs/backbone/',
           expand: true,
-          rename: rename('backbone-min')
+          rename: rename('backbone')
         },
 
         // Backbone/validation

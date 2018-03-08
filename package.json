@@ -13,7 +13,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "babel-standalone": "^6.26.0",
-    "backbone": "^1.3.3",
+    "backbone": "^1.1.2",
     "backbone-validation": "^0.11.5",
     "backbone.marionette": "^2.4.5",
     "backbone.radio": "^2.0.0",
@@ -32,7 +32,7 @@
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",
     "jsonpath": "^0.2.12",
-    "lodash": "^2.4.2",
+    "lodash": "^3.10.1",
     "mathjax": "^2.7.3",
     "moment": "^2.21.0",
     "persist-js": "^0.3.1",
