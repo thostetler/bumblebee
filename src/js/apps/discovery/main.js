@@ -20,13 +20,9 @@ define(['appModules'], function(modules) {
       'js/components/application',
       'js/mixins/discovery_bootstrap',
       'js/mixins/api_access',
+      'analytics',
       'es5-shim'
-    ],
-    function(Router,
-      Application,
-      DiscoveryBootstrap,
-      ApiAccess
-    ) {
+    ], function(Router, Application, DiscoveryBootstrap, ApiAccess, analytics) {
 
       var updateProgress = (typeof window.__setAppLoadingProgress === 'function') ?
         window.__setAppLoadingProgress : function () {};
@@ -90,6 +86,17 @@ define(['appModules'], function(modules) {
             window.bbb = app;
           }
 
+          // app is loaded, send timing event
+
+          if (__PAGE_LOAD_TIMESTAMP) {
+            var time = new Date() - __PAGE_LOAD_TIMESTAMP;
+            analytics('send', {
+              hitType: 'timing',
+              timingCategory: 'Application',
+              timingVar: 'Loaded',
+              timingValue: (!isNaN(time)) ? -1 : time
+            });
+          }
         }).fail(function () {
           app.redirect('500.html');
         });
