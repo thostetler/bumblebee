@@ -19,7 +19,7 @@ define(function (require) {
       objects: {
         User: require('js/components/user'),
         Session: require('js/components/session'),
-        DynamicConfig: require('src/discovery.vars'),
+        DynamicConfig: require('discovery.vars'),
         MasterPageManager: require('js/page_managers/master'),
         AppStorage: require('js/components/app_storage'),
         RecaptchaManager: require('js/components/recaptcha_manager'),

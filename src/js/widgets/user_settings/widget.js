@@ -9,7 +9,7 @@ define([
   'hbs!js/widgets/user_settings/templates/change_password',
   'hbs!js/widgets/user_settings/templates/delete_account',
   'backbone-validation',
-  'backbone.stickit',
+  'backbone-stickit',
   'bootstrap'
 
 ], function (Marionette,

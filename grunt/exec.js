@@ -6,8 +6,11 @@
  */
 module.exports = {
   // this is necessary to make the library AMD compatible
-  convert_dsjslib: {
-    cmd: 'node node_modules/requirejs/bin/r.js -convert src/libs/dsjslib src/libs/dsjslib'
+  convert_cache: {
+    cmd: 'node node_modules/requirejs/bin/r.js -convert src/libs/cache src/libs/cache'
+  },
+  convert_json2: {
+    cmd: 'node node_modules/requirejs/bin/r.js -convert src/libs/json2 src/libs/json2'
   },
   latest_commit: {
     cmd: 'git rev-parse --short=7 --verify HEAD | cat > git-latest-commit'

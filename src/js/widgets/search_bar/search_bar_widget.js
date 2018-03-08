@@ -18,7 +18,7 @@ define([
       'analytics',
       'js/components/query_validator',
       'select2',
-      'libs/select2/matcher'
+      'select2/matcher'
     ],
     function (
         _,

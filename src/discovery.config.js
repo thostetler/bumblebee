@@ -56,63 +56,158 @@ require.config({
     'router': './js/apps/discovery/router',
     'analytics': './js/components/analytics',
 
-    // Opt for Lo-Dash Underscore compatibility build over Underscore.
-    "underscore": [
-      '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min',
+    'underscore': [
+      'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min',
       './libs/lodash/index'
     ],
+
+    'async': [
+      'https://cdnjs.cloudflare.com/ajax/libs/requirejs-plugins/1.0.3/async.min',
+      './libs/requirejs/plugins/async/index'
+      ],
+
+    'react': [
+      'https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.production.min',
+      './libs/react/index'
+      ],
+
+    'create-react-class': './libs/react/create-react-class/index',
+
+    'prop-types': './libs/react/prop-types/index',
+
+    'react-redux': './libs/react/redux/index',
+
+    'react-dom': './libs/react/dom/index',
+
+    'jsonpath': './libs/jsonpath/index',
+
+    'filesaver': './libs/filesaver/index',
+
+    'backbone': './libs/backbone/index',
+
+    'backbone-validation': './libs/backbone/validation/index',
+
+    'backbone-stickit': './libs/backbone/stickit/index',
+
+    'backbone.radio': './libs/backbone/radio/index',
+
+    'cache': './libs/cache/index',
+
+    'enzyme': './libs/enzyme/index',
+
+    'bootstrap': './libs/bootstrap/index',
+
+    'jquery': './libs/jquery/index',
+
+    'select2': './libs/select2/index',
+
+    'select2/matcher': './libs/select2/matcher/index',
+
+    'babel': './libs/babel/index',
+
+    'es6': './libs/requirejs/plugins/es6/index',
+
+    'moment': './libs/moment/index',
+
+    'hbs': './libs/requirejs/plugins/hbs/index',
+
+    'handlebars': './libs/handlebars/index',
+
+    'd3': './libs/d3/index',
+
+    'mathjax': './libs/mathjax/index',
+
+    'sprintf': './libs/sprintf/index',
+
+    'google-recaptcha': [
+      'https://www.google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad'
+    ],
+
+    'google-analytics': [
+      'https://www.google-analytics.com/analytics'
+    ],
+
+    'text': './libs/requirejs/plugins/text/index',
+
+    'jquery-ui': [
+      'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min',
+      './libs/jqueryui/core'
+    ],
+
+    'persist-js': './libs/persist/index',
+
+    'jquery-querybuilder': './libs/jquery/index',
+
+    'marionette': './libs/backbone/marionette/index',
+
+    'd3-cloud': './libs/d3/cloud/index',
+
+    'redux': './libs/redux/index',
+
+    'redux-thunk': './libs/redux/thunk/index',
+
+    'json2': './libs/json2/index'
 
     // 3rd party dependencies
     // I can't for the life of my figure out how to swap non-minified libs in dev
     // to minified libs in the r.js optimize task
-    'async': './libs/requirejs-plugins/async',
-    'babel': './libs/requirejs-babel-plugin/babel-5.8.34.min',
-    'backbone': './libs/backbone/backbone',
-    'backbone-validation': './libs/backbone-validation/backbone-validation',
-    // 'backbone.babysitter' : './libs/backbone.babysitter/backbone.babysitter',
-    // 'backbone.eventbinder' : 'libs/backbone.eventbinder/backbone.eventbinder',
-    'backbone.stickit' : './libs/backbone.stickit/backbone.stickit',
-    // 'backbone.wreqr' : './libs/backbone.wreqr/lib/backbone.wreqr',
-    'bootstrap': './libs/bootstrap/bootstrap',
-    'cache': './libs/dsjslib/lib/Cache',
-    'chai': '../bower_components/chai/chai',
-    'classnames': '../bower_components/classnames/index',
-    'clipboard': './libs/clipboard/clipboard',
-    'create-react-class': './libs/create-react-class/index',
-    'd3':'./libs/d3/d3',
-    'd3-cloud' : './libs/d3-cloud/d3.layout.cloud',
-    'enzyme': './libs/enzyme/enzyme',
-    'es5-shim' : './libs/es5-shim/es5-shim',
-    'es6': './libs/requirejs-babel-plugin/es6',
-    'filesaver' : './libs/FileSaver/FileSaver',
-    'google-analytics': "//www.google-analytics.com/analytics",
-    'google-recaptcha' : '//www.google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
-    'hbs': './libs/require-handlebars-plugin/hbs',
-    'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min',
-    'jquery-querybuilder': './libs/jQuery-QueryBuilder/query-builder',
-    'jquery-ui' : '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min',
-    'jsonpath': './libs/jsonpath/jsonpath',
-    'marionette' : './libs/marionette/backbone.marionette',
-    'mathjax' : '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML&amp;delayStartupUntil=configured',
-    'mocha': './libs/mocha/mocha',
-    'moment' : './libs/momentjs/moment',
-    'persist-js': './libs/persist-js/src/persist',
-    'react' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-with-addons.min',
-    'react-backbone': 'libs/react-backbone/react.backbone',
-    'react-dom' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min',
-    'react-prop-types': './libs/react-prop-types/index',
-    'react-redux' : './libs/react-redux/index',
-    'redux' : './libs/redux/index',
-    'redux-thunk' : './libs/redux-thunk/index',
-    'select2' : './libs/select2/select2',
-    'sinon': '../bower_components/sinon/index',
-    'sprintf': './libs/sprintf/sprintf',
-    'squire': '../bower_components/squire/src/Squire'
+    // 'async': './libs/requirejs-plugins/async',
+    // 'babel': './libs/requirejs-babel-plugin/babel-5.8.34.min',
+    // 'backbone': './libs/backbone/backbone',
+    // 'backbone-validation': './libs/backbone-validation/backbone-validation',
+    // // 'backbone.babysitter' : './libs/backbone.babysitter/backbone.babysitter',
+    // // 'backbone.eventbinder' : 'libs/backbone.eventbinder/backbone.eventbinder',
+    // 'backbone.stickit' : './libs/backbone.stickit/backbone.stickit',
+    // // 'backbone.wreqr' : './libs/backbone.wreqr/lib/backbone.wreqr',
+    // 'bootstrap': './libs/bootstrap/bootstrap',
+    // 'cache': './libs/dsjslib/lib/Cache',
+    // 'chai': '../bower_components/chai/chai',
+    // 'classnames': '../bower_components/classnames/index',
+    // 'clipboard': './libs/clipboard/clipboard',
+    // 'create-react-class': './libs/create-react-class/index',
+    // 'd3':'./libs/d3/d3',
+    // 'd3-cloud' : './libs/d3-cloud/d3.layout.cloud',
+    // 'enzyme': './libs/enzyme/enzyme',
+    // 'es5-shim' : './libs/es5-shim/es5-shim',
+    // 'es6': './libs/requirejs-babel-plugin/es6',
+    // 'filesaver' : './libs/FileSaver/FileSaver',
+    // 'google-analytics': "//www.google-analytics.com/analytics",
+    // 'google-recaptcha' : '//www.google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
+    // 'hbs': './libs/require-handlebars-plugin/hbs',
+    // 'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min',
+    // 'jquery-querybuilder': './libs/jQuery-QueryBuilder/query-builder',
+    // 'jquery-ui' : '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min',
+    // 'jsonpath': './libs/jsonpath/jsonpath',
+    // 'marionette' : './libs/marionette/backbone.marionette',
+    // 'mathjax' : '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML&amp;delayStartupUntil=configured',
+    // 'mocha': './libs/mocha/mocha',
+    // 'moment' : './libs/momentjs/moment',
+    // 'persist-js': './libs/persist-js/src/persist',
+    // 'react' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-with-addons.min',
+    // 'react-backbone': 'libs/react-backbone/react.backbone',
+    // 'react-dom' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min',
+    // 'react-prop-types': './libs/react-prop-types/index',
+    // 'react-redux' : './libs/react-redux/index',
+    // 'redux' : './libs/redux/index',
+    // 'redux-thunk' : './libs/redux-thunk/index',
+    // 'select2' : './libs/select2/select2',
+    // 'sinon': '../bower_components/sinon/index',
+    // 'sprintf': './libs/sprintf/sprintf',
+    // 'squire': '../bower_components/squire/src/Squire'
   },
 
   hbs: {
-    'templateExtension' : 'html',
+    templateExtension: 'html',
     helpers: false
+  },
+
+  es6: {
+    fileExtension: '.jsx.js'
+  },
+
+  babel: {
+    presets: ['es2015', 'react'],
+    plugins: ['transform-es2015-modules-amd']
   },
 
   shim: {
@@ -124,7 +219,7 @@ require.config({
     'mocha': {
       exports: 'mocha'
     },
-    'backbone.stickit' : {
+    'backbone-stickit' : {
       deps : ['backbone']
     },
     'backbone-validation' : {
@@ -193,11 +288,7 @@ require.config({
 
   callback: function() {
 
-    require([
-      'hbs/handlebars'
-              ], function(
-        Handlebars
-    ) {
+    require(['handlebars'], function (Handlebars) {
 
       // register helpers
       // http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/#comment-44
@@ -241,7 +332,7 @@ require.config({
     });
 
     //set validation callbacks used by authentication and user settings widgets
-    require(['backbone-validation'], function(){
+    require(['backbone-validation'], function () {
 
       //this allows for instant validation of form fields using the backbone-validation plugin
       _.extend(Backbone.Validation.callbacks, {

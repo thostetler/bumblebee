@@ -6,15 +6,34 @@
  */
 module.exports = function (grunt) {
 
-  var rename = function (name) {
+  var rename = function (name, val) {
     return function (dest, src) {
-      return dest + src.replace(name, 'index');
+      return dest + src.replace(name, val || 'index');
     }
   };
 
   return {
     libraries: {
+      options: {
+        processContent: function (content, src) {
+          switch(src) {
+            case 'node_modules/require-handlebars-plugin/hbs.js':
+              return content.replace(/hbs\//g, '');
+            default:
+              return content;
+          }
+        }
+      },
       files: [
+
+        // Babel
+        {
+          cwd: 'node_modules/babel-standalone',
+          src: 'babel.min.js',
+          dest: 'src/libs/babel/',
+          expand: true,
+          rename: rename('babel.min')
+        },
 
         // Lodash
         {
@@ -22,7 +41,6 @@ module.exports = function (grunt) {
           src: 'lodash.min.js',
           dest: 'src/libs/lodash/',
           expand: true,
-          flatten: true,
           rename: rename('lodash.min')
         },
 
@@ -44,13 +62,31 @@ module.exports = function (grunt) {
           rename: rename('async')
         },
 
-        // Requirejs/plugins#json
+        // RequireJs/plugins#es6
         {
-          cwd: 'node_modules/requirejs-plugins/src',
-          src: 'json.js',
-          dest: 'src/libs/requirejs/plugins/json/',
+          cwd: 'node_modules/requirejs-babel',
+          src: 'es6.js',
+          dest: 'src/libs/requirejs/plugins/es6/',
           expand: true,
-          rename: rename('json')
+          rename: rename('es6')
+        },
+
+        // Requirejs/plugins#text
+        {
+          cwd: 'node_modules/requirejs-plugins/lib',
+          src: 'text.js',
+          dest: 'src/libs/requirejs/plugins/text/',
+          expand: true,
+          rename: rename('text')
+        },
+
+        // RequireJs/plugins#hbs
+        {
+          cwd: 'node_modules/require-handlebars-plugin',
+          src: 'hbs.js',
+          dest: 'src/libs/requirejs/plugins/hbs/',
+          expand: true,
+          rename: rename('hbs')
         },
 
         // React
@@ -77,7 +113,7 @@ module.exports = function (grunt) {
           src: 'prop-types.js',
           dest: 'src/libs/react/prop-types/',
           expand: true,
-          rename: rename('react-prop-types')
+          rename: rename('prop-types')
         },
 
         // React/redux
@@ -143,6 +179,24 @@ module.exports = function (grunt) {
           rename: rename('backbone.stickit')
         },
 
+        // Backbone/marionette
+        {
+          cwd: 'node_modules/backbone.marionette/lib',
+          src: 'backbone.marionette.min.js',
+          dest: 'src/libs/backbone/marionette/',
+          expand: true,
+          rename: rename('backbone.marionette.min')
+        },
+
+        // Backbone/radio
+        {
+          cwd: 'node_modules/backbone.radio/build',
+          src: 'backbone.radio.min.js',
+          dest: 'src/libs/backbone/radio/',
+          expand: true,
+          rename: rename('backbone.radio.min')
+        },
+
         // Cache
         {
           cwd: 'node_modules/dsjslib/lib',
@@ -162,7 +216,7 @@ module.exports = function (grunt) {
 
         // Bootstrap JS
         {
-          cwd: 'node_modules/bootstrap-sass/assets',
+          cwd: 'node_modules/bootstrap-sass/assets/javascripts',
           src: 'bootstrap.min.js',
           dest: 'src/libs/bootstrap/',
           expand: true,
@@ -173,9 +227,18 @@ module.exports = function (grunt) {
         {
           cwd: 'node_modules/bootstrap-sass/assets/stylesheets',
           src: ['**'],
-          dest: 'src/styles/sass/bootstrap/',
+          dest: 'src/styles/vendor/bootstrap/',
           expand: true,
-          rename: rename('_bootstrap')
+          rename: rename('_bootstrap.scss', 'index.scss')
+        },
+
+        // jQuery
+        {
+          cwd: 'node_modules/jquery/dist',
+          src: 'jquery.min.js',
+          dest: 'src/libs/jquery/',
+          expand: true,
+          rename: rename('jquery.min')
         },
 
         // jQueryui JS
@@ -190,114 +253,140 @@ module.exports = function (grunt) {
         {
           cwd: 'node_modules/jquery-ui/themes/base',
           src: ['**'],
-          dest: 'src/styles/jqueryui/',
+          dest: 'src/styles/vendor/jqueryui/',
           expand: true
         },
 
+        // Select2 JS
+        {
+          cwd: 'node_modules/select2/dist/js',
+          src: 'select2.min.js',
+          dest: 'src/libs/select2/',
+          expand: true,
+          rename: rename('select2.min')
+        },
 
-        // {
-        //   src: 'bower_components/marionette/lib/*',
-        //   dest: 'src/libs/marionette/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   src: 'bower_components/backbone.babysitter/lib/*',
-        //   dest: 'src/libs/backbone.babysitter/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   src: [
-        //     'bower_components/bootstrap/dist/css/*',
-        //     'bower_components/bootstrap/dist/fonts/*',
-        //     'bower_components/bootstrap/dist/js/*'
-        //   ],
-        //   dest: 'src/libs/bootstrap/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   src: ['bower_components/d3/*.js'],
-        //   dest: 'src/libs/d3/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   src: ['bower_components/requirejs-plugins/src/*.js'],
-        //   dest: 'src/libs/requirejs-plugins/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        //
-        // {
-        //   src: ['bower_components/fontawesome/scss/*'],
-        //   dest: 'src/libs/fontawesome/scss/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   src: ['bower_components/fontawesome/fonts/*'],
-        //   dest: 'src/libs/fontawesome/fonts',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   cwd: 'bower_components/bootstrap-sass/assets/stylesheets/',
-        //   src: ['*', '**'],
-        //   expand: true
-        // },
-        // {
-        //   src: ['bower_components/react/*.js'],
-        //   dest: 'src/libs/react/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   src: ['bower_components/requirejs-babel/*.js'],
-        //   dest: 'src/libs/requirejs-babel-plugin/',
-        //   expand: true,
-        //   flatten: true
-        // },
-        // {
-        //   cwd: 'node_modules/create-react-class',
-        //   src: 'create-react-class.js',
-        //   dest: 'src/libs/create-react-class/',
-        //   expand: true,
-        //   rename: function (dest, src) {
-        //     return dest + src.replace('create-react-class', 'index');
-        //   }
-        // },
-        // {
-        //   cwd: 'node_modules/prop-types',
-        //   src: 'prop-types.js',
-        //   dest: 'src/libs/react-prop-types/',
-        //   expand: true,
-        //   rename: function (dest, src) {
-        //     return dest + src.replace('prop-types', 'index');
-        //   }
-        // },
-        // {
-        //   src: ['bower_components/select2/**/*.js', 'bower_components/select2/**/*.css'],
-        //   dest: 'src/libs/select2/',
-        //   expand: true,
-        //   flatten : true
-        // },
-        // {
-        //   cwd: 'node_modules/jsonpath',
-        //   src: 'jsonpath*.js',
-        //   dest: 'src/libs/jsonpath',
-        //   expand: true
-        // },
-        // {
-        //   cwd: 'node_modules/prop-types',
-        //   src: 'prop-types.js',
-        //   dest: 'src/libs/react-prop-types/',
-        //   expand: true,
-        //   rename: function (dest, src) {
-        //     return dest + src.replace('prop-types', 'index');
-        //   }
-        // }
+        // Select2 JS (Old Matcher)
+        {
+          cwd: 'node_modules/select2/src/js/select2/compat',
+          src: 'matcher.js',
+          dest: 'src/libs/select2/matcher/',
+          expand: true,
+          rename: rename('matcher')
+        },
+
+        // Select2 Styles
+        {
+          cwd: 'node_modules/select2/dist/css',
+          src: 'select2.min.css',
+          dest: 'src/styles/vendor/select2/',
+          expand: true,
+          rename: rename('select2.min')
+        },
+
+        // Font-Awesome
+        {
+          cwd: 'node_modules/font-awesome',
+          src: ['scss/*', 'fonts/*'],
+          dest: 'src/styles/vendor/font-awesome/',
+          expand: true,
+          rename: rename('font-awesome')
+        },
+
+        // Moment
+        {
+          cwd: 'node_modules/moment/min',
+          src: 'moment.min.js',
+          dest: 'src/libs/moment/',
+          expand: true,
+          rename: rename('moment.min')
+        },
+
+        // Handlebars
+        {
+          cwd: 'node_modules/handlebars/dist',
+          src: 'handlebars.amd.min.js',
+          dest: 'src/libs/handlebars/',
+          expand: true,
+          rename: rename('handlebars.amd.min')
+        },
+
+        // D3
+        {
+          cwd: 'node_modules/d3/build',
+          src: 'd3.min.js',
+          dest: 'src/libs/d3/',
+          expand: true,
+          rename: rename('d3.min')
+        },
+
+        // D3/cloud
+        {
+          cwd: 'node_modules/d3-cloud/build',
+          src: 'd3.layout.cloud.js',
+          dest: 'src/libs/d3/cloud/',
+          expand: true,
+          rename: rename('d3.layout.cloud')
+        },
+
+        // MathJax
+        {
+          cwd: 'node_modules/mathjax',
+          src: 'MathJax.js',
+          dest: 'src/libs/mathjax/',
+          expand: true,
+          rename: rename('MathJax')
+        },
+
+        // SprintF
+        {
+          cwd: 'node_modules/sprintf-js/dist',
+          src: 'sprintf.min.js',
+          dest: 'src/libs/sprintf/',
+          expand: true,
+          rename: rename('sprintf.min')
+        },
+
+        // Persist-Js
+        {
+          cwd: 'node_modules/persist-js',
+          src: 'persist-min.js',
+          dest: 'src/libs/persist/',
+          expand: true,
+          rename: rename('persist-min')
+        },
+
+        // Redux
+        {
+          cwd: 'node_modules/redux/dist',
+          src: 'redux.min.js',
+          dest: 'src/libs/redux/',
+          expand: true,
+          rename: rename('redux.min')
+        },
+
+        // Redux/thunk
+        {
+          cwd: 'node_modules/redux-thunk/dist',
+          src: 'redux-thunk.min.js',
+          dest: 'src/libs/redux/thunk/',
+          expand: true,
+          rename: rename('redux-thunk.min')
+        },
+
+        // Redux/thunk
+        {
+          cwd: 'node_modules/JSON2',
+          src: 'json2.js',
+          dest: 'src/libs/json2/',
+          expand: true,
+          rename: rename('json2')
+        },
+
+
+
+
+
       ]
     },
 
