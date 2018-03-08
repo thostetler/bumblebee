@@ -16,12 +16,17 @@ module.exports = function (grunt) {
     libraries: {
       options: {
         processContent: function (content, src) {
-          switch(src) {
-            case 'node_modules/require-handlebars-plugin/hbs.js':
-              return content.replace(/hbs\//g, '');
-            default:
-              return content;
+
+          if (/require-handlebars-plugin\/hbs.js/.test(src)) {
+            return content
+              .replace(/hbs\//g, '')
+              .replace('json2', 'hbs.json2');
+          } else if (/mathjax\//.test(src)) {
+            return content
+              .replace(/\[MathJax]/g, 'libs/mathjax');
           }
+
+          return content;
         }
       },
       files: [
@@ -29,10 +34,10 @@ module.exports = function (grunt) {
         // Babel
         {
           cwd: 'node_modules/babel-standalone',
-          src: 'babel.min.js',
+          src: 'babel.js',
           dest: 'src/libs/babel/',
           expand: true,
-          rename: rename('babel.min')
+          rename: rename('babel')
         },
 
         // Lodash
@@ -64,7 +69,7 @@ module.exports = function (grunt) {
 
         // RequireJs/plugins#es6
         {
-          cwd: 'node_modules/requirejs-babel',
+          cwd: 'node_modules/requirejs-babel-plugin',
           src: 'es6.js',
           dest: 'src/libs/requirejs/plugins/es6/',
           expand: true,
@@ -83,9 +88,10 @@ module.exports = function (grunt) {
         // RequireJs/plugins#hbs
         {
           cwd: 'node_modules/require-handlebars-plugin',
-          src: 'hbs.js',
+          src: ['hbs.js', 'hbs/json2.js'],
           dest: 'src/libs/requirejs/plugins/hbs/',
           expand: true,
+          flatten: true,
           rename: rename('hbs')
         },
 
@@ -145,11 +151,11 @@ module.exports = function (grunt) {
 
         // Filesaver
         {
-          cwd: 'node_modules/filesaver/src',
-          src: 'Filesaver.js',
+          cwd: 'node_modules/file-saver',
+          src: 'FileSaver.min.js',
           dest: 'src/libs/filesaver/',
           expand: true,
-          rename: rename('Filesaver')
+          rename: rename('FileSaver.min')
         },
 
         // Backbone
@@ -332,10 +338,19 @@ module.exports = function (grunt) {
         // MathJax
         {
           cwd: 'node_modules/mathjax',
-          src: 'MathJax.js',
+          src: [ 'MathJax.js', 'extensions/**', 'jax/**' ],
           dest: 'src/libs/mathjax/',
           expand: true,
           rename: rename('MathJax')
+        },
+
+        // ClipboardJs
+        {
+          cwd: 'node_modules/clipboard/dist',
+          src: 'clipboard.min.js',
+          dest: 'src/libs/clipboard/',
+          expand: true,
+          rename: rename('clipboard.min')
         },
 
         // SprintF
@@ -373,20 +388,6 @@ module.exports = function (grunt) {
           expand: true,
           rename: rename('redux-thunk.min')
         },
-
-        // Redux/thunk
-        {
-          cwd: 'node_modules/JSON2',
-          src: 'json2.js',
-          dest: 'src/libs/json2/',
-          expand: true,
-          rename: rename('json2')
-        },
-
-
-
-
-
       ]
     },
 

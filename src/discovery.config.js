@@ -6,7 +6,7 @@ require.config({
   // as a test, then load the test unittests
   deps: (function(){
 
-    if (typeof window !== "undefined" && window.skipMain){
+    if (typeof window !== 'undefined' && window.skipMain){
       return [];
     }
     else {
@@ -16,15 +16,11 @@ require.config({
   }()),
 
   //this will be overridden in the compiled file
-  waitSeconds: 30,
+  waitSeconds: 90,
 
   // Configuration we want to make available to modules of ths application
   // see: http://requirejs.org/docs/api.html#config-moduleconfig
   config: {
-
-    'es6': {
-      modules: undefined
-    },
 
     'js/components/persistent_storage': {
       // the unique namespace under which the local storage will be created
@@ -44,13 +40,6 @@ require.config({
   },
 
   paths: {
-
-    //TODO: these libs will need manual optimization (they dont come with minified sources)
-    //TODO: require-handlebars-js, d3-cloud, jquery-hoverIntent, dsjslib/cache, query-builder
-
-    // bumblebee components (here we'll lists simple names), paths are relative
-    // to the config (the module that bootstraps our application; look at the html)
-    // as a convention, all modules should be loaded using 'symbolic' names
     'appModules': './modules.config',
     'main': './js/apps/discovery/main',
     'router': './js/apps/discovery/router',
@@ -64,16 +53,16 @@ require.config({
     'async': [
       'https://cdnjs.cloudflare.com/ajax/libs/requirejs-plugins/1.0.3/async.min',
       './libs/requirejs/plugins/async/index'
-      ],
+    ],
 
     'react': [
       'https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.production.min',
       './libs/react/index'
-      ],
+    ],
 
     'create-react-class': './libs/react/create-react-class/index',
 
-    'prop-types': './libs/react/prop-types/index',
+    'react-prop-types': './libs/react/prop-types/index',
 
     'react-redux': './libs/react/redux/index',
 
@@ -111,6 +100,8 @@ require.config({
 
     'hbs': './libs/requirejs/plugins/hbs/index',
 
+    'hbs.json2': './libs/requirejs/plugins/hbs/json2',
+
     'handlebars': './libs/handlebars/index',
 
     'd3': './libs/d3/index',
@@ -146,54 +137,7 @@ require.config({
 
     'redux-thunk': './libs/redux/thunk/index',
 
-    'json2': './libs/json2/index'
-
-    // 3rd party dependencies
-    // I can't for the life of my figure out how to swap non-minified libs in dev
-    // to minified libs in the r.js optimize task
-    // 'async': './libs/requirejs-plugins/async',
-    // 'babel': './libs/requirejs-babel-plugin/babel-5.8.34.min',
-    // 'backbone': './libs/backbone/backbone',
-    // 'backbone-validation': './libs/backbone-validation/backbone-validation',
-    // // 'backbone.babysitter' : './libs/backbone.babysitter/backbone.babysitter',
-    // // 'backbone.eventbinder' : 'libs/backbone.eventbinder/backbone.eventbinder',
-    // 'backbone.stickit' : './libs/backbone.stickit/backbone.stickit',
-    // // 'backbone.wreqr' : './libs/backbone.wreqr/lib/backbone.wreqr',
-    // 'bootstrap': './libs/bootstrap/bootstrap',
-    // 'cache': './libs/dsjslib/lib/Cache',
-    // 'chai': '../bower_components/chai/chai',
-    // 'classnames': '../bower_components/classnames/index',
-    // 'clipboard': './libs/clipboard/clipboard',
-    // 'create-react-class': './libs/create-react-class/index',
-    // 'd3':'./libs/d3/d3',
-    // 'd3-cloud' : './libs/d3-cloud/d3.layout.cloud',
-    // 'enzyme': './libs/enzyme/enzyme',
-    // 'es5-shim' : './libs/es5-shim/es5-shim',
-    // 'es6': './libs/requirejs-babel-plugin/es6',
-    // 'filesaver' : './libs/FileSaver/FileSaver',
-    // 'google-analytics': "//www.google-analytics.com/analytics",
-    // 'google-recaptcha' : '//www.google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
-    // 'hbs': './libs/require-handlebars-plugin/hbs',
-    // 'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min',
-    // 'jquery-querybuilder': './libs/jQuery-QueryBuilder/query-builder',
-    // 'jquery-ui' : '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min',
-    // 'jsonpath': './libs/jsonpath/jsonpath',
-    // 'marionette' : './libs/marionette/backbone.marionette',
-    // 'mathjax' : '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML&amp;delayStartupUntil=configured',
-    // 'mocha': './libs/mocha/mocha',
-    // 'moment' : './libs/momentjs/moment',
-    // 'persist-js': './libs/persist-js/src/persist',
-    // 'react' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-with-addons.min',
-    // 'react-backbone': 'libs/react-backbone/react.backbone',
-    // 'react-dom' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min',
-    // 'react-prop-types': './libs/react-prop-types/index',
-    // 'react-redux' : './libs/react-redux/index',
-    // 'redux' : './libs/redux/index',
-    // 'redux-thunk' : './libs/redux-thunk/index',
-    // 'select2' : './libs/select2/select2',
-    // 'sinon': '../bower_components/sinon/index',
-    // 'sprintf': './libs/sprintf/sprintf',
-    // 'squire': '../bower_components/squire/src/Squire'
+    'clipboard': './libs/clipboard/index'
   },
 
   hbs: {
@@ -202,19 +146,18 @@ require.config({
   },
 
   es6: {
-    fileExtension: '.jsx.js'
+    // fileExtension: '.js'
   },
 
   babel: {
-    presets: ['es2015', 'react'],
-    plugins: ['transform-es2015-modules-amd']
+    presets: ['es2015-loose', 'stage-3', 'react']
   },
 
   shim: {
 
-    "Backbone": {
-      deps: ["backbone"],
-      exports: "Backbone"
+    'Backbone': {
+      deps: ['backbone'],
+      exports: 'Backbone'
     },
     'mocha': {
       exports: 'mocha'
@@ -266,18 +209,18 @@ require.config({
     },
 
     mathjax: {
-        exports: "MathJax",
+        exports: 'MathJax',
         init: function () {
           MathJax.Hub.Config({
-            HTML: ["input/TeX","output/HTML-CSS"],
-            TeX: { extensions: ["AMSmath.js","AMSsymbols.js"],
-              equationNumbers: { autoNumber: "AMS" } },
-            extensions: ["tex2jax.js"],
-            jax: ["input/TeX","output/HTML-CSS"],
-            tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-              displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            HTML: ['input/TeX','output/HTML-CSS'],
+            TeX: { extensions: ['AMSmath.js','AMSsymbols.js'],
+              equationNumbers: { autoNumber: 'AMS' } },
+            extensions: ['tex2jax.js'],
+            jax: ['input/TeX','output/HTML-CSS'],
+            tex2jax: { inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+              displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
               processEscapes: true },
-            "HTML-CSS": { availableFonts: ["TeX"],
+            'HTML-CSS': { availableFonts: ['TeX'],
               linebreaks: { automatic: true } }
           });
           MathJax.Hub.Startup.onload();
@@ -287,22 +230,21 @@ require.config({
   },
 
   callback: function() {
-
     require(['handlebars'], function (Handlebars) {
 
       // register helpers
       // http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/#comment-44
 
-      //eg  (where current is a variable): {{#compare current 1 operator=">"}}
+      //eg  (where current is a variable): {{#compare current 1 operator='>'}}
 
       Handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
         var operators, result, operator;
         if (arguments.length < 3) {
-          throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+          throw new Error('Handlerbars Helper \'compare\' needs 2 parameters');
         }
 
         if (options === undefined || !options.hash || !options.hash.operator) {
-          operator = "===";
+          operator = '===';
         }
         else {
           operator = options.hash.operator;
@@ -320,7 +262,7 @@ require.config({
           'typeof': function (l, r) { return typeof l == r; }
         };
         if (!operators[operator]) {
-          throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+          throw new Error('Handlerbars Helper \'compare\' doesn\'t know the operator ' + operator);
         }
         result = operators[operator](lvalue, rvalue);
         if (result) {
@@ -358,6 +300,5 @@ require.config({
         }
       });
     });
-
   }
 });

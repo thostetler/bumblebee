@@ -9,9 +9,6 @@ module.exports = {
   convert_cache: {
     cmd: 'node node_modules/requirejs/bin/r.js -convert src/libs/cache src/libs/cache'
   },
-  convert_json2: {
-    cmd: 'node node_modules/requirejs/bin/r.js -convert src/libs/json2 src/libs/json2'
-  },
   latest_commit: {
     cmd: 'git rev-parse --short=7 --verify HEAD | cat > git-latest-commit'
   },
@@ -33,10 +30,4 @@ module.exports = {
   'coveralls-report': {
     cmd: 'cat test/coverage/reports/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
   },
-  'kubernetes-build': {
-    cmd: 'git checkout kubernetes && git rebase origin master'
-  },
-  'return-to-working-branch': {
-    cmd: 'git checkout -'
-  }
 };
