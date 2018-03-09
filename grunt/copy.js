@@ -48,10 +48,11 @@ module.exports = function (grunt) {
 
         // Lodash
         {
-          cwd: 'node_modules/lodash',
-          src: 'index.js',
+          cwd: 'node_modules/lodash/dist',
+          src: 'lodash.compat.min.js',
           dest: 'src/libs/lodash/',
-          expand: true
+          expand: true,
+          rename: rename('lodash.compat.min')
         },
 
         // Requirejs
@@ -103,10 +104,10 @@ module.exports = function (grunt) {
         // React
         {
           cwd: 'node_modules/react/dist',
-          src: 'react.min.js',
+          src: 'react-with-addons.min.js',
           dest: 'src/libs/react/',
           expand: true,
-          rename: rename('react.min')
+          rename: rename('react-with-addons.min')
         },
 
         // React/create-react-class
@@ -217,12 +218,22 @@ module.exports = function (grunt) {
           rename: rename('Cache')
         },
 
-        // Enzyme
+        // jQuery-QueryBuilder JS
         {
-          cwd: 'node_modules/enzyme/build',
-          src: '*.js',
-          dest: 'src/libs/enzyme/',
-          expand: true
+          cwd: 'node_modules/jQuery-QueryBuilder/dist',
+          src: 'query-builder.min.js',
+          dest: 'src/libs/jquery/query-builder/',
+          expand: true,
+          rename: rename('query-builder.min')
+        },
+
+        // jQuery-QueryBuilder Styles
+        {
+          cwd: 'node_modules/jQuery-QueryBuilder/dist',
+          src: 'query-builder.min.css',
+          dest: 'src/styles/vendor/jquery-query-builder/',
+          expand: true,
+          rename: rename('query-builder.min')
         },
 
         // Bootstrap JS
@@ -315,16 +326,16 @@ module.exports = function (grunt) {
 
         // Handlebars
         {
-          cwd: 'node_modules/handlebars/dist',
-          src: 'handlebars.amd.min.js',
+          cwd: 'node_modules/require-handlebars-plugin/hbs/',
+          src: 'handlebars.js',
           dest: 'src/libs/handlebars/',
           expand: true,
-          rename: rename('handlebars.amd.min')
+          rename: rename('handlebars')
         },
 
         // D3
         {
-          cwd: 'node_modules/d3/build',
+          cwd: 'node_modules/d3',
           src: 'd3.min.js',
           dest: 'src/libs/d3/',
           expand: true,

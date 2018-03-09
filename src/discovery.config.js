@@ -127,7 +127,7 @@ require.config({
 
     'persist-js': './libs/persist/index',
 
-    'jquery-querybuilder': './libs/jquery/index',
+    'jquery-querybuilder': './libs/jquery/query-builder/index',
 
     'marionette': './libs/backbone/marionette/index',
 
@@ -144,7 +144,8 @@ require.config({
 
   hbs: {
     templateExtension: 'html',
-    helpers: false
+    helpers: false,
+    partialsUrl: ''
   },
 
   es6: {
@@ -171,7 +172,11 @@ require.config({
       deps : ['backbone']
     },
     'bootstrap' : {
-      deps: ['jquery', 'jquery-ui']
+      deps: ['jquery', 'jquery-ui'],
+      exports: 'jquery'
+    },
+    'filesaver': {
+      exports: 'saveAs'
     },
     // This is required to ensure Backbone works as expected within the AMD
     // environment.
@@ -191,7 +196,6 @@ require.config({
 
     'jquery-querybuilder': {
       deps: ['jquery']
-
     },
 
     'd3-cloud' : {
@@ -199,7 +203,8 @@ require.config({
     },
     
     'jquery-ui' : {
-      deps: ['jquery']
+      deps: ['jquery'],
+      exports: 'jquery'
     },
 
     'sprintf': {
@@ -235,7 +240,11 @@ require.config({
   },
 
   callback: function() {
-    require(['handlebars'], function (Handlebars) {
+    require([
+      'handlebars',
+      'hbs!js/widgets/list_of_things/templates/pagination-partial',
+      'hbs!js/widgets/library_import/templates/authentication-form-partial'
+    ], function (Handlebars) {
 
       // register helpers
       // http://doginthehat.com.au/2012/02/comparison-block-helper-for-handlebars-templates/#comment-44

@@ -15,6 +15,9 @@ $fa-font-path: '../vendor/font-awesome/fonts';
 @import '../vendor/jqueryui/core.css';
 @import '../vendor/jqueryui/theme.css';
 
+/* Import jQuery-Query-Builder */
+@import '../vendor/jquery-query-builder/index.css';
+
 /* Import stuff that should be accessible by modules below */
 @import 'ads-sass/ads-variables';
 @import 'ads-sass/ads-mixins';

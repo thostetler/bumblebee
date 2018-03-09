@@ -454,15 +454,15 @@ define([
        * Utility method to load CSS into the page in which the plugin is used.
        */
       loadCss: function() {
-        var url = require.toUrl('jquery-querybuilder') + '.css';
-
-        if ($(document.getElementsByTagName("head")[0]).find('link[href=\''+url+'\']').length == 0) {
-          var link = document.createElement("link");
-          link.type = "text/css";
-          link.rel = "stylesheet";
-          link.href = url;
-          document.getElementsByTagName("head")[0].appendChild(link);
-        }
+        // var url = require.toUrl('jquery-querybuilder') + '.css';
+        //
+        // if ($(document.getElementsByTagName("head")[0]).find('link[href=\''+url+'\']').length == 0) {
+        //   var link = document.createElement("link");
+        //   link.type = "text/css";
+        //   link.rel = "stylesheet";
+        //   link.href = url;
+        //   document.getElementsByTagName("head")[0].appendChild(link);
+        // }
       },
 
       /**

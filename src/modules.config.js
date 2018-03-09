@@ -52,7 +52,7 @@ define(function (require) {
       UserNavbarWidget: require('js/widgets/user_navbar/widget'),
       AlertsWidget: require('js/widgets/alerts/widget'),
       ClassicSearchForm: require('js/widgets/classic_form/widget'),
-      //SearchWidget: require('js/widgets/search_bar/search_bar_widget'),
+      SearchWidget: require('js/widgets/search_bar/search_bar_widget'),
       PaperSearchForm: require('js/widgets/paper_search_form/widget'),
       Results: require('js/widgets/results/widget'),
       QueryInfo: require('js/widgets/query_info/query_info_widget'),
