@@ -49,10 +49,10 @@ module.exports = function (grunt) {
         // Lodash
         {
           cwd: 'node_modules/lodash/dist',
-          src: 'lodash.compat.min.js',
+          src: 'lodash.min.js',
           dest: 'src/libs/lodash/',
           expand: true,
-          rename: rename('lodash.compat.min')
+          rename: rename('lodash.min')
         },
 
         // Requirejs
@@ -354,7 +354,7 @@ module.exports = function (grunt) {
         // MathJax
         {
           cwd: 'node_modules/mathjax',
-          src: [ 'MathJax.js', 'extensions/**', 'jax/**' ],
+          src: [ 'MathJax.js', 'extensions/**', 'jax/**', 'fonts/**' ],
           dest: 'src/libs/mathjax/',
           expand: true,
           rename: rename('MathJax')
