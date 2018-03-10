@@ -1,5 +1,5 @@
 
-$fa-font-path: '../vendor/font-awesome/fonts';
+$fa-font-path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts' !default;
 
 /* Import Font-Awesome Icons */
 @import '../vendor/font-awesome/scss/index';

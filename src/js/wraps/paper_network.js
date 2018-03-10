@@ -7,7 +7,8 @@ define([
     'hbs!js/widgets/network_vis/templates/not-enough-data-template',
     'hbs!js/wraps/templates/paper-network-link-data',
     'js/components/api_targets',
-    'bootstrap'
+    'bootstrap',
+    'd3'
   ],
   function (
     Marionette,
@@ -18,7 +19,8 @@ define([
     NotEnoughDataTemplate,
     LinkDataTemplate,
     ApiTargets,
-    bs) {
+    bs,
+    d3) {
 
     var options = {};
 

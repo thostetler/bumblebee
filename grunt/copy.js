@@ -15,7 +15,8 @@ module.exports = function (grunt) {
   return {
     libraries: {
       options: {
-        processContent: function (content, src) {
+        noProcess: ['**/*.{png,gif,jpg,ico,psd,otf,eot,svg,ttf,woff}'],
+        process: function (content, src) {
 
           if (/require-handlebars-plugin\/hbs.js/.test(src)) {
             return content
@@ -357,7 +358,7 @@ module.exports = function (grunt) {
           src: [ 'MathJax.js', 'extensions/**', 'jax/**', 'fonts/**' ],
           dest: 'src/libs/mathjax/',
           expand: true,
-          rename: rename('MathJax')
+          rename: rename('MathJax.js', 'index.js')
         },
 
         // ClipboardJs
