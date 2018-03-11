@@ -12,8 +12,8 @@ $fa-font-path: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts'
 @import '../vendor/select2/index';
 
 /* Import jQueryUI */
-@import '../vendor/jqueryui/core.css';
-@import '../vendor/jqueryui/theme.css';
+@import '../smoothness/jquery-ui.min.css';
+@import '../smoothness/jquery.ui.theme.css';
 
 /* Import jQuery-Query-Builder */
 @import '../vendor/jquery-query-builder/index.css';

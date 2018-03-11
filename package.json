@@ -30,7 +30,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "jQuery-QueryBuilder": "https://github.com/romanchyla/jQuery-QueryBuilder.git#master",
     "jquery": "3.3.1",
-    "jquery-ui": "1.12.1",
+    "jquery-ui-dist": "https://registry.npmjs.org/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz",
     "jsonpath": "0.2.12",
     "lodash": "2.4.2",
     "mathjax": "2.5.1",

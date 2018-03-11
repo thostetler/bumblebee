@@ -609,6 +609,11 @@
       "from": "jquery-ui@1.12.1",
       "resolved": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.12.1.tgz"
     },
+    "jquery-ui-dist": {
+      "version": "1.12.1",
+      "from": "https://registry.npmjs.org/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz",
+      "resolved": "https://registry.npmjs.org/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz"
+    },
     "js-tokens": {
       "version": "3.0.2",
       "from": "js-tokens@>=3.0.0 <4.0.0",

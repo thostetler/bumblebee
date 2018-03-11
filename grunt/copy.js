@@ -266,18 +266,11 @@ module.exports = function (grunt) {
 
         // jQueryui JS
         {
-          cwd: 'node_modules/jquery-ui/ui',
-          src: ['*.js', 'effects/**', 'widgets/**'],
+          cwd: 'node_modules/jquery-ui-dist',
+          src: 'jquery-ui.min.js',
           dest: 'src/libs/jqueryui/',
-          expand: true
-        },
-
-        // jQueryui Styles
-        {
-          cwd: 'node_modules/jquery-ui/themes/base',
-          src: ['**'],
-          dest: 'src/styles/vendor/jqueryui/',
-          expand: true
+          expand: true,
+          rename: rename('jquery-ui.min')
         },
 
         // Select2 JS
@@ -355,7 +348,10 @@ module.exports = function (grunt) {
         // MathJax
         {
           cwd: 'node_modules/mathjax',
-          src: [ 'MathJax.js', 'extensions/**', 'jax/**', 'fonts/**' ],
+          src: [
+            'MathJax.js', 'extensions/**',
+            'jax/**', 'fonts/HTML-CSS/TeX/**'
+          ],
           dest: 'src/libs/mathjax/',
           expand: true,
           rename: rename('MathJax.js', 'index.js')

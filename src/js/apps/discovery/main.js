@@ -1,93 +1,3 @@
-// define([
-  // 'appModules',
-  // "main",
-  // "router",
-  // "analytics",
-  // "underscore",
-  // "async",
-  // "react",
-  // "create-react-class",
-  // "react-prop-types",
-  // "react-redux",
-  // "react-dom",
-  // "jsonpath",
-  // "filesaver",
-  // "backbone",
-  // "backbone-validation",
-  // "backbone-stickit",
-  // "backbone.radio",
-  // "cache",
-  // "enzyme",
-  // "bootstrap",
-  // "jquery",
-  // "select2",
-  // "select2/matcher",
-  // "babel",
-  // "es6",
-  // "moment",
-  // "hbs",
-  // "hbs.json2",
-  // "handlebars",
-  // "d3",
-  // "mathjax",
-  // "sprintf",
-  // "google-recaptcha",
-  // "google-analytics",
-  // "text",
-  // "jquery-ui",
-  // "persist-js",
-  // "jquery-querybuilder",
-  // "marionette",
-  // "d3-cloud",
-  // "redux",
-  // "redux-thunk",
-  // "clipboard",
-  // "es5-shim",
-// ], function () {
-  // console.log("main", arguments[0]);
-  // console.log("router", arguments[1]);
-  // console.log("analytics", arguments[2]);
-  // console.log("underscore", arguments[3]);
-  // console.log("async", arguments[4]);
-  // console.log("react", arguments[5]);
-  // console.log("create-react-class", arguments[6]);
-  // console.log("react-prop-types", arguments[7]);
-  // console.log("react-redux", arguments[8]);
-  // console.log("react-dom", arguments[9]);
-  // console.log("jsonpath", arguments[10]);
-  // console.log("filesaver", arguments[11]);
-  // console.log("backbone", arguments[12]);
-  // console.log("backbone-validation", arguments[13]);
-  // console.log("backbone-stickit", arguments[14]);
-  // console.log("backbone.radio", arguments[15]);
-  // console.log("cache", arguments[16]);
-  // console.log("enzyme", arguments[17]);
-  // console.log("bootstrap", arguments[18]);
-  // console.log("jquery", arguments[19]);
-  // console.log("select2", arguments[20]);
-  // console.log("select2/matcher", arguments[21]);
-  // console.log("babel", arguments[22]);
-  // console.log("es6", arguments[23]);
-  // console.log("moment", arguments[24]);
-  // console.log("hbs", arguments[25]);
-  // console.log("hbs.json2", arguments[26]);
-  // console.log("handlebars", arguments[27]);
-  // console.log("d3", arguments[28]);
-  // console.log("mathjax", arguments[29]);
-  // console.log("sprintf", arguments[30]);
-  // console.log("google-recaptcha", arguments[31]);
-  // console.log("google-analytics", arguments[32]);
-  // console.log("text", arguments[33]);
-  // console.log("jquery-ui", arguments[34]);
-  // console.log("persist-js", arguments[35]);
-  // console.log("jquery-querybuilder", arguments[36]);
-  // console.log("marionette", arguments[37]);
-  // console.log("d3-cloud", arguments[38]);
-  // console.log("redux", arguments[39]);
-  // console.log("redux-thunk", arguments[40]);
-  // console.log("clipboard", arguments[41]);
-  // console.log("es5-shim", arguments[42]);
-// });
 /**
  * Discovery application: main bootstrapping routine
  *
@@ -139,7 +49,6 @@ define(['appModules'], function(modules) {
 
         var pubsub = app.getService('PubSub');
         pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_LOADED);
-
 
         // set some important urls, parameters before doing anything
         app.configure();
