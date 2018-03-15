@@ -120,7 +120,7 @@ define([
           this.route = "#paper-form";
         });
 
-        this.set("LibraryImport", function(page,data){
+        this.set("LibraryImport", function(){
           if (redirectIfNotSignedIn())
             return;
           app.getObject('MasterPageManager').show("SettingsPage",
@@ -170,7 +170,7 @@ define([
           if (redirectIfNotSignedIn())
             return;
 
-          var subView = subView || "libraries";
+          subView = subView || "libraries";
           app.getObject('MasterPageManager').show("LibrariesPage",
             ["AllLibrariesWidget", "UserNavbarWidget"]);
           app.getWidget("AllLibrariesWidget").done(function(widget) {
@@ -182,7 +182,7 @@ define([
 
         });
 
-        this.set("LibraryAdminView", function(widget){
+        this.set("LibraryAdminView", function(){
 
           //this is NOT navigable from outside, so library already has data
           //only setting a nav event to hide previous widgets
@@ -237,8 +237,6 @@ define([
 
         //for external widgets shown by library
         function navToLibrarySubView (widget, data) {
-
-          var that = this;
 
           //actual name of widget to be shown in main area
           var widgetName = data.widgetName;
@@ -302,9 +300,9 @@ define([
         });
 
         this.set('authentication-page', function(page, data){
-          var data = data || {},
-              subView = data.subView || "login",
-              loggedIn = app.getBeeHive().getObject("User").isLoggedIn();
+          data = data || {};
+          var subView = data.subView || "login";
+          var loggedIn = app.getBeeHive().getObject("User").isLoggedIn();
 
           if (loggedIn){
             //redirect to index
@@ -320,17 +318,16 @@ define([
           }
         });
 
-        this.set('results-page', function(widget, args) {
+        this.set('results-page', function() {
 
           app.getObject('MasterPageManager').show('SearchPage',
             searchPageAlwaysVisible);
           //allowing widgets to override appstorage query (so far only used for orcid redirect)
           var q = app.getObject('AppStorage').getCurrentQuery();
+          var route = '#search/' + queryUpdater.clean(q).url();
           if (q && q.get("__original_url")) {
-            var route = '#search/' + q.get("__original_url");
+            route = '#search/' + q.get("__original_url");
             q.unset('__original_url');
-          } else {
-            var route = '#search/' + queryUpdater.clean(q).url();
           }
 
           //taking care of inserting bigquery key here, not sure if right place
@@ -579,22 +576,22 @@ define([
 
         }
 
-        this.set('show-author-network', function(command, options) {
+        this.set('show-author-network', function() {
           showResultsPageWidgetWithUniqueUrl.apply(this, arguments);
         });
 
-        this.set('show-concept-cloud', function(command, options) {
+        this.set('show-concept-cloud', function() {
           showResultsPageWidgetWithUniqueUrl.apply(this, arguments);
         });
 
-        this.set('show-paper-network', function(command, options) {
+        this.set('show-paper-network', function() {
           showResultsPageWidgetWithUniqueUrl.apply(this, arguments);
         });
 
-        this.set('show-bubble-chart', function(command, options) {
+        this.set('show-bubble-chart', function() {
           showResultsPageWidgetWithUniqueUrl.apply(this, arguments);
         });
-        this.set('show-metrics', function(command, options) {
+        this.set('show-metrics', function() {
           showResultsPageWidgetWithUniqueUrl.apply(this, arguments);
         });
 

@@ -1,5 +1,6 @@
 define([
     'jquery',
+    'underscore',
     'backbone',
     'js/components/api_query',
     'js/mixins/dependon',
@@ -12,6 +13,7 @@ define([
   ],
   function (
     $,
+    _,
     Backbone,
     ApiQuery,
     Dependon,
@@ -20,22 +22,20 @@ define([
     ApiTargets,
     ApiAccessMixin,
     ApiQueryUpdater
-
     ) {
 
     "use strict";
 
     var Router = Backbone.Router.extend({
 
-      initialize : function(options){
-        options = options || {};
+      initialize : function(){
         this.queryUpdater = new ApiQueryUpdater('Router');
       },
 
       activate: function (beehive) {
         this.setBeeHive(beehive);
         if (!this.hasPubSub()) {
-          throw new Exception("Ooops! Who configured this #@$%! There is no PubSub service!")
+          throw new Error("Ooops! Who configured this #@$%! There is no PubSub service!")
         }
       },
 
@@ -46,7 +46,7 @@ define([
 
       routerNavigate: function (route, options) {
 
-        var options = options || {};
+        options = options || {};
         //this tells navigator not to create 2 history entries, which causes
         //problems with the back button
         _.extend(options, {replace : true});
@@ -80,7 +80,7 @@ define([
         '*invalidRoute': 'noPageFound'
       },
 
-      index: function (query) {
+      index: function () {
         this.routerNavigate('index-page');
       },
 
@@ -231,7 +231,7 @@ define([
           type = "GET";
 
         }
-        function fail(jqXHR, status, errorThrown) {
+        function fail(jqXHR) {
           //redirect to index page
           this.getPubSub().publish(this.getPubSub().NAVIGATE, 'index-page');
           var error = (jqXHR.responseJSON && jqXHR.responseJSON.error) ? jqXHR.responseJSON.error : "error unknown";
@@ -287,7 +287,7 @@ define([
 
         if (id){
           //individual libraries view
-          var subView = subView || "library";
+          subView = subView || "library";
           if (_.contains(["library", "admin"], subView )){
 
             this.routerNavigate('IndividualLibraryWidget', {subView : subView, id : id});
@@ -331,7 +331,7 @@ define([
       _extractParameters: function(route, fragment) {
         return _.map(route.exec(fragment).slice(1), function(param) {
           //do not decode api queries
-          if (/q\=/.test(param)){return param; }
+          if (/q=/.test(param)){return param; }
           else {
             return param ? decodeURIComponent(param) : param;
           }
