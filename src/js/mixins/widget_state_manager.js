@@ -29,7 +29,7 @@ define([
      * @param {function} cb - callback function
      */
     this.off = function (cb) {
-      _.forEach(this.handlers, function (v, k) {
+      _.forEach(this.handlers, function (v) {
         var idx = v.indexOf(cb);
         if (idx > -1) {
           v.splice(idx, 1);

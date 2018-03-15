@@ -4,6 +4,7 @@
  */
 define([
     'underscore',
+    'jquery',
     'backbone',
     'js/components/api_query',
     'js/components/api_request',
@@ -13,6 +14,7 @@ define([
     ],
   function(
     _,
+    $,
     Backbone,
     ApiQuery,
     ApiRequest,
@@ -78,8 +80,6 @@ define([
 
     bootstrap: function() {
       // XXX:rca - solve this better, through config
-      var beehive = this.getBeeHive();
-      var dynConf = this.getObject('DynamicConfig');
       var timeout = 3000;
 
       var defer = $.Deferred();
@@ -173,7 +173,6 @@ define([
     start: function(Router) {
       var app = this;
       var beehive = this.getBeeHive();
-      var api = beehive.getService("Api");
       var conf = this.getObject('DynamicConfig');
 
       // set the config into the appstorage

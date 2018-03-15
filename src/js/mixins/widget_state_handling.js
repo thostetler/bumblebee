@@ -7,17 +7,8 @@
 define([
   'underscore',
   'jquery',
-  'js/widgets/widget_states',
-  'hbs!js/widgets/base/templates/loading-template',
-  'hbs!js/widgets/base/templates/loading-template-small',
-
-], function (
-  _,
-  $,
-  WidgetStates,
-  LoadingTemplate,
-  LoadingTemplateSmall
-  ) {
+  'js/widgets/widget_states'
+], function (_,  $,  WidgetStates) {
 
   /**
    * This function tries hard to grab the topmost container (view)
@@ -45,7 +36,7 @@ define([
    * @param state
    */
   handlers[WidgetStates.ERRORED] = {
-    set: function(state) {
+    set: function() {
       var view = getView(this);
       if (view && view.$el) {
         view.$el.addClass('s-error'); // TODO: eventually, add an error msg
@@ -83,7 +74,6 @@ define([
 
       if (newState.state == WidgetStates.RESET) {
         if (this._states.length > 0) {
-          var self = this;
           for (var i=this._states.length-1; i>=0; i--) {
             var state = this._states[i];
             this._getStateHandler(state).revert.call(this, state);

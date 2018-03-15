@@ -44,7 +44,7 @@ var linkGenerator = {
       case "openurl":
         return adsClassicBaseUrl + "cgi-bin/nph-data_query?bibcode=" + id + "&link_type=OPENURL";
       default:
-        throw new Exception('Unknown type: ' + type);
+        throw new Error('Unknown type: ' + type);
 
     }
   },
@@ -84,6 +84,7 @@ var linkGenerator = {
     _.each(link_types, function (l) {
 
       var openAccess = l.access === "open" ? true : false;
+      var title = '';
 
       switch (l.type) {
 
@@ -124,15 +125,15 @@ var linkGenerator = {
           links.text.push({openAccess: openAccess, title: "ADS Scanned Article", link: this.adsUrlRedirect('gif', bib)});
           break;
         case "data":
-          var title = l.instances ? "Archival Data (" + l.instances + ")" : "Archival Data";
+          title = l.instances ? "Archival Data (" + l.instances + ")" : "Archival Data";
           links.data.push({title: title, link: this.adsUrlRedirect('data', bib)});
           break;
         case "simbad":
-          var title = l.instances ? "SIMBAD objects (" + l.instances + ")" : "SIMBAD objects";
+          title = l.instances ? "SIMBAD objects (" + l.instances + ")" : "SIMBAD objects";
           links.data.push({title: title, link: this.adsUrlRedirect('simbad', bib)});
           break;
         case "ned":
-          var title = l.instances ? "NED objects (" + l.instances + ")" : "NED objects";
+          title = l.instances ? "NED objects (" + l.instances + ")" : "NED objects";
           links.data.push({title: title, link: this.adsUrlRedirect('ned', bib)});
           break;
       }

@@ -1,11 +1,10 @@
 define([
-  "underscore"
+  'underscore',
+  'backbone'
 ], function(
-  _
-
-  ){
-
-
+  _,
+  Backbone
+){
 
   //some functions to be used by form views which auto-validate
   var formFunctions = {

@@ -1,7 +1,10 @@
-define(['js/mixins/widget_utility'], function (Utils) {
+define([
+  'underscore',
+  'js/mixins/widget_utility'
+], function (_, Utils) {
 
 
-  var mixin = function (from, methods) {
+  var mixin = function (from) {
     var to = this.prototype;
     // we add those methods which exists on `from` but not on `to` to the latter
     _.extend(from, to);
@@ -10,10 +13,10 @@ define(['js/mixins/widget_utility'], function (Utils) {
 
     _.each(Array.prototype.slice.call(arguments, 1), function (m) {
       Utils.extendMethod(to, from, m)
-    })
+    });
   };
 
   return mixin
 
-})
+});
 

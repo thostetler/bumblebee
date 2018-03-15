@@ -1,13 +1,15 @@
-define([], function(){
+define([
+  'underscore'
+], function (_) {
 
 
-  var f = {}
+  var f = {};
 
   /*
   * takes a number or string, returns a string
   * */
 
-  f.formatNum = function(num){
+  f.formatNum = function (num) {
     var withCommas = [];
     num = num+"";
     if (num.length < 4){
@@ -23,9 +25,9 @@ define([], function(){
       })
     }
     return withCommas.join("");
-  }
+  };
 
 
 
   return f
-})
+});

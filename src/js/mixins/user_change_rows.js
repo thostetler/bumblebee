@@ -1,11 +1,14 @@
 define([
-  "marionette",
+  'underscore',
+  'backbone',
+  'marionette',
   'js/components/api_targets'
 ], function(
+  _,
+  Backbone,
   Marionette,
   ApiTargets
-
-  ){
+){
 
   /*
   * use this model as a base for any widget that needs to request
