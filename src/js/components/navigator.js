@@ -15,6 +15,7 @@
 define(['underscore',
     'jquery',
     'cache',
+    'backbone',
     'js/components/generic_module',
     'js/mixins/dependon',
     'js/components/transition',
@@ -25,6 +26,7 @@ define(['underscore',
     _,
     $,
     Cache,
+    Backbone,
     GenericModule,
     Mixins,
     Transition,
@@ -56,7 +58,7 @@ define(['underscore',
       /**
        * Responds to PubSubEvents.NAVIGATE signal
        */
-      navigate: function(ev, arg1, arg2) {
+      navigate: function(ev, arg1) {
 
         if (!this.router || ! (this.router instanceof Backbone.Router)) {
           throw new Error('Navigator must be given \'router\' instance');
@@ -124,7 +126,7 @@ define(['underscore',
           if (arguments[1] instanceof Transition) {
             return this.catalog.add(arguments[1]);
           }
-          throw new Exception('You must be kiddin\' sir!');
+          throw new Error('You must be kiddin\' sir!');
         }
         else if (arguments.length == 2) {
           var endpoint = arguments[0];
@@ -135,12 +137,12 @@ define(['underscore',
             return this.catalog.add(new Transition(endpoint, arguments[1]));
           }
           else {
-            throw new Exception('Himmm, I dont know how to create a catalog rule with this input:', arguments);
+            throw new Error('Himmm, I dont know how to create a catalog rule with this input:', arguments);
           }
         }
         else {
           //var args = array.slice.call(arguments, 1);
-          throw new Exception('Himmm, I dont know how to create a catalog rule with this input:', arguments);
+          throw new Error('Himmm, I dont know how to create a catalog rule with this input:', arguments);
         }
       },
 

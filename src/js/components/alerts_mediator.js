@@ -65,7 +65,7 @@ define([
         }
       },
 
-      onAlert: function(apiFeedback, psk) {
+      onAlert: function(apiFeedback) {
         var self = this;
         var promise = this.alert(apiFeedback)
           .done(function(result) {
@@ -87,7 +87,7 @@ define([
                   self.getPubSub().publish(result.signal, result.arguments);
                   break;
                 default:
-                  throw new Exception('Unknown action type:' + result);
+                  throw new Error('Unknown action type:' + result);
               }
 
               // close the widget immediately

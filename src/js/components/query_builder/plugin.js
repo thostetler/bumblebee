@@ -182,7 +182,7 @@ define([
               operators: multiTokenOperators, createOperatorIfNecessary: true},
             {id: 'pos()', label: 'position()', type: 'string',
               operators: functionOperators,
-              input: function($rule, filter) {
+              input: function($rule) {
                 return this.createFunctionInputs([
                   {id: $rule.attr('id'), label: 'function', type: 'text', placeholder: 'hidden target'},
                   {id: 'query', label: 'query', type: 'text', placeholder: 'any valid query'},
@@ -190,7 +190,7 @@ define([
                   {id: 'end', label: 'end', type: 'number', placeholder: 'end:optional, e.g. 100'}
                 ]);
               },
-              onAfterSetValue: function($rule, value, filter, operator) {
+              onAfterSetValue: function($rule, value) {
                 var vals = value.split('|');
                 $rule.find('input[name=query]').val(vals[0]);
                 $rule.find('input[name=start]').val(vals[1]);
@@ -200,59 +200,59 @@ define([
             },
             {id: 'citations()', label: 'citations()', type: 'string', placeholder: 'query',
               operators: functionOperators,
-              input: function($rule, filter) {
+              input: function($rule) {
                 return this.createFunctionInputs([
                   {id: $rule.attr('id'), label: 'function', type: 'text', placeholder: 'hidden target'},
                   {id: 'query', label: 'query', type: 'text', placeholder: 'any valid query'}
                 ]);
               },
-              onAfterSetValue: function($rule, value, filter, operator) {
+              onAfterSetValue: function($rule, value) {
                 var vals = value.split('|');
                 $rule.find('input[name=query]').val(vals[0]);
               }
             },
             {id: 'references()', label: 'references()', type: 'string', placeholder: 'instructive(title:&quot;monte carlo&quot;)',
               operators: functionOperators,
-              input: function($rule, filter) {
+              input: function($rule) {
                 return this.createFunctionInputs([
                   {id: $rule.attr('id'), label: 'function', type: 'text', placeholder: 'hidden target'},
                   {id: 'query', label: 'query', type: 'text', placeholder: 'any valid query'}
                 ]);
               },
-              onAfterSetValue: function($rule, value, filter, operator) {
+              onAfterSetValue: function($rule, value) {
                 var vals = value.split('|');
                 $rule.find('input[name=query]').val(vals[0]);
               }
             },
             {id: 'trending()', label: 'trending()', type: 'string', placeholder: '(any valid query)',
               operators: functionOperators,
-              input: function($rule, filter) {
+              input: function($rule) {
                 return this.createFunctionInputs([
                   {id: $rule.attr('id'), label: 'function', type: 'text', placeholder: 'hidden target'},
                   {id: 'query', label: 'query', type: 'text', placeholder: 'any valid query'}
                 ]);
               },
-              onAfterSetValue: function($rule, value, filter, operator) {
+              onAfterSetValue: function($rule, value) {
                 var vals = value.split('|');
                 $rule.find('input[name=query]').val(vals[0]);
               }
             },
             {id: 'reviews()', label: 'reviews()', type: 'string', placeholder: '(any valid query)',
               operators: functionOperators,
-              input: function($rule, filter) {
+              input: function($rule) {
                 return this.createFunctionInputs([
                   {id: $rule.attr('id'), label: 'function', type: 'text', placeholder: 'hidden target'},
                   {id: 'query', label: 'query', type: 'text', placeholder: 'any valid query'}
                 ]);
               },
-              onAfterSetValue: function($rule, value, filter, operator) {
+              onAfterSetValue: function($rule, value) {
                 var vals = value.split('|');
                 $rule.find('input[name=query]').val(vals[0]);
               }
             },
             {id: 'topn()', label: 'topn()', type: 'string',
               operators: functionOperators,
-              input: function($rule, filter) {
+              input: function($rule) {
                 return this.createFunctionInputs([
                   {id: $rule.attr('id'), label: 'function', type: 'text', placeholder: 'hidden'},
                   {id: 'query', label: 'query', type: 'text', placeholder: 'any valid query'},
@@ -272,7 +272,7 @@ define([
                   }
                 ]);
               },
-              onAfterSetValue: function($rule, value, filter, operator) {
+              onAfterSetValue: function($rule, value) {
                 var vals = value.split('|');
                 $rule.find('input[name=number]').val(vals[0]);
                 $rule.find('input[name=query]').val(vals[1]);
@@ -371,9 +371,9 @@ define([
           ],
           extend: {
             createFunctionInputs: function(profiles) {
-              var $target, values, $current, $container;
+              var $target, $current, $container;
               $container = $('<span/>');
-              var $target = $(this.getRuleInput(profiles[0].id, profiles[0]));
+              $target = $(this.getRuleInput(profiles[0].id, profiles[0]));
               $target.addClass('hide');
 
               for (var i=1; i<profiles.length; i++) {
@@ -641,13 +641,13 @@ define([
 
         var throttled = _.debounce(callback, delay);
 
-        this.$el.on('change.queryBuilder', function(ev) {
+        this.$el.on('change.queryBuilder', function() {
           throttled();
         });
-        this.$el.on('click.queryBuilder', function(ev) {
+        this.$el.on('click.queryBuilder', function() {
           throttled();
         });
-        this.$el.on('keypress.input', function(ev) {
+        this.$el.on('keypress.input', function() {
           throttled();
         });
       },

@@ -48,6 +48,7 @@ define(['underscore', 'js/components/api_query'], function (_, ApiQuery) {
      *      String: this will serve as concatenator for the conditions
      */
     updateQuery: function(apiQuery, field, mode, queryCondition) {
+      var testq;
 
       if (!field || !_.isString(field)) {
         throw new Error("You must tell us what parameter to update in the ApiQuery");
@@ -147,7 +148,7 @@ define(['underscore', 'js/components/api_query'], function (_, ApiQuery) {
         newConditions = _.union(existingConditions, queryCondition);
         newConditionAsString = this._buildQueryFromConditions(newConditions);
 
-        var testq = _.clone(q);
+        testq = _.clone(q);
         // try to find the pre-condition and replace it with a new value
         if (this._modifyArrayReplaceString(testq, oldConditionAsString, newConditionAsString)) {
           apiQuery.set(field, testq); //success
@@ -175,7 +176,7 @@ define(['underscore', 'js/components/api_query'], function (_, ApiQuery) {
         modifiedConditions[0] = 'OR';
         newConditionAsString = ' NOT ' + this._buildQueryFromConditions(modifiedConditions);
 
-        var testq = _.clone(q);
+        testq = _.clone(q);
         // try to find the pre-condition and replace it with a new value
         if (this._modifyArrayReplaceString(testq, oldConditionAsString, newConditionAsString)) {
           apiQuery.set(field, testq); //success
@@ -210,7 +211,7 @@ define(['underscore', 'js/components/api_query'], function (_, ApiQuery) {
      * @param value
      */
     needsEscape: function(s) {
-      var sb = [], c;
+      var c;
       for (var i = 0; i < s.length; i++) {
         c = s[i];
         // These characters are part of the query syntax and must be escaped
@@ -413,7 +414,6 @@ define(['underscore', 'js/components/api_query'], function (_, ApiQuery) {
       if (!search) {
         throw new Error("Your search is empty, you fool");
       }
-      var modified = false;
       _.each(arr, function(text, i) {
         if (maxNumMod > 0 && numMod > maxNumMod) {
           return;

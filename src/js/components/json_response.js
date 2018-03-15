@@ -4,14 +4,15 @@
  * (e.g. solr_response)
  */
 
-define(['underscore',
+define([
+  'underscore',
   'backbone',
   'js/components/api_query',
 ], function(
-            _,
-            Backbone,
-            ApiQuery
-  ) {
+  _,
+  Backbone,
+  ApiQuery
+) {
 
 
   var JSONResponse = function(attributes, options) {
@@ -22,8 +23,10 @@ define(['underscore',
     this.readOnly = options.hasOwnProperty('readOnly') ? options.readOnly : true;
     this._url = options.hasOwnProperty('url') ? options.url : null;
 
-    if (options.parse) attrs = this.parse(attrs, options) || {};
-    if (defaults = _.result(this, 'defaults')) {
+    if (options.parse) {
+      attrs = this.parse(attrs, options) || {};
+    }
+    if ((defaults = _.result(this, 'defaults'))) {
       attrs = _.defaults({}, attrs, defaults);
     }
 
@@ -51,7 +54,7 @@ define(['underscore',
     },
 
     // Return a copy of the model's `attributes` object.
-    toJSON: function(options) {
+    toJSON: function() {
       return this._clone(this.attributes);
     },
 
@@ -63,17 +66,13 @@ define(['underscore',
       return this.rid; // default is just to return response id
     },
 
-    set: function(key, val, options) {
+    set: function(key, val) {
       if (this.readOnly) {
         throw Error("You can't change read-only response object");
       }
       var parts = this._split(key);
       if (parts.length == 1) {
         this.attributes[parts[0]] = val;
-      }
-      else {
-        var pointer = this.get(key);
-        pointer = val;
       }
     },
 

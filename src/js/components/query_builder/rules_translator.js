@@ -34,7 +34,7 @@ define(['underscore',
       }
 
       var queries = [];
-      _.each(this.children, function (child, index, list) {
+      _.each(this.children, function (child) {
         queries.push(child.toString(level+1));
       });
 
@@ -139,7 +139,7 @@ define(['underscore',
 
 
     var RulesTranslator = GenericModule.extend({
-      initialize: function(options) {
+      initialize: function() {
         this.apiQueryUpdater = new ApiQueryUpdater('rulesTranslator');
         this.validFunctions = {
           'topn()': true,
@@ -229,8 +229,8 @@ define(['underscore',
       },
 
       _extractRule: function(qtree, ruleNode) { // ruleNode can be null
-        var ruleNode, inputNode;
         var self = this;
+        var input;
         //console.log('extracting', qtree.name, ruleNode);
 
         switch (qtree.name) {
@@ -327,14 +327,14 @@ define(['underscore',
             ruleNode.setOperator('is');
             break;
           case 'QPHRASE':
-            var input =  qtree.children[0].input;
+            input =  qtree.children[0].input;
             ruleNode.setValue(input.substring(1, input.length-1));
             ruleNode.setOffset(qtree.children[0].start+1);
             ruleNode.setEnd(qtree.children[0].end-1);
             ruleNode.setOperator('is_phrase');
             break;
           case 'QPHRASETRUNC':
-            var input =  qtree.children[0].input.trim();
+            input =  qtree.children[0].input.trim();
             if (input.substring(input.length-1) == '*') {
               input = input.substring(0, input.length-1);
               ruleNode.setOperator('starts_with');
@@ -347,7 +347,7 @@ define(['underscore',
             ruleNode.setEnd(qtree.children[0].end-1);
             break;
           case 'QTRUNCATED':
-            var input =  qtree.children[0].input.trim();
+            input =  qtree.children[0].input.trim();
             if (input.substring(input.length-1) == '*') {
               input = input.substring(0, input.length-1);
               ruleNode.setOperator('starts_with');
@@ -368,7 +368,7 @@ define(['underscore',
             break;
           case 'QPOSITION':
             if (qtree.children[0].name == 'AUTHOR_SEARCH') {
-              var input =  qtree.children[0].input.trim();
+              input =  qtree.children[0].input.trim();
               ruleNode.setValue(input.replace('^', ''));
               ruleNode.setField('^author');
               ruleNode.setOperator('is');
@@ -426,7 +426,6 @@ define(['underscore',
           case 'QCOORDINATE':
           case 'QREGEX':
             throw new Error('Not yet ready for: ' + JSON.stringify(qtree));
-            break;
           default:
             console.log('skipping', qtree);
             break;
@@ -487,10 +486,10 @@ define(['underscore',
        * @returns String
        */
       buildQuery: function (rules) {
-
+        var root, tree;
         if (rules.rules) {
-          var root = new TreeNode(rules.condition);
-          var tree = this._buildQueryTree(root, rules.rules);
+          root = new TreeNode(rules.condition);
+          tree = this._buildQueryTree(root, rules.rules);
           if (tree) {
 
             // final modifications (removing some of the unnecessary details)
@@ -499,8 +498,8 @@ define(['underscore',
           }
         }
         else {
-          var root = new TreeNode('DEFOP');
-          var tree = this._buildQueryTree(root, [rules]);
+          root = new TreeNode('DEFOP');
+          tree = this._buildQueryTree(root, [rules]);
           if (tree) {
             // final modifications (removing some of the unnecessary details)
             return tree.toString().split(' DEFOP ').join(' ').split('__all__:').join('');
@@ -511,11 +510,11 @@ define(['underscore',
       },
 
       _buildQueryTree: function (treeNode, rules) {
-        var self = this;
+        var self = this, node;
         if (rules && rules.length > 0) {
           _.each(rules, function(rule){
             if (rule.condition) {
-              var node = new TreeNode(rule.condition);
+              node = new TreeNode(rule.condition);
               treeNode.addChild(node);
               self._buildQueryTree(node, rule.rules);
             }
@@ -523,7 +522,7 @@ define(['underscore',
               self._buildQueryTree(treeNode, rule.rules);
             }
             else {
-              var node = self._buildOneRule(rule);
+              node = self._buildOneRule(rule);
               if (node) {
                 treeNode.addChild(node);
               }

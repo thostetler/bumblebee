@@ -9,7 +9,6 @@ define(['backbone', 'underscore'], function(Backbone, _) {
   var moduleOptions = ['className', 'activate'];
 
   var Module = function(options) {
-    var defaults;
     options = options || {};
     this.mid = _.uniqueId('module');
     _.extend(this, _.pick(options, moduleOptions));

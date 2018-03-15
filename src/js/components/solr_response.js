@@ -12,13 +12,13 @@ define([
   'js/components/json_response',
   'js/components/solr_params',
   'backbone',
-  'underscore',
-  'jquery'], function(
+  'underscore'
+], function(
   JsonResponse,
   SolrParams,
   Backbone,
-  _,
-  $) {
+  _
+) {
 
 
   var SolrResponse = JsonResponse.extend({
@@ -36,7 +36,7 @@ define([
         this._url = new SolrParams(queryParams).url();
       }
     },
-    url: function(resp, options) {
+    url: function() {
       return this._url;
     }
 

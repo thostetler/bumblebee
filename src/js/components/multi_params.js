@@ -37,7 +37,7 @@ define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
     // signal we throw a direct error
     _validate: function(attributes, options) {
       // check we have only numbers and/or finite numbers
-      for (attr in attributes) {
+      for (var attr in attributes) {
         if (!_.isString(attr)) {
           throw new Error('Keys must be strings, not: ' + attr);
         }
@@ -81,7 +81,7 @@ define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
         (attrs = {})[key] = val;
       }
 
-      for (attr in attrs) {
+      for (var attr in attrs) {
         var tempVal = attrs[attr];
 
         // convert to array if necessary
@@ -114,7 +114,7 @@ define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
         (attrs = {})[key] = val;
       }
 
-      for (attr in attrs) {
+      for (var attr in attrs) {
         var tempVal = attrs[attr];
 
         // convert to array if necessary
@@ -173,10 +173,9 @@ define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
     /**
      * Parses string (urlparams) and returns it as an object
      * @param resp
-     * @param options
      * @returns {*}
      */
-    parse: function(resp, options) {
+    parse: function(resp) {
       if (_.isString(resp)) {
         var attrs  = {};
         resp = decodeURI(resp);

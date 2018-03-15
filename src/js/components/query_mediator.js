@@ -313,7 +313,7 @@ define(['underscore',
        *
        * @param force
        */
-      startExecutingQueries: function(force) {
+      startExecutingQueries: function() {
 
         var self = this;
         var cycle = this.__searchCycle;
@@ -332,7 +332,7 @@ define(['underscore',
 
         var app = this.getApp();
         var pskToExecuteFirst;
-        if (pskToExecuteFirst = app.getPskOfPluginOrWidget('widget:Results')) { // pick a request that will be executed first
+        if ((pskToExecuteFirst = app.getPskOfPluginOrWidget('widget:Results'))) { // pick a request that will be executed first
           if (cycle.waiting[pskToExecuteFirst]) {
             data = cycle.waiting[pskToExecuteFirst];
             delete cycle.waiting[pskToExecuteFirst];
@@ -356,7 +356,7 @@ define(['underscore',
         cycle.inprogress[firstReqKey] = data;
 
         this._executeRequest(data.request, data.key)
-          .done(function(response, textStatus, jqXHR) {
+          .done(function(response) {
             cycle.done[firstReqKey] = data;
             delete cycle.inprogress[firstReqKey];
 
@@ -600,7 +600,7 @@ define(['underscore',
 
       },
 
-      onApiResponse: function(data, textStatus, jqXHR ) {
+      onApiResponse: function(data) {
         var qm = this.qm;
 
         // TODO: check the status responses
@@ -629,7 +629,6 @@ define(['underscore',
       onApiRequestFailure: function( jqXHR, textStatus, errorThrown ) {
 
         var qm = this.qm;
-        var query = this.request.get('query');
         if (qm.debug) {
           console.warn('[QM]: request failed', jqXHR, textStatus, errorThrown);
         }
@@ -670,10 +669,8 @@ define(['underscore',
        * If it returns a Feedback object, the sender will be notified using it
        *
        * @param jqXHR
-       * @param textStatus
-       * @param errorThrown
        */
-      tryToRecover: function(jqXHR, textStatus, errorThrown) {
+      tryToRecover: function(jqXHR) {
         var qm = this.qm; // QueryMediator
         var senderKey = this.key;
         var request = this.request;
@@ -704,7 +701,6 @@ define(['underscore',
                 qm._executeRequest.call(qm, request, senderKey);
               }, qm.recoveryDelayInMs);
               return true;
-              break;
 
             default:
             //TBD

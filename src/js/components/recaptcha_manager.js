@@ -4,12 +4,16 @@
  *
  * */
 define([
+    'jquery',
+    'underscore',
     'backbone',
     'js/components/generic_module',
     'js/mixins/hardened',
     'js/mixins/dependon'
   ],
   function(
+    $,
+    _,
     Backbone,
     GenericModule,
     Hardened,
@@ -19,7 +23,7 @@ define([
     var grecaptchaDeferred = $.Deferred();
 
     // this has to be global
-    onRecaptchaLoad = function(){
+    window.onRecaptchaLoad = function(){
       grecaptchaDeferred.resolve();
     };
 
@@ -54,8 +58,8 @@ define([
         this.when.done(_.partial(this.renderRecaptcha, view));
       },
 
-      renderRecaptcha :  function(view, siteKey, undefined){
-        grecaptcha.render(view.$(".g-recaptcha")[0],
+      renderRecaptcha :  function(view, siteKey){
+        window.grecaptcha.render(view.$(".g-recaptcha")[0],
           {
             sitekey: siteKey, callback: function (response) {
             //this might need to be inserted into the model.

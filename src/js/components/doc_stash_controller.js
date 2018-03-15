@@ -1,5 +1,6 @@
 
 define([
+      'underscore',
       'backbone',
       'js/components/generic_module',
       'js/mixins/hardened',
@@ -7,6 +8,7 @@ define([
 
     ],
     function(
+        _,
         Backbone,
         GenericModule,
         Hardened,

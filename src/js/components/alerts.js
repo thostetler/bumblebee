@@ -3,13 +3,7 @@
  * to the user)
  */
 
-define([
-  'backbone',
-  'js/mixins/hardened'
-], function(
-  Backbone,
-  Hardened
-  ) {
+define([], function() {
 
   var Alerts = {
     TYPE: {

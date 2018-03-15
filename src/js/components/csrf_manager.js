@@ -4,6 +4,7 @@
  *
  * */
 define([
+    'underscore',
     'backbone',
     'js/components/generic_module',
     'js/mixins/hardened',
@@ -11,7 +12,8 @@ define([
     "js/components/api_targets",
     'js/mixins/dependon'
   ],
-  function(
+  function (
+    _,
     Backbone,
     GenericModule,
     Hardened,

@@ -22,7 +22,7 @@ Instead, import 'api_query' and configure it properly
  */
 
 
-define(['js/components/multi_params', 'backbone', 'underscore', 'jquery'], function(MultiParams, Backbone, _, $) {
+define(['js/components/multi_params', 'backbone', 'underscore'], function(MultiParams, Backbone, _) {
 
 
   var SolrParams = MultiParams.extend({
@@ -41,7 +41,7 @@ define(['js/components/multi_params', 'backbone', 'underscore', 'jquery'], funct
       }
     },
 
-    url: function(resp, options) {
+    url: function() {
 
       // first massage the fields, but do not touch the original values
       // lodash has a parameter isDeep that can be set to true, but

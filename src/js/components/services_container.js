@@ -43,7 +43,7 @@ define([
       this._services[name] = service;
     },
 
-    remove: function(name, service) {
+    remove: function(name) {
       if (this._services.hasOwnProperty(name)) {
         var s = this._services[name];
         if ('destroy' in s) {
@@ -77,7 +77,7 @@ define([
      */
     getHardenedInstance: function() {
       var iface = {}, s;
-      for (service in this._services) {
+      for (var service in this._services) {
         s = this._services[service];
         if (_.isObject(s) && 'getHardenedInstance' in s) {
           iface[service] = true;

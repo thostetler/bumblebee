@@ -15,7 +15,7 @@
  *  var htmlInterface = new Facade(remoteInterface, htmlRemote);
  *
  */
-define(['underscore', 'js/components/facade'], function(_, Facade) {
+define(['underscore'], function(_) {
   'use strict';
 
   // The Facade encapsulates objectIn according to the description

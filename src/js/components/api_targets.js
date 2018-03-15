@@ -5,14 +5,7 @@
  * and any related limits
  */
 
-define([
-    'underscore',
-    'backbone'
-  ],
-  function(
-    _,
-    Backbone
-    ) {
+define([], function() {
 
    var config =  {
       BOOTSTRAP : '/accounts/bootstrap',

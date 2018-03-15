@@ -85,7 +85,7 @@ define([
 
   _.extend(Application.prototype, {
 
-    initialize: function(config, options) {
+    initialize: function() {
       // these are core (elevated access)
       this.__beehive = new BeeHive();
       this.__modules = new Container();
@@ -127,7 +127,7 @@ define([
      * @param config
      * @param options
      */
-    loadModules: function(config, options) {
+    loadModules: function(config) {
 
       var promises = [];
       var self = this;
@@ -164,7 +164,7 @@ define([
 
       var bigPromise = $.when.apply($, promises)
         .then(function () {
-          _.each(arguments, function (promisedValues, idx) {
+          _.each(arguments, function (promisedValues) {
             if (_.isArray(promisedValues)) {
               if (self.debug) {
                 console.log('application: registering ' + promisedValues[0]);
@@ -270,7 +270,7 @@ define([
 
     _checkPrescription: function(modulePrescription) {
       // basic checking
-      _.each(_.pairs(modulePrescription), function(module, idx, list) {
+      _.each(_.pairs(modulePrescription), function(module) {
         var symbolicName = module[0];
         var impl = module[1];
 
@@ -314,7 +314,7 @@ define([
         if (self.debug)
           console.timeEnd("startLoading"+sectionName)
         var modules = arguments;
-        _.each(implNames, function (name, idx, implList) {
+        _.each(implNames, function (name, idx) {
           ret[name] = modules[idx];
         });
         defer.resolve(sectionName, ret);
@@ -361,7 +361,7 @@ define([
     },
 
 
-    activate: function(options) {
+    activate: function() {
       var beehive = this.getBeeHive();
       var self = this;
 
@@ -477,7 +477,7 @@ define([
 
       // this happens right after the callback
       setTimeout(function() {
-        defer.done(function(widget) {
+        defer.done(function() {
           if (_.isArray(name)) {
             _.each(name, function(x) {
               self.returnWidget(x);
@@ -549,7 +549,7 @@ define([
       }
 
       setTimeout(function() {
-        defer.done(function(widget) {
+        defer.done(function() {
           if (_.isArray(name)) {
             _.each(name, function(x) {
               self.returnPlugin(x);
@@ -625,12 +625,11 @@ define([
     },
 
     getPskOfPluginOrWidget: function(symbolicName) {
-      var parts = symbolicName.split(':');
       var psk;
       if (this._isBarbarianAlive(symbolicName)) {
         var b = this._getBarbarian(symbolicName);
         if (b.getPubSub && b.getPubSub().getCurrentPubSubKey)
-          return b.getPubSub().getCurrentPubSubKey().getId();
+          psk = b.getPubSub().getCurrentPubSubKey().getId();
       }
       return psk;
     },
@@ -664,7 +663,6 @@ define([
       // on widgets to do the right thing (and tells us what children they made)
 
       var pubsub = this.getService('PubSub');
-      var existingSubscribers = _.keys(pubsub._issuedKeys);
 
       if ('activate' in instance) {
         if (this.debug) {console.log('application: ' + symbolicName + '.activate(beehive)')}
@@ -790,29 +788,14 @@ define([
         pubsub.unsubscribe(b.psk);
       }
 
-      // painstaikingly discover undeclared children and unsubscribe them
-      if (b.bastards && false) { // deactivate, it causes problems
-        var kmap = {};
-        _.each(b.bastards, function(psk) {
-          kmap[psk] = 1;
-        }, this);
-
-        _.each(pubsub._events, function(val, evName) {
-          _.each(val, function(v) {
-            if (v.ctx.getId && kmap[v.ctx.getId()]) {
-              pubsub.unsubscribe(v.ctx);
-            }
-          }, this);
-        }, this);
-      }
-
       b.parent.destroy();
 
       delete this.__barbarianInstances[symbolicName];
       if ('setBeeHive' in b.parent)
         b.parent.setBeeHive({fake: 'one'});
 
-      delete b;
+      // destroy reference to b
+      b = null;
 
       if (this.debug)
         console.log('Destroyed: ' + symbolicName);

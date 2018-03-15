@@ -42,14 +42,6 @@ define([
       options : basicCheck
     };
 
-    var checker = {
-      target: function(s) {
-        if (s && s.substring(0,1) !== '/') {
-          return '/' + s;
-        }
-      }
-    };
-
     var Request = MultiParams.extend({
       /**
        * Internal method: we allow only certain keys
@@ -59,7 +51,7 @@ define([
        * @returns {boolean}
        * @private
        */
-      _validate: function(attributes, options) {
+      _validate: function(attributes) {
         _.forOwn(attributes, function (val, attr) {
           var tempVal = attributes[attr];
 

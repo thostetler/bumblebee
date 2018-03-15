@@ -1,15 +1,15 @@
 
 define([
+      'underscore',
       'js/components/generic_module',
       'js/mixins/dependon',
-      'js/mixins/hardened',
-      'js/components/pubsub_key'
+      'js/mixins/hardened'
     ],
     function(
+        _,
         GenericModule,
         Dependon,
-        Hardened,
-        PubSubKey
+        Hardened
     ) {
 
       var History = GenericModule.extend({

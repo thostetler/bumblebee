@@ -2,6 +2,7 @@
  * A generic class that lazy-loads User info
  */
 define([
+  'underscore',
   'backbone',
   'js/components/api_request',
   'js/components/api_targets',
@@ -12,19 +13,19 @@ define([
   'js/components/user',
   'js/components/api_feedback',
   'js/mixins/api_access'
-
-], function
-  (Backbone,
-   ApiRequest,
-   ApiTargets,
-   Hardened,
-   GenericModule,
-   Dependon,
-   ApiQuery,
-   User,
-   ApiFeedback,
-   ApiAccess
-    ) {
+], function (
+  _,
+  Backbone,
+  ApiRequest,
+  ApiTargets,
+  Hardened,
+  GenericModule,
+  Dependon,
+  ApiQuery,
+  User,
+  ApiFeedback,
+  ApiAccess
+) {
 
 
   var SessionModel = Backbone.Model.extend({
@@ -41,7 +42,7 @@ define([
   var Session = GenericModule.extend({
 
     initialize: function (options) {
-      var options = options || {};
+      options = options || {};
       //right now, this will only be used if someone forgot their password
       this.model = new SessionModel();
       this.test = options.test ? true : undefined;
@@ -89,7 +90,7 @@ define([
             d.reject.apply(d, arguments);
             that.loginFail.apply(that, arguments);
           },
-          beforeSend: function(jqXHR, settings) {
+          beforeSend: function(jqXHR) {
             jqXHR.session = this;
           }
         }
@@ -160,7 +161,7 @@ define([
       _.extend(data, {reset_url : current_loc + "/#user/account/verify/reset-password"});
 
      var email = data.email;
-     var data = _.omit(data, "email");
+     data = _.omit(data, "email");
 
      this.sendRequestWithNewCSRF(function(csrfToken){
        var request = new ApiRequest({
@@ -206,14 +207,12 @@ define([
 
     /* private methods */
 
-    loginSuccess: function (response, status, jqXHR) {
+    loginSuccess: function () {
       //reset auth token by contacting Bootstrap, which will log user in
-      var that = this;
-       this.getApiAccess({reconnect: true}).done(function(){
-       });
+       this.getApiAccess({reconnect: true}).done(function(){});
     },
 
-    loginFail : function(xhr, status, errorThrown){
+    loginFail : function(xhr){
       var pubsub = this.getPubSub(), error;
       if (xhr.responseJSON && xhr.responseJSON.error ){
         error = xhr.responseJSON.error
@@ -229,7 +228,7 @@ define([
       pubsub.publish(pubsub.USER_ANNOUNCEMENT, "login_fail", message);
     },
 
-    logoutSuccess : function (response, status, jqXHR) {
+    logoutSuccess : function () {
       var that = this;
       this.getApiAccess({reconnect: true}).done(function(){
         //set session state to logged out
@@ -237,13 +236,13 @@ define([
       });
     },
 
-    registerSuccess : function (response, status, jqXHR) {
+    registerSuccess : function () {
       var pubsub = this.getPubSub();
       //authentication widget will show a "success" view in response to this user announcement
       pubsub.publish(pubsub.USER_ANNOUNCEMENT, "register_success");
     },
 
-    registerFail : function(xhr, status, errorThrown){
+    registerFail : function(xhr){
       var pubsub = this.getPubSub();
       var error = (xhr.responseJSON && xhr.responseJSON.error)  ? xhr.responseJSON.error : "error unknown";
       var message = 'Registration was unsuccessful (' + error + ')';
@@ -251,12 +250,12 @@ define([
       pubsub.publish(pubsub.USER_ANNOUNCEMENT, "register_fail", message);
     },
 
-    resetPassword1Success :function(response, status, jqXHR){
+    resetPassword1Success :function(){
       var pubsub = this.getPubSub();
       pubsub.publish(pubsub.USER_ANNOUNCEMENT, "reset_password_1_success");
     },
 
-    resetPassword1Fail: function(xhr, status, errorThrown){
+    resetPassword1Fail: function(xhr){
       var pubsub = this.getPubSub();
       var error = (xhr.responseJSON && xhr.responseJSON.error)  ? xhr.responseJSON.error : "error unknown";
       var message = 'password reset step 1 was unsucessful (' + error + ')';
@@ -264,7 +263,7 @@ define([
       pubsub.publish(pubsub.USER_ANNOUNCEMENT, "reset_password_1_fail");
     },
 
-    resetPassword2Success :function(response, status, jqXHR){
+    resetPassword2Success :function(){
 
       var promise, pubsub;
       //reset auth token by contacting Bootstrap
@@ -288,7 +287,7 @@ define([
 
     },
 
-    resetPassword2Fail: function(xhr, status, errorThrown){
+    resetPassword2Fail: function(xhr){
       var pubsub = this.getPubSub();
       var error = (xhr.responseJSON && xhr.responseJSON.error)  ? xhr.responseJSON.error : "error unknown";
       var message = 'password reset step 2 was unsucessful (' + error + ')';

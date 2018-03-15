@@ -29,7 +29,7 @@ define([
       },
 
       initialize: function() {
-        this.on('change:selectedPapers', function(model) {
+        this.on('change:selectedPapers', function() {
           this._updateNumSelected();
           if (this.hasPubSub())
             var pubsub = this.getPubSub();

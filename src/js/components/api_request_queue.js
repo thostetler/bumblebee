@@ -26,7 +26,7 @@ define(['underscore', 'js/components/api_request'], function(_, ApiRequest) {
     _lock : false,
     _options : {},
     successAllCallback: null,
-    initialize: function(attrs, options) {
+    initialize: function(attrs) {
       _.extend(this, _.pick(attrs, ['successAllCallback']));
     },
 
@@ -71,7 +71,7 @@ define(['underscore', 'js/components/api_request'], function(_, ApiRequest) {
           }
           self.unlock();
         };
-        R.Api.request(args);
+        window.R.Api.request(args);
       }
     },
 

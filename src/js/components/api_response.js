@@ -55,7 +55,7 @@ define([
   };
 
   var toInsert = {};
-  _.each(_.keys(hardenedInterface), function (element, index, list) {
+  _.each(_.keys(hardenedInterface), function (element) {
     toInsert[element] = function () {
       return this.innerResponse[element].apply(this.innerResponse, arguments)
     };

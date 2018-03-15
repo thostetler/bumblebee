@@ -7,7 +7,7 @@ define(['underscore',
     ) {
 
 
-    var TransitionCatalog = function (options) {
+    var TransitionCatalog = function () {
       this._catalog = {};
     };
     _.extend(TransitionCatalog.prototype, {

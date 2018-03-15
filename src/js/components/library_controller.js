@@ -1,5 +1,7 @@
 
 define([
+    'underscore',
+    'jquery',
     'backbone',
     'js/components/generic_module',
     'js/mixins/hardened',
@@ -8,9 +10,10 @@ define([
     'js/components/api_feedback',
     'js/components/api_query',
     'js/mixins/dependon'
-
   ],
   function(
+    _,
+    $,
     Backbone,
     GenericModule,
     Hardened,
@@ -56,7 +59,7 @@ define([
 
       activate: function (beehive) {
         this.setBeeHive(beehive.getHardenedInstance())
-        pubsub = this.getBeeHive().getService('PubSub');
+        var pubsub = this.getBeeHive().getService('PubSub');
 
         pubsub.subscribe(pubsub.INVITING_REQUEST, _.bind(this.updateCurrentQuery, this));
         pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, _.bind(this.handleUserAnnouncement, this));
@@ -70,7 +73,7 @@ define([
          * */
         _.each(["change", "add", "reset", "remove"], function(ev){
 
-          this.listenTo(this.collection, ev, function(arg1, arg2){
+          this.listenTo(this.collection, ev, function(arg1){
             if (ev == "change" && arg1 instanceof Backbone.Model ){
               //a single model changed, widgets might want to know which one
               pubsub.publish(pubsub.LIBRARY_CHANGE, this.collection.toJSON(), {ev: ev, id: arg1.id});
@@ -104,8 +107,8 @@ define([
       },
 
       composeRequest : function (target, method, options) {
+        options = options || {};
         var request,
-          options = options || {},
           data = options.data || undefined;
 
         //using "endpoint" to mean the actual url string
@@ -146,6 +149,7 @@ define([
           target: ApiTargets.SEARCH,
           query: apiQuery
         });
+        var pubsub = this.getPubSub();
         var defer = $.Deferred();
         pubsub.subscribeOnce(pubsub.DELIVERING_RESPONSE, _.bind(function(data) {
           defer.resolve(data);
@@ -171,7 +175,7 @@ define([
               q.set("rows", 100);
               q.set("fl", "bibcode");
 
-          function makeRequest(){
+          var makeRequest = function () {
 
             q.set("start", start);
 
@@ -191,7 +195,7 @@ define([
               }
             });
 
-          }
+          };
           makeRequest.call(this);
         }
         else if (options.bibcodes == "selected"){
@@ -244,7 +248,7 @@ define([
         var that = this;
         //if this is the initial check, just wait until we can load the metadata
         if  (!this._metadataLoaded){
-          this._fetchAllMetadata().done(function(data){
+          this._fetchAllMetadata().done(function(){
             //make sure the collection is refilled before this promise is resolved
             setTimeout(function(){
               var data = id ? that.collection.get(id).toJSON() : that.collection.toJSON();
@@ -318,8 +322,7 @@ define([
             start = 0,
             rows = 100,
             bibcodes = [],
-            endpoint = ApiTargets["LIBRARIES"] + "/" + id,
-            that = this;
+            endpoint = ApiTargets["LIBRARIES"] + "/" + id;
 
         //this function gets called repeatedly
         function done(data) {
@@ -370,7 +373,7 @@ define([
 
         var endpoint = ApiTargets["LIBRARIES"];
         return this.composeRequest(endpoint, "POST", {data : data})
-          .done(function(data){
+          .done(function(){
             //refresh collection
             that._fetchAllMetadata();
           });
@@ -379,8 +382,7 @@ define([
       deleteLibrary : function(id, name){
 
         var that = this,
-          endpoint = ApiTargets["DOCUMENTS"] + "/" + id,
-          name;
+          endpoint = ApiTargets["DOCUMENTS"] + "/" + id;
 
         var promise  = this.composeRequest(endpoint, "DELETE")
           .done(function(){
@@ -392,7 +394,7 @@ define([
             that.getBeeHive().getService("PubSub").publish(that.getBeeHive().getService("PubSub").ALERT, new ApiFeedback({code: 0, msg: message, type : "success"}));
           })
           .fail(function(jqXHR){
-            var error = JSON.parse(jqXHR.responseText).error
+            var error = JSON.parse(jqXHR.responseText).error;
             var message = "Library <b>" + name + "</b> could not be deleted : (" + error + ")";
             that.getBeeHive().getService("PubSub").publish(that.getBeeHive().getService("PubSub").ALERT, new ApiFeedback({code: 0, msg: message, type : "danger"}));
           });
@@ -527,12 +529,12 @@ define([
         this.getBeeHive().getService("Api").request(new ApiRequest({
           target: endpoint,
           options: {
-            done: function (data) {
+            done: function () {
              d.resolve.apply(undefined,[].slice.apply(arguments));
               //re-fetch metadata, since new libs were imported
               that._fetchAllMetadata();
             },
-            fail: function (data) {
+            fail: function () {
               d.reject.apply(undefined,[].slice.apply(arguments));
             }
           }

@@ -18,6 +18,7 @@
  *
  */
 define([
+    'underscore',
     'backbone',
     'js/components/api_request',
     'js/components/api_targets',
@@ -26,9 +27,9 @@ define([
     'js/mixins/hardened',
     'js/components/api_feedback',
     'js/mixins/api_access'
-
   ],
   function(
+    _,
     Backbone,
     ApiRequest,
     ApiTargets,
@@ -65,7 +66,7 @@ define([
 
     User = GenericModule.extend({
 
-      initialize : function(options){
+      initialize : function(){
        //this model is for settings that come from PersistentStorage service
         this.localStorageModel = new LocalStorageModel();
         this.listenTo(this.localStorageModel, "change", this.broadcastUserDataChange);
@@ -135,7 +136,7 @@ define([
       },
 
       /*generic get localStorage function, gives you everything*/
-      getLocalStorage : function(obj){
+      getLocalStorage : function(){
         return this.localStorageModel.toJSON();
       },
 
@@ -172,7 +173,7 @@ define([
       },
 
       handleFailedPOST : function(jqXHR, status, errorThrown, target){
-        var pubsub = this.getPubSub(), error;
+        var error;
 
         if (jqXHR.responseJSON && jqXHR.responseJSON.error){
           error = jqXHR.responseJSON.error;
@@ -186,7 +187,7 @@ define([
       },
 
       handleFailedGET :  function(jqXHR, status, errorThrown, target){
-        var pubsub = this.getPubSub(), error;
+        var error;
 
         if (jqXHR.responseJSON && jqXHR.responseJSON.error){
           error = jqXHR.responseJSON.error;
@@ -241,10 +242,8 @@ define([
 
         var target = config.target,
           method = config.method,
-          data = config.data || {},
-          csrf = data.csrf,
-        //don't want to send this to the endpoint
-          data = _.omit(data, "csrf");
+          data = _.omit(config.data, 'csrf') || {},
+          csrf = config.data && config.data.csrf;
 
         var endpoint = ApiTargets[target],
           that = this,

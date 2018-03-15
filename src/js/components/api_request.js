@@ -51,7 +51,7 @@ define([
     };
 
     var toInsert = {};
-    _.each(_.keys(hardenedInterface), function(element, index, list) {
+    _.each(_.keys(hardenedInterface), function(element) {
       toInsert[element] = function() {return this.innerRequest[element].apply(this.innerRequest, arguments)};
     });
     _.extend(ApiRequest.prototype, toInsert, {
