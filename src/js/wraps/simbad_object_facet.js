@@ -97,7 +97,7 @@ define([
               return facet;
             }, this)
         that.store.dispatch(that.actions.data_received(enhancedResponse, id));
-      };
+      }
       
       var request = new ApiRequest({
         target: ApiTargets.SERVICE_OBJECTS,

@@ -366,13 +366,13 @@ define([
       var self = this;
 
       // services are activated by beehive itself
-      if (self.debug) {console.log('application: beehive.activate()')};
+      if (self.debug) {console.log('application: beehive.activate()')}
       beehive.activate(beehive);
 
       // controllers receive application itself and elevated beehive object
       // all of them must succeed; we don't catch errors
       _.each(this.getAllControllers(), function(el) {
-        if (self.debug) {console.log('application: controllers: ' + el[0] + '.activate(beehive, app)')};
+        if (self.debug) {console.log('application: controllers: ' + el[0] + '.activate(beehive, app)')}
         var plugin = el[1];
         if ('activate' in plugin) {
           plugin.activate(beehive, self);
@@ -892,11 +892,11 @@ define([
       var rets = _.map(objects, function(el) {
         var obj = el[1];
         if (funcName in obj) {
-          if (self.debug) {console.log('application.triggerMethod: ' + msg + ": " + el[0] + '.' + funcName + '()')};
+          if (self.debug) {console.log('application.triggerMethod: ' + msg + ": " + el[0] + '.' + funcName + '()')}
           obj[funcName].call(obj, options);
         }
         else if (_.isFunction(funcName)) {
-          if (self.debug) {console.log('application.triggerMethod: ' + msg + ": " + el[0] + ' customCallback()')};
+          if (self.debug) {console.log('application.triggerMethod: ' + msg + ": " + el[0] + ' customCallback()')}
           funcName.call(obj, msg + ":" + el[0], options);
         }
       });

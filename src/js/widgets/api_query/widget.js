@@ -146,10 +146,10 @@ define([
           arguments[2].destroy();
         }
         else if (event == 'childview:key-changed') {
-          arguments[2].set('key', arguments[3]);;
+          arguments[2].set('key', arguments[3]);
         }
         else if (event == 'childview:value-changed') {
-          arguments[2].set('value', arguments[3]);;
+          arguments[2].set('value', arguments[3]);
         }
         else if (event == 'add-new-item') {
           arguments[1].collection.add({key:'', value:''});

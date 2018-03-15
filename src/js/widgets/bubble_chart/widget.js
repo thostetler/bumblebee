@@ -757,7 +757,7 @@ define([
          d3this.classed("journal-selected", true);
          that.model.set("currentPub", pubName);
        }
-     };
+     }
 
       //adding the "trackingBibs" bubble select functionality
       //a delegated event

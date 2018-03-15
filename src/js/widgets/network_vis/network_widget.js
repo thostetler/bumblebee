@@ -744,7 +744,7 @@ define([
         function stash(d) {
           d.x0 = d.x;
           d.dx0 = d.dx;
-        };
+        }
 
         function computeLabelPosition(d) {
           var angle = (d.x + d.x + d.dx) / 2 * 180 / Math.PI - 90;
@@ -1115,7 +1115,7 @@ define([
         var that = this;
         function value (d) {
           return d[currentVal];
-        };
+        }
 
         // Interpolate the arcs in data space.
         function arcTween(a) {

@@ -344,7 +344,7 @@ define([
               }
             }
           };
-        };
+        }
 
         //have to add this to the text or else it interferes with mouseover
         function fadeText(event) {

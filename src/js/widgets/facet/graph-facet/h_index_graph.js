@@ -194,7 +194,7 @@ define(['./base_graph',
           this.limitVal = val;
         }
         else if (!this.limitVal) {
-          this.limitVal = d3.max(_.pluck(data, "x"));;
+          this.limitVal = d3.max(_.pluck(data, "x"));
         }
         //else, limitval has already been set previously
 

@@ -119,7 +119,7 @@ define(['underscore', 'jquery', 'backbone', 'marionette',
         var event = arguments[0];
 
         if (event == 'childview:value-changed') {
-          arguments[2].set('value', arguments[3]);;
+          arguments[2].set('value', arguments[3]);
         }
         else if (event == 'load-api-request') {
           this.onLoad(arguments[1]);

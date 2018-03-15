@@ -354,11 +354,11 @@ define([
           function alertSuccess (){
             var message = "<p>Please check <b>" + new_email+ "</b> for further instructions</p><p>(If you don't see the email, please <b>check your spam folder</b>)</p>";
             this.getPubSub().publish(this.getPubSub().ALERT,  new ApiFeedback({code: 0, msg: message, type : "success", title: "Success", modal: true}));
-          };
+          }
           //need to do it this way so the alert doesnt get lost after page is changed
           this.getPubSub().subscribeOnce(this.getPubSub().NAVIGATE, _.bind(alertSuccess, this));
           this.getBeeHive().getObject("Session").logout();
-        };
+        }
 
         data = _.extend(data, {csrf : true});
 
@@ -432,11 +432,11 @@ define([
 
         function done (data){
           deferred.resolve(data);
-        };
+        }
 
         function fail(data){
           deferred.reject(data);
-        };
+        }
 
         var request = new ApiRequest({
           target : key ? ApiTargets["SITE_CONFIGURATION"] + '/' + key : ApiTargets["SITE_CONFIGURATION"],

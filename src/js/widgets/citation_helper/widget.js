@@ -97,7 +97,7 @@ define([
       //on initialization, store the current query
       if (this.getBeeHive().getObject("AppStorage")){
         this.setCurrentQuery(this.getBeeHive().getObject("AppStorage").getCurrentQuery());
-      };
+      }
 
     },
 
@@ -199,7 +199,7 @@ define([
         this.model.set('msg', 'Citation Helper did not find any suggestions.')
       } else {
         this.model.set('items', response);
-      };
+      }
     },
 
     renderWidgetForCurrentQuery : function(){

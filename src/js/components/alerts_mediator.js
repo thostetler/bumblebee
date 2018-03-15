@@ -73,7 +73,7 @@ define([
             if (_.isFunction(result)) {
               result();
               return;
-            };
+            }
 
             // non-privileged components can reach alerts sending limited
             // definition of actions; we'll turn those into functions/actions

@@ -100,7 +100,7 @@ define([
               }
             });
           }
-      };
+      }
 
       var modalOnRender = ModalView.prototype.onRender;
 

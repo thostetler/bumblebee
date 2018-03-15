@@ -84,7 +84,7 @@ define([
             return permissionHierarchy.indexOf(model1.get(sort)) - permissionHierarchy.indexOf(model2.get(sort));
           }
           else {
-            return permissionHierarchy.indexOf(model2.get(sort)) - permissionHierarchy.indexOf(model1.get(sort));;
+            return permissionHierarchy.indexOf(model2.get(sort)) - permissionHierarchy.indexOf(model1.get(sort));
           }
 
         }

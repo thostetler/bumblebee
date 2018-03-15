@@ -237,7 +237,7 @@ define([
           var error = (jqXHR.responseJSON && jqXHR.responseJSON.error) ? jqXHR.responseJSON.error : "error unknown";
           //call alerts widget
           this.getPubSub().publish(this.getPubSub().ALERT, new ApiFeedback({code: 0, title: failTitle, msg: " <b>" + error + "</b> <br/>" + failMessage, modal : true, type : "danger"}));
-        };
+        }
 
         request = new ApiRequest({
           target : route,

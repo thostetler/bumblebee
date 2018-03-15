@@ -106,7 +106,7 @@ define([
           toReturn.inactive = "";
         }
         return toReturn;
-      };
+      }
 
       var SearchBarModel = Backbone.Model.extend({
           defaults : function(){
@@ -162,7 +162,7 @@ define([
         function matchStart (term, text) {
             if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) { return true; }
             return false;
-          };
+          }
 
           var $select = this.$(".quick-add-dropdown");
 

@@ -219,7 +219,7 @@ define([
           </div>
         </div>
       );
-    };
+    }
   }
 
   App.propTypes = {

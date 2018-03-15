@@ -84,7 +84,7 @@ define([
           else {
             return false;
           }
-        };
+        }
 
         this.set('index-page', function() {
 

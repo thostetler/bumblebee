@@ -335,11 +335,11 @@ define([
     triggerEvents: function(events, args) {
       var ev, i = -1, l = events.length, a1 = args[0], a2 = args[1], a3 = args[2];
       switch (args.length) {
-        case 0: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx)} catch(e) {this.handleCallbackError(e, ev, args)}; return;
-        case 1: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx, a1)} catch(e) {this.handleCallbackError(e, ev, args)}; return;
-        case 2: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx, a1, a2)} catch(e) {this.handleCallbackError(e, ev, args)}; return;
-        case 3: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx, a1, a2, a3)} catch(e) {this.handleCallbackError(e, ev, args)}; return;
-        default: while (++i < l) try{(ev = events[i]).callback.apply(ev.ctx, args)} catch(e) {this.handleCallbackError(e, ev, args)};
+        case 0: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx)} catch(e) {this.handleCallbackError(e, ev, args)} return;
+        case 1: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx, a1)} catch(e) {this.handleCallbackError(e, ev, args)} return;
+        case 2: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx, a1, a2)} catch(e) {this.handleCallbackError(e, ev, args)} return;
+        case 3: while (++i < l) try{(ev = events[i]).callback.call(ev.ctx, a1, a2, a3)} catch(e) {this.handleCallbackError(e, ev, args)} return;
+        default: while (++i < l) try{(ev = events[i]).callback.apply(ev.ctx, args)} catch(e) {this.handleCallbackError(e, ev, args)}
       }
     },
 

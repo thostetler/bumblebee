@@ -30,7 +30,7 @@ define([
       if (!this.model.get("msg") && !this.model.get("title")){
         this.$el.html("");
         return this
-      };
+      }
       return Marionette.ItemView.prototype.render.apply(this, arguments);
       //log the error to console as well
       if (this.model.get("type") === "danger"){

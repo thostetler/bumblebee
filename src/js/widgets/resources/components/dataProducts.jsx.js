@@ -38,7 +38,7 @@ define([
         </ul>
       </div>
     );
-  };
+  }
 
   return DataProducts;
 });
