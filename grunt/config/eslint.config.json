@@ -11,8 +11,5 @@
     "mocha": true,
     "jquery": true,
     "es6": true
-  },
-  "ecmaFeatures": {
-    "jsx": true
   }
 }
