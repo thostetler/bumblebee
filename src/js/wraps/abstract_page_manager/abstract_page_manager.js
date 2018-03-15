@@ -1,14 +1,16 @@
 define([
+  'underscore',
   'js/page_managers/toc_controller',
   'js/page_managers/three_column_view',
   'hbs!js/wraps/abstract_page_manager/abstract-page-layout',
   'hbs!js/wraps/abstract_page_manager/abstract-nav'
   ], function (
+  _,
   PageManagerController,
   PageManagerView,
   PageManagerTemplate,
   TOCTemplate
-  ) {
+) {
 
   var PageManager = PageManagerController.extend({
 
@@ -43,7 +45,7 @@ define([
         this.view.model.set('query', apiQuery.url());
     },
 
-    show: function(pageName){
+    show: function(){
       var ret = PageManagerController.prototype.show.apply(this, arguments);
       if (this.view.model && this.view.model.has('query')) {
         ret.$el.find('.s-back-button-container').empty().html('<a href="#search/' + this.view.model.get('query') + '" class="back-button btn btn-sm btn-default"> <i class="fa fa-arrow-left"></i> Back to results</a>');

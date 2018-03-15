@@ -54,7 +54,7 @@ define([
 
       var q = this.customizeQuery(this.getCurrentQuery());
       var children = id ? this.store.getState().facets[id].children : this.store.getState().children;
-      var offset = children.length || 0;
+      offset = children.length || 0;
 
       q.set("facet.offset", offset);
       // set prefix from 0/ to 1/
@@ -111,8 +111,8 @@ define([
         }
       });
 
-	  var pubsub = this.getPubSub();
-	  pubsub.publish(pubsub.EXECUTE_REQUEST, request);
+      var pubsub = this.getPubSub();
+      pubsub.publish(pubsub.EXECUTE_REQUEST, request);
     };
 
     widget.submitFilter = function(operator) {
@@ -125,14 +125,12 @@ define([
       var selectedFacets = Reducers.getActiveFacets(this.store.getState(), this.store.getState().state.selected);
 
       var conditions = selectedFacets.map(function(c) {
+          var facetName = c;
           //it's a second level facet, replace the name part with the simbid (unique for object facet)
           if ( this._simbidCache[c] ){
-            var facetName = c.split('/').slice(0,2)
+            facetName = c.split('/').slice(0,2)
             .concat([this._simbidCache[c]])
             .join('/');
-          }
-          else {
-            var facetName = c;
           }
           return facetField + ":\"" + facetName + "\"";
         }, this);

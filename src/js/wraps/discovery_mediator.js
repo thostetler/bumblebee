@@ -26,7 +26,7 @@ define([
 
     var handlers = {};
 
-    handlers[ApiFeedback.CODES.MAKE_SPACE] = function(feedback) {
+    handlers[ApiFeedback.CODES.MAKE_SPACE] = function() {
       var mpm = this.getApp().getObject('MasterPageManager');
       if (mpm) {
         var child = mpm.getCurrentActiveChild();
@@ -45,7 +45,7 @@ define([
       }, this));
     };
 
-    handlers[ApiFeedback.CODES.UNMAKE_SPACE] = function(feedback) {
+    handlers[ApiFeedback.CODES.UNMAKE_SPACE] = function() {
       var mpm = this.getApp().getObject('MasterPageManager');
       if (mpm) {
         var child = mpm.getCurrentActiveChild();
@@ -71,30 +71,26 @@ define([
       this.getPubSub().publish(this.getPubSub().NAVIGATE, "results-page");
 
       if (feedback.request && feedback.request.get('target').indexOf('search') > -1 && feedback.query && !feedback.numFound) {
-        var q = feedback.query;
-
         //TODO: add in generic handler for this error
-
         return; // do not bother with the rest
       }
 
       // too many results
       if (feedback.numFound > 1000) {
         app.getWidget('SearchWidget').done(function(widget) {
+
           // make the search form pulsate little bit
-          if (widget.view && widget.view.highlightFields)
-            search.view.highlightFields();
+          if (widget.view && widget.view.highlightFields){
+            widget.view.highlightFields();
+          }
         });
       }
-
-      // retrieve ids of all components that wait for a query
-      var ids = _.keys(feedback.cycle.waiting);
 
       // remove alerts from previous searches
       this.getAlerter().alert(new ApiFeedback({
         type: Alerts.TYPE.INFO,
-        msg: null}));
-
+        msg: null
+      }));
     };
 
 
@@ -148,7 +144,6 @@ define([
                 }));
               });
             return;
-            break;
         }
 
 
@@ -284,7 +279,6 @@ define([
         this._tmp.api_failures = this._tmp.api_failures || {};
         this._tmp.api_failures[n] = this._tmp.api_failures[n] || 0;
         this._tmp.api_failures[n] += 1;
-        var numErr = this._tmp.api_failures[n];
       }
       else {
         if (!feedback.beVerbose) return;
@@ -332,7 +326,7 @@ define([
           this.getPubSub().subscribe(pubsub.START_SEARCH, _.bind(function(apiQuery, senderKey) {
             var pubsub = this.getPubSub();
             var app = this.getApp();
-            var qm, widget, storage;
+            var qm, storage;
 
             if (!pubsub)
               return; // gone
@@ -345,12 +339,10 @@ define([
             storage = app.getObject('AppStorage');
 
             if (storage && storage.getCurrentQuery() ){
-              try{
+              try {
                 console.log("URL: ", storage.getCurrentQuery().url());
-
-              }
-              catch (e){
-
+              } catch (e) {
+                // do nothing
               }
             }
 

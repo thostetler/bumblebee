@@ -54,7 +54,7 @@ define([
 
       var q = this.customizeQuery(this.getCurrentQuery());
       var children = id ? this.store.getState().facets[id].children : this.store.getState().children;
-      var offset = children.length || 0;
+      offset = children.length || 0;
 
       q.set("facet.offset", offset);
       // set prefix from 0/ to 1/
@@ -108,15 +108,15 @@ define([
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify({
-			source: "NED",
+            source: "NED",
             identifiers: nedids
           }),
           done: done
         }
       });
 
-	  var pubsub = this.getPubSub();
-	  pubsub.publish(pubsub.EXECUTE_REQUEST, request);
+      var pubsub = this.getPubSub();
+      pubsub.publish(pubsub.EXECUTE_REQUEST, request);
     };
 
     widget.submitFilter = function(operator) {
@@ -129,14 +129,13 @@ define([
       var selectedFacets = Reducers.getActiveFacets(this.store.getState(), this.store.getState().state.selected);
 
       var conditions = selectedFacets.map(function(c) {
+
           //it's a second level facet, replace the name part with the nedid (unique for object facet)
+          var facetName = c;
           if ( this._nedidCache[c] ){
-            var facetName = c.split('/').slice(0,2)
+            facetName = c.split('/').slice(0,2)
             .concat([this._nedidCache[c]])
             .join('/');
-          }
-          else {
-            var facetName = c;
           }
           return facetField + ":\"" + facetName + "\"";
         }, this);

@@ -1,17 +1,19 @@
 define([
-    'js/widgets/tabs/tabs_widget',
-    'js/widgets/facet/factory',
-    'js/widgets/facet/graph-facet/year_graph',
-    'js/widgets/facet/graph-facet/h_index_graph',
-    'js/mixins/formatter'
-  ],
-  function (
-    TabsWidget,
-    FacetFactory,
-    YearGraphView,
-    HIndexGraph,
-    FormatMixin
-    ) {
+  'underscore',
+  'js/widgets/tabs/tabs_widget',
+  'js/widgets/facet/factory',
+  'js/widgets/facet/graph-facet/year_graph',
+  'js/widgets/facet/graph-facet/h_index_graph',
+  'js/mixins/formatter'
+],
+function (
+  _,
+  TabsWidget,
+  FacetFactory,
+  YearGraphView,
+  HIndexGraph,
+  FormatMixin
+) {
 
     return function() {
 
@@ -22,8 +24,7 @@ define([
           "facet.pivot"   : "property,year",
           "facet"         : "true",
           "facet.minCount": "1",
-		  "facet.limit"   : "-1"
-
+          "facet.limit"   : "-1"
         },
 
         graphViewOptions : {
@@ -56,6 +57,7 @@ define([
 
           var maxVal, minVal;
 
+          //TODO: clean up this logic!
           _.each(refData, function (d) {
             var val = parseInt(d.value);
             if (maxVal === undefined) {
@@ -94,18 +96,18 @@ define([
 
           _.each(yearRange, function (year) {
             var stringYear = year + "";
-            refCount = _.filter(refData, function (d) {
+            var refCount = _.filter(refData, function (d) {
               return d.value === stringYear
             })[0];
             refCount = refCount ? refCount.count : 0;
-            nonRefCount = _.filter(nonRefData, function (d) {
+            var nonRefCount = _.filter(nonRefData, function (d) {
               return d.value === stringYear
             })[0];
             nonRefCount = nonRefCount ? nonRefCount.count : 0;
 
             finalData.push({x: year, y: refCount + nonRefCount, refCount: refCount})
 
-          })
+          });
 
           if (finalData.length < 2) {
             this.model.set({ graphData: [] });
@@ -272,14 +274,14 @@ define([
 
           var statsCount;
           if (apiResponse.toJSON().stats){
-            var statsCount = FormatMixin.formatNum(apiResponse.get("stats.stats_fields.read_count.sum"));
+            statsCount = FormatMixin.formatNum(apiResponse.get("stats.stats_fields.read_count.sum"));
           }
 
           this.model.set({
-              graphData: finalData,
-              statsCount: statsCount,
-              statsDescription : "total recent (90 day) reads"
-            });
+            graphData: finalData,
+            statsCount: statsCount,
+            statsDescription : "total recent (90 day) reads"
+          });
 
         }
 

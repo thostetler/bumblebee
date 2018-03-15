@@ -1,10 +1,12 @@
 define([
+  'underscore',
   'js/widgets/facet/factory',
   'analytics'
 ], function (
+  _,
   FacetFactory,
   analytics
-  ) {
+) {
 
   return function() {
     var widget = FacetFactory.makeHierarchicalCheckboxFacet({

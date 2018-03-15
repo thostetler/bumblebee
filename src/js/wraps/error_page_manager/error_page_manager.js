@@ -9,14 +9,13 @@ define([
 ) {
 
   var PageManager = PageManagerController.extend({
-
-    createView: function(options) {
-      options = options || {};
-      return new PageManagerView({template: PageManagerTemplate, className :  "error-page-layout s-100-height"   })
+    createView: function () {
+      return new PageManagerView({
+        template: PageManagerTemplate,
+        className : 'error-page-layout s-100-height'
+      });
     },
-
-
-
   });
+
   return PageManager;
 });

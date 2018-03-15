@@ -1,24 +1,31 @@
 define([
-    'marionette',
-    'js/widgets/network_vis/network_widget',
-    'js/components/api_query_updater',
-    'hbs!js/wraps/templates/paper-network-data',
-    'hbs!js/wraps/templates/paper-network-container',
-    'hbs!js/widgets/network_vis/templates/not-enough-data-template',
-    'hbs!js/wraps/templates/paper-network-link-data',
-    'js/components/api_targets',
-    'bootstrap'
-  ],
-  function (
-    Marionette,
-    NetworkWidget,
-    ApiQueryUpdater,
-    GroupDataTemplate,
-    ContainerTemplate,
-    NotEnoughDataTemplate,
-    LinkDataTemplate,
-    ApiTargets,
-    bs) {
+  'underscore',
+  'd3',
+  'jquery',
+  'backbone',
+  'marionette',
+  'js/widgets/network_vis/network_widget',
+  'js/components/api_query_updater',
+  'hbs!js/wraps/templates/paper-network-data',
+  'hbs!js/wraps/templates/paper-network-container',
+  'hbs!js/widgets/network_vis/templates/not-enough-data-template',
+  'hbs!js/wraps/templates/paper-network-link-data',
+  'js/components/api_targets'
+],
+function (
+  _,
+  d3,
+  $,
+  Backbone,
+  Marionette,
+  NetworkWidget,
+  ApiQueryUpdater,
+  GroupDataTemplate,
+  ContainerTemplate,
+  NotEnoughDataTemplate,
+  LinkDataTemplate,
+  ApiTargets
+) {
 
     var options = {};
 
@@ -31,20 +38,6 @@ define([
       " <p>If your search returned a large enough set of papers, you will see two views:" +
       " a <b>summary view</b>  with groups of tightly linked papers, and a <b>detail view</b> " +
       " that gives you more information about the group </p>";
-
-    var GraphModel = Backbone.Model.extend({
-      defaults: function () {
-        return  {
-          //data from the api
-          graphData: {},
-          //keep track of selection state
-          selectedEntity: undefined,
-          cachedEntity: undefined,
-          linkLayer: false,
-          mode: "occurrences"
-        }
-      }
-    });
 
     options.graphView = Marionette.ItemView.extend({
 
@@ -59,7 +52,7 @@ define([
         "change input[name=show-link]": function (e) {
           this.model.set("linkLayer", e.target.checked);
         },
-        "click .filter-remove": function (e) {
+        "click .filter-remove": function () {
           var id = this.model.get("selectedEntity");
           var displayName = _.findWhere(this.model.get("graphData").summaryGraph.nodes, {id: id}).node_name
           //showing display name
@@ -67,7 +60,7 @@ define([
           //re-render detail sub view
           this.showSelectedEntity();
         },
-        "click .filter-add": function (e) {
+        "click .filter-add": function () {
           var id = this.model.get("selectedEntity");
           var displayName = _.findWhere(this.model.get("graphData").summaryGraph.nodes, {id: id}).node_name
           Marionette.getOption(this, "filterCollection").add({name: displayName});
@@ -234,7 +227,7 @@ define([
           .enter()
           .append("path")
           .classed("node-path", true)
-          .attr("fill", function (d, i) {
+          .attr("fill", function (d) {
             if (d.data.node_name > 7) {
               return that.config.noGroupColor;
             } else {
@@ -243,21 +236,19 @@ define([
           })
           .attr("d", arc)
           //for testing purposes, add the id
-          .attr("id", function (d, i) {
+          .attr("id", function (d) {
             return "vis-group-" + d.data.node_name
           })
           .on("mouseover", fade("mouseenter"))
           .on("mouseout", fade("mouseleave"))
           //trigger group select events
-          .on("click", function (d, i)
-          {
-            var groupId = d.data.id;
+          .on("click", function () {
             that.model.set("selectedEntity", this);
           });
 
         var ticks = svg.selectAll(".groupLabel")
           .data(function () {
-            return _.map(data, function (d, i) {
+            return _.map(data, function (d) {
               return that.cachedVals.groupTicks(d)
             });
           })
@@ -277,7 +268,7 @@ define([
         var text = ticks.append("g")
           .attr("x", 0)
           .attr("dy", ".5em")
-          .attr("transform", function (d, i) {
+          .attr("transform", function (d) {
             return "rotate(" + -(d.angle * 180 / Math.PI - 90) + ")"
           })
           .classed("summary-label-container", true)
@@ -287,7 +278,7 @@ define([
             }
           })
           .selectAll("text")
-          .data(function (d, i) {
+          .data(function (d) {
             var data = _.pairs(d.label);
             //take top 4 with highest idf
                 data = _.sortBy(data, function(d){return -d[1]});
@@ -302,15 +293,15 @@ define([
           .attr("x", 0)
           .classed("paper-network-labels", true)
           .attr("text-anchor", "middle")
-          .attr("y", function (d, i, j) {
+          .attr("y", function (d, i) {
             var size = _.findWhere(graphData.nodes, {id: d[2]}).paper_count;
             return i * that.scales.initialFontScale(size) - 30;
           })
-          .attr("font-size", function (d, i, j) {
+          .attr("font-size", function (d) {
             var size = _.findWhere(graphData.nodes, {id: d[2]}).paper_count;
             return that.scales.initialFontScale(size) + "px";
           })
-          .text(function (d, i) {
+          .text(function (d) {
               return d[0];
           });
 
@@ -319,7 +310,7 @@ define([
           .on("mouseout", fadeText("mouseleave"));
 
         //trigger group select events
-        text.on("click", function (d) {
+        text.on("click", function () {
           var nodeName = d3.select(this.parentNode).data()[0].data.data.node_name;
           var nodePath = that.$("#vis-group-" + nodeName)[0];
           that.model.set("selectedEntity", nodePath);
@@ -327,7 +318,7 @@ define([
 
         // Returns an event handler for fading a given chord group.
         function fade(event) {
-          return function (g, i, j) {
+          return function (g) {
             //properly color the group background
             if (event === "mouseenter"){
               if (g.data.node_name > 7) {
@@ -348,7 +339,7 @@ define([
 
         //have to add this to the text or else it interferes with mouseover
         function fadeText(event) {
-          return function (g, j, i) {
+          return function () {
             //properly color the group background
             var nodeName = d3.select(this.parentNode).data()[0].data.data.node_name;
             var pieNode = d3.selectAll(".node-path").filter(function(d){return d.data.node_name === nodeName})[0][0];
@@ -378,10 +369,10 @@ define([
 
         links = _.chain(links).map(function (l) {
           var linkData = {};
-          linkData.source = svg.selectAll(".node-path").filter(function (d, i) {
+          linkData.source = svg.selectAll(".node-path").filter(function (d) {
             return d.data.stable_index == l.source;
           })[0][0].__data__;
-          linkData.target = svg.selectAll(".node-path").filter(function (d, i) {
+          linkData.target = svg.selectAll(".node-path").filter(function (d) {
             return d.data.stable_index == l.target;
           })[0][0].__data__;
           //ignore self links
@@ -484,11 +475,11 @@ define([
           allReferences2 = _.flatten(_.pluck(links2, "overlap"));
 
           _.each(_.intersection(allReferences1, allReferences2), function (s) {
-            percent1 = _.filter(allReferences1, function (b) {
+            var percent1 = _.filter(allReferences1, function (b) {
               return b == s
             }).length / allReferences1.length;
 
-            percent2 = _.filter(allReferences2, function (b) {
+            var percent2 = _.filter(allReferences2, function (b) {
               return b == s
             }).length / allReferences2.length;
 
@@ -521,14 +512,14 @@ define([
         else {
 
         //the network widget actually expects a path
-        var entity = entity.__data__.data.id
+        entity = entity.__data__.data.id;
 
           var groupData = _.findWhere(that.model.get("graphData").summaryGraph.nodes, function (g) {
             return ( g.id == entity);
           });
 
           //make a copy
-          summaryData = $.extend({}, groupData);
+          var summaryData = $.extend({}, groupData);
           summaryData.processedTopCommonReferences = [];
           summaryData.titleWords = _.keys(groupData.node_label);
 
@@ -544,7 +535,7 @@ define([
               return n[1]
             }).reverse();
           //using OLD ID because it is the one that joins the group to the detail nodes
-          filteredNodes = this.getAllNodes(groupData.id);
+          var filteredNodes = this.getAllNodes(groupData.id);
           topNodes = _.sortBy(filteredNodes, function (o) {
             return o.citation_count;
           }).reverse();
@@ -583,7 +574,10 @@ define([
           mode = this.model.get("mode");
 
         function arcTween(d, i) {
-          var i = d3.interpolate({startAngle: this.oldStartAngle, endAngle: this.oldEndAngle}, d);
+          i = d3.interpolate({
+            startAngle: this.oldStartAngle,
+            endAngle: this.oldEndAngle
+          }, d);
           return function (t) {
             var b = i(t);
             this.startAngle = b.startAngle;
@@ -660,16 +654,16 @@ define([
           .transition()
           .duration(1000)
 
-          .attr("transform", function (d, i) {
+          .attr("transform", function (d) {
             return "rotate(" + -(d.angle * 180 / Math.PI - 90) + ")"
           });
 
         groups.selectAll("text")
-          .attr("y", function (d, i, j) {
+          .attr("y", function (d, i) {
             var size = this.parentNode.__data__.data.value;
             return i * fontScale(size) - 30;
           })
-          .attr("font-size", function (d, i, j) {
+          .attr("font-size", function () {
             var size = this.parentNode.__data__.data.value;
             return fontScale(size) + "px";
           });
@@ -680,7 +674,7 @@ define([
         var fullGraph = this.model.get("graphData").fullGraph;
         var filteredNodes = [];
 
-        _.each(fullGraph.nodes, function (n, i) {
+        _.each(fullGraph.nodes, function (n) {
           if (n.group === id) {
             filteredNodes.push(n)
           }
@@ -692,16 +686,14 @@ define([
 
       getAllLinks: function (id) {
         var fullGraph = this.model.get("graphData").fullGraph;
-        var indexes = [];
-        links = [],
-          filteredNodes = [];
+        var indexes = [], links = [];
 
         _.each(fullGraph.nodes, function (n, i) {
           if (n.group === id) {
             indexes.push(i)
           }
         });
-        _.each(fullGraph.links, function (l, i) {
+        _.each(fullGraph.links, function (l) {
           if (indexes.indexOf(l.source) !== -1 || indexes.indexOf(l.target) !== -1) {
             links.push(l)
           }
