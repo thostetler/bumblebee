@@ -200,11 +200,11 @@ define([
         this.off(name+key.getId(), callback, context);
       }
       else { // remove all events of this subscriber
-        var names = _.keys(this._events), name, events,ev, i, l, k, j;
+        var names = _.keys(this._events), events,ev, i, l, k, j;
         var toRemove = [];
         for (i = 0, l = names.length; i < l; i++) {
           name = names[i];
-          if (events = this._events[name]) {
+          if ((events = this._events[name])) {
             for (j = 0, k = events.length; j < k; j++) {
               ev = events[j];
               if (ev.context === context) {
@@ -292,7 +292,7 @@ define([
     /*
      * Checks the key - subscriber must supply it when calling
      */
-    _checkKey: function(key, name, callback) {
+    _checkKey: function(key) {
       if (this.strict) {
 
         if (_.isUndefined(key)) {

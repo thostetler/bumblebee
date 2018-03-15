@@ -11,11 +11,6 @@ define([
   //let them do that; but we'll not care for it
 
   var Storage = PersistentStorage.extend( {
-    activate: function(beehive) {
-      //this.setBeeHive(beehive);
-      //var pubsub = beehive.getService('PubSub');
-      //pubsub.subscribeOnce(pubsub.getPubSubKey(), pubsub.APP_BOOTSTRAPPED, this.onAppBootstrapped);
-    },
 
     onAppBootstrapped: function() {
       var beehive = this.getBeeHive();

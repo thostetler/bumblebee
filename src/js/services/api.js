@@ -41,7 +41,7 @@ define([
         this.setBeeHive(beehive);
       },
 
-      done: function( data, textStatus, jqXHR ) {
+      done: function (data) {
         // TODO: check the status responses
         var response = new ApiResponse(data);
         response.setApiQuery(this.request.get('query'));
@@ -90,11 +90,8 @@ define([
        * the options and can modify them. Typically, clients
        * make want to provide their own implementation.
        *
-       * @param opts
        */
-      modifyRequestOptions: function(opts) {
-        // do nothing
-      },
+      modifyRequestOptions: _.identity,
 
       hardenedInterface : {
         request : "make a request to the API",
