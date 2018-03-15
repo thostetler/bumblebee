@@ -8,5 +8,10 @@ module.exports = {
   options: {
     configFile: 'grunt/config/eslint.config.json'
   },
-  target: ['src/js'/*, 'test/mocha'*/]
+  source: {
+    src: [
+      'src/**/*.js',
+      '!src/libs/**/*'
+    ]
+  }
 };
