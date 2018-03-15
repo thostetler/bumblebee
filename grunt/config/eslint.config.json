@@ -11,5 +11,11 @@
     "mocha": true,
     "jquery": true,
     "es6": true
+  },
+  "globals": {
+    "__PAGE_LOAD_TIMESTAMP": true
+  },
+  "rules": {
+    "no-console": 0
   }
 }

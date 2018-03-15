@@ -9,7 +9,10 @@ module.exports = {
     configFile: 'grunt/config/eslint.config.json'
   },
   apps: {
-    src: 'src/js/apps/**/*.js'
+    src: [
+      'src/js/apps/**/*.js',
+      '!src/js/apps/bumblebox/**/*.js'
+    ]
   },
   bugutils: {
     src: 'src/js/bugutils/**/*.js'
