@@ -50,7 +50,7 @@ app.use(config.apiPath, proxy(config.proxy));
 // start the server
 app.listen(8000, () => {
   console.log('config: ', JSON.stringify(config));
-  console.log('Listening on port 8000')
+  console.log('Listening on port 8000');
 });
 
 
