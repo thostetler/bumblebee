@@ -29,7 +29,7 @@
  *
  */
 
-define(['underscore', 'backbone',
+define(['underscore', 'backbone', 'sinon',
   'js/components/query_mediator',
   'js/services/pubsub',
   'js/components/beehive',
@@ -40,7 +40,8 @@ define(['underscore', 'backbone',
   'js/components/api_response'
 ], function(
   _,
-  BackBone,
+  Backbone,
+  sinon,
   QueryMediator,
   PubSub,
   BeeHive,
@@ -130,12 +131,12 @@ define(['underscore', 'backbone',
       this.pubsub.publish.apply(this.pubsub, args);
     },
 
-    subscribe: function(signal, callback) {
+    subscribe: function() {
       var args = _.toArray(arguments);
       args.unshift(this.key);
       this.pubsub.subscribe.apply(this.pubsub, args);
     },
-    subscribeOnce: function(signal, callback) {
+    subscribeOnce: function() {
       var args = _.toArray(arguments);
       args.unshift(this.key);
       this.pubsub.subscribeOnce.apply(this.pubsub, args);

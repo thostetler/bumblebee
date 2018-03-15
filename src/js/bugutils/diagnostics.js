@@ -212,7 +212,6 @@ define([
 
       for(var ix in listOfFields) {
         var fname = listOfFields[ix];
-        var de = $.Deferred();
         var q = '{!lucene}' + fname + ':*';
 
         console.log('Getting num docs for: ' + q);
@@ -273,7 +272,6 @@ define([
      */
     testOrcidSendingData: function() {
       var app = this.getApp();
-      var self = this;
       this.getFirstDoc('bibcode:1978yCat.1072....0C').done(
         function(doc) {
           var oa = app.getService('OrcidApi');
@@ -293,7 +291,7 @@ define([
 
       // collect names of all the objects
       var objNames = {};
-      app.triggerMethodOnAll(function(name, opts) {
+      app.triggerMethodOnAll(function(name) {
 
         if (this === pubsub) { // pubsub has its own (root) key
           objNames[pubsub.pubSubKey.getId()] = name;
@@ -329,7 +327,7 @@ define([
 
       var stats = {};
       console.log('Printing active subscribers to PubSub');
-      _.each(pubsub._events, function(val, key, idx) {
+      _.each(pubsub._events, function(val, key) {
         console.log(key + ' (' + val.length + ')');
         _.each(val, function(v) {
           var x = v.ctx.getId ? objNames[v.ctx.getId()] : 'unknown object';
