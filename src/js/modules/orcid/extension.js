@@ -130,7 +130,7 @@ define([
                 self.trigger('orcid-update-finished');
               }
             });
-            recInfo.fail(function (data) {
+            recInfo.fail(function () {
               counter -= 1;
 
               // very likely, the request timed out
@@ -557,7 +557,7 @@ define([
             'orcid-logout': function () {
               orcidApi.signOut();
             },
-            'orcid-view': function (model) {
+            'orcid-view': function () {
               // do nothing for now
             }
           };

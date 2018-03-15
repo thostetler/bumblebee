@@ -6,6 +6,7 @@
 
 define([
   'underscore',
+  'marionette',
   'js/widgets/list_of_things/widget',
   'js/widgets/base/base_widget',
   'js/mixins/add_stable_index_to_collection',
@@ -20,6 +21,7 @@ define([
   'js/modules/orcid/extension'
 ], function (
     _,
+    Marionette,
     ListOfThingsWidget,
     BaseWidget,
     PaginationMixin,
@@ -36,7 +38,7 @@ define([
 
   var ResultsWidget = ListOfThingsWidget.extend({
 
-    initialize : function (options) {
+    initialize : function () {
       ListOfThingsWidget.prototype.initialize.apply(this, arguments);
 
       var that = this;
@@ -54,7 +56,7 @@ define([
           var orcidName = this.model.get("orcidLastName") + ", " + this.model.get("orcidFirstName");
           var oApi = that.getBeeHive().getService('OrcidApi');
 
-          var searchTerm = "author:\"" + orcidName + "\"";
+          searchTerm = "author:\"" + orcidName + "\"";
           oApi.getADSUserData()
             .done(function(data){
               if (data && data.nameVariations){
@@ -83,7 +85,7 @@ define([
 
     orcidWidget : true,
 
-    activate: function (beehive) {
+    activate: function () {
 
       ListOfThingsWidget.prototype.activate.apply(this, [].slice.apply(arguments));
 
@@ -142,7 +144,7 @@ define([
       if (dupsFound) {
         var toRemove = {}, toUpdate = [];
 
-        _.each(dmap, function(value, key) {
+        _.each(dmap, function(value) {
           if (value.length > 1) {
 
             // decide which record is ours (or pick the first one)
@@ -205,7 +207,7 @@ define([
 
     processDocs: function (jsonResponse, docs) {
       var start = 0;
-      var docs = PaginationMixin.addPaginationToDocs(docs, start);
+      docs = PaginationMixin.addPaginationToDocs(docs, start);
       _.each(docs, function (d,i) {
 
         // let each doc know if it's on the orcid widget page

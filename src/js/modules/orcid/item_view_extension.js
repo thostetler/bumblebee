@@ -5,11 +5,7 @@
  * orcid/extension provides functionality for the widget controllers)
  *
  */
-define([
-    'backbone',
-    'underscore'
-  ],
-  function (Backbone, _) {
+define([], function () {
 
     return {
       showOrcidActions: function (isWorkInCollection) {

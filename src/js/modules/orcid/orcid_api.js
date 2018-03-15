@@ -272,7 +272,7 @@ define([
             }
           }
         );
-        r.fail(function (jqXHR, textStatus, errorThrown) {
+        r.fail(function () {
           promise.reject.apply(promise, arguments);
         });
         return promise.promise();
