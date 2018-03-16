@@ -82,7 +82,7 @@ require.config({
         UserSettings: 'js/widgets/user_settings/widget',
         UserPreferences: 'js/widgets/preferences/widget',
         LibraryImport : 'js/widgets/library_import/widget',
-        BreadcrumbsWidget: 'js/widgets/filter_visualizer/widget',
+        BreadcrumbsWidget: 'es6!js/widgets/filter_visualizer/widget',
         NavbarWidget: 'js/widgets/navbar/widget',
         UserNavbarWidget: 'js/widgets/user_navbar/widget',
         AlertsWidget: 'js/widgets/alerts/widget',
@@ -195,6 +195,7 @@ require.config({
     'google-analytics': "//www.google-analytics.com/analytics",
     'google-recaptcha' : '//www.google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
     'hbs': 'libs/require-handlebars-plugin/hbs',
+    'immutable': 'libs/immutable/index',
     'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min',
     'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',
     'jquery-ui' : '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min',
@@ -204,12 +205,13 @@ require.config({
     'mocha': 'libs/mocha/mocha',
     'moment' : 'libs/momentjs/moment',
     'persist-js': 'libs/persist-js/src/persist',
-    'react' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-with-addons.min',
+    'react' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-with-addons',
     'react-backbone': 'libs/react-backbone/react.backbone',
-    'react-dom' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min',
+    'react-dom' : '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom',
     'react-prop-types': 'libs/react-prop-types/index',
     'react-redux' : 'libs/react-redux/index',
     'redux' : 'libs/redux/index',
+    'redux-immutable': 'libs/redux-immutable/index',
     'redux-thunk' : 'libs/redux-thunk/index',
     'select2' : 'libs/select2/select2',
     'sinon': '../bower_components/sinon/index',
@@ -295,6 +297,10 @@ require.config({
           MathJax.Hub.Startup.onload();
           return MathJax;
         }
+    },
+
+    'redux-immutable': {
+      deps: ['immutable']
     }
   },
 
