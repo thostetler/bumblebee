@@ -131,7 +131,8 @@ define([
        * displaying the filters
        */
       processQuery: function(data) {
-        var q = data.q; numFound = data.numFound;
+        var q = data.q;
+        var numFound = data.numFound;
 
         var filters = this.extractFilters(q);
         this._saveInfo(q, filters);
