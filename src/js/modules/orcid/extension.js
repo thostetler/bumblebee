@@ -33,6 +33,47 @@ define([
       WidgetClass.prototype.activate = function (beehive) {
         this.setBeeHive(beehive);
         activate.apply(this, arguments);
+        var pubsub = beehive.hasService('PubSub') && beehive.getService('PubSub');
+        pubsub.subscribe(pubsub.CUSTOM_EVENT, _.bind(this.onCustomEvent));
+      };
+
+      WidgetClass.prototype.onCustomEvent = function (event, bibcodes) {
+
+        /**
+         * Find the models for each of the bibcodes
+         * Filter out ones that can't perform the action
+         * Trigger the action on each of the views
+         */
+        var orcidAction = _.bind(function (action, bibcodes) {
+          var models = _.filter(this.collection.models, function (m) {
+            return _.contains(bibcodes, m.get('bibcode'));
+          });
+
+          // go through each model and grab the view for triggering
+          _.forEach(models, _.bind(function (m) {
+
+            // only continue if the model has the action available
+            var actions = _.map(m.get('orcid').actions, 'action');
+
+            if (_.contains(actions, action)) {
+              var view = this.view.children.findByModel(m);
+
+              if (view) {
+                view.trigger('OrcidAction', {
+                  action: action,
+                  view: view,
+                  model: m
+                });
+              }
+            }
+          }, this));
+        }, this);
+
+        switch (event) {
+          case 'orcid-bulk-claim': orcidAction('orcid-add', bibcodes); break;
+          case 'orcid-bulk-update': orcidAction('orcid-update', bibcodes); break;
+          case 'orcid-bulk-delete': orcidAction('orcid-delete', bibcodes); break;
+        }
       };
 
       /**
