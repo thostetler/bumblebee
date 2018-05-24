@@ -688,7 +688,7 @@ define([
             //for querymediator to do the correct thing
             query.unset('__qid');
             query.unset('__bigquerySource');
-            query.set('__clearBiqQuery', 'true');
+            query.set('__clearBigQuery', 'true');
             this.navigate(query);
           });
 
@@ -851,15 +851,22 @@ define([
 
         navigate: function (newQuery) {
           var newQ = newQuery.toJSON();
-          var oldQ = _.omit(this.getCurrentQuery().toJSON(), function (val, key) {
+          var oldQ = _.omit(this.getCurrentQuery().toJSON(), function (val, key, q) {
 
             // omit certain fields (highlights, paging)
             return /^hl.*/.test(key) || /^p_$/.test(key);
           });
 
+
           // if we aren't on the index page, only refine the current query, don't wipe it out
           if (this.currentPage !== 'index-page') {
             newQuery = new ApiQuery(_.assign({}, oldQ, newQ));
+          }
+
+          // make sure big query is actually getting cleared
+          if (newQuery.has('__clearBigQuery')) {
+            newQuery.unset('__qid');
+            newQuery.unset('__bigquerySource');
           }
 
           this.view.setFormVal(newQuery.get('q')[0]);
