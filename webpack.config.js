@@ -66,6 +66,8 @@ module.exports = {
       'js/mixins': path.resolve(__dirname, 'src/js/mixins/'),
       'js/components': path.resolve(__dirname, 'src/js/components/'),
       'js/widgets': path.resolve(__dirname, 'src/js/widgets/'),
+      'js/page_managers': path.resolve(__dirname, 'src/js/page_managers/'),
+      'js/bugutils': path.resolve(__dirname, 'src/js/bugutils/'),
     }
   },
   module: {
@@ -78,6 +80,13 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env']
           }
+        }
+      },
+      {
+        test: /\.html$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'handlebars-loader'
         }
       }
     ]
