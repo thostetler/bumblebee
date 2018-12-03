@@ -13,6 +13,20 @@
  *
  */
 
+// import * as Application from '../../components/application';
+// import * as Bootstrapper from '../../mixins/discovery_bootstrap';
+
+// Application.prototype.shim();
+// const app = new (Application.extend(Bootstrapper))({ debug: true, timeout: 300000 });
+// app.loadModules();
+
+
+
+
+
+
+
+
 define(['config', 'module'], function (config, module) {
   require([
     'router',

@@ -323,7 +323,106 @@ define([
 
       // start loading the modules
       // console.log('loading', implNames, impls)
-      require(impls, callback, errback);
+      console.log(sectionName, impls);
+      switch(sectionName) {
+        case 'controllers': {
+          require([
+            "js/wraps/discovery_mediator",
+            "js/components/query_mediator",
+            "js/bugutils/diagnostics",
+            "js/wraps/alerts_mediator",
+            "js/modules/orcid/module",
+          ], callback, errback);
+        } break;
+        case 'modules': {
+          require(['js/widgets/facet/factory'], callback, errback);
+        } break;
+        case 'services': {
+          require([
+            "js/services/api",
+            "js/services/pubsub",
+            "js/apps/discovery/navigator",
+            "js/services/storage",
+            "js/components/history_manager"
+          ], callback, errback);
+        } break;
+        case 'widgets': {
+          require([
+            "js/wraps/landing_page_manager/landing_page_manager",
+            "js/wraps/results_page_manager",
+            "js/wraps/abstract_page_manager/abstract_page_manager",
+            "js/wraps/authentication_page_manager",
+            "js/wraps/user_settings_page_manager/user_page_manager",
+            "js/wraps/orcid_page_manager/orcid_page_manager",
+            "js/wraps/orcid-instructions-page-manager/manager",
+            "js/wraps/libraries_page_manager/libraries_page_manager",
+            "js/wraps/home_page_manager/home_page_manager",
+            "js/wraps/public_libraries_page_manager/public_libraries_manager",
+            "js/wraps/error_page_manager/error_page_manager",
+            "js/widgets/authentication/widget",
+            "js/widgets/user_settings/widget",
+            "js/widgets/preferences/widget",
+            "js/widgets/library_import/widget",
+            "js/widgets/filter_visualizer/widget",
+            "js/widgets/navbar/widget",
+            "js/widgets/user_navbar/widget",
+            "js/widgets/alerts/widget",
+            "js/widgets/classic_form/widget",
+            "js/widgets/search_bar/search_bar_widget",
+            "js/widgets/paper_search_form/widget",
+            "js/widgets/results/widget",
+            "js/widgets/query_info/query_info_widget",
+            "js/widgets/api_query/widget",
+            "es6!js/widgets/export/widget.jsx",
+            "es6!js/widgets/sort/widget.jsx",
+            "js/wraps/export_dropdown",
+            "js/wraps/visualization_dropdown",
+            "js/wraps/author_network",
+            "js/wraps/paper_network",
+            "js/widgets/wordcloud/widget",
+            "js/widgets/bubble_chart/widget",
+            "es6!js/widgets/author_affiliation_tool/widget.jsx",
+            "js/widgets/metrics/widget",
+            "js/widgets/citation_helper/widget",
+            "js/modules/orcid/widget/widget",
+            "es6!js/widgets/orcid-selector/widget.jsx",
+            "js/wraps/affiliation_facet",
+            "js/wraps/author_facet",
+            "js/wraps/bibgroup_facet",
+            "js/wraps/bibstem_facet",
+            "js/wraps/data_facet",
+            "js/wraps/database_facet",
+            "js/wraps/grants_facet",
+            "js/wraps/keyword_facet",
+            "js/wraps/simbad_object_facet",
+            "js/wraps/ned_object_facet",
+            "js/wraps/refereed_facet",
+            "js/wraps/vizier_facet",
+            "js/wraps/graph_tabs",
+            "js/widgets/footer/widget",
+            "js/wraps/pubtype_facet",
+            "js/widgets/abstract/widget",
+            "js/widgets/graphics/widget",
+            "js/wraps/sidebar-graphics-widget",
+            "js/wraps/references",
+            "js/wraps/citations",
+            "js/wraps/coreads",
+            "js/widgets/meta_tags/widget",
+            "js/wraps/table_of_contents",
+            "es6!js/widgets/resources/widget.jsx",
+            "es6!js/widgets/associated/widget.jsx",
+            "js/widgets/recommender/widget",
+            "js/wraps/paper_metrics",
+            "js/wraps/paper_export",
+            "js/wraps/abstract_page_library_add/widget",
+            "js/widgets/library_individual/widget",
+            "js/widgets/libraries_all/widget",
+            "js/widgets/library_list/widget",
+          ], callback, errback);
+        } break;
+      }
+
+      //require(impls, callback, errback);
 
       return this._setTimeout(defer).promise();
     },
