@@ -6,11 +6,11 @@ define([
   'react-redux',
   'react-dom',
   'redux',
-  'es6!./redux/configure-store',
-  'es6!./redux/modules/orcid-selector-app',
+  './redux/configure-store',
+  './redux/modules/orcid-selector-app',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'es6!./containers/orcid-selector-container'
+  './containers/orcid-selector-container'
 ], function (
   _, Backbone, React, ReactRedux, ReactDOM, Redux, configureStore,
   OrcidSelectorApp, ApiQuery, BaseWidget, OrcidSelectorContainer

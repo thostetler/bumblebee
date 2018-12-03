@@ -2,7 +2,7 @@
 define([
   'redux',
   'redux-thunk',
-  'es6!./modules/sort-app',
+  './modules/sort-app',
   'redux-immutable'
 ], function (Redux, ReduxThunk, SortApp, ReduxImmutable) {
   const { createStore, applyMiddleware } = Redux;

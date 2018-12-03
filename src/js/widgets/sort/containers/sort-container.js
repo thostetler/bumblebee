@@ -4,8 +4,8 @@ define([
   'react',
   'redux',
   'react-redux',
-  'es6!../redux/modules/sort-app',
-  'es6!../components/sort-app.jsx'
+  '../redux/modules/sort-app',
+  '../components/sort-app.jsx'
 ], function (_, React, Redux, ReactRedux, actions, SortApp) {
   // actions
   const {

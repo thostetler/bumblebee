@@ -1,6 +1,6 @@
 define([
-  'es6!../modules/api',
-  'es6!../modules/ui'
+  '../modules/api',
+  '../modules/ui'
 ], function (api, ui) {
   const {
     LINK_CLICKED

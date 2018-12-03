@@ -1,7 +1,7 @@
 define([
   'underscore',
-  'es6!../modules/api',
-  'es6!../modules/ui'
+  '../modules/api',
+  '../modules/ui'
 ], function (_, api, ui) {
   const {
     QUERY_PROVIDED,

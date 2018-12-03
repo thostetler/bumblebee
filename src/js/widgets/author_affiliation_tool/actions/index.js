@@ -1,8 +1,8 @@
 
 define([
   'underscore',
-  'es6!../models/authorAffiliation',
-  'es6!../constants/actionNames',
+  '../models/authorAffiliation',
+  '../constants/actionNames',
   'filesaver'
 ], function (_, authorAffiliation, ACTIONS) {
   /**

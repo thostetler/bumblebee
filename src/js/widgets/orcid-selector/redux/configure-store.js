@@ -2,7 +2,7 @@
 define([
   'redux',
   'redux-thunk',
-  'es6!./modules/orcid-selector-app',
+  './modules/orcid-selector-app',
   'redux-immutable'
 ], function (Redux, ReduxThunk, OrcidSelectorApp, ReduxImmutable) {
   const { createStore, applyMiddleware } = Redux;

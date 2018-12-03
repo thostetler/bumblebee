@@ -1,6 +1,6 @@
 
 define([
-  'es6!../constants/actionNames',
+  '../constants/actionNames',
   'moment'
 ], function (ACTIONS, Moment) {
   const currentYear = Number((new Moment()).year());

@@ -9,10 +9,10 @@ define([
   'js/components/api_query',
   'js/widgets/base/base_widget',
   'js/mixins/link_generator_mixin',
-  'es6!./redux/configure-store',
-  'es6!./redux/modules/api',
-  'es6!./redux/modules/ui',
-  'es6!./containers/app'
+  './redux/configure-store',
+  './redux/modules/api',
+  './redux/modules/ui',
+  './containers/app'
 ], function (
   _, Backbone, React, ReactDOM, ReactRedux, analytics, ApiQuery, BaseWidget, LinkGenerator,
   configureStore, api, ui, App

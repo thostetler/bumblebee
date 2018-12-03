@@ -12,10 +12,10 @@ define([
   'js/components/api_query',
   'js/components/api_request',
   'js/widgets/base/base_widget',
-  'es6!./containers/App.jsx',
-  'es6!./constants/actionNames',
-  'es6!./actions/index',
-  'es6!./reducers/index'
+  './containers/App.jsx',
+  './constants/actionNames',
+  './actions/index',
+  './reducers/index'
 ], function (
   $, _, Backbone, React, ReactRedux, ReactDOM, Redux, ReduxThunk,
   ApiTargets, ApiQuery, ApiRequest, BaseWidget, App, ACTIONS, actions, reducers

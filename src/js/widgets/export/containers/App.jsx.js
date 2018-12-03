@@ -4,10 +4,10 @@ define([
   'underscore',
   'react', 'react-redux',
   'react-prop-types',
-  'es6!../actions/index',
-  'es6!../components/Closer.jsx',
-  'es6!../components/Setup.jsx',
-  'es6!../components/Export.jsx'
+  '../actions/index',
+  '../components/Closer.jsx',
+  '../components/Setup.jsx',
+  '../components/Export.jsx'
 ], function (
   _, React, ReactRedux, ReactPropTypes,
   actions, Closer, Setup, Export
