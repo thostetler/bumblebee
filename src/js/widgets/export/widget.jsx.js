@@ -15,7 +15,7 @@ define([
   'js/components/api_query',
   'js/components/api_targets',
   'js/components/api_feedback',
-  'hbs!js/widgets/export/templates/classic_submit_form',
+  'js/widgets/export/templates/classic_submit_form.html',
   'js/widgets/config'
 ], function ($, _, Backbone, React, ReactDOM, Redux, ReactRedux,
   ReduxThunk, BaseWidget, reducers, actions, App, ApiQuery, ApiTargets,

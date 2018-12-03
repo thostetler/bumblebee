@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'hbs!js/widgets/footer/footer'
+  'js/widgets/footer/footer.html'
 ], function (
   Marionette,
   FooterTemplate

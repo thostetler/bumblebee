@@ -10,17 +10,17 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
-  'hbs!js/widgets/list_of_things/templates/results-container-template',
+  'js/widgets/list_of_things/templates/item-template.html',
+  'js/widgets/list_of_things/templates/results-container-template.html',
   'js/mixins/link_generator_mixin',
   'js/mixins/add_stable_index_to_collection',
-  'hbs!js/widgets/list_of_things/templates/empty-view-template',
-  'hbs!js/widgets/list_of_things/templates/error-view-template',
-  'hbs!js/widgets/list_of_things/templates/initial-view-template',
+  'js/widgets/list_of_things/templates/empty-view-template.html',
+  'js/widgets/list_of_things/templates/error-view-template.html',
+  'js/widgets/list_of_things/templates/initial-view-template.html',
   './item_view',
   'analytics',
   'mathjax',
-  'hbs!js/wraps/widget/loading/template'
+  'js/wraps/widget/loading/template.html'
 ],
 
 function (

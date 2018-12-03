@@ -6,7 +6,7 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/mixins/dependon',
-  'hbs!js/widgets/citation_helper/templates/citation_helper_template',
+  'js/widgets/citation_helper/templates/citation_helper_template.html',
   'bootstrap',
   'js/components/api_feedback',
   'js/components/api_targets',

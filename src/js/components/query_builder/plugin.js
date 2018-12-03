@@ -16,8 +16,8 @@ define([
   'js/components/generic_module',
   'js/components/query_builder/rules_translator',
   'js/components/api_query',
-  'hbs!js/components/query_builder/templates/group_template',
-  'hbs!js/components/query_builder/templates/rule_template',
+  'js/components/query_builder/templates/group_template.html',
+  'js/components/query_builder/templates/rule_template.html',
   'js/mixins/dependon'
 
 ],

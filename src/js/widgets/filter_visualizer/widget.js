@@ -16,8 +16,8 @@ define([
   'marionette',
   'js/components/api_query',
   'js/components/pubsub_events',
-  'hbs!js/widgets/filter_visualizer/templates/widget-view',
-  'hbs!js/widgets/filter_visualizer/templates/item-view',
+  'js/widgets/filter_visualizer/templates/widget-view.html',
+  'js/widgets/filter_visualizer/templates/item-view.html',
   'js/components/api_feedback',
   'js/mixins/dependon'
 ],

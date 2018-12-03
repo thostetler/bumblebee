@@ -1,7 +1,7 @@
 define([
   'js/page_managers/controller',
   'js/page_managers/three_column_view',
-  'hbs!js/page_managers/templates/results-page-layout'
+  'js/page_managers/templates/results-page-layout.html'
 ], function (
   PageManagerController,
   PageManagerView,

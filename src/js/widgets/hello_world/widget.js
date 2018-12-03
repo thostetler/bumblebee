@@ -45,9 +45,9 @@ define([
   'js/bugutils/minimal_pubsub', // will create a test pubsub queue (very useful!)
   'test/mocha/js/widgets/test_json/test1', // and example response (to give to widget)
 
-  // 'hbs!' is 'handlebars' template pre-processor, it will load the file and give you
+  // '' is 'handlebars.html' template pre-processor, it will load the file and give you
   // executable template
-  'hbs!js/widgets/hello_world/templates/layout'
+  'js/widgets/hello_world/templates/layout.html'
 ],
 function ( // all of the following names must correspond to the import above
   _,

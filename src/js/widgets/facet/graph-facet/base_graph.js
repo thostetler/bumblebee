@@ -2,7 +2,7 @@ define(['marionette',
   'd3',
   'jquery',
   'jquery-ui',
-  'hbs!js/widgets/facet/graph-facet/templates/graph'
+  'js/widgets/facet/graph-facet/templates/graph.html'
 ],
 function (Marionette,
   d3,

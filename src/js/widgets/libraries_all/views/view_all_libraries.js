@@ -1,9 +1,9 @@
 define([
   'marionette',
-  'hbs!js/widgets/libraries_all/templates/libraries-list-container',
-  'hbs!js/widgets/libraries_all/templates/library-item',
-  'hbs!js/widgets/libraries_all/templates/no-libraries',
-  'hbs!js/widgets/libraries_all/templates/loading-libraries',
+  'js/widgets/libraries_all/templates/libraries-list-container.html',
+  'js/widgets/libraries_all/templates/library-item.html',
+  'js/widgets/libraries_all/templates/no-libraries.html',
+  'js/widgets/libraries_all/templates/loading-libraries.html',
   'moment'
 ], function (
   Marionette,

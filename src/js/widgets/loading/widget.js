@@ -6,7 +6,7 @@ define([
   'marionette',
   'backbone',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/loading/loading-template',
+  'js/widgets/loading/loading-template.html',
   'bootstrap'
 ],
 function (

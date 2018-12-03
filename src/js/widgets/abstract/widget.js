@@ -8,7 +8,7 @@ define([
   'underscore',
   'cache',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/abstract/templates/abstract_template',
+  'js/widgets/abstract/templates/abstract_template.html',
   'js/components/api_query',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',

@@ -1,7 +1,7 @@
 define([
   'js/page_managers/controller',
   'js/page_managers/one_column_view',
-  'hbs!js/apps/bumblebox/templates/embedded-page'
+  'js/apps/bumblebox/templates/embedded-page.html'
 ], function (
   PageManagerController,
   PageManagerView,

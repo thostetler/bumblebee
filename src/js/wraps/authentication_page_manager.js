@@ -1,7 +1,7 @@
 define([
   'js/page_managers/controller',
   'js/page_managers/one_column_view',
-  'hbs!js/page_managers/templates/authentication-page-layout'
+  'js/page_managers/templates/authentication-page-layout.html'
 ], function (
   PageManagerController,
   PageManagerView,

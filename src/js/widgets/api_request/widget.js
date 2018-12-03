@@ -6,8 +6,8 @@ define(['underscore', 'jquery', 'backbone', 'marionette',
   'js/components/api_request',
   'js/components/api_query',
   'js/components/pubsub_events',
-  'hbs!js/widgets/api_request/templates/widget-view',
-  'hbs!js/widgets/api_request/templates/item-view',
+  'js/widgets/api_request/templates/widget-view.html',
+  'js/widgets/api_request/templates/item-view.html',
   'js/mixins/dependon'
 ],
 

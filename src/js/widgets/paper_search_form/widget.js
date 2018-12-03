@@ -2,7 +2,7 @@ define([
   'js/widgets/base/base_widget',
   'js/components/api_query',
   'js/components/api_feedback',
-  'hbs!js/widgets/paper_search_form/form',
+  'js/widgets/paper_search_form/form.html',
   './topterms',
   'jquery-ui'
 ], function (

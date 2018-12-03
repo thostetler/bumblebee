@@ -4,9 +4,9 @@ define([
   'js/widgets/list_of_things/widget',
   'js/widgets/list_of_things/paginated_view',
   'js/widgets/list_of_things/model',
-  'hbs!js/widgets/library_list/templates/library-container',
-  'hbs!js/widgets/library_list/templates/library-item-edit',
-  'hbs!js/widgets/library_list/templates/empty-collection',
+  'js/widgets/library_list/templates/library-container.html',
+  'js/widgets/library_list/templates/library-item-edit.html',
+  'js/widgets/library_list/templates/empty-collection.html',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
   'js/mixins/formatter',
@@ -17,7 +17,7 @@ define([
   'js/mixins/add_stable_index_to_collection',
   'js/mixins/add_secondary_sort',
   'bootstrap',
-  'hbs!js/wraps/widget/loading/template',
+  'js/wraps/widget/loading/template.html',
   'js/widgets/sort/widget.jsx',
   'js/widgets/sort/redux/modules/sort-app'
 
