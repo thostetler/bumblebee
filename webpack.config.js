@@ -32,8 +32,8 @@ module.exports = {
       'es5-shim': path.resolve(__dirname, 'src/libs/es5-shim/es5-shim'),
       'es6': path.resolve(__dirname, 'src/libs/requirejs-babel-plugin/es6'),
       'filesaver': path.resolve(__dirname, 'src/libs/file-saver/index'),
-      'google-analytics': path.resolve(__dirname, 'src/data:application/javascript,'),
-      'google-recaptcha': path.resolve(__dirname, 'src/data:application/javascript,'),
+      'google-analytics': '//google-analytics.com/analytics',
+      'google-recaptcha': '//google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
       'hbs': path.resolve(__dirname, 'src/libs/require-handlebars-plugin/hbs'),
       'immutable': path.resolve(__dirname, 'src/libs/immutable/index'),
       'jquery-querybuilder': path.resolve(__dirname, 'src/libs/jQuery-QueryBuilder/query-builder'),
@@ -56,7 +56,7 @@ module.exports = {
       'redux': path.resolve(__dirname, 'src/libs/redux/index'),
       'reselect': path.resolve(__dirname, 'src/libs/reselect'),
       'router': path.resolve(__dirname, 'src/js/apps/discovery/router'),
-      'select2': path.resolve(__dirname, 'src/libs/select2/select2'),
+      'select2': path.resolve(__dirname, 'src/libs/select2/'),
       'sinon': path.resolve(__dirname, '../bower_components/sinon/index'),
       'sprintf': path.resolve(__dirname, 'src/libs/sprintf/sprintf'),
       'underscore': path.resolve(__dirname, 'src/libs/lodash/lodash.compat'),
@@ -68,6 +68,8 @@ module.exports = {
       'js/widgets': path.resolve(__dirname, 'src/js/widgets/'),
       'js/page_managers': path.resolve(__dirname, 'src/js/page_managers/'),
       'js/bugutils': path.resolve(__dirname, 'src/js/bugutils/'),
+      'js/modules': path.resolve(__dirname, 'src/js/modules/'),
+      'js/services': path.resolve(__dirname, 'src/js/services/'),
     }
   },
   module: {
@@ -78,7 +80,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-react', '@babel/preset-env']
           }
         }
       },
@@ -86,7 +88,11 @@ module.exports = {
         test: /\.html$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'handlebars-loader'
+          loader: 'handlebars-loader',
+          options: {
+            ignorePartials: true,
+            ignoreHelpers: true
+          }
         }
       }
     ]

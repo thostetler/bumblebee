@@ -14,7 +14,7 @@ define([
   'js/components/api_query',
   'js/components/api_request',
   'js/components/api_targets',
-  '404.html',
+  '../../../404.html',
   'js/apps/discovery/templates/orcid-modal-template.html'
 ],
 
