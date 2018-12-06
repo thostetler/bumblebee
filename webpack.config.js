@@ -4,9 +4,13 @@ module.exports = {
   entry: './src/js/apps/discovery/main.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'src/dist')
   },
+  mode: 'development',
   devServer: {
+    contentBase: path.resolve(__dirname, 'src'),
+    compress: false,
+    port: 8000
   },
   resolve: {
     modules: ['node_modules'],
