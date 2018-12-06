@@ -19,7 +19,6 @@ define([
   'js/widgets/list_of_things/templates/initial-view-template.html',
   './item_view',
   'analytics',
-  'mathjax',
   'js/wraps/widget/loading/template.html'
 ],
 
@@ -39,7 +38,6 @@ function (
   InitialViewTemplate,
   ItemView,
   analytics,
-  MathJax,
   loadingTemplate
 ) {
   /**

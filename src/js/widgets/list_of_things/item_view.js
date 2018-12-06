@@ -5,8 +5,7 @@ define([
   'js/components/api_query',
   'js/widgets/base/base_widget',
   'js/widgets/list_of_things/templates/item-template.html',
-  'analytics',
-  'mathjax'
+  'analytics'
 ],
 
 function (
@@ -16,8 +15,7 @@ function (
   ApiQuery,
   BaseWidget,
   ItemTemplate,
-  analytics,
-  MathJax
+  analytics
 ) {
   var ItemView = Marionette.ItemView.extend({
     tagName: 'li',

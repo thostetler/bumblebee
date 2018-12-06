@@ -129,12 +129,27 @@ define([
       var self = this;
       var promise;
 
-      _.each(['controllers', 'modules', 'services', 'objects', 'plugins', 'widgets'], function (name) {
-        promise = self._loadModules(name, core[name]);
+      var core = config.core;
+      if (core) {
+        _.each(['controllers', 'modules', 'services', 'objects'], function (name) {
+          if (core[name]) {
+            promise = self._loadModules(name, core[name]);
+            if (promise) promises.push(promise);
+          }
+        });
+      }
+
+      var plugins = config.plugins;
+      if (plugins) {
+        promise = self._loadModules('plugins', plugins);
         if (promise) promises.push(promise);
-      });
+      }
 
-
+      var widgets = config.widgets;
+      if (widgets) {
+        promise = self._loadModules('widgets', widgets);
+        if (promise) promises.push(promise);
+      }
 
       if (promises.length == 1) {
         promises.push(promise); // hack, so that $.when() always returns []
@@ -276,22 +291,25 @@ define([
 
       // create the promise object - load the modules asynchronously
       var implNames = _.keys(modulePrescription);
+      var modsLeft = implNames.slice(0);
       var impls = _.values(modulePrescription);
       var defer = $.Deferred();
 
-      var callback = function () {
-        if (self.debug) console.timeEnd('startLoading' + sectionName);
-        var modules = arguments;
-        _.each(implNames, function (name, idx, implList) {
-          ret[name] = modules[idx];
-        });
-        defer.resolve(sectionName, ret);
+      var callback = function (moduleName, module) {
+        // if (self.debug) console.timeEnd('startLoading' + sectionName);
+        ret[moduleName] = module;
+        modsLeft.splice(modsLeft.indexOf(moduleName), 1);
+        if (modsLeft.length === 0) {
+          defer.resolve(sectionName, ret);
+        }
         if (self.debug) {
           console.log('Loaded: type=' + sectionName + ' state=' + defer.state(), ret);
         }
       };
 
       var errback = function (err) {
+        console.log(err);
+        return;
         var symbolicName = err.requireModules && err.requireModules[0];
         if (self.debug) console.warn('Error loading impl=' + symbolicName, err.requireMap);
         if (ignoreErrors) {
@@ -305,104 +323,100 @@ define([
 
       // start loading the modules
       // console.log('loading', implNames, impls)
-      console.log(sectionName, impls);
-      switch(sectionName) {
-        case 'controllers': {
-          require([
-            // "js/wraps/discovery_mediator",
-            // "js/components/query_mediator",
-            // "js/bugutils/diagnostics",
-            // "js/wraps/alerts_mediator",
-            // "js/modules/orcid/module",
-          ], callback, errback);
-        } break;
-        case 'modules': {
-          // require(['js/widgets/facet/factory'], callback, errback);
-        } break;
-        case 'services': {
-          require([
-            // "js/services/api",
-            // "js/services/pubsub",
-            // "js/apps/discovery/navigator",
-            // "js/services/storage",
-            // "js/components/history_manager"
-          ], callback, errback);
-        } break;
-        case 'widgets': {
-          // require([
-          //   "js/wraps/landing_page_manager/landing_page_manager",
-          //   "js/wraps/results_page_manager",
-          //   "js/wraps/abstract_page_manager/abstract_page_manager",
-          //   "js/wraps/authentication_page_manager",
-          //   "js/wraps/user_settings_page_manager/user_page_manager",
-          //   "js/wraps/orcid_page_manager/orcid_page_manager",
-          //   "js/wraps/orcid-instructions-page-manager/manager",
-          //   "js/wraps/libraries_page_manager/libraries_page_manager",
-          //   "js/wraps/home_page_manager/home_page_manager",
-          //   "js/wraps/public_libraries_page_manager/public_libraries_manager",
-          //   "js/wraps/error_page_manager/error_page_manager",
-          //   "js/widgets/authentication/widget",
-          //   "js/widgets/user_settings/widget",
-          //   "js/widgets/preferences/widget",
-          //   "js/widgets/library_import/widget",
-          //   "js/widgets/filter_visualizer/widget",
-          //   "js/widgets/navbar/widget",
-          //   "js/widgets/user_navbar/widget",
-          //   "js/widgets/alerts/widget",
-          //   "js/widgets/classic_form/widget",
-          //   "js/widgets/search_bar/search_bar_widget",
-          //   "js/widgets/paper_search_form/widget",
-          //   "js/widgets/results/widget",
-          //   "js/widgets/query_info/query_info_widget",
-          //   "js/widgets/api_query/widget",
-          //   "js/widgets/export/widget.jsx",
-          //   "js/widgets/sort/widget.jsx",
-          //   "js/wraps/export_dropdown",
-          //   "js/wraps/visualization_dropdown",
-          //   "js/wraps/author_network",
-          //   "js/wraps/paper_network",
-          //   "js/widgets/wordcloud/widget",
-          //   "js/widgets/bubble_chart/widget",
-          //   "js/widgets/author_affiliation_tool/widget.jsx",
-          //   "js/widgets/metrics/widget",
-          //   "js/widgets/citation_helper/widget",
-          //   "js/modules/orcid/widget/widget",
-          //   "js/widgets/orcid-selector/widget.jsx",
-          //   "js/wraps/affiliation_facet",
-          //   "js/wraps/author_facet",
-          //   "js/wraps/bibgroup_facet",
-          //   "js/wraps/bibstem_facet",
-          //   "js/wraps/data_facet",
-          //   "js/wraps/database_facet",
-          //   "js/wraps/grants_facet",
-          //   "js/wraps/keyword_facet",
-          //   "js/wraps/simbad_object_facet",
-          //   "js/wraps/ned_object_facet",
-          //   "js/wraps/refereed_facet",
-          //   "js/wraps/vizier_facet",
-          //   "js/wraps/graph_tabs",
-          //   "js/widgets/footer/widget",
-          //   "js/wraps/pubtype_facet",
-          //   "js/widgets/abstract/widget",
-          //   "js/widgets/graphics/widget",
-          //   "js/wraps/sidebar-graphics-widget",
-          //   "js/wraps/references",
-          //   "js/wraps/citations",
-          //   "js/wraps/coreads",
-          //   "js/widgets/meta_tags/widget",
-          //   "js/wraps/table_of_contents",
-          //   "js/widgets/resources/widget.jsx",
-          //   "js/widgets/associated/widget.jsx",
-          //   "js/widgets/recommender/widget",
-          //   "js/wraps/paper_metrics",
-          //   "js/wraps/paper_export",
-          //   "js/wraps/abstract_page_library_add/widget",
-          //   "js/widgets/library_individual/widget",
-          //   "js/widgets/libraries_all/widget",
-          //   "js/widgets/library_list/widget",
-          // ], callback, errback);
-        } break;
-      }
+      _.forEach(implNames, function (name) {
+        switch(name) {
+          case 'LandingPage': require(['js/wraps/landing_page_manager/landing_page_manager'], _.partial(callback, 'LandingPage'), _.partial(errback, 'LandingPage')); break;
+          case 'SearchPage': require(['js/wraps/results_page_manager'], _.partial(callback, 'SearchPage'), _.partial(errback, 'SearchPage')); break;
+          case 'DetailsPage': require(['js/wraps/abstract_page_manager/abstract_page_manager'], _.partial(callback, 'DetailsPage'), _.partial(errback, 'DetailsPage')); break;
+          case 'AuthenticationPage': require(['js/wraps/authentication_page_manager'], _.partial(callback, 'AuthenticationPage'), _.partial(errback, 'AuthenticationPage')); break;
+          case 'SettingsPage': require(['js/wraps/user_settings_page_manager/user_page_manager'], _.partial(callback, 'SettingsPage'), _.partial(errback, 'SettingsPage')); break;
+          case 'OrcidPage': require(['js/wraps/orcid_page_manager/orcid_page_manager'], _.partial(callback, 'OrcidPage'), _.partial(errback, 'OrcidPage')); break;
+          case 'OrcidInstructionsPage': require(['js/wraps/orcid-instructions-page-manager/manager'], _.partial(callback, 'OrcidInstructionsPage'), _.partial(errback, 'OrcidInstructionsPage')); break;
+          case 'LibrariesPage': require(['js/wraps/libraries_page_manager/libraries_page_manager'], _.partial(callback, 'LibrariesPage'), _.partial(errback, 'LibrariesPage')); break;
+          case 'HomePage': require(['js/wraps/home_page_manager/home_page_manager'], _.partial(callback, 'HomePage'), _.partial(errback, 'HomePage')); break;
+          case 'PublicLibrariesPage': require(['js/wraps/public_libraries_page_manager/public_libraries_manager'], _.partial(callback, 'PublicLibrariesPage'), _.partial(errback, 'PublicLibrariesPage')); break;
+          case 'ErrorPage': require(['js/wraps/error_page_manager/error_page_manager'], _.partial(callback, 'ErrorPage'), _.partial(errback, 'ErrorPage')); break;
+          case 'Authentication': require(['js/widgets/authentication/widget'], _.partial(callback, 'Authentication'), _.partial(errback, 'Authentication')); break;
+          case 'UserSettings': require(['js/widgets/user_settings/widget'], _.partial(callback, 'UserSettings'), _.partial(errback, 'UserSettings')); break;
+          case 'UserPreferences': require(['js/widgets/preferences/widget'], _.partial(callback, 'UserPreferences'), _.partial(errback, 'UserPreferences')); break;
+          case 'LibraryImport': require(['js/widgets/library_import/widget'], _.partial(callback, 'LibraryImport'), _.partial(errback, 'LibraryImport')); break;
+          case 'BreadcrumbsWidget': require(['js/widgets/filter_visualizer/widget'], _.partial(callback, 'BreadcrumbsWidget'), _.partial(errback, 'BreadcrumbsWidget')); break;
+          case 'NavbarWidget': require(['js/widgets/navbar/widget'], _.partial(callback, 'NavbarWidget'), _.partial(errback, 'NavbarWidget')); break;
+          case 'UserNavbarWidget': require(['js/widgets/user_navbar/widget'], _.partial(callback, 'UserNavbarWidget'), _.partial(errback, 'UserNavbarWidget')); break;
+          case 'AlertsWidget': require(['js/widgets/alerts/widget'], _.partial(callback, 'AlertsWidget'), _.partial(errback, 'AlertsWidget')); break;
+          case 'ClassicSearchForm': require(['js/widgets/classic_form/widget'], _.partial(callback, 'ClassicSearchForm'), _.partial(errback, 'ClassicSearchForm')); break;
+          case 'SearchWidget': require(['js/widgets/search_bar/search_bar_widget'], _.partial(callback, 'SearchWidget'), _.partial(errback, 'SearchWidget')); break;
+          case 'PaperSearchForm': require(['js/widgets/paper_search_form/widget'], _.partial(callback, 'PaperSearchForm'), _.partial(errback, 'PaperSearchForm')); break;
+          case 'Results': require(['js/widgets/results/widget'], _.partial(callback, 'Results'), _.partial(errback, 'Results')); break;
+          case 'QueryInfo': require(['js/widgets/query_info/query_info_widget'], _.partial(callback, 'QueryInfo'), _.partial(errback, 'QueryInfo')); break;
+          case 'QueryDebugInfo': require(['js/widgets/api_query/widget'], _.partial(callback, 'QueryDebugInfo'), _.partial(errback, 'QueryDebugInfo')); break;
+          case 'ExportWidget': require(['js/widgets/export/widget.jsx'], _.partial(callback, 'ExportWidget'), _.partial(errback, 'ExportWidget')); break;
+          case 'Sort': require(['js/widgets/sort/widget.jsx'], _.partial(callback, 'Sort'), _.partial(errback, 'Sort')); break;
+          case 'ExportDropdown': require(['js/wraps/export_dropdown'], _.partial(callback, 'ExportDropdown'), _.partial(errback, 'ExportDropdown')); break;
+          case 'VisualizationDropdown': require(['js/wraps/visualization_dropdown'], _.partial(callback, 'VisualizationDropdown'), _.partial(errback, 'VisualizationDropdown')); break;
+          case 'AuthorNetwork': require(['js/wraps/author_network'], _.partial(callback, 'AuthorNetwork'), _.partial(errback, 'AuthorNetwork')); break;
+          case 'PaperNetwork': require(['js/wraps/paper_network'], _.partial(callback, 'PaperNetwork'), _.partial(errback, 'PaperNetwork')); break;
+          case 'ConceptCloud': require(['js/widgets/wordcloud/widget'], _.partial(callback, 'ConceptCloud'), _.partial(errback, 'ConceptCloud')); break;
+          case 'BubbleChart': require(['js/widgets/bubble_chart/widget'], _.partial(callback, 'BubbleChart'), _.partial(errback, 'BubbleChart')); break;
+          case 'AuthorAffiliationTool': require(['js/widgets/author_affiliation_tool/widget.jsx'], _.partial(callback, 'AuthorAffiliationTool'), _.partial(errback, 'AuthorAffiliationTool')); break;
+          case 'Metrics': require(['js/widgets/metrics/widget'], _.partial(callback, 'Metrics'), _.partial(errback, 'Metrics')); break;
+          case 'CitationHelper': require(['js/widgets/citation_helper/widget'], _.partial(callback, 'CitationHelper'), _.partial(errback, 'CitationHelper')); break;
+          case 'OrcidBigWidget': require(['js/modules/orcid/widget/widget'], _.partial(callback, 'OrcidBigWidget'), _.partial(errback, 'OrcidBigWidget')); break;
+          case 'OrcidSelector': require(['js/widgets/orcid-selector/widget.jsx'], _.partial(callback, 'OrcidSelector'), _.partial(errback, 'OrcidSelector')); break;
+          case 'AffiliationFacet': require(['js/wraps/affiliation_facet'], _.partial(callback, 'AffiliationFacet'), _.partial(errback, 'AffiliationFacet')); break;
+          case 'AuthorFacet': require(['js/wraps/author_facet'], _.partial(callback, 'AuthorFacet'), _.partial(errback, 'AuthorFacet')); break;
+          case 'BibgroupFacet': require(['js/wraps/bibgroup_facet'], _.partial(callback, 'BibgroupFacet'), _.partial(errback, 'BibgroupFacet')); break;
+          case 'BibstemFacet': require(['js/wraps/bibstem_facet'], _.partial(callback, 'BibstemFacet'), _.partial(errback, 'BibstemFacet')); break;
+          case 'DataFacet': require(['js/wraps/data_facet'], _.partial(callback, 'DataFacet'), _.partial(errback, 'DataFacet')); break;
+          case 'DatabaseFacet': require(['js/wraps/database_facet'], _.partial(callback, 'DatabaseFacet'), _.partial(errback, 'DatabaseFacet')); break;
+          case 'GrantsFacet': require(['js/wraps/grants_facet'], _.partial(callback, 'GrantsFacet'), _.partial(errback, 'GrantsFacet')); break;
+          case 'KeywordFacet': require(['js/wraps/keyword_facet'], _.partial(callback, 'KeywordFacet'), _.partial(errback, 'KeywordFacet')); break;
+          case 'ObjectFacet': require(['js/wraps/simbad_object_facet'], _.partial(callback, 'ObjectFacet'), _.partial(errback, 'ObjectFacet')); break;
+          case 'NedObjectFacet': require(['js/wraps/ned_object_facet'], _.partial(callback, 'NedObjectFacet'), _.partial(errback, 'NedObjectFacet')); break;
+          case 'RefereedFacet': require(['js/wraps/refereed_facet'], _.partial(callback, 'RefereedFacet'), _.partial(errback, 'RefereedFacet')); break;
+          case 'VizierFacet': require(['js/wraps/vizier_facet'], _.partial(callback, 'VizierFacet'), _.partial(errback, 'VizierFacet')); break;
+          case 'GraphTabs': require(['js/wraps/graph_tabs'], _.partial(callback, 'GraphTabs'), _.partial(errback, 'GraphTabs')); break;
+          case 'FooterWidget': require(['js/widgets/footer/widget'], _.partial(callback, 'FooterWidget'), _.partial(errback, 'FooterWidget')); break;
+          case 'PubtypeFacet': require(['js/wraps/pubtype_facet'], _.partial(callback, 'PubtypeFacet'), _.partial(errback, 'PubtypeFacet')); break;
+          case 'ShowAbstract': require(['js/widgets/abstract/widget'], _.partial(callback, 'ShowAbstract'), _.partial(errback, 'ShowAbstract')); break;
+          case 'ShowGraphics': require(['js/widgets/graphics/widget'], _.partial(callback, 'ShowGraphics'), _.partial(errback, 'ShowGraphics')); break;
+          case 'ShowGraphicsSidebar': require(['js/wraps/sidebar-graphics-widget'], _.partial(callback, 'ShowGraphicsSidebar'), _.partial(errback, 'ShowGraphicsSidebar')); break;
+          case 'ShowReferences': require(['js/wraps/references'], _.partial(callback, 'ShowReferences'), _.partial(errback, 'ShowReferences')); break;
+          case 'ShowCitations': require(['js/wraps/citations'], _.partial(callback, 'ShowCitations'), _.partial(errback, 'ShowCitations')); break;
+          case 'ShowCoreads': require(['js/wraps/coreads'], _.partial(callback, 'ShowCoreads'), _.partial(errback, 'ShowCoreads')); break;
+          case 'MetaTagsWidget': require(['js/widgets/meta_tags/widget'], _.partial(callback, 'MetaTagsWidget'), _.partial(errback, 'MetaTagsWidget')); break;
+          case 'ShowTableofcontents': require(['js/wraps/table_of_contents'], _.partial(callback, 'ShowTableofcontents'), _.partial(errback, 'ShowTableofcontents')); break;
+          case 'ShowResources': require(['js/widgets/resources/widget.jsx'], _.partial(callback, 'ShowResources'), _.partial(errback, 'ShowResources')); break;
+          case 'ShowAssociated': require(['js/widgets/associated/widget.jsx'], _.partial(callback, 'ShowAssociated'), _.partial(errback, 'ShowAssociated')); break;
+          case 'ShowRecommender': require(['js/widgets/recommender/widget'], _.partial(callback, 'ShowRecommender'), _.partial(errback, 'ShowRecommender')); break;
+          case 'ShowMetrics': require(['js/wraps/paper_metrics'], _.partial(callback, 'ShowMetrics'), _.partial(errback, 'ShowMetrics')); break;
+          case 'ShowPaperExport': require(['js/wraps/paper_export'], _.partial(callback, 'ShowPaperExport'), _.partial(errback, 'ShowPaperExport')); break;
+          case 'ShowLibraryAdd': require(['js/wraps/abstract_page_library_add/widget'], _.partial(callback, 'ShowLibraryAdd'), _.partial(errback, 'ShowLibraryAdd')); break;
+          case 'IndividualLibraryWidget': require(['js/widgets/library_individual/widget'], _.partial(callback, 'IndividualLibraryWidget'), _.partial(errback, 'IndividualLibraryWidget')); break;
+          case 'AllLibrariesWidget': require(['js/widgets/libraries_all/widget'], _.partial(callback, 'AllLibrariesWidget'), _.partial(errback, 'AllLibrariesWidget')); break;
+          case 'LibraryListWidget': require(['js/widgets/library_list/widget'], _.partial(callback, 'LibraryListWidget'), _.partial(errback, 'LibraryListWidget')); break;
+          case 'FeedbackMediator': require(['js/wraps/discovery_mediator'], _.partial(callback, 'FeedbackMediator'), _.partial(errback, 'FeedbackMediator')); break;
+          case 'QueryMediator': require(['js/components/query_mediator'], _.partial(callback, 'QueryMediator'), _.partial(errback, 'QueryMediator')); break;
+          case 'Diagnostics': require(['js/bugutils/diagnostics'], _.partial(callback, 'Diagnostics'), _.partial(errback, 'Diagnostics')); break;
+          case 'AlertsController': require(['js/wraps/alerts_mediator'], _.partial(callback, 'AlertsController'), _.partial(errback, 'AlertsController')); break;
+          case 'Orcid': require(['js/modules/orcid/module'], _.partial(callback, 'Orcid'), _.partial(errback, 'Orcid')); break;
+          case 'Api': require(['js/services/api'], _.partial(callback, 'Api'), _.partial(errback, 'Api')); break;
+          case 'PubSub': require(['js/services/pubsub'], _.partial(callback, 'PubSub'), _.partial(errback, 'PubSub')); break;
+          case 'Navigator': require(['js/apps/discovery/navigator'], _.partial(callback, 'Navigator'), _.partial(errback, 'Navigator')); break;
+          case 'PersistentStorage': require(['js/services/storage'], _.partial(callback, 'PersistentStorage'), _.partial(errback, 'PersistentStorage')); break;
+          case 'HistoryManager': require(['js/components/history_manager'], _.partial(callback, 'HistoryManager'), _.partial(errback, 'HistoryManager')); break;
+          case 'User': require(['js/components/user'], _.partial(callback, 'User'), _.partial(errback, 'User')); break;
+          case 'Session': require(['js/components/session'], _.partial(callback, 'Session'), _.partial(errback, 'Session')); break;
+          case 'DynamicConfig': require(['discovery.vars'], _.partial(callback, 'DynamicConfig'), _.partial(errback, 'DynamicConfig')); break;
+          case 'MasterPageManager': require(['js/page_managers/master'], _.partial(callback, 'MasterPageManager'), _.partial(errback, 'MasterPageManager')); break;
+          case 'AppStorage': require(['js/components/app_storage'], _.partial(callback, 'AppStorage'), _.partial(errback, 'AppStorage')); break;
+          case 'RecaptchaManager': require(['js/components/recaptcha_manager'], _.partial(callback, 'RecaptchaManager'), _.partial(errback, 'RecaptchaManager')); break;
+          case 'CSRFManager': require(['js/components/csrf_manager'], _.partial(callback, 'CSRFManager'), _.partial(errback, 'CSRFManager')); break;
+          case 'LibraryController': require(['js/components/library_controller'], _.partial(callback, 'LibraryController'), _.partial(errback, 'LibraryController')); break;
+          case 'DocStashController': require(['js/components/doc_stash_controller'], _.partial(callback, 'DocStashController'), _.partial(errback, 'DocStashController')); break;
+          case 'FacetFactory': require(['js/widgets/facet/factory'], _.partial(callback, 'FacetFactory'), _.partial(errback, 'FacetFactory')); break;
+        }
+      });
 
       //require(impls, callback, errback);
 

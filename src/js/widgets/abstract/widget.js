@@ -12,7 +12,6 @@ define([
   'js/components/api_query',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
-  'mathjax',
   'bootstrap'
 ],
 function (
@@ -26,7 +25,6 @@ function (
   ApiQuery,
   LinkGeneratorMixin,
   PapersUtils,
-  MathJax,
   Bootstrap
 ) {
   var MAX_COMMENTS = 3;

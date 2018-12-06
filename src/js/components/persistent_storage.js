@@ -2,17 +2,15 @@ define([
   'underscore',
   'js/components/generic_module',
   'js/mixins/dependon',
-  'persist-js',
-  'module'
+  'persist-js'
 ],
 function (
   _,
   GenericModule,
   Mixins,
-  PersistJS,
-  module
+  PersistJS
 ) {
-  var namespace = module.config().namespace || '';
+  var namespace = 'Bumblebee';
 
   var LocalStorage = GenericModule.extend({
 

@@ -81,7 +81,11 @@ define([
 
   var Analytics = function () {
     adsLogger.apply(null, _.rest(arguments, 3));
-    window[window.GoogleAnalyticsObject].apply(this, arguments);
+    try {
+      window[window.GoogleAnalyticsObject].apply(this, arguments);
+    } catch (e) {
+      console.info('google analytics tracking not started');
+    }
   };
 
   return Analytics;
