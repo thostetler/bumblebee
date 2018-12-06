@@ -1,16 +1,19 @@
 define([
   'marionette',
-  'js/widgets/library_individual/templates/library-header.html',
+  //'js/widgets/library_individual/templates/library-header.html',
   'moment',
   'bootstrap'
 
 ], function (
   Marionette,
-  LibraryHeaderTemplate,
+  //LibraryHeaderTemplate,
   moment,
   Bootstrap
 
 ) {
+
+  var LibraryHeaderTemplate = _.template('');
+
   var LibraryTitleModel = Backbone.Model.extend({
 
     initialize: function (vals, options) {

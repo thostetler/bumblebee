@@ -7,7 +7,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   devServer: {
-    contentBase: './src'
   },
   resolve: {
     modules: ['node_modules'],
@@ -32,8 +31,6 @@ module.exports = {
       'es5-shim': path.resolve(__dirname, 'src/libs/es5-shim/es5-shim'),
       'es6': path.resolve(__dirname, 'src/libs/requirejs-babel-plugin/es6'),
       'filesaver': path.resolve(__dirname, 'src/libs/file-saver/index'),
-      'google-analytics': '//google-analytics.com/analytics',
-      'google-recaptcha': '//google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
       'hbs': path.resolve(__dirname, 'src/libs/require-handlebars-plugin/hbs'),
       'immutable': path.resolve(__dirname, 'src/libs/immutable/index'),
       'jquery-querybuilder': path.resolve(__dirname, 'src/libs/jQuery-QueryBuilder/query-builder'),
@@ -46,6 +43,7 @@ module.exports = {
       'mocha': path.resolve(__dirname, 'src/libs/mocha/mocha'),
       'moment': path.resolve(__dirname, 'src/libs/momentjs/moment'),
       'persist-js': path.resolve(__dirname, 'src/libs/persist-js/src/persist'),
+      'pubsub_service_impl': path.resolve(__dirname, 'src/js/services/default_pubsub'),
       'react-bootstrap': path.resolve(__dirname, 'src/libs/react-bootstrap/index'),
       'react-dom': path.resolve(__dirname, 'src/libs/react-dom/index'),
       'react-prop-types': path.resolve(__dirname, 'src/libs/react-prop-types/index'),
