@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/js/apps/discovery/main.js',
@@ -35,7 +36,7 @@ module.exports = {
       'es5-shim': path.resolve(__dirname, 'src/libs/es5-shim/es5-shim'),
       'es6': path.resolve(__dirname, 'src/libs/requirejs-babel-plugin/es6'),
       'filesaver': path.resolve(__dirname, 'src/libs/file-saver/index'),
-      'hbs': path.resolve(__dirname, 'src/libs/require-handlebars-plugin/hbs'),
+      //'hbs': path.resolve(__dirname, 'src/libs/require-handlebars-plugin/hbs'),
       'immutable': path.resolve(__dirname, 'src/libs/immutable/index'),
       'jquery-querybuilder': path.resolve(__dirname, 'src/libs/jQuery-QueryBuilder/query-builder'),
       'jquery-ui': path.resolve(__dirname, 'src/libs/jqueryui/jquery-ui'),
@@ -98,5 +99,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      _: 'underscore'
+    })
+  ]
 }
