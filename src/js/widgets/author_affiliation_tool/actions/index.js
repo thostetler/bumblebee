@@ -3,8 +3,8 @@ define([
   'underscore',
   '../models/authorAffiliation',
   '../constants/actionNames',
-  'filesaver'
-], function (_, authorAffiliation, ACTIONS) {
+  'file-saver'
+], function (_, authorAffiliation, ACTIONS, FileSaver) {
   /**
    * Format the data into something the server will accept
    *
@@ -449,21 +449,28 @@ define([
             'If new tab doesn\'t appear, you will need to allow popups'
           ));
         } else {
-          res.blob().then(b => saveAs(b, `authorAffiliations.${file.ext}`));
+          res.blob().then(b => {
+            try {
+              FileSaver.saveAs(b, `authorAffiliations.${file.ext}`)
 
-          // show a message about successful download
-          dispatch(actions.showMessage('success', 'Export Successful!'));
+              // show a message about successful download
+              dispatch(actions.showMessage('success', 'Export Successful!'));
+            } catch (e) {
+              console.error(e);
+              dispatch(actions.showMessage('danger', 'There was an error exporting the file...'));
+            }
+          });
         }
       })
 
-    // on failure, show error message
+      // on failure, show error message
       .fail(() => {
-        actions.showMessage('danger', 'Something happened with the request, please try again');
+        dispatch(actions.showMessage('danger', 'Something happened with the request, please try again'));
       })
 
-    // always stop loading
+      // always stop loading
       .always(() => dispatch({ type: ACTIONS.setExporting, value: false }));
-    actions.showMessage('info', 'Exporting...');
+      dispatch(actions.showMessage('info', 'Exporting...'));
   };
 
   return actions;
