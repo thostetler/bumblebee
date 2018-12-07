@@ -7,10 +7,9 @@ define([
 function (
   _,
   GenericModule,
-  Mixins,
-  PersistJS
+  Mixins
 ) {
-  var namespace = 'Bumblebee';
+  var namespace = 'bumblebee';
 
   var LocalStorage = GenericModule.extend({
 
@@ -24,7 +23,7 @@ function (
     },
 
     _createStore: function (name) {
-      var s = new PersistJS.Store(name, {
+      var s = new Persist.Store(name, {
         about: 'This is bumblebee persistent storage',
         defer: true
       });

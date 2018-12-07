@@ -179,6 +179,14 @@ define([
       return this.__beehive;
     },
 
+    registerModules: function (modules) {
+      var register = _.bind(this._registerLoadedModules, this);
+      // core
+      _.forEach(modules.core, function (v, k) {
+        register(k, _.toArray(v));
+      });
+      register('widgets', _.toArray(modules.widgets));
+    },
 
     _registerLoadedModules: function (section, modules) {
       var beehive = this.getBeeHive();
@@ -191,20 +199,24 @@ define([
       var self = this;
 
       createInstance = function (key, module) {
-        if (!module) {
-          console.warn('Object ' + key + ' is empty, cannot instantiate it!');
-          return;
+        try {
+          if (!module) {
+            console.warn('Object ' + key + ' is empty, cannot instantiate it!');
+            return;
+          }
+          if (self.debug) {
+            console.log('Creating instance of: ' + key);
+          }
+          if (module.prototype) {
+            return new module();
+          }
+          if (module && module.hasOwnProperty(key)) {
+            return module[key];
+          }
+          return module;
+        } catch (e) {
+          console.error('Error creating instance of module', e.message);
         }
-        if (self.debug) {
-          console.log('Creating instance of: ' + key);
-        }
-        if (module.prototype) {
-          return new module();
-        }
-        if (module && module.hasOwnProperty(key)) {
-          return module[key];
-        }
-        return module;
       };
 
       // console.log('registering', section, modules);
@@ -298,7 +310,9 @@ define([
       var callback = function (moduleName, module) {
         // if (self.debug) console.timeEnd('startLoading' + sectionName);
         ret[moduleName] = module;
-        modsLeft.splice(modsLeft.indexOf(moduleName), 1);
+        modsLeft.pop();
+        console.log('module loaded: ', moduleName);
+        console.log('mods: ', modsLeft)
         if (modsLeft.length === 0) {
           defer.resolve(sectionName, ret);
         }
@@ -308,7 +322,7 @@ define([
       };
 
       var errback = function (err) {
-        console.log(err);
+        console.error(err);
         return;
         var symbolicName = err.requireModules && err.requireModules[0];
         if (self.debug) console.warn('Error loading impl=' + symbolicName, err.requireMap);

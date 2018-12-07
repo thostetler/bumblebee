@@ -46,7 +46,7 @@ module.exports = {
       'main': path.resolve(__dirname, 'src/js/apps/discovery/main'),
       'marionette': path.resolve(__dirname, 'src/libs/marionette/backbone.marionette'),
       'mocha': path.resolve(__dirname, 'src/libs/mocha/mocha'),
-      'persist-js': path.resolve(__dirname, 'src/libs/persist-js/src/persist'),
+      // 'persist-js': path.resolve(__dirname, 'src/libs/persist-js/src/persist'),
       'pubsub_service_impl': path.resolve(__dirname, 'src/js/services/default_pubsub'),
       'react-bootstrap': path.resolve(__dirname, 'src/libs/react-bootstrap/index'),
       'react-dom': path.resolve(__dirname, 'src/libs/react-dom/index'),
@@ -105,7 +105,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       _: 'underscore',
       'Backbone': 'backbone',
-      'Marionette': 'marionette'
+      'Marionette': 'marionette',
+      'Persist': 'persist-js'
     })
   ]
 }
