@@ -137,7 +137,11 @@
             <button class="btn btn-link toggle-form" data-field="description">edit</button>
         </span>
         <p>
-           {{#if description }}{{ description }}{{else}}(none) {{/if}}
+           {{#if description }}
+            {{ description }}
+            {{else}}
+            (none)
+            {{/if}}
         </p>
         <form class="hidden" data-field="description">
             <label class="sr-only" for="#edit-library-description"> Change description </label>
@@ -176,7 +180,9 @@
         <br/>
         <p><i class="fa fa-cog"></i> You can <b>read</b> this library, but cannot alter it in any way. </p>
 
-        {{else}}
+        {{/compare}}
+
+        {{#compare permission "read" operator="!=="}}
 
             <button class="btn btn-default"  type="button" data-toggle="collapse" data-target="#library-actions" aria-expanded="false" aria-controls="#library-actions">
                 <i class="fa fa-cog"></i> View editing options (You have <b>{{permission}}</b> privileges)
@@ -263,6 +269,4 @@
             <li class="tab s-tab  {{#compare active 'citation_helper'}} active {{/compare}}" data-tab="citation_helper"><i class="fa fa-flask"></i> Citation Helper </li>
         </ul>
     {{/if}}
-
-
 {{/if}}

@@ -20,6 +20,8 @@ function (
     template: LoadingTemplate
   });
 
+
+  console.log('LIBRARY TEMPLATE', ContainerTemplate);
   var ContainerView = Marionette.LayoutView.extend({
 
     className: 'library-widget s-library-widget',
