@@ -32,7 +32,7 @@ module.exports = {
       'config': path.resolve(__dirname, 'src/discovery.config'),
       'create-react-class': path.resolve(__dirname, 'src/libs/create-react-class/index'),
       'd3-cloud': path.resolve(__dirname, 'src/libs/d3-cloud/d3.layout.cloud'),
-      'd3': path.resolve(__dirname, 'src/libs/d3/d3.min'),
+      'd3': path.resolve(__dirname, 'src/libs/d3/d3'),
       'discovery.vars': path.resolve(__dirname, 'src/discovery.vars'),
       'enzyme': path.resolve(__dirname, 'src/libs/enzyme/enzyme'),
       'es5-shim': path.resolve(__dirname, 'src/libs/es5-shim/es5-shim'),
@@ -64,7 +64,7 @@ module.exports = {
       'underscore': path.resolve(__dirname, 'src/libs/lodash/lodash.compat'),
       'utils': path.resolve(__dirname, 'src/js/utils/'),
       // 'moment': path.resolve(__dirname, 'src/libs/momentjs/moment'),
-      //'hbs': path.resolve(__dirname, 'src/libs/require-handlebars-plugin/hbs'),
+      'handlebars': path.resolve(__dirname, 'node_modules/handlebars/dist/handlebars'),
       'js/wraps': path.resolve(__dirname, 'src/js/wraps/'),
       'js/apps': path.resolve(__dirname, 'src/js/apps/'),
       'js/mixins': path.resolve(__dirname, 'src/js/mixins/'),
@@ -94,8 +94,9 @@ module.exports = {
         use: {
           loader: 'handlebars-loader',
           options: {
-            ignorePartials: true,
-            ignoreHelpers: true
+            helperDirs: path.join(__dirname, 'src/js/helpers/handlebars'),
+            partialDirs: path.join(__dirname, 'src'),
+            extensions: '.html'
           }
         }
       }
@@ -106,7 +107,10 @@ module.exports = {
       _: 'underscore',
       'Backbone': 'backbone',
       'Marionette': 'marionette',
-      'Persist': 'persist-js'
+      'd3': 'd3'
     })
-  ]
+  ],
+  node: {
+    fs: 'empty'
+  }
 }

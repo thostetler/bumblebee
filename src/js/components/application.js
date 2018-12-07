@@ -46,7 +46,7 @@ define([
   'backbone',
   'module',
   'js/components/beehive',
-  'js/mixins/api_access'
+  'js/mixins/api_access',
 ], function (
   _,
   $,
@@ -183,9 +183,9 @@ define([
       var register = _.bind(this._registerLoadedModules, this);
       // core
       _.forEach(modules.core, function (v, k) {
-        register(k, _.toArray(v));
+        register(k, v);
       });
-      register('widgets', _.toArray(modules.widgets));
+      register('widgets', modules.widgets);
     },
 
     _registerLoadedModules: function (section, modules) {
@@ -199,24 +199,20 @@ define([
       var self = this;
 
       createInstance = function (key, module) {
-        try {
-          if (!module) {
-            console.warn('Object ' + key + ' is empty, cannot instantiate it!');
-            return;
-          }
-          if (self.debug) {
-            console.log('Creating instance of: ' + key);
-          }
-          if (module.prototype) {
-            return new module();
-          }
-          if (module && module.hasOwnProperty(key)) {
-            return module[key];
-          }
-          return module;
-        } catch (e) {
-          console.error('Error creating instance of module', e.message);
+        if (!module) {
+          console.warn('Object ' + key + ' is empty, cannot instantiate it!');
+          return;
         }
+        if (self.debug) {
+          console.log('Creating instance of: ' + key);
+        }
+        if (module.prototype) {
+          return new module();
+        }
+        if (module && module.hasOwnProperty(key)) {
+          return module[key];
+        }
+        return module;
       };
 
       // console.log('registering', section, modules);

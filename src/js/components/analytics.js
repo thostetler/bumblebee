@@ -1,7 +1,8 @@
 define([
   'underscore',
-  'jquery'
-], function (_, $) {
+  'jquery',
+  'discovery.vars'
+], function (_, $, config) {
   /*
    * Set of targets
    * each has a set of hooks which coorespond to the event label passed
@@ -68,6 +69,13 @@ define([
     }
   };
 
+  // Initial google analytics setup
+  var qa = window[window.GoogleAnalyticsObject];
+  qa.l = Date.now();
+  qa('create', config.googleTrackingCode || '', config.googleTrackingOptions);
+
+
+  // event handler
   var ga = window[window.GoogleAnalyticsObject];
   window[window.GoogleAnalyticsObject] = function () {
     try {

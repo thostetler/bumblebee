@@ -2,12 +2,13 @@ define([
   'underscore',
   'js/components/generic_module',
   'js/mixins/dependon',
-  'persist-js'
+  'store'
 ],
 function (
   _,
   GenericModule,
-  Mixins
+  Mixins,
+  Store
 ) {
   var namespace = 'bumblebee';
 
@@ -23,10 +24,8 @@ function (
     },
 
     _createStore: function (name) {
-      var s = new Persist.Store(name, {
-        about: 'This is bumblebee persistent storage',
-        defer: true
-      });
+      s = Store;
+      s.namespace(name);
       var keys = s.get('#keys');
       if (!keys) {
         s.set('#keys', '{}');

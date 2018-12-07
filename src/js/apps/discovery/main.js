@@ -21,6 +21,8 @@ require([
   '../../../modules.config',
   'analytics',
   'es5-shim',
+  '../../helpers/backbone-validation',
+  '../../helpers/d3'
 ], function (Router,
   Application,
   DiscoveryBootstrap,
@@ -59,6 +61,9 @@ require([
 
   // set some important urls, parameters before doing anything
   app.configure();
+  pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_STARTING);
+  app.start(Router);
+  pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_STARTED);
 
   updateProgress(95, 'Finishing Up...');
   app.bootstrap().done(function (data) {
@@ -66,10 +71,6 @@ require([
 
     app.onBootstrap(data);
     pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_BOOTSTRAPPED);
-
-    pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_STARTING);
-    app.start(Router);
-    pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_STARTED);
 
     var getUserData = function () {
       try {

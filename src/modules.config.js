@@ -22,7 +22,7 @@ define([], function () {
         MasterPageManager: require('js/page_managers/master'),
         AppStorage: require('js/components/app_storage'),
         RecaptchaManager: require('js/components/recaptcha_manager'),
-        CSRFManager: "js/components/csrf_manager",
+        CSRFManager: require('js/components/csrf_manager'),
         LibraryController: require('js/components/library_controller'),
         DocStashController: require('js/components/doc_stash_controller')
       },

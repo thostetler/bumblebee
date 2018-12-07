@@ -18,7 +18,8 @@ define([
   'bootstrap',
   'js/components/api_feedback',
   'js/components/api_targets',
-  './d3-tip'
+  './d3-tip',
+  '../../helpers/d3'
 ], function (
   _,
   Marionette,
