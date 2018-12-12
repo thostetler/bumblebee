@@ -10,13 +10,13 @@
  * */
 
 define([
-  'js/widgets/base/base_widget',
-  'js/components/generic_module',
-  'js/page_managers/controller',
-  'js/page_managers/templates/aria-announcement.html',
-  'js/page_managers/templates/master-page-manager.html',
+  'widgets/base/base_widget',
+  'components/generic_module',
+  'page_managers/controller',
+  'page_managers/templates/aria-announcement.html',
+  'page_managers/templates/master-page-manager.html',
   'marionette',
-  'js/mixins/dependon'
+  'mixins/dependon'
 
 ], function (
   BaseWidget,

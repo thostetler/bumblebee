@@ -2,9 +2,9 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'js/widgets/base/base_widget',
-  'js/widgets/meta_tags/template/metatags.html',
-  'js/mixins/link_generator_mixin'
+  'widgets/base/base_widget',
+  'widgets/meta_tags/template/metatags.html',
+  'mixins/link_generator_mixin'
 ], function ($, Backbone, _, BaseWidget, metatagsTemplate, LinkGenerator) {
   var View = Backbone.View.extend({
     destroy: function () {

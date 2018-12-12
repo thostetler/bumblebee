@@ -1,12 +1,12 @@
 define([
   'backbone',
   'marionette',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/mixins/widget_mixin_method',
-  'js/components/api_targets',
-  'js/mixins/dependon',
-  'js/mixins/widget_state_manager'
+  'components/api_query',
+  'components/api_request',
+  'mixins/widget_mixin_method',
+  'components/api_targets',
+  'mixins/dependon',
+  'mixins/widget_state_manager'
 ], function (
   Backbone,
   Marionette,

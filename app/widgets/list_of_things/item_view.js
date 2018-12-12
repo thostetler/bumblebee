@@ -1,10 +1,10 @@
 define([
   'marionette',
   'backbone',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'js/widgets/list_of_things/templates/item-template.html',
+  'components/api_request',
+  'components/api_query',
+  'widgets/base/base_widget',
+  'widgets/list_of_things/templates/item-template.html',
   'analytics'
 ],
 

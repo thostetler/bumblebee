@@ -15,9 +15,9 @@
 
 require([
   'router',
-  'js/components/application',
-  'js/mixins/discovery_bootstrap',
-  'js/mixins/api_access',
+  'components/application',
+  'mixins/discovery_bootstrap',
+  'mixins/api_access',
   '../../../modules.config',
   'analytics',
   'es5-shim',

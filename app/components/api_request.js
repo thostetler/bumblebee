@@ -4,8 +4,8 @@
 
 define([
   'underscore', 'backbone',
-  'js/components/facade',
-  'js/components/default_request'
+  'components/facade',
+  'components/default_request'
 ],
 function (
   _,

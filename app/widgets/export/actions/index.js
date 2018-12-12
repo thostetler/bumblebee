@@ -6,8 +6,8 @@
 define([
   'underscore',
   'jquery',
-  'js/components/api_query',
-  'js/components/api_targets',
+  'components/api_query',
+  'components/api_targets',
   'filesaver'
 ], function (_, $, ApiQuery, ApiTargets) {
   // set of action names

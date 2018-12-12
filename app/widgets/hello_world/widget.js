@@ -36,18 +36,18 @@ define([
   // here we are importing our own components, you will notice the path is relative
   // to the src/ folder
 
-  'js/components/api_query', // the holy trinity of BBB - query says what to do
-  'js/components/api_request', // requests says where and how
-  'js/components/api_response', // and response brings it back
+  'components/api_query', // the holy trinity of BBB - query says what to do
+  'components/api_request', // requests says where and how
+  'components/api_response', // and response brings it back
 
-  'js/widgets/base/base_widget', // (almost all) BBB widgets extend base_widget
+  'widgets/base/base_widget', // (almost all) BBB widgets extend base_widget
 
-  'js/bugutils/minimal_pubsub', // will create a test pubsub queue (very useful!)
+  'bugutils/minimal_pubsub', // will create a test pubsub queue (very useful!)
   'test/mocha/js/widgets/test_json/test1', // and example response (to give to widget)
 
   // '' is 'handlebars.html' template pre-processor, it will load the file and give you
   // executable template
-  'js/widgets/hello_world/templates/layout.html'
+  'widgets/hello_world/templates/layout.html'
 ],
 function ( // all of the following names must correspond to the import above
   _,

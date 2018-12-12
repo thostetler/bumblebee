@@ -1,8 +1,8 @@
 define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/one_column_view',
-  'js/wraps/landing_page_manager/landing-page-layout.html',
-  'js/wraps/landing_page_manager/landing-page-nav.html'
+  'page_managers/toc_controller',
+  'page_managers/one_column_view',
+  'wraps/landing_page_manager/landing-page-layout.html',
+  'wraps/landing_page_manager/landing-page-nav.html'
 ], function (
   PageManagerController,
   PageManagerView,

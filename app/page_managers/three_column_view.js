@@ -1,9 +1,9 @@
 define([
   'underscore',
   'marionette',
-  'js/page_managers/templates/results-page-layout.html',
-  'js/page_managers/templates/results-control-row.html',
-  'js/widgets/base/base_widget'
+  'page_managers/templates/results-page-layout.html',
+  'page_managers/templates/results-control-row.html',
+  'widgets/base/base_widget'
 ],
 function (
   _,

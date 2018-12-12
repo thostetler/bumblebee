@@ -6,9 +6,9 @@
 
 define([
   './widget',
-  'js/mixins/add_stable_index_to_collection',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/papers_utils'
+  'mixins/add_stable_index_to_collection',
+  'mixins/link_generator_mixin',
+  'mixins/papers_utils'
 ],
 function (
   ListOfThings,

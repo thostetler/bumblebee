@@ -1,7 +1,7 @@
 define([
   'underscore',
-  'js/components/generic_module',
-  'js/mixins/dependon',
+  'components/generic_module',
+  'mixins/dependon',
   'store'
 ],
 function (

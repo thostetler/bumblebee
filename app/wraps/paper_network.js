@@ -1,12 +1,12 @@
 define([
   'marionette',
-  'js/widgets/network_vis/network_widget',
-  'js/components/api_query_updater',
-  'js/wraps/templates/paper-network-data.html',
-  'js/wraps/templates/paper-network-container.html',
-  'js/widgets/network_vis/templates/not-enough-data-template.html',
-  'js/wraps/templates/paper-network-link-data.html',
-  'js/components/api_targets',
+  'widgets/network_vis/network_widget',
+  'components/api_query_updater',
+  'wraps/templates/paper-network-data.html',
+  'wraps/templates/paper-network-container.html',
+  'widgets/network_vis/templates/not-enough-data-template.html',
+  'wraps/templates/paper-network-link-data.html',
+  'components/api_targets',
   'bootstrap'
 ],
 function (

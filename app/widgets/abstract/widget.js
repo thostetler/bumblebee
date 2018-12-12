@@ -7,11 +7,11 @@ define([
   'jquery',
   'underscore',
   'cache',
-  'js/widgets/base/base_widget',
-  'js/widgets/abstract/templates/abstract_template.html',
-  'js/components/api_query',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/papers_utils',
+  'widgets/base/base_widget',
+  'widgets/abstract/templates/abstract_template.html',
+  'components/api_query',
+  'mixins/link_generator_mixin',
+  'mixins/papers_utils',
   'bootstrap'
 ],
 function (

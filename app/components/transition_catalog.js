@@ -1,5 +1,5 @@
 define(['underscore',
-  'js/components/transition'
+  'components/transition'
 ],
 function (
   _,

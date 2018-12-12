@@ -1,6 +1,6 @@
 define([
   'underscore',
-  'js/widgets/facet/factory'
+  'widgets/facet/factory'
 ], function (
   _,
   FacetFactory

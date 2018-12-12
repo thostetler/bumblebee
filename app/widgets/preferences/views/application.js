@@ -1,8 +1,8 @@
 define([
   'underscore',
   'marionette',
-  'js/widgets/preferences/templates/application.html',
-  'js/widgets/config'
+  'widgets/preferences/templates/application.html',
+  'widgets/config'
 ], function (_, Marionette, ApplicationTemplate, config) {
 
   var DEFAULTS = {

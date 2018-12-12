@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'js/components/api_targets'
+  'components/api_targets'
 ], function (
   Marionette,
   ApiTargets

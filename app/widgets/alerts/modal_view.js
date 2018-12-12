@@ -1,7 +1,7 @@
 
 define([
   'marionette',
-  'js/widgets/alerts/templates/modal_template.html'
+  'widgets/alerts/templates/modal_template.html'
 ], function (
   Marionette,
   ModalTemplate

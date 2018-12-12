@@ -17,11 +17,11 @@ define([
   'jquery',
   'backbone',
   'marionette',
-  'js/components/api_query',
-  'js/components/pubsub_events',
-  'js/widgets/breadcrumb/templates/widget-view.html',
-  'js/widgets/breadcrumb/templates/item-view.html',
-  'js/mixins/dependon'
+  'components/api_query',
+  'components/pubsub_events',
+  'widgets/breadcrumb/templates/widget-view.html',
+  'widgets/breadcrumb/templates/item-view.html',
+  'mixins/dependon'
 ],
 
 function (

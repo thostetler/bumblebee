@@ -22,7 +22,7 @@ Instead, import 'api_query' and configure it properly
  */
 
 
-define(['js/components/multi_params', 'backbone', 'underscore', 'jquery'], function (MultiParams, Backbone, _, $) {
+define(['components/multi_params', 'backbone', 'underscore', 'jquery'], function (MultiParams, Backbone, _, $) {
   var SolrParams = MultiParams.extend({
 
     fieldsToConcatenate: [],

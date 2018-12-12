@@ -6,18 +6,18 @@
 
 define([
   'underscore',
-  'js/widgets/list_of_things/widget',
-  'js/widgets/base/base_widget',
-  'js/mixins/add_stable_index_to_collection',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/formatter',
-  'js/modules/orcid/widget/templates/container-template.html',
-  'js/mixins/papers_utils',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  'js/components/json_response',
-  'js/modules/orcid/widget/templates/empty-template.html',
-  'js/modules/orcid/extension'
+  'widgets/list_of_things/widget',
+  'widgets/base/base_widget',
+  'mixins/add_stable_index_to_collection',
+  'mixins/link_generator_mixin',
+  'mixins/formatter',
+  'modules/orcid/widget/templates/container-template.html',
+  'mixins/papers_utils',
+  'components/api_query',
+  'components/api_feedback',
+  'components/json_response',
+  'modules/orcid/widget/templates/empty-template.html',
+  'modules/orcid/extension'
 ], function (
   _,
   ListOfThingsWidget,

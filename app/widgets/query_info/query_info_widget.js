@@ -1,13 +1,13 @@
 define(['marionette',
   'backbone',
   'underscore',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'js/widgets/query_info/query_info_template.html',
-  'js/mixins/formatter',
+  'components/api_request',
+  'components/api_query',
+  'widgets/base/base_widget',
+  'widgets/query_info/query_info_template.html',
+  'mixins/formatter',
   'bootstrap',
-  'js/components/api_feedback'
+  'components/api_feedback'
 ],
 
 function (Marionette,

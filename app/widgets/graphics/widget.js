@@ -1,12 +1,12 @@
 define([
   'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_query',
-  'js/widgets/graphics/templates/grid.html',
-  'js/widgets/graphics/templates/sidebar.html',
-  'js/components/api_targets'
+  'widgets/base/base_widget',
+  'components/api_request',
+  'components/api_response',
+  'components/api_query',
+  'widgets/graphics/templates/grid.html',
+  'widgets/graphics/templates/sidebar.html',
+  'components/api_targets'
 
 
 ], function (

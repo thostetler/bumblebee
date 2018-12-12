@@ -1,4 +1,4 @@
-define(['underscore', 'js/mixins/openurl_generator'], function (_, OpenURLGenerator) {
+define(['underscore', 'mixins/openurl_generator'], function (_, OpenURLGenerator) {
   const GATEWAY_BASE_URL = '/link_gateway/';
 
   const DEFAULT_ORDERING = [

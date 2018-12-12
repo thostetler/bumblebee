@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'js/widgets/base/base_widget',
+  'widgets/base/base_widget',
   './views/view_all_libraries'
 
 ],

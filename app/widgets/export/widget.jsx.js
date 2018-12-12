@@ -8,15 +8,15 @@ define([
   'redux',
   'react-redux',
   'redux-thunk',
-  'js/widgets/base/base_widget',
+  'widgets/base/base_widget',
   './reducers/index',
   './actions/index',
   './containers/App.jsx',
-  'js/components/api_query',
-  'js/components/api_targets',
-  'js/components/api_feedback',
-  'js/widgets/export/templates/classic_submit_form.html',
-  'js/widgets/config'
+  'components/api_query',
+  'components/api_targets',
+  'components/api_feedback',
+  'widgets/export/templates/classic_submit_form.html',
+  'widgets/config'
 ], function ($, _, Backbone, React, ReactDOM, Redux, ReactRedux,
   ReduxThunk, BaseWidget, reducers, actions, App, ApiQuery, ApiTargets,
   ApiFeedback, ClassicFormTemplate, config) {

@@ -1,13 +1,13 @@
 
 define([
   'backbone',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'js/components/api_targets',
-  'js/components/api_request',
-  'js/components/api_feedback',
-  'js/components/api_query',
-  'js/mixins/dependon'
+  'components/generic_module',
+  'mixins/hardened',
+  'components/api_targets',
+  'components/api_request',
+  'components/api_feedback',
+  'components/api_query',
+  'mixins/dependon'
 
 ],
 function (

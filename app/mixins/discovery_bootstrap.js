@@ -5,10 +5,10 @@
 define([
   'underscore',
   'backbone',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/pubsub_events',
-  'js/components/api_targets'
+  'components/api_query',
+  'components/api_request',
+  'components/pubsub_events',
+  'components/api_targets'
 ],
 function (
   _,

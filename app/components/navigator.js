@@ -15,10 +15,10 @@
 define(['underscore',
   'jquery',
   'cache',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/transition',
-  'js/components/transition_catalog',
+  'components/generic_module',
+  'mixins/dependon',
+  'components/transition',
+  'components/transition_catalog',
   'analytics'
 ],
 function (

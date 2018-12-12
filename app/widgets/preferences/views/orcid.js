@@ -1,7 +1,7 @@
 define([
   'marionette',
-  'js/widgets/preferences/templates/orcid.html',
-  'js/widgets/preferences/templates/orcid-name-row-template.html'
+  'widgets/preferences/templates/orcid.html',
+  'widgets/preferences/templates/orcid-name-row-template.html'
 ], function (
   Marionette,
   orcidTemplate,

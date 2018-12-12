@@ -9,7 +9,7 @@
  *
  * map: {
  *  'your/module': {
- *    'api_response_impl': 'js/components/specific_impl_of_the_api_response'
+ *    'api_response_impl': 'components/specific_impl_of_the_api_response'
  *  }
  * },
  */
@@ -17,8 +17,8 @@
 define([
   'underscore',
   'backbone',
-  'js/components/solr_response',
-  'js/components/facade'
+  'components/solr_response',
+  'components/facade'
 ], function (
   _,
   Backbone,

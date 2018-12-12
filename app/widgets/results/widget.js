@@ -5,16 +5,16 @@
  */
 
 define([
-  'js/widgets/list_of_things/widget',
-  'js/widgets/abstract/widget',
-  'js/mixins/add_stable_index_to_collection',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/formatter',
-  'js/widgets/results/templates/container-template.html',
-  'js/mixins/papers_utils',
-  'js/modules/orcid/extension',
-  'js/mixins/dependon',
-  'js/components/api_feedback'
+  'widgets/list_of_things/widget',
+  'widgets/abstract/widget',
+  'mixins/add_stable_index_to_collection',
+  'mixins/link_generator_mixin',
+  'mixins/formatter',
+  'widgets/results/templates/container-template.html',
+  'mixins/papers_utils',
+  'modules/orcid/extension',
+  'mixins/dependon',
+  'components/api_feedback'
 ],
 
 function (

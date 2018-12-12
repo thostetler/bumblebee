@@ -3,15 +3,15 @@
  */
 define([
   'backbone',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/mixins/hardened',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/api_query',
-  'js/components/user',
-  'js/components/api_feedback',
-  'js/mixins/api_access'
+  'components/api_request',
+  'components/api_targets',
+  'mixins/hardened',
+  'components/generic_module',
+  'mixins/dependon',
+  'components/api_query',
+  'components/user',
+  'components/api_feedback',
+  'mixins/api_access'
 
 ], function
 (Backbone,

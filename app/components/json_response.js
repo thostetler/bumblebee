@@ -6,7 +6,7 @@
 
 define(['underscore',
   'backbone',
-  'js/components/api_query',
+  'components/api_query',
 ], function (
   _,
   Backbone,

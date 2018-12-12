@@ -15,7 +15,7 @@
  *  var htmlInterface = new Facade(remoteInterface, htmlRemote);
  *
  */
-define(['underscore', 'js/components/facade'], function (_, Facade) {
+define(['underscore', 'components/facade'], function (_, Facade) {
   // The Facade encapsulates objectIn according to the description
   // The exposed facade is guaranteed to have exactly the functions described in description.
   var Facade = function (description, objectIn) {

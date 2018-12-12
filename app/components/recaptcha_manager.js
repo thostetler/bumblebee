@@ -5,9 +5,9 @@
  * */
 define([
   'backbone',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'js/mixins/dependon'
+  'components/generic_module',
+  'mixins/hardened',
+  'mixins/dependon'
 ],
 function (
   Backbone,

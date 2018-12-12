@@ -7,11 +7,11 @@
  *
  * You config should look like:
  *
- *   'js/apps/discovery/main': {
+ *   'apps/discovery/main': {
  *
  *      core: {
  *       controllers: {
- *         Orcid: 'js/modules/orcid/module'
+ *         Orcid: 'modules/orcid/module'
  *         ....
  *         }
  *   }
@@ -21,7 +21,7 @@
 define([
   'backbone',
   'underscore',
-  'js/components/generic_module',
+  'components/generic_module',
   './orcid_api',
 ],
 function (

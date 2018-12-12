@@ -1,4 +1,4 @@
-define(['js/widgets/facet/factory'], function (FacetFactory) {
+define(['widgets/facet/factory'], function (FacetFactory) {
   return function () {
     var widget = FacetFactory.makeBasicCheckboxFacet({
       facetField: 'data_facet',

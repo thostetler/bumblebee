@@ -5,7 +5,7 @@
 
 define([
   'backbone',
-  'js/mixins/hardened'
+  'mixins/hardened'
 ], function (
   Backbone,
   Hardened

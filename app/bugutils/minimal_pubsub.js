@@ -30,14 +30,14 @@
  */
 
 define(['underscore', 'backbone',
-  'js/components/query_mediator',
-  'js/services/pubsub',
-  'js/components/beehive',
-  'js/components/pubsub_events',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_feedback',
-  'js/components/api_response'
+  'components/query_mediator',
+  'services/pubsub',
+  'components/beehive',
+  'components/pubsub_events',
+  'components/api_query',
+  'components/api_request',
+  'components/api_feedback',
+  'components/api_response'
 ], function (
   _,
   BackBone,

@@ -3,7 +3,7 @@ define(
     'underscore',
     'redux',
     'redux-thunk',
-    'js/widgets/facet/reducers'
+    'widgets/facet/reducers'
   ],
   function (
     _,

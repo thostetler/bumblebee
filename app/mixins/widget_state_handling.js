@@ -7,9 +7,9 @@
 define([
   'underscore',
   'jquery',
-  'js/widgets/widget_states',
-  'js/widgets/base/templates/loading-template.html',
-  'js/widgets/base/templates/loading-template-small.html',
+  'widgets/widget_states',
+  'widgets/base/templates/loading-template.html',
+  'widgets/base/templates/loading-template-small.html',
 
 ], function (
   _,

@@ -3,14 +3,14 @@
 define([
   'underscore',
   'jquery',
-  'js/components/generic_module',
-  'js/components/api_request',
-  'js/mixins/dependon',
-  'js/components/api_response',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  'js/mixins/hardened',
-  'js/mixins/api_access',
+  'components/generic_module',
+  'components/api_request',
+  'mixins/dependon',
+  'components/api_response',
+  'components/api_query',
+  'components/api_feedback',
+  'mixins/hardened',
+  'mixins/api_access',
   'moment'
 ],
 function (

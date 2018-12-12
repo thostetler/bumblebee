@@ -5,9 +5,9 @@ define([
   'underscore',
   'marionette',
   'bootstrap',
-  'js/widgets/tabs/templates/tabs_inner.html',
-  'js/widgets/tabs/templates/tabs_outer.html',
-  'js/widgets/tabs/templates/tabs_title.html'],
+  'widgets/tabs/templates/tabs_inner.html',
+  'widgets/tabs/templates/tabs_outer.html',
+  'widgets/tabs/templates/tabs_title.html'],
 function (
   _,
   Marionette,

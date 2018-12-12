@@ -8,8 +8,8 @@
 define([
   'marionette',
   'backbone',
-  'js/widgets/list_of_things/templates/expanding-item-template.html',
-  'js/widgets/list_of_things/templates/expanding-results-container-template.html',
+  'widgets/list_of_things/templates/expanding-item-template.html',
+  'widgets/list_of_things/templates/expanding-results-container-template.html',
 ],
 
 function (Marionette,

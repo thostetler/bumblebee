@@ -1,4 +1,4 @@
-define(['js/mixins/widget_utility'], function (Utils) {
+define(['mixins/widget_utility'], function (Utils) {
   var mixin = function (from, methods) {
     var to = this.prototype;
     // we add those methods which exists on `from` but not on `to` to the latter

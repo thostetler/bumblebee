@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'js/widgets/success/success_template.html'
+  'widgets/success/success_template.html'
 ], function (
   Marionette,
   SuccessTemplate

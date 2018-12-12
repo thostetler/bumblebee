@@ -1,7 +1,7 @@
 define([
   'backbone',
   'underscore',
-  'js/mixins/add_stable_index_to_collection'
+  'mixins/add_stable_index_to_collection'
 ],
 function (
   Backbone,

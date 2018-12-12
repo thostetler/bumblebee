@@ -1,7 +1,7 @@
 define([
   'marionette',
-  'js/widgets/user_navbar/nav_template.html',
-  'js/mixins/dependon'
+  'widgets/user_navbar/nav_template.html',
+  'mixins/dependon'
 ], function (Marionette, NavTemplate, Dependon) {
   var NavModel = Backbone.Model.extend({
 

@@ -1,9 +1,9 @@
 define([
   'underscore',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-  'js/components/api_query_updater'
+  'components/api_query',
+  'components/api_request',
+  'widgets/base/base_widget',
+  'components/api_query_updater'
 ],
 function (
   _,

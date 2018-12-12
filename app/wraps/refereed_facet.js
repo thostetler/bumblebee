@@ -1,5 +1,5 @@
 define([
-  'js/widgets/facet/factory',
+  'widgets/facet/factory',
   'analytics'
 ], function (
   FacetFactory,

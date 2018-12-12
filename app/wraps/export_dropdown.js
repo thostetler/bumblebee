@@ -1,7 +1,7 @@
 define([
   'underscore',
-  'js/widgets/config',
-  'js/widgets/dropdown-menu/widget'
+  'widgets/config',
+  'widgets/dropdown-menu/widget'
 ], function (_, config, DropdownWidget) {
   var links = [
     { description: 'in BibTeX', navEvent: 'export', params: { format: 'bibtex' } },

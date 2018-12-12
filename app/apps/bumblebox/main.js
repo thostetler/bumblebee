@@ -21,8 +21,8 @@ function (
 ) {
   require([
     'router',
-    'js/components/application',
-    'js/apps/bumblebox/bootstrap',
+    'components/application',
+    'apps/bumblebox/bootstrap',
     'dynamic_config',
     'es5-shim',
     'underscore'

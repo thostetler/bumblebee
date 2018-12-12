@@ -1,7 +1,7 @@
 define([
-  'js/widgets/query_info/query_info_widget',
-  'js/widgets/base/base_widget',
-  'js/wraps/abstract_page_library_add/template.html'
+  'widgets/query_info/query_info_widget',
+  'widgets/base/base_widget',
+  'wraps/abstract_page_library_add/template.html'
 ],
 function (
   QueryInfoWidget,

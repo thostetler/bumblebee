@@ -1,7 +1,7 @@
 
 define([
-  'js/widgets/metrics/widget',
-  'js/components/api_feedback'
+  'widgets/metrics/widget',
+  'components/api_feedback'
 ],
 
 function (

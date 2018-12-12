@@ -1,5 +1,5 @@
 define([
-  'js/widgets/dropdown-menu/widget'
+  'widgets/dropdown-menu/widget'
 
 ], function (
 

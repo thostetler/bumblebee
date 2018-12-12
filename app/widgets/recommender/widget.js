@@ -1,10 +1,10 @@
 define([
   'marionette',
-  'js/components/api_query',
-  'js/components/api_targets',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-  'js/widgets/recommender/templates/recommender_template.html',
+  'components/api_query',
+  'components/api_targets',
+  'components/api_request',
+  'widgets/base/base_widget',
+  'widgets/recommender/templates/recommender_template.html',
   'bootstrap',
   'analytics'
 ], function (

@@ -28,8 +28,8 @@
 define([
   'backbone',
   'underscore',
-  'js/components/generic_module',
-  'js/components/pubsub_key'
+  'components/generic_module',
+  'components/pubsub_key'
 ],
 function (
   Backbone,

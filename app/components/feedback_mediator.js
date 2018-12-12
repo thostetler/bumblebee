@@ -11,13 +11,13 @@ define([
   'underscore',
   'jquery',
   'cache',
-  'js/components/generic_module',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_query_updater',
-  'js/components/api_feedback',
-  'js/components/pubsub_key',
-  'js/mixins/dependon'
+  'components/generic_module',
+  'components/api_request',
+  'components/api_response',
+  'components/api_query_updater',
+  'components/api_feedback',
+  'components/pubsub_key',
+  'mixins/dependon'
 ],
 function (
   _,

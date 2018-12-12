@@ -7,15 +7,15 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'js/components/navigator',
-  'js/components/api_feedback',
-  'js/components/api_query_updater',
-  'js/components/json_response',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_targets',
+  'components/navigator',
+  'components/api_feedback',
+  'components/api_query_updater',
+  'components/json_response',
+  'components/api_query',
+  'components/api_request',
+  'components/api_targets',
   '../../../404.html',
-  'js/apps/discovery/templates/orcid-modal-template.html'
+  'apps/discovery/templates/orcid-modal-template.html'
 ],
 
 function (

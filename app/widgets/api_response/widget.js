@@ -12,10 +12,10 @@ define([
   'jquery',
   'backbone',
   'marionette',
-  'js/components/api_response',
-  'js/widgets/api_response/templates/widget-view.html',
-  'js/components/pubsub_events',
-  'js/mixins/dependon'
+  'components/api_response',
+  'widgets/api_response/templates/widget-view.html',
+  'components/pubsub_events',
+  'mixins/dependon'
 ],
 
 function (

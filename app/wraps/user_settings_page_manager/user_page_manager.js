@@ -1,8 +1,8 @@
 define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/three_column_view',
-  'js/wraps/user_settings_page_manager/user-settings-layout.html',
-  'js/wraps/user_settings_page_manager/user_nav.html'
+  'page_managers/toc_controller',
+  'page_managers/three_column_view',
+  'wraps/user_settings_page_manager/user-settings-layout.html',
+  'wraps/user_settings_page_manager/user_nav.html'
 ], function (
   PageManagerController,
   PageManagerView,

@@ -6,9 +6,9 @@ define([
   'underscore',
   'jquery',
   'backbone',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/pubsub_events'
+  'components/api_query',
+  'components/api_request',
+  'components/pubsub_events'
 ],
 function (
   _,
@@ -104,10 +104,10 @@ function (
       var rConfig = null;
       for (var k in requirejs.s.contexts) {
         var kontext = requirejs.s.contexts[k];
-        if (kontext.config && kontext.config.config && kontext.config.config['js/apps/bumblebox/main']) {
+        if (kontext.config && kontext.config.config && kontext.config.config['apps/bumblebox/main']) {
           // ignore this context if it's used by some other app already
-          if (kontext.config.config['js/apps/bumblebox/main'].bootstrap) return;
-          kontext.config.config['js/apps/bumblebox/main'].bootstrap = 'placeholder';
+          if (kontext.config.config['apps/bumblebox/main'].bootstrap) return;
+          kontext.config.config['apps/bumblebox/main'].bootstrap = 'placeholder';
           rConfig = kontext.config;
         }
       }

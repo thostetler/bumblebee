@@ -5,11 +5,11 @@
  * */
 define([
   'backbone',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/mixins/dependon'
+  'components/generic_module',
+  'mixins/hardened',
+  'components/api_request',
+  'components/api_targets',
+  'mixins/dependon'
 ],
 function (
   Backbone,

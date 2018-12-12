@@ -1,9 +1,9 @@
 
 define([
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/pubsub_key'
+  'components/generic_module',
+  'mixins/dependon',
+  'mixins/hardened',
+  'components/pubsub_key'
 ],
 function (
   GenericModule,

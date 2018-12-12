@@ -5,9 +5,9 @@
 define([
   'backbone',
   'underscore',
-  'js/components/api_query',
-  'js/mixins/hardened',
-  'js/mixins/dependon'
+  'components/api_query',
+  'mixins/hardened',
+  'mixins/dependon'
 ], function (
   Backbone,
   _,

@@ -14,12 +14,12 @@ define([
   'jquery',
   'backbone',
   'marionette',
-  'js/components/api_query',
-  'js/components/pubsub_events',
-  'js/widgets/filter_visualizer/templates/widget-view.html',
-  'js/widgets/filter_visualizer/templates/item-view.html',
-  'js/components/api_feedback',
-  'js/mixins/dependon'
+  'components/api_query',
+  'components/pubsub_events',
+  'widgets/filter_visualizer/templates/widget-view.html',
+  'widgets/filter_visualizer/templates/item-view.html',
+  'components/api_feedback',
+  'mixins/dependon'
 ],
 
 function (

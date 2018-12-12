@@ -9,8 +9,8 @@
 
 
 define([
-  'js/components/json_response',
-  'js/components/solr_params',
+  'components/json_response',
+  'components/solr_params',
   'backbone',
   'underscore',
   'jquery'], function (

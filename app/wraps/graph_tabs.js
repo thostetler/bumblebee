@@ -1,9 +1,9 @@
 define([
-  'js/widgets/tabs/tabs_widget',
-  'js/widgets/facet/factory',
-  'js/widgets/facet/graph-facet/year_graph',
-  'js/widgets/facet/graph-facet/h_index_graph',
-  'js/mixins/formatter'
+  'widgets/tabs/tabs_widget',
+  'widgets/facet/factory',
+  'widgets/facet/graph-facet/year_graph',
+  'widgets/facet/graph-facet/h_index_graph',
+  'mixins/formatter'
 ],
 function (
   TabsWidget,

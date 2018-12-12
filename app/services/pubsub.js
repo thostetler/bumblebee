@@ -2,7 +2,7 @@
  * Created by rchyla on 3/16/14.
  */
 
-define(['backbone', 'underscore', 'js/mixins/hardened', 'pubsub_service_impl', 'js/components/pubsub_events'],
+define(['backbone', 'underscore', 'mixins/hardened', 'pubsub_service_impl', 'components/pubsub_events'],
   function (Backbone, _, Hardened, PubSubImplementation, PubSubEvents) {
     var PubSub = PubSubImplementation.extend({
 

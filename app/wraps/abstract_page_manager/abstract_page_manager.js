@@ -1,8 +1,8 @@
 define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/three_column_view',
-  'js/wraps/abstract_page_manager/abstract-page-layout.html',
-  'js/wraps/abstract_page_manager/abstract-nav.html'
+  'page_managers/toc_controller',
+  'page_managers/three_column_view',
+  'wraps/abstract_page_manager/abstract-page-layout.html',
+  'wraps/abstract_page_manager/abstract-nav.html'
 ], function (
   PageManagerController,
   PageManagerView,

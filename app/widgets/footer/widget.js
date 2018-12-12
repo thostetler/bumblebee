@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'js/widgets/footer/footer.html'
+  'widgets/footer/footer.html'
 ], function (
   Marionette,
   FooterTemplate

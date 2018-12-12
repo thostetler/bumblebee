@@ -7,13 +7,13 @@
 
 define([
   'underscore',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_query_updater',
-  'js/components/api_targets',
-  'js/modules/orcid/work',
-  'js/components/api_feedback',
-  'js/mixins/dependon',
+  'components/api_query',
+  'components/api_request',
+  'components/api_query_updater',
+  'components/api_targets',
+  'modules/orcid/work',
+  'components/api_feedback',
+  'mixins/dependon',
 ],
 function (
   _,

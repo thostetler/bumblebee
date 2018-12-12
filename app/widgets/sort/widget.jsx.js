@@ -9,9 +9,9 @@ define([
   'redux',
   './redux/configure-store',
   './redux/modules/sort-app',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'js/components/api_feedback',
+  'components/api_query',
+  'widgets/base/base_widget',
+  'components/api_feedback',
   './containers/sort-container'
 ], function (
   _, Backbone, analytics, React, ReactRedux, ReactDOM, Redux, configureStore,

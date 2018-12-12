@@ -1,13 +1,13 @@
 define([
   'd3',
   'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_request',
-  'js/widgets/bubble_chart/templates/container.html',
-  'js/widgets/bubble_chart/templates/tooltip.html',
-  'js/components/api_targets',
-  'js/components/api_query_updater',
-  'js/components/api_query'
+  'widgets/base/base_widget',
+  'components/api_request',
+  'widgets/bubble_chart/templates/container.html',
+  'widgets/bubble_chart/templates/tooltip.html',
+  'components/api_targets',
+  'components/api_query_updater',
+  'components/api_query'
 ], function (
   d3,
   Marionette,

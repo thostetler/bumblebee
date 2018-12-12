@@ -1,12 +1,12 @@
 define([
   'underscore',
   'marionette',
-  'js/widgets/base/base_widget',
+  'widgets/base/base_widget',
   './views/openurl',
   './views/orcid',
   './views/application',
-  'js/components/api_feedback',
-  'js/widgets/preferences/templates/orcid-form-submit-modal.html'
+  'components/api_feedback',
+  'widgets/preferences/templates/orcid-form-submit-modal.html'
 ], function (
   _,
   Marionette,

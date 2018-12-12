@@ -1,6 +1,6 @@
 define([
   'underscore',
-  'js/components/persistent_storage'
+  'components/persistent_storage'
 ], function (
   _,
   PersistentStorage

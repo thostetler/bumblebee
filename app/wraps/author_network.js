@@ -1,6 +1,6 @@
 define([
-  'js/widgets/network_vis/network_widget',
-  'js/components/api_targets'
+  'widgets/network_vis/network_widget',
+  'components/api_targets'
 ], function (
   NetworkWidget,
   ApiTargets

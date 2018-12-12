@@ -1,9 +1,9 @@
 define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/toc_widget',
-  'js/page_managers/three_column_view',
-  'js/wraps/libraries_page_manager/libraries-page-layout.html',
-  'js/wraps/libraries_page_manager/libraries-nav.html'
+  'page_managers/toc_controller',
+  'page_managers/toc_widget',
+  'page_managers/three_column_view',
+  'wraps/libraries_page_manager/libraries-page-layout.html',
+  'wraps/libraries_page_manager/libraries-nav.html'
 ], function (
   TOCController,
   TOCView,

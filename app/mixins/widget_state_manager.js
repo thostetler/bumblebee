@@ -1,7 +1,7 @@
 
 define([
   'underscore',
-  'js/components/api_feedback'
+  'components/api_feedback'
 ], function (_, ApiFeedback) {
   /**
    * Abstract error pubsub-like manager.  Allows for hooks to be applied that

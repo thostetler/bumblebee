@@ -1,11 +1,11 @@
 define([
-  'js/widgets/base/base_widget',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/widgets/library_import/templates/tab-container.html',
-  'js/widgets/library_import/templates/import-view-labs.html',
-  'js/widgets/library_import/templates/import-view-classic.html',
-  'js/widgets/library_import/templates/success-template.html',
+  'widgets/base/base_widget',
+  'components/api_request',
+  'components/api_targets',
+  'widgets/library_import/templates/tab-container.html',
+  'widgets/library_import/templates/import-view-labs.html',
+  'widgets/library_import/templates/import-view-classic.html',
+  'widgets/library_import/templates/success-template.html',
   'bootstrap'
 
 ], function (BaseWidget,

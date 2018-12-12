@@ -6,7 +6,7 @@
  Put in your config:
  map: {
  'your/module': {
- 'api_query_impl': 'js/components/specific_impl_of_the_api_query'
+ 'api_query_impl': 'components/specific_impl_of_the_api_query'
  }
  },
 
@@ -16,8 +16,8 @@
 define([
   'backbone',
   'underscore',
-  'js/components/solr_params',
-  'js/components/facade'
+  'components/solr_params',
+  'components/facade'
 ], function (
   Backbone,
   _,

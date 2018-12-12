@@ -10,13 +10,13 @@
 define([
   'jquery',
   'underscore',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/mixins/dependon',
-  'js/components/generic_module',
+  'components/api_query',
+  'components/api_request',
+  'components/api_response',
+  'mixins/dependon',
+  'components/generic_module',
   'sprintf',
-  'js/components/api_targets'
+  'components/api_targets'
 ], function (
   $,
   _,

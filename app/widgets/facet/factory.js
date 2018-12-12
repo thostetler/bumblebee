@@ -1,6 +1,6 @@
 define([
-  'js/widgets/facet/widget',
-  'js/widgets/facet/graph-facet/widget'
+  'widgets/facet/widget',
+  'widgets/facet/graph-facet/widget'
 ], function (
   FacetWidget,
   BaseGraphWidget

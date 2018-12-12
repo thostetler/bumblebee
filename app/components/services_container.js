@@ -3,9 +3,9 @@
  */
 
 define([
-  'js/components/facade',
-  'js/components/generic_module',
-  'js/mixins/hardened',
+  'components/facade',
+  'components/generic_module',
+  'mixins/hardened',
   'underscore'
 ],
 function (

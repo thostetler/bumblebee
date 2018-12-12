@@ -1,6 +1,6 @@
 define([
   './base_graph',
-  'js/widgets/facet/graph-facet/templates/year-graph-legend.html',
+  'widgets/facet/graph-facet/templates/year-graph-legend.html',
   'marionette',
   'jquery-ui'
 ],

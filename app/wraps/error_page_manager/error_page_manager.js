@@ -1,7 +1,7 @@
 define([
-  'js/page_managers/controller',
-  'js/page_managers/one_column_view',
-  'js/wraps/error_page_manager/404.html'
+  'page_managers/controller',
+  'page_managers/one_column_view',
+  'wraps/error_page_manager/404.html'
 ], function (
   PageManagerController,
   PageManagerView,

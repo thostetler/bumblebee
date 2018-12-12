@@ -9,16 +9,16 @@ define([
   'marionette',
   'bootstrap',
 
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_feedback',
-  'js/components/alerts',
+  'components/api_query',
+  'components/api_request',
+  'components/api_response',
+  'components/api_feedback',
+  'components/alerts',
 
-  'js/widgets/base/base_widget',
-  'js/widgets/green_button/templates/widget-view.html',
-  'js/widgets/green_button/templates/item-view.html',
-  'js/widgets/green_button/templates/empty-view.html'
+  'widgets/base/base_widget',
+  'widgets/green_button/templates/widget-view.html',
+  'widgets/green_button/templates/item-view.html',
+  'widgets/green_button/templates/empty-view.html'
 ],
 function (
   _,

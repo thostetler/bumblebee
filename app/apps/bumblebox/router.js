@@ -2,12 +2,12 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'js/components/api_query',
-  'js/mixins/dependon',
-  'js/components/api_feedback',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/components/api_query_updater'
+  'components/api_query',
+  'mixins/dependon',
+  'components/api_feedback',
+  'components/api_request',
+  'components/api_targets',
+  'components/api_query_updater'
 ],
 function (
   $,

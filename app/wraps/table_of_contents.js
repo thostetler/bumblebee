@@ -1,7 +1,7 @@
 
 define([
   'underscore',
-  'js/widgets/list_of_things/details_widget'
+  'widgets/list_of_things/details_widget'
 ],
 function (
   _,

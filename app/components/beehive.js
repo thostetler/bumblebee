@@ -8,10 +8,10 @@
 define([
   'backbone',
   'underscore',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/services_container'
+  'components/generic_module',
+  'mixins/dependon',
+  'mixins/hardened',
+  'components/services_container'
 ],
 function (
   Backbone,

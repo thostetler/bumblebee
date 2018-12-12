@@ -6,11 +6,11 @@
 
 define([
   'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_feedback',
+  'widgets/base/base_widget',
+  'components/api_query',
+  'components/api_feedback',
   // list of possible alerts
-  'js/components/alerts',
+  'components/alerts',
   './modal_view',
   './page_top_alert',
   'jquery',

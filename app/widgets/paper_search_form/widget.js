@@ -1,8 +1,8 @@
 define([
-  'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  'js/widgets/paper_search_form/form.html',
+  'widgets/base/base_widget',
+  'components/api_query',
+  'components/api_feedback',
+  'widgets/paper_search_form/form.html',
   './topterms',
   'jquery-ui'
 ], function (

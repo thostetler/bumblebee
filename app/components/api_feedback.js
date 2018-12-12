@@ -1,7 +1,7 @@
 define([
   'underscore',
   'backbone',
-  'js/mixins/hardened'],
+  'mixins/hardened'],
 function (_, Backbone, Hardened) {
   var ApiFeedback = function (options) {
     _.extend(this, _.defaults(options || {}, { code: 200, msg: undefined }));

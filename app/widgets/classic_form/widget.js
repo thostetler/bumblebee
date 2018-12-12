@@ -1,10 +1,10 @@
 define([
-  'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_query_updater',
-  'js/widgets/classic_form/form.html',
+  'widgets/base/base_widget',
+  'components/api_query',
+  'components/api_query_updater',
+  'widgets/classic_form/form.html',
   'jquery-ui',
-  'js/widgets/paper_search_form/topterms',
+  'widgets/paper_search_form/topterms',
   'analytics'
 ], function (
   BaseWidget,

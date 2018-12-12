@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'js/widgets/preferences/templates/openurl.html',
+  'widgets/preferences/templates/openurl.html',
   'bootstrap',
   'select2/select2'
 ], function (

@@ -7,7 +7,7 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'js/components/navigator'
+  'components/navigator'
 ],
 function (
   $,

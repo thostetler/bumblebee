@@ -8,8 +8,8 @@
  */
 define([
   'underscore',
-  'js/components/pubsub_events',
-  'js/components/pubsub_key'
+  'components/pubsub_events',
+  'components/pubsub_key'
 ], function (
   _,
   PubSubEvents,

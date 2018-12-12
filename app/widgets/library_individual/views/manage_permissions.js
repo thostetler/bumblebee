@@ -1,7 +1,7 @@
 define([
   'marionette',
-  'js/widgets/library_individual/templates/manage-permissions-container.html',
-  'js/widgets/library_individual/templates/make-public.html',
+  'widgets/library_individual/templates/manage-permissions-container.html',
+  'widgets/library_individual/templates/make-public.html',
   'bootstrap'
 ], function (
   Marionette,

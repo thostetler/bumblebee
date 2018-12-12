@@ -1,14 +1,14 @@
 define([
-  'js/components/api_response',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/components/solr_response',
-  'js/widgets/facet/factory',
-  'js/components/api_targets',
+  'components/api_response',
+  'components/api_request',
+  'components/api_query',
+  'components/solr_response',
+  'widgets/facet/factory',
+  'components/api_targets',
   'analytics',
   'cache',
   'underscore',
-  'js/widgets/facet/reducers'
+  'widgets/facet/reducers'
 ], function (
   ApiResponse,
   ApiRequest,

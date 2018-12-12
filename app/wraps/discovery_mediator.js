@@ -2,11 +2,11 @@
 define([
   'underscore',
   'jquery',
-  'js/components/feedback_mediator',
-  'js/components/api_feedback',
-  'js/widgets/widget_states',
-  'js/components/alerts',
-  'js/components/api_response',
+  'components/feedback_mediator',
+  'components/api_feedback',
+  'widgets/widget_states',
+  'components/alerts',
+  'components/api_response',
   'analytics'
 ],
 

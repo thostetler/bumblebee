@@ -5,8 +5,8 @@
 define([
   'underscore',
   'backbone',
-  'js/components/api_query',
-  'js/components/multi_params'
+  'components/api_query',
+  'components/multi_params'
 ],
 function (
   _,

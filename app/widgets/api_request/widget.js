@@ -3,12 +3,12 @@
  */
 
 define(['underscore', 'jquery', 'backbone', 'marionette',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/components/pubsub_events',
-  'js/widgets/api_request/templates/widget-view.html',
-  'js/widgets/api_request/templates/item-view.html',
-  'js/mixins/dependon'
+  'components/api_request',
+  'components/api_query',
+  'components/pubsub_events',
+  'widgets/api_request/templates/widget-view.html',
+  'widgets/api_request/templates/item-view.html',
+  'mixins/dependon'
 ],
 
 function (

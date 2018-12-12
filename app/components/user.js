@@ -20,13 +20,13 @@
 define([
   'underscore',
   'backbone',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/api_feedback',
-  'js/mixins/api_access'
+  'components/api_request',
+  'components/api_targets',
+  'components/generic_module',
+  'mixins/dependon',
+  'mixins/hardened',
+  'components/api_feedback',
+  'mixins/api_access'
 
 ],
 function (

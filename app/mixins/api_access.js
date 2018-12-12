@@ -1,8 +1,8 @@
 define([
   'underscore',
   'backbone',
-  'js/components/api_query',
-  'js/components/api_request'
+  'components/api_query',
+  'components/api_request'
 ],
 function (
   _,

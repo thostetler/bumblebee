@@ -8,11 +8,11 @@ define([
   'underscore',
   'jquery',
   'cache',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/api_feedback',
-  'js/mixins/hardened',
-  'js/components/alerts'
+  'components/generic_module',
+  'mixins/dependon',
+  'components/api_feedback',
+  'mixins/hardened',
+  'components/alerts'
 ],
 function (
   _,

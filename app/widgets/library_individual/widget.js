@@ -1,11 +1,11 @@
 define([
   'marionette',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
+  'components/api_query',
+  'widgets/base/base_widget',
   './views/library_header',
   './views/manage_permissions',
-  'js/widgets/library_individual/templates/layout-container.html',
-  'js/widgets/library_individual/templates/loading-library.html'
+  'widgets/library_individual/templates/layout-container.html',
+  'widgets/library_individual/templates/loading-library.html'
 ],
 function (
   Marionette,

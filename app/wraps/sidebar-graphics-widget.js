@@ -1,5 +1,5 @@
 define([
-  'js/widgets/graphics/widget'
+  'widgets/graphics/widget'
 
 ], function (
   GraphicsWidget

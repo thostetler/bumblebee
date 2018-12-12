@@ -1,13 +1,13 @@
 define([
   'underscore',
   'marionette',
-  'js/widgets/base/base_widget',
-  'js/widgets/navbar/template/navbar.html',
-  'js/widgets/navbar/template/feedback.html',
-  'js/components/api_query_updater',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_targets',
+  'widgets/base/base_widget',
+  'widgets/navbar/template/navbar.html',
+  'widgets/navbar/template/feedback.html',
+  'components/api_query_updater',
+  'components/api_query',
+  'components/api_request',
+  'components/api_targets',
   'bootstrap'
 ], function (
   _,

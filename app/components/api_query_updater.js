@@ -15,7 +15,7 @@
  *
  */
 
-define(['underscore', 'js/components/api_query'], function (_, ApiQuery) {
+define(['underscore', 'components/api_query'], function (_, ApiQuery) {
   var ApiQueryUpdater = function (contextIdentifier, options) {
     if (!contextIdentifier || !_.isString(contextIdentifier)) {
       throw new Error('You must initialize the ApiQueryUpdater with a context (which is a string)');

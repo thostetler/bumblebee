@@ -5,9 +5,9 @@
  */
 define([
   'underscore',
-  'js/components/api_targets',
+  'components/api_targets',
   '../actions/index',
-  'js/widgets/config',
+  'widgets/config',
   'redux'
 ], function (_, ApiTargets, actions, config, Redux) {
   const {

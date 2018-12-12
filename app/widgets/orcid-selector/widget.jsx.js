@@ -8,8 +8,8 @@ define([
   'redux',
   './redux/configure-store',
   './redux/modules/orcid-selector-app',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
+  'components/api_query',
+  'widgets/base/base_widget',
   './containers/orcid-selector-container'
 ], function (
   _, Backbone, React, ReactRedux, ReactDOM, Redux, configureStore,
