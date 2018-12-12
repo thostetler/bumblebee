@@ -1,116 +1,149 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/js/apps/discovery/main.js',
-  output: {
-    filename: 'main.js',
-    path: path.join(__dirname, 'src/dist'),
-    publicPath: 'dist/'
-  },
   mode: 'development',
+  entry: {
+    main: path.resolve(__dirname, 'app/app.js')
+  },
+  output: {
+    filename: '[name].[contenthash:8].js',
+    path: path.resolve(__dirname, 'dist')
+  },
   devServer: {
-    contentBase: path.resolve(__dirname, 'src'),
-    compress: false,
-    port: 8000
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 8000,
+    proxy: {
+      '/v1': {
+        target: 'https://devapi.adsabs.harvard.edu',
+        changeOrigin: true
+      }
+    }
   },
   resolve: {
-    modules: ['node_modules'],
+    modules: [
+      'app', 'node_modules'
+    ],
     alias: {
-      'analytics': path.resolve(__dirname, 'src/js/components/analytics'),
-      'async': path.resolve(__dirname, 'src/libs/requirejs-plugins/async'),
-      'babel': path.resolve(__dirname, 'src/libs/requirejs-babel-plugin/babel-5.8.34.min'),
-      'backbone-validation': path.resolve(__dirname, 'src/libs/backbone-validation/backbone-validation'),
-      'backbone.stickit': path.resolve(__dirname, 'src/libs/backbone.stickit/backbone.stickit'),
-      'backbone.wreqr': path.resolve(__dirname, 'src/libs/backbone.wreqr/lib/backbone.wreqr'),
-      'backbone': path.resolve(__dirname, 'src/libs/backbone/backbone'),
-      'bootstrap': path.resolve(__dirname, 'src/libs/bootstrap/bootstrap'),
-      'cache': path.resolve(__dirname, 'src/libs/dsjslib/lib/Cache'),
-      'chai': path.resolve(__dirname, '../bower_components/chai/chai'),
-      'classnames': path.resolve(__dirname, '../bower_components/classnames/index'),
-      'clipboard': path.resolve(__dirname, 'src/libs/clipboard/clipboard'),
-      'config': path.resolve(__dirname, 'src/discovery.config'),
-      'create-react-class': path.resolve(__dirname, 'src/libs/create-react-class/index'),
-      'd3-cloud': path.resolve(__dirname, 'src/libs/d3-cloud/d3.layout.cloud'),
-      'd3': path.resolve(__dirname, 'src/libs/d3/d3'),
-      'discovery.vars': path.resolve(__dirname, 'src/discovery.vars'),
-      'enzyme': path.resolve(__dirname, 'src/libs/enzyme/enzyme'),
-      'es5-shim': path.resolve(__dirname, 'src/libs/es5-shim/es5-shim'),
-      'es6': path.resolve(__dirname, 'src/libs/requirejs-babel-plugin/es6'),
-      'filesaver': path.resolve(__dirname, 'src/libs/file-saver/index'),
-      'immutable': path.resolve(__dirname, 'src/libs/immutable/index'),
-      'jquery-querybuilder': path.resolve(__dirname, 'src/libs/jQuery-QueryBuilder/query-builder'),
-      'jquery-ui': path.resolve(__dirname, 'src/libs/jqueryui/jquery-ui'),
-      'jquery': path.resolve(__dirname, 'src/libs/jquery/jquery'),
-      'jsonpath': path.resolve(__dirname, 'src/libs/jsonpath/jsonpath'),
-      'main': path.resolve(__dirname, 'src/js/apps/discovery/main'),
-      'marionette': path.resolve(__dirname, 'src/libs/marionette/backbone.marionette'),
-      'mocha': path.resolve(__dirname, 'src/libs/mocha/mocha'),
-      // 'persist-js': path.resolve(__dirname, 'src/libs/persist-js/src/persist'),
-      'pubsub_service_impl': path.resolve(__dirname, 'src/js/services/default_pubsub'),
-      'react-bootstrap': path.resolve(__dirname, 'src/libs/react-bootstrap/index'),
-      'react-dom': path.resolve(__dirname, 'src/libs/react-dom/index'),
-      'react-prop-types': path.resolve(__dirname, 'src/libs/react-prop-types/index'),
-      'react-redux': path.resolve(__dirname, 'src/libs/react-redux/index'),
-      'react': path.resolve(__dirname, 'src/libs/react/index'),
-      'redux-immutable': path.resolve(__dirname, 'src/libs/redux-immutable/index'),
-      'redux-thunk': path.resolve(__dirname, 'src/libs/redux-thunk/index'),
-      'redux': path.resolve(__dirname, 'src/libs/redux/index'),
-      'reselect': path.resolve(__dirname, 'src/libs/reselect'),
-      'router': path.resolve(__dirname, 'src/js/apps/discovery/router'),
-      'select2': path.resolve(__dirname, 'src/libs/select2/'),
-      'sinon': path.resolve(__dirname, '../bower_components/sinon/index'),
-      'sprintf': path.resolve(__dirname, 'src/libs/sprintf/sprintf'),
-      'underscore': path.resolve(__dirname, 'src/libs/lodash/lodash.compat'),
-      'utils': path.resolve(__dirname, 'src/js/utils/'),
-      // 'moment': path.resolve(__dirname, 'src/libs/momentjs/moment'),
-      'handlebars': path.resolve(__dirname, 'node_modules/handlebars/dist/handlebars'),
-      'js/wraps': path.resolve(__dirname, 'src/js/wraps/'),
-      'js/apps': path.resolve(__dirname, 'src/js/apps/'),
-      'js/mixins': path.resolve(__dirname, 'src/js/mixins/'),
-      'js/components': path.resolve(__dirname, 'src/js/components/'),
-      'js/widgets': path.resolve(__dirname, 'src/js/widgets/'),
-      'js/page_managers': path.resolve(__dirname, 'src/js/page_managers/'),
-      'js/bugutils': path.resolve(__dirname, 'src/js/bugutils/'),
-      'js/modules': path.resolve(__dirname, 'src/js/modules/'),
-      'js/services': path.resolve(__dirname, 'src/js/services/'),
+      'discovery.vars': path.resolve(__dirname, 'app.config.js'),
+      'utils': path.resolve(__dirname, 'app/utils.js'),
+      'cache': 'dsjslib/lib/Cache.js',
+      'underscore': 'lodash/dist/lodash.compat.js',
+      'marionette': 'backbone.marionette',
+      'jsonpath': 'jsonpath/jsonpath.js'
     }
   },
   module: {
     rules: [
       {
         test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env']
+            presets: [ '@babel/preset-react', '@babel/preset-env' ]
           }
         }
       },
       {
         test: /\.html$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'handlebars-loader',
           options: {
-            helperDirs: path.join(__dirname, 'src/js/helpers/handlebars'),
-            partialDirs: path.join(__dirname, 'src'),
+            helperDirs: path.resolve(__dirname, 'app/helpers/handlebars'),
+            partialDirs: path.resolve(__dirname, 'app'),
             extensions: '.html'
           }
         }
+      },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'url-loader?limit=10000',
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        use: 'file-loader',
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('postcss-import'),
+                require('cssnano')({ preset: 'default' })
+              ]
+            }
+          },
+          'sass-loader'
+        ],
+      },
+      {
+        test: /\.(png|jp(e*)g|svg)$/,
+        use: [{
+            loader: 'url-loader',
+            options: {
+                limit: 8000, // Convert images < 8kb to base64 strings
+                name: 'img/[name].[hash:8].[ext]'
+            }
+        }]
       }
     ]
   },
   plugins: [
+    new webpack.HashedModuleIdsPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'template.html'
+    }),
     new webpack.ProvidePlugin({
-      _: 'underscore',
+      '_': 'underscore',
       'Backbone': 'backbone',
       'Marionette': 'marionette',
-      'd3': 'd3'
-    })
+      '$': 'jquery',
+      'jQuery': 'jquery',
+      'window.jQuery': 'jquery'
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css'
+    }),
+    new CopyWebpackPlugin([
+      { from: 'app/styles/img', to: 'img'}
+    ]),
+    // new WebpackCdnPlugin({
+    //   modules: [
+    //     { name: 'jquery', var: 'jQuery' }
+    //   ],
+    //   publicPath: '/node_modules'
+    // })
   ],
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            const pkgName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+            return `npm.${pkgName.replace('@', '')}`;
+          }
+        }
+      }
+    }
+  },
   node: {
-    fs: 'empty'
+    'fs': 'empty'
   }
 }
