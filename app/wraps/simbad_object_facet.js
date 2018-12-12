@@ -5,7 +5,7 @@ define([
   'components/solr_response',
   'widgets/facet/factory',
   'components/api_targets',
-  'analytics',
+  'components/analytics',
   'cache',
   'underscore',
   'widgets/facet/reducers'

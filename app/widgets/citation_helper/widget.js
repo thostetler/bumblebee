@@ -10,7 +10,7 @@ define([
   'bootstrap',
   'components/api_feedback',
   'components/api_targets',
-  'analytics'
+  'components/analytics'
 ], function (
   Marionette,
   BaseWidget,

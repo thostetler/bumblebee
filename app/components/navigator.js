@@ -19,7 +19,7 @@ define(['underscore',
   'mixins/dependon',
   'components/transition',
   'components/transition_catalog',
-  'analytics'
+  'components/analytics'
 ],
 function (
   _,

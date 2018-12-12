@@ -4,7 +4,7 @@ define([
   'components/api_request',
   'widgets/base/base_widget',
   'components/api_query_updater',
-  'analytics',
+  'components/analytics',
   'react',
   'react-dom',
   'react-redux',

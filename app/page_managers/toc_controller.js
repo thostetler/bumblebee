@@ -3,7 +3,7 @@ define([
   'marionette',
   './controller',
   './toc_widget',
-  'analytics'
+  'components/analytics'
 ],
 function (_, Marionette, BasicPageManagerController, TOCWidget, analytics) {
   /*

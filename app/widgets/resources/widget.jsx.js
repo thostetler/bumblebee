@@ -5,7 +5,7 @@ define([
   'react',
   'react-dom',
   'react-redux',
-  'analytics',
+  'components/analytics',
   'components/api_query',
   'widgets/base/base_widget',
   'mixins/link_generator_mixin',

@@ -5,7 +5,7 @@ define([
   'widgets/classic_form/form.html',
   'jquery-ui',
   'widgets/paper_search_form/topterms',
-  'analytics'
+  'components/analytics'
 ], function (
   BaseWidget,
   ApiQuery,

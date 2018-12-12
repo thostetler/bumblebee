@@ -21,7 +21,7 @@ define(['underscore',
   'components/api_query',
   'components/alerts',
   'utils',
-  'analytics'
+  'components/analytics'
 ],
 function (
   _,

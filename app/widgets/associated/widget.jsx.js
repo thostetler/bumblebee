@@ -5,7 +5,7 @@ define([
   'react',
   'react-dom',
   'react-redux',
-  'analytics',
+  'components/analytics',
   'components/api_query',
   'components/api_request',
   'components/api_targets',

@@ -18,7 +18,7 @@ define([
   'widgets/list_of_things/templates/error-view-template.html',
   'widgets/list_of_things/templates/initial-view-template.html',
   './item_view',
-  'analytics',
+  'components/analytics',
   'wraps/widget/loading/template.html'
 ],
 

@@ -19,7 +19,7 @@ require([
   'mixins/discovery_bootstrap',
   'mixins/api_access',
   '../../../modules.config',
-  'analytics',
+  'components/analytics',
   'es5-shim',
   '../../helpers/backbone-validation',
   '../../helpers/d3'

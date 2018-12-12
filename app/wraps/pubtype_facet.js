@@ -1,6 +1,6 @@
 define([
   'widgets/facet/factory',
-  'analytics'
+  'components/analytics'
 ], function (
   FacetFactory,
   analytics

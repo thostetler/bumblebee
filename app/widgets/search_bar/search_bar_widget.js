@@ -14,7 +14,7 @@ define([
   'bootstrap', // if bootstrap is missing, jQuery events get propagated
   'jquery-ui',
   'mixins/dependon',
-  'analytics',
+  'components/analytics',
   'components/query_validator',
   'select2/select2',
   'select2/matcher'

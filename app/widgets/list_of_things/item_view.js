@@ -5,7 +5,7 @@ define([
   'components/api_query',
   'widgets/base/base_widget',
   'widgets/list_of_things/templates/item-template.html',
-  'analytics'
+  'components/analytics'
 ],
 
 function (

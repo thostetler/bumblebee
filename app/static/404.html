@@ -15,14 +15,14 @@
           '//www.google-analytics.com/analytics',
           'data:application/javascript,'
         ],
-        'analytics': 'js/components/analytics',
+        'components/analytics': 'js/components/analytics',
         'jquery': '//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min'
       },
       shim: {
         'google-analytics': {
           exports: '__ga__'
         },
-        'analytics': {
+        'components/analytics': {
           deps: ['google-analytics']
         }
       },
@@ -42,7 +42,7 @@
         });
       }
     });
-    require(['analytics'], function (analytics) {
+    require(['components/analytics'], function (analytics) {
       analytics('send', 'pageview');
       analytics('send', 'event', 'error', 'automatic_redirection', '404.html');
     });

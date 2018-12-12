@@ -6,7 +6,7 @@ define([
   'widgets/base/base_widget',
   'widgets/recommender/templates/recommender_template.html',
   'bootstrap',
-  'analytics'
+  'components/analytics'
 ], function (
   Marionette,
   ApiQuery,

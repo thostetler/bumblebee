@@ -2,7 +2,7 @@
 define([
   'underscore',
   'backbone',
-  'analytics',
+  'components/analytics',
   'react',
   'react-redux',
   'react-dom',

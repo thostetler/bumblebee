@@ -7,7 +7,7 @@ define([
   'widgets/widget_states',
   'components/alerts',
   'components/api_response',
-  'analytics'
+  'components/analytics'
 ],
 
 function (
