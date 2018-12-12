@@ -1,7 +1,7 @@
 
 define([
   'react',
-  'react-prop-types'
+  'prop-types'
 ], function (React, PropTypes) {
   const SortApp = ({ setSort, setDirection, app }) => {
     const options = app.get('options');

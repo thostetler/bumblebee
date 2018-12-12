@@ -1,5 +1,4 @@
 define([
-  'marionette',
   'widgets/list_of_things/item_view',
   'widgets/list_of_things/widget',
   'widgets/list_of_things/paginated_view',
@@ -16,13 +15,11 @@ define([
   'components/api_targets',
   'mixins/add_stable_index_to_collection',
   'mixins/add_secondary_sort',
-  'bootstrap',
   'wraps/widget/loading/template.html',
-  'widgets/sort/widget.jsx',
+  'widgets/sort/widget',
   'widgets/sort/redux/modules/sort-app'
 
 ], function (
-  Marionette,
   DefaultItemView,
   ListOfThingsWidget,
   ListOfThingsPaginatedContainerView,
@@ -39,7 +36,6 @@ define([
   ApiTargets,
   PaginationMixin,
   SecondarySort,
-  Bootstrap,
   loadingTemplate,
   SortWidget,
   SortActions

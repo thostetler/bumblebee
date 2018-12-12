@@ -1,13 +1,9 @@
 define([
-  'marionette',
   'widgets/library_individual/templates/manage-permissions-container.html',
-  'widgets/library_individual/templates/make-public.html',
-  'bootstrap'
+  'widgets/library_individual/templates/make-public.html'
 ], function (
-  Marionette,
   ManagePermissionsContainer,
-  MakePublicTemplate,
-  Bootstrap
+  MakePublicTemplate
 ) {
   var PermissionsModel = Backbone.Model.extend({
 

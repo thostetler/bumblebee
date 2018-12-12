@@ -1,6 +1,4 @@
 define([
-  'marionette',
-  'd3',
   'components/api_targets',
   'mixins/user_change_rows',
   'components/api_request',
@@ -15,11 +13,9 @@ define([
   'widgets/network_vis/templates/not-enough-data-template.html',
   'widgets/network_vis/templates/network_metadata.html',
   'widgets/network_vis/templates/loading-template.html',
-  'widgets/network_vis/templates/default-details-template.html',
-  'bootstrap'
+  'widgets/network_vis/templates/default-details-template.html'
 ],
-function (Marionette,
-  d3,
+function (
   ApiTargets,
   UserChangeMixin,
   ApiRequest,

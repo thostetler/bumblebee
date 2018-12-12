@@ -1,24 +1,21 @@
 define([
-  'marionette',
   'widgets/network_vis/network_widget',
   'components/api_query_updater',
   'wraps/templates/paper-network-data.html',
   'wraps/templates/paper-network-container.html',
   'widgets/network_vis/templates/not-enough-data-template.html',
   'wraps/templates/paper-network-link-data.html',
-  'components/api_targets',
-  'bootstrap'
+  'components/api_targets'
 ],
 function (
-  Marionette,
   NetworkWidget,
   ApiQueryUpdater,
   GroupDataTemplate,
   ContainerTemplate,
   NotEnoughDataTemplate,
   LinkDataTemplate,
-  ApiTargets,
-  bs) {
+  ApiTargets
+) {
   var options = {};
 
   options.endpoint = ApiTargets.SERVICE_PAPER_NETWORK;

@@ -1,7 +1,7 @@
 
 
 define([
-  'react', 'react-prop-types'
+  'react', 'prop-types'
 ], function (React, ReactPropTypes) {
   const Closer = ({ onClick }) => {
     const handleClick = (e) => {

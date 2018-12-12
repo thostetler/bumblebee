@@ -3,12 +3,6 @@
  */
 
 define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'marionette',
-  'bootstrap',
-
   'components/api_query',
   'components/api_request',
   'components/api_response',
@@ -21,11 +15,6 @@ define([
   'widgets/green_button/templates/empty-view.html'
 ],
 function (
-  _,
-  $,
-  Backbone,
-  Marionette,
-  Bootstrap,
   ApiQuery,
   ApiRequest,
   ApiResponse,

@@ -1,13 +1,11 @@
 define([
   'page_managers/controller',
   'page_managers/one_column_view',
-  'wraps/orcid-instructions-page-manager/orcid-instructions.html',
-  'bootstrap'
+  'wraps/orcid-instructions-page-manager/orcid-instructions.html'
 ], function (
   PageManagerController,
   PageManagerView,
-  PageManagerTemplate,
-  Bootstrap
+  PageManagerTemplate
 ) {
   var PageManager = PageManagerController.extend({
 

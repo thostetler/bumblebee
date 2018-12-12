@@ -1,14 +1,11 @@
 define([
-  'marionette',
   'components/api_query',
   'components/api_targets',
   'components/api_request',
   'widgets/base/base_widget',
   'widgets/recommender/templates/recommender_template.html',
-  'bootstrap',
   'components/analytics'
 ], function (
-  Marionette,
   ApiQuery,
   ApiTargets,
   ApiRequest,

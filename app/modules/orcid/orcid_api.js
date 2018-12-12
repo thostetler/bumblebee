@@ -39,10 +39,6 @@
 
 
 define([
-  'underscore',
-  'bootstrap',
-  'jquery',
-  'backbone',
   'components/generic_module',
   'mixins/dependon',
   'components/pubsub_events',
@@ -57,10 +53,6 @@ define([
   'modules/orcid/profile'
 ],
 function (
-  _,
-  Bootstrap,
-  $,
-  Backbone,
   GenericModule,
   Mixins,
   PubSubEvents,

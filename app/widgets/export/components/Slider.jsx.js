@@ -2,7 +2,7 @@
 
 define([
   'react',
-  'react-prop-types'
+  'prop-types'
 ], function (React, ReactPropTypes) {
   const Slider = ({ count, setCount }) => (
     <div>

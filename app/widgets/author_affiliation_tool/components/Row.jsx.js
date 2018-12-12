@@ -1,8 +1,8 @@
 
 define([
   'react',
-  '../components/LastActiveDateRow.jsx',
-  '../components/AffiliationRow.jsx'
+  '../components/LastActiveDateRow',
+  '../components/AffiliationRow'
 ], function (React, LastActiveDateRow, AffiliationRow) {
   /**
    * Simple Row which contains the Affiliation and LastActiveDate sections

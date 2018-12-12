@@ -1,24 +1,18 @@
-define(['marionette',
-  'backbone',
-  'underscore',
+define([
   'components/api_request',
   'components/api_query',
   'widgets/base/base_widget',
   'widgets/query_info/query_info_template.html',
   'mixins/formatter',
-  'bootstrap',
   'components/api_feedback'
 ],
 
-function (Marionette,
-  Backbone,
-  _,
+function (
   ApiRequest,
   ApiQuery,
   BaseWidget,
   queryInfoTemplate,
   FormatMixin,
-  Bootstrap,
   ApiFeedback
 ) {
   var QueryModel = Backbone.Model.extend({

@@ -2,16 +2,10 @@
  * Created by alex on 5/12/14.
  */
 define([
-  'underscore',
-  'marionette',
-  'bootstrap',
   'widgets/tabs/templates/tabs_inner.html',
   'widgets/tabs/templates/tabs_outer.html',
   'widgets/tabs/templates/tabs_title.html'],
 function (
-  _,
-  Marionette,
-  Bootstrap,
   innerTemplate,
   outerTemplate,
   titleTemplate) {

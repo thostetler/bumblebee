@@ -2,7 +2,7 @@ define([
   'underscore',
   'react-redux',
   '../redux/modules/ui',
-  '../components/app.jsx'
+  '../components/app'
 ], function (_, ReactRedux, ui, App) {
   // actions
   const {

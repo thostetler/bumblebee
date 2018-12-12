@@ -2,7 +2,7 @@
 
 define([
   'react',
-  'react-prop-types'
+  'prop-types'
 ], function (React, ReactPropTypes) {
   const Setup = ({
     onApply, setFormat, disabled, onCancel, batchSize, hasMore, onReset,

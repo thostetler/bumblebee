@@ -1,6 +1,4 @@
 define([
-  'underscore',
-  'marionette',
   'widgets/base/base_widget',
   'widgets/navbar/template/navbar.html',
   'widgets/navbar/template/feedback.html',
@@ -8,18 +6,14 @@ define([
   'components/api_query',
   'components/api_request',
   'components/api_targets',
-  'bootstrap'
 ], function (
-  _,
-  Marionette,
   BaseWidget,
   NavBarTemplate,
   FeedbackTemplate,
   ApiQueryUpdater,
   ApiQuery,
   ApiRequest,
-  ApiTargets,
-  Bootstrap
+  ApiTargets
 ) {
   var NavView,
     NavModel,

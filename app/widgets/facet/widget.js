@@ -8,7 +8,7 @@ define([
   'react',
   'react-dom',
   'react-redux',
-  './facet-container.jsx',
+  './facet-container',
   './actions',
   './reducers',
   './create_store'

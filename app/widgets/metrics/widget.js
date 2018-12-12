@@ -1,7 +1,4 @@
 define([
-  'underscore',
-  'marionette',
-  'd3',
   'widgets/base/base_widget',
   './extractor_functions',
   'components/api_response',
@@ -15,15 +12,11 @@ define([
   'widgets/metrics/templates/citations_table.html',
   'widgets/metrics/templates/indices_table.html',
   'widgets/metrics/templates/reads_table.html',
-  'bootstrap',
   'components/api_feedback',
   'components/api_targets',
   './d3-tip',
   '../../helpers/d3'
 ], function (
-  _,
-  Marionette,
-  d3,
   BaseWidget,
   DataExtractor,
   ApiResponse,
@@ -37,7 +30,6 @@ define([
   CitationsTableTemplate,
   IndicesTableTemplate,
   ReadsTableTemplate,
-  bs,
   ApiFeedback,
   ApiTargets,
   d3Tip

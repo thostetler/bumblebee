@@ -5,7 +5,7 @@ define([
   'redux',
   'react-redux',
   '../redux/modules/orcid-selector-app',
-  '../components/orcid-selector-app.jsx'
+  '../components/orcid-selector-app'
 ], function (_, React, Redux, ReactRedux, actions, OrcidSelectorApp) {
   // actions
   const {

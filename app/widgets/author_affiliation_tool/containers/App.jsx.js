@@ -6,12 +6,12 @@ define([
   'react-redux',
   '../actions/index',
   '../constants/actionNames',
-  '../components/ExportFormatControl.jsx',
-  '../components/SelectionButtons.jsx',
-  '../components/Row.jsx',
-  '../components/Message.jsx',
-  '../components/Loading.jsx',
-  '../components/Closer.jsx',
+  '../components/ExportFormatControl',
+  '../components/SelectionButtons',
+  '../components/Row',
+  '../components/Message',
+  '../components/Loading',
+  '../components/Closer',
 ], function (
   _, React, Redux, ReactRedux, actions, ACTIONS,
   ExportFormatControl, SelectionButtons, Row, Message, Loading, Closer

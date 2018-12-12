@@ -2,7 +2,7 @@ define([
   'react',
   'react-redux',
   'underscore',
-  './toggle_list.jsx',
+  './toggle_list',
   './reducers',
   'create-react-class'
 ], function (

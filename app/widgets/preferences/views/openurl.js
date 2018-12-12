@@ -1,12 +1,8 @@
 define([
-  'marionette',
   'widgets/preferences/templates/openurl.html',
-  'bootstrap',
   'select2/select2'
 ], function (
-  Marionette,
   OpenURLTemplate,
-  Bootstrap,
   Select2
 ) {
   var OpenURLView = Marionette.ItemView.extend({

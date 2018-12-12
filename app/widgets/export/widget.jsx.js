@@ -11,7 +11,7 @@ define([
   'widgets/base/base_widget',
   './reducers/index',
   './actions/index',
-  './containers/App.jsx',
+  './containers/App',
   'components/api_query',
   'components/api_targets',
   'components/api_feedback',

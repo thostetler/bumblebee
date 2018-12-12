@@ -12,7 +12,7 @@ define([
   'components/api_query',
   'components/api_request',
   'widgets/base/base_widget',
-  './containers/App.jsx',
+  './containers/App',
   './constants/actionNames',
   './actions/index',
   './reducers/index'

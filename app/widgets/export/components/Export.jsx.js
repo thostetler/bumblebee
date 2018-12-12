@@ -1,7 +1,7 @@
 
 
 define([
-  'react', 'react-prop-types', './ClipboardBtn.jsx'
+  'react', 'prop-types', './ClipboardBtn'
 ], function (React, ReactPropTypes, ClipboardBtn) {
   const Export = ({
     output, isFetching, progress, onDownloadFile, onCopy

@@ -1,6 +1,4 @@
 define([
-  'underscore',
-  'marionette',
   'components/api_query',
   'widgets/base/base_widget',
   'widgets/search_bar/templates/search_bar_template.html',
@@ -11,7 +9,6 @@ define([
   'components/api_feedback',
   'mixins/formatter',
   './autocomplete',
-  'bootstrap', // if bootstrap is missing, jQuery events get propagated
   'jquery-ui',
   'mixins/dependon',
   'components/analytics',
@@ -20,8 +17,6 @@ define([
   'select2/matcher'
 ],
 function (
-  _,
-  Marionette,
   ApiQuery,
   BaseWidget,
   SearchBarTemplate,
@@ -32,7 +27,6 @@ function (
   ApiFeedback,
   FormatMixin,
   autocompleteArray,
-  bootstrap,
   jqueryUI,
   Dependon,
   analytics,

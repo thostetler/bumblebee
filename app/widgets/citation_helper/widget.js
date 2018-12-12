@@ -1,5 +1,4 @@
 define([
-  'marionette',
   'widgets/base/base_widget',
   'components/api_response',
   'components/json_response',
@@ -7,12 +6,10 @@ define([
   'components/api_query',
   'mixins/dependon',
   'widgets/citation_helper/templates/citation_helper_template.html',
-  'bootstrap',
   'components/api_feedback',
   'components/api_targets',
   'components/analytics'
 ], function (
-  Marionette,
   BaseWidget,
   ApiResponse,
   JsonResponse,
@@ -20,7 +17,6 @@ define([
   ApiQuery,
   Dependon,
   CitationHelperTemplate,
-  bs,
   ApiFeedback,
   ApiTargets,
   analytics

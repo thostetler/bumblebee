@@ -2,30 +2,20 @@
  * Created by alex on 5/19/14.
  */
 define([
-  'marionette',
-  'backbone',
-  'jquery',
-  'underscore',
   'cache',
   'widgets/base/base_widget',
   'widgets/abstract/templates/abstract_template.html',
   'components/api_query',
   'mixins/link_generator_mixin',
-  'mixins/papers_utils',
-  'bootstrap'
+  'mixins/papers_utils'
 ],
 function (
-  Marionette,
-  Backbone,
-  $,
-  _,
   Cache,
   BaseWidget,
   abstractTemplate,
   ApiQuery,
   LinkGeneratorMixin,
-  PapersUtils,
-  Bootstrap
+  PapersUtils
 ) {
   var MAX_COMMENTS = 3;
 

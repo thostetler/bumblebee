@@ -3,15 +3,10 @@
  */
 
 define([
-  'marionette',
-  'backbone',
   'widgets/base/base_widget',
-  'widgets/loading/loading-template.html',
-  'bootstrap'
+  'widgets/loading/loading-template.html'
 ],
 function (
-  Marionette,
-  Backbone,
   BaseWidget,
   loadingTemplate
 ) {

@@ -5,7 +5,7 @@ define([
   'redux',
   'react-redux',
   '../redux/modules/sort-app',
-  '../components/sort-app.jsx'
+  '../components/sort-app'
 ], function (_, React, Redux, ReactRedux, actions, SortApp) {
   // actions
   const {

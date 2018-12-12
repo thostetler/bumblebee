@@ -5,8 +5,7 @@ define([
   'widgets/library_import/templates/tab-container.html',
   'widgets/library_import/templates/import-view-labs.html',
   'widgets/library_import/templates/import-view-classic.html',
-  'widgets/library_import/templates/success-template.html',
-  'bootstrap'
+  'widgets/library_import/templates/success-template.html'
 
 ], function (BaseWidget,
   ApiRequest,
@@ -14,8 +13,7 @@ define([
   TabContainerTemplate,
   ADS2ImportView,
   ClassicImportView,
-  SuccessTemplate,
-  Bootstrap
+  SuccessTemplate
 ) {
   /* config vars */
 

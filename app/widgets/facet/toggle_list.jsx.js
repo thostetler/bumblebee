@@ -2,7 +2,7 @@ define([
   'react',
   'underscore',
   'd3',
-  'react-prop-types',
+  'prop-types',
   'create-react-class'
 ], function (
   React,

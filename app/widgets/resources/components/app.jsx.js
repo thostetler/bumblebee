@@ -1,7 +1,7 @@
 define([
   'underscore',
   'react',
-  'react-prop-types',
+  'prop-types',
 ], function (_, React, PropTypes) {
   // No Results View
   const NoResults = () => (

@@ -1,5 +1,4 @@
 define([
-  'marionette',
   'widgets/base/base_widget',
   'mixins/form_view_functions',
   'widgets/success/view',
@@ -9,10 +8,9 @@ define([
   'widgets/user_settings/templates/change_password.html',
   'widgets/user_settings/templates/delete_account.html',
   'backbone-validation',
-  'backbone.stickit',
-  'bootstrap'
+  'backbone.stickit'
 
-], function (Marionette,
+], function (
   BaseWidget,
   FormFunctions,
   SuccessView,
@@ -21,7 +19,7 @@ define([
   EmailTemplate,
   PasswordTemplate,
   DeleteAccountTemplate,
-  Bootstrap) {
+) {
   var passwordRegex = /(?=.*\d)(?=.*[a-zA-Z]).{5,}/;
 
   var FormView,

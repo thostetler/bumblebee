@@ -1,8 +1,4 @@
 define([
-  'jquery',
-  'backbone',
-  'marionette',
-  'd3',
   'components/api_request',
   'widgets/base/base_widget',
   'widgets/wordcloud/templates/wordcloud-template.html',
@@ -12,12 +8,8 @@ define([
   'components/api_query',
   'components/api_feedback',
   'jquery-ui',
-  'bootstrap',
   'd3-cloud'
-], function ($,
-  Backbone,
-  Marionette,
-  d3,
+], function (
   ApiRequest,
   BaseWidget,
   WordCloudTemplate,
