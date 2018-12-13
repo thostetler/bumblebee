@@ -600,19 +600,19 @@ define([
     },
 
     _getWidget: function (name, async) {
-      if (async) {
-        switch(name) {
-          case 'LandingPage': return this._loadLandingPage();
-          case 'ErrorPage': return this._loadErrorPage();
-          case 'DetailsPage': return this._loadAbstractPage();
-          case 'SearchPage': return this._loadSearchPage();
-          case 'AuthenticationPage': return this._loadAuthenticationPage();
-        }
-      }
+      // if (async && !this.hasWidget(name)) {
+      //   switch(name) {
+      //     case 'LandingPage': return this._loadLandingPage();
+      //     case 'ErrorPage': return this._loadErrorPage();
+      //     case 'DetailsPage': return this._loadAbstractPage();
+      //     case 'SearchPage': return this._loadSearchPage();
+      //     case 'AuthenticationPage': return this._loadAuthenticationPage();
+      //   }
+      // }
 
       var w = this._getOrCreateBarbarian('widget', name);
       this.__barbarianInstances['widget:' + name].counter++;
-      return w;
+      return $.Deferred().resolve(w).promise();
     },
 
     returnWidget: function (name) {
