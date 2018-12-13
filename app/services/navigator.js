@@ -4,7 +4,6 @@
 */
 
 define([
-  'underscore',
   'components/navigator',
   'components/api_feedback',
   'components/api_query_updater',
@@ -15,7 +14,6 @@ define([
 ],
 
 function (
-  _,
   Navigator,
   ApiFeedback,
   ApiQueryUpdater,
@@ -74,10 +72,9 @@ function (
 
       this.set('index-page', function () {
         this.route = '';
-        app.getObject('MasterPageManager').show('LandingPage', ['SearchWidget']).done(function () {
-          app.getWidget('LandingPage').done(function (widget) {
-            widget.setActive('SearchWidget');
-          });
+        app.getObject('MasterPageManager').show('LandingPage', ['SearchWidget']);
+        app.getWidget('LandingPage').done(function (widget) {
+          widget.setActive('SearchWidget');
         });
       });
 
@@ -304,56 +301,54 @@ function (
 
       this.set('results-page', function (widget, args) {
         var self = this;
-        app.getObject('MasterPageManager')
-          .show('SearchPage', searchPageAlwaysVisible).done(function () {
+        app.getObject('MasterPageManager').show('SearchPage', searchPageAlwaysVisible);
 
-            // allowing widgets to override appstorage query (so far only used for orcid redirect)
-            var q = app.getObject('AppStorage').getCurrentQuery();
-            if (q && q.get('__original_url')) {
-              var route = '#search/' + q.get('__original_url');
-              q.unset('__original_url');
-            } else {
-              var route = '#search/' + queryUpdater.clean(q).url();
-            }
+        // allowing widgets to override appstorage query (so far only used for orcid redirect)
+        var q = app.getObject('AppStorage').getCurrentQuery();
+        if (q && q.get('__original_url')) {
+          var route = '#search/' + q.get('__original_url');
+          q.unset('__original_url');
+        } else {
+          var route = '#search/' + queryUpdater.clean(q).url();
+        }
 
-            // update the pagination of the results widget
-            if (q instanceof ApiQuery) {
-              var update = {};
-              var par = function (str) {
-                if (_.isString(str)) {
-                  try {
-                    return parseInt(str);
-                  } catch (e) {
-                    // do nothing
-                  }
-                }
-                return false;
-              };
-
-              if (q.has('p_')) {
-                var page = par(q.get('p_')[0]);
-                update.page = page;
-              } else {
-                route += '&p_=0';
-              }
-
-              if (!_.isEmpty(update)) {
-                app.getWidget('Results').then(function (w) {
-                  if (_.isFunction(w.updatePagination)) {
-                    w.updatePagination(update);
-                  }
-                });
+        // update the pagination of the results widget
+        if (q instanceof ApiQuery) {
+          var update = {};
+          var par = function (str) {
+            if (_.isString(str)) {
+              try {
+                return parseInt(str);
+              } catch (e) {
+                // do nothing
               }
             }
+            return false;
+          };
 
-            // taking care of inserting bigquery key here, not sure if right place
-            // clean(q) above got rid of qid key, reinsert it
-            if (q && q.get('__qid')) {
-              route += ('&__qid=' + q.get('__qid')[0]);
-            }
-            self.route = route;
-            publishFeedback({ code: ApiFeedback.CODES.UNMAKE_SPACE });
-          });
+          if (q.has('p_')) {
+            var page = par(q.get('p_')[0]);
+            update.page = page;
+          } else {
+            route += '&p_=0';
+          }
+
+          if (!_.isEmpty(update)) {
+            app.getWidget('Results').then(function (w) {
+              if (_.isFunction(w.updatePagination)) {
+                w.updatePagination(update);
+              }
+            });
+          }
+        }
+
+        // taking care of inserting bigquery key here, not sure if right place
+        // clean(q) above got rid of qid key, reinsert it
+        if (q && q.get('__qid')) {
+          route += ('&__qid=' + q.get('__qid')[0]);
+        }
+        self.route = route;
+        publishFeedback({ code: ApiFeedback.CODES.UNMAKE_SPACE });
       });
 
       this.set('export', function (nav, options) {

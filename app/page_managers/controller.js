@@ -1,12 +1,10 @@
 define([
-  'jquery',
-  'underscore',
   'widgets/base/base_widget',
   './three_column_view',
   './view_mixin',
   'mixins/dependon'
 ],
-function ($, _,
+function (
   BaseWidget,
   ThreeColumnView,
   PageManagerViewMixin,

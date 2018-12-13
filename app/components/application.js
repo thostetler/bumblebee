@@ -612,7 +612,7 @@ define([
 
       var w = this._getOrCreateBarbarian('widget', name);
       this.__barbarianInstances['widget:' + name].counter++;
-      return $.Deferred().resolve(w).promise();
+      return w;
     },
 
     returnWidget: function (name) {
