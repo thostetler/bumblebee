@@ -1,5 +1,4 @@
 define([
-  'marionette',
   'components/api_query',
   'widgets/base/base_widget',
   './views/library_header',
@@ -8,7 +7,6 @@ define([
   'widgets/library_individual/templates/loading-library.html'
 ],
 function (
-  Marionette,
   ApiQuery,
   BaseWidget,
   HeaderView,
@@ -20,8 +18,6 @@ function (
     template: LoadingTemplate
   });
 
-
-  console.log('LIBRARY TEMPLATE', ContainerTemplate);
   var ContainerView = Marionette.LayoutView.extend({
 
     className: 'library-widget s-library-widget',

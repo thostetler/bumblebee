@@ -1,9 +1,7 @@
 define([
-  'jquery-ui',
   'widgets/facet/graph-facet/templates/graph.html'
 ],
 function (
-  $ui,
   FacetGraphTemplate
 ) {
   var ZoomableGraphView = Marionette.ItemView.extend({
@@ -52,10 +50,11 @@ function (
     },
 
     pulseApplyButton: function () {
+      var self = this;
       this.$('.apply').addClass('draw-attention-primary-faded');
       // this initiates an animation that lasts for 6 second
       setTimeout(function () {
-        this.$('.apply').removeClass('draw-attention-primary-faded');
+        self.$('.apply').removeClass('draw-attention-primary-faded');
       }, 2000);
     },
 

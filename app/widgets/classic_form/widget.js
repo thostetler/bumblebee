@@ -3,7 +3,6 @@ define([
   'components/api_query',
   'components/api_query_updater',
   'widgets/classic_form/form.html',
-  'jquery-ui',
   'widgets/paper_search_form/topterms',
   'components/analytics'
 ], function (
@@ -11,7 +10,6 @@ define([
   ApiQuery,
   ApiQueryUpdater,
   FormTemplate,
-  JQueryUI,
   AutocompleteData,
   analytics) {
   // for autocomplete

@@ -11,9 +11,7 @@ define([
   // list of possible alerts
   'components/alerts',
   './modal_view',
-  './page_top_alert',
-  'jquery',
-  'jquery-ui'
+  './page_top_alert'
 ],
 function (
   BaseWidget,
@@ -21,9 +19,7 @@ function (
   Alerts,
   ApiFeedback,
   ModalView,
-  BannerView,
-  $,
-  $ui
+  BannerView
 ) {
   var AlertModel = Backbone.Model.extend({
     defaults: {

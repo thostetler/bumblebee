@@ -15,7 +15,7 @@ define([
   'components/api_feedback',
   'components/api_targets',
   './d3-tip',
-  '../../helpers/d3'
+  'helpers/d3'
 ], function (
   BaseWidget,
   DataExtractor,

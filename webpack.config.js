@@ -19,7 +19,7 @@ module.exports = {
     port: 8000,
     proxy: {
       '/v1': {
-        target: 'https://devapi.adsabs.harvard.edu',
+        target: 'https://api.adsabs.harvard.edu',
         changeOrigin: true
       }
     }

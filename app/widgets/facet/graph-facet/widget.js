@@ -1,12 +1,10 @@
 define([
-  'underscore',
   'components/api_query',
   'components/api_request',
   'widgets/base/base_widget',
   'components/api_query_updater'
 ],
 function (
-  _,
   ApiQuery,
   ApiRequest,
   BaseWidget,

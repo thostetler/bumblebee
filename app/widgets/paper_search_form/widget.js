@@ -3,15 +3,13 @@ define([
   'components/api_query',
   'components/api_feedback',
   'widgets/paper_search_form/form.html',
-  './topterms',
-  'jquery-ui'
+  './topterms'
 ], function (
   BaseWidget,
   ApiQuery,
   ApiFeedback,
   FormTemplate,
-  AutocompleteData,
-  JQueryUI
+  AutocompleteData
 ) {
   var FormModel = Backbone.Model.extend({
 
