@@ -7,10 +7,6 @@ lib-cov
 *.pid
 *.gz
 
-# Generated SCSS Files
-_*
-bootstrap
-
 pids
 logs
 
