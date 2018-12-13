@@ -4,7 +4,7 @@ define([
   '../models/authorAffiliation',
   '../constants/actionNames',
   'file-saver'
-], function (_, authorAffiliation, ACTIONS, FileSaver) {
+], function (_, authorAffiliation, ACTIONS, saveAs) {
   /**
    * Format the data into something the server will accept
    *
@@ -451,7 +451,7 @@ define([
         } else {
           res.blob().then(b => {
             try {
-              FileSaver.saveAs(b, `authorAffiliations.${file.ext}`)
+              saveAs(b, `authorAffiliations.${file.ext}`)
 
               // show a message about successful download
               dispatch(actions.showMessage('success', 'Export Successful!'));

@@ -1,6 +1,4 @@
 define([
-  'd3',
-  'marionette',
   'widgets/base/base_widget',
   'components/api_request',
   'widgets/bubble_chart/templates/container.html',
@@ -9,8 +7,6 @@ define([
   'components/api_query_updater',
   'components/api_query'
 ], function (
-  d3,
-  Marionette,
   BaseWidget,
   ApiRequest,
   ContainerTemplate,

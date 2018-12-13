@@ -6,9 +6,7 @@ define([
   'components/api_targets',
   'components/api_query_updater',
   'components/api_query',
-  'components/api_feedback',
-  'jquery-ui',
-  'd3-cloud'
+  'components/api_feedback'
 ], function (
   ApiRequest,
   BaseWidget,

@@ -3,15 +3,9 @@
 //
 // Tooltips for d3.js SVG visualizations
 
-(function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module with d3 as a dependency.
-    define(['d3'], factory);
-  } else {
-    // Browser global.
-    factory(root.d3);
-  }
-}(this, function (d3) {
+define([], function () {
+  var d3 = window.d3;
+
   // Public - contructs a new tooltip
   //
   // Returns a tip
@@ -288,4 +282,4 @@
     return tip;
   };
   return d3.tip;
-}));
+});

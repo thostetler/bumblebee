@@ -4,9 +4,6 @@
 */
 
 define([
-  'jquery',
-  'backbone',
-  'underscore',
   'components/navigator',
   'components/api_feedback',
   'components/api_query_updater',
@@ -14,14 +11,11 @@ define([
   'components/api_query',
   'components/api_request',
   'components/api_targets',
-  '../../../404.html',
+  'static/404.html',
   'apps/discovery/templates/orcid-modal-template.html'
 ],
 
 function (
-  $,
-  Backbone,
-  _,
   Navigator,
   ApiFeedback,
   ApiQueryUpdater,

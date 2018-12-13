@@ -13,8 +13,9 @@ define([
   'mixins/dependon',
   'components/analytics',
   'components/query_validator',
-  'select2/select2',
-  'select2/matcher'
+  'select2/src/js/select2/compat/matcher',
+  'jquery-ui/ui/widgets/autocomplete',
+  'select2'
 ],
 function (
   ApiQuery,
@@ -31,7 +32,6 @@ function (
   Dependon,
   analytics,
   QueryValidator,
-  select2,
   oldMatcher
 ) {
   $.fn.getCursorPosition = function () {

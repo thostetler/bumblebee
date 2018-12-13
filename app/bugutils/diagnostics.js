@@ -8,18 +8,14 @@
  */
 
 define([
-  'jquery',
-  'underscore',
   'components/api_query',
   'components/api_request',
   'components/api_response',
   'mixins/dependon',
   'components/generic_module',
-  'sprintf',
+  'sprintf-js',
   'components/api_targets'
 ], function (
-  $,
-  _,
   ApiQuery,
   ApiRequest,
   ApiResponse,

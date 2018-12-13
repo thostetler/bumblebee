@@ -1,9 +1,8 @@
 define([
   'widgets/preferences/templates/openurl.html',
-  'select2/select2'
+  'select2'
 ], function (
-  OpenURLTemplate,
-  Select2
+  OpenURLTemplate
 ) {
   var OpenURLView = Marionette.ItemView.extend({
 

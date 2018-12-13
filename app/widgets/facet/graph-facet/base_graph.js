@@ -1,12 +1,8 @@
-define(['marionette',
-  'd3',
-  'jquery',
+define([
   'jquery-ui',
   'widgets/facet/graph-facet/templates/graph.html'
 ],
-function (Marionette,
-  d3,
-  $,
+function (
   $ui,
   FacetGraphTemplate
 ) {

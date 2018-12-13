@@ -1,5 +1,5 @@
 // d3/d3-cloud don't like to load normally from a CDN
-require(['d3', 'd3-cloud'], function(d3, cloud) {
+define([], function() {
   var g = window;
   if (!g.d3) {
     g.d3 = d3;

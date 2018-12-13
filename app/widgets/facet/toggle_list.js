@@ -1,13 +1,9 @@
 define([
   'react',
-  'underscore',
-  'd3',
   'prop-types',
   'create-react-class'
 ], function (
-  React,
-  _,
-  d3, PropTypes, createReactClass
+  React, PropTypes, createReactClass
 ) {
   // putting FacetCheckbox and ToggleList in one file
   // since requirejs forbids circular imports and they import eachother
