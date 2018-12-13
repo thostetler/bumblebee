@@ -119,7 +119,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'app/styles/img', to: 'img' }
-    ])
+    ]),
   ],
   optimization: {
     runtimeChunk: 'single',

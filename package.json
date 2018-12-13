@@ -41,7 +41,6 @@
     "file-saver": "2.0.0",
     "handlebars": "4.0.12",
     "handlebars-loader": "1.7.0",
-    "imagemin-webpack-plugin": "2.3.0",
     "immutable": "4.0.0-rc.12",
     "jquery-ui": "1.12.1",
     "jsonpath": "1.0.0",
