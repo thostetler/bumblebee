@@ -4,28 +4,25 @@
 */
 
 define([
+  'underscore',
   'components/navigator',
   'components/api_feedback',
   'components/api_query_updater',
-  'components/json_response',
   'components/api_query',
   'components/api_request',
   'components/api_targets',
-  'static/404.html',
-  'apps/discovery/templates/orcid-modal-template.html'
+  './templates/orcid-modal.html'
 ],
 
 function (
+  _,
   Navigator,
   ApiFeedback,
   ApiQueryUpdater,
-  JsonResponse,
   ApiQuery,
   ApiRequest,
   ApiTargets,
-  ErrorTemplate,
   OrcidModalTemplate
-
 ) {
   var NavigatorService = Navigator.extend({
 
@@ -76,11 +73,12 @@ function (
       }
 
       this.set('index-page', function () {
-        app.getObject('MasterPageManager').show('LandingPage', ['SearchWidget']);
-        app.getWidget('LandingPage').done(function (widget) {
-          widget.setActive('SearchWidget');
-        });
         this.route = '';
+        app.getObject('MasterPageManager').show('LandingPage', ['SearchWidget']).done(function () {
+          app.getWidget('LandingPage').done(function (widget) {
+            widget.setActive('SearchWidget');
+          });
+        });
       });
 
       this.set('SearchWidget', function () {
@@ -296,63 +294,66 @@ function (
         } else {
           this.route = '#user/account/' + subView;
           app.getObject('MasterPageManager').show('AuthenticationPage',
-            ['Authentication']);
-          app.getWidget('Authentication').done(function (w) {
-            w.setSubView(subView);
-          });
+            ['Authentication']).done(function () {
+              app.getWidget('Authentication').done(function (w) {
+                w.setSubView(subView);
+              });
+            });
         }
       });
 
       this.set('results-page', function (widget, args) {
-        app.getObject('MasterPageManager').show('SearchPage',
-          searchPageAlwaysVisible);
-        // allowing widgets to override appstorage query (so far only used for orcid redirect)
-        var q = app.getObject('AppStorage').getCurrentQuery();
-        if (q && q.get('__original_url')) {
-          var route = '#search/' + q.get('__original_url');
-          q.unset('__original_url');
-        } else {
-          var route = '#search/' + queryUpdater.clean(q).url();
-        }
+        var self = this;
+        app.getObject('MasterPageManager')
+          .show('SearchPage', searchPageAlwaysVisible).done(function () {
 
-        // update the pagination of the results widget
-        if (q instanceof ApiQuery) {
-          var update = {};
-          var par = function (str) {
-            if (_.isString(str)) {
-              try {
-                return parseInt(str);
-              } catch (e) {
-                // do nothing
+            // allowing widgets to override appstorage query (so far only used for orcid redirect)
+            var q = app.getObject('AppStorage').getCurrentQuery();
+            if (q && q.get('__original_url')) {
+              var route = '#search/' + q.get('__original_url');
+              q.unset('__original_url');
+            } else {
+              var route = '#search/' + queryUpdater.clean(q).url();
+            }
+
+            // update the pagination of the results widget
+            if (q instanceof ApiQuery) {
+              var update = {};
+              var par = function (str) {
+                if (_.isString(str)) {
+                  try {
+                    return parseInt(str);
+                  } catch (e) {
+                    // do nothing
+                  }
+                }
+                return false;
+              };
+
+              if (q.has('p_')) {
+                var page = par(q.get('p_')[0]);
+                update.page = page;
+              } else {
+                route += '&p_=0';
+              }
+
+              if (!_.isEmpty(update)) {
+                app.getWidget('Results').then(function (w) {
+                  if (_.isFunction(w.updatePagination)) {
+                    w.updatePagination(update);
+                  }
+                });
               }
             }
-            return false;
-          };
 
-          if (q.has('p_')) {
-            var page = par(q.get('p_')[0]);
-            update.page = page;
-          } else {
-            route += '&p_=0';
-          }
-
-          if (!_.isEmpty(update)) {
-            app.getWidget('Results').then(function (w) {
-              if (_.isFunction(w.updatePagination)) {
-                w.updatePagination(update);
-              }
-            });
-          }
-        }
-
-        // taking care of inserting bigquery key here, not sure if right place
-        // clean(q) above got rid of qid key, reinsert it
-        if (q && q.get('__qid')) {
-          route += ('&__qid=' + q.get('__qid')[0]);
-        }
-
-        this.route = route;
-        publishFeedback({ code: ApiFeedback.CODES.UNMAKE_SPACE });
+            // taking care of inserting bigquery key here, not sure if right place
+            // clean(q) above got rid of qid key, reinsert it
+            if (q && q.get('__qid')) {
+              route += ('&__qid=' + q.get('__qid')[0]);
+            }
+            self.route = route;
+            publishFeedback({ code: ApiFeedback.CODES.UNMAKE_SPACE });
+          });
       });
 
       this.set('export', function (nav, options) {
