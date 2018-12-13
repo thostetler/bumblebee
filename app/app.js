@@ -9,7 +9,7 @@ define([
 
   Application.prototype.shim();
   const app = window.app = new (Application.extend(Bootstrapper))({
-    debug: true,
+    debug: false,
     timeout: 30000
   });
 
@@ -58,6 +58,19 @@ define([
   app.bootstrap().done(function (config) {
     app.onBootstrap(config);
     publish(pb.APP_BOOTSTRAPPED);
+  });
+
+  $('body').on('click', 'button.toggle-menu', function (e) {
+    var $button = $(e.target),
+      $sidebar = $button.parents().eq(1).find('.nav-container');
+
+    $sidebar.toggleClass('show');
+    var text = $sidebar.hasClass('show') ? '  <i class="fa fa-close"></i> Close Menu' : ' <i class="fa fa-bars"></i> Show Menu';
+    $button.html(text);
+  });
+
+  $('body').on('click', '#skip-to-main-content', function (e) {
+    e.preventDefault();
   });
 
   console.log(app);

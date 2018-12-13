@@ -290,12 +290,10 @@ function (
           self.get('index-page').execute();
         } else {
           this.route = '#user/account/' + subView;
-          app.getObject('MasterPageManager').show('AuthenticationPage',
-            ['Authentication']).done(function () {
-              app.getWidget('Authentication').done(function (w) {
-                w.setSubView(subView);
-              });
-            });
+          app.getObject('MasterPageManager').show('AuthenticationPage',['Authentication']);
+          app.getWidget('Authentication').done(function (w) {
+            w.setSubView(subView);
+          });
         }
       });
 

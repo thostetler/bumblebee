@@ -34,7 +34,8 @@ module.exports = {
       'cache': 'dsjslib/lib/Cache.js',
       'underscore': 'lodash',
       'marionette': 'backbone.marionette',
-      'jsonpath': 'jsonpath/jsonpath.js'
+      'jsonpath': 'jsonpath/jsonpath.js',
+      'jquery': 'jquery-ui/external/jquery/jquery.js'
     }
   },
   module: {
@@ -117,14 +118,8 @@ module.exports = {
       chunkFilename: '[id].[hash].css'
     }),
     new CopyWebpackPlugin([
-      { from: 'app/styles/img', to: 'img'}
-    ]),
-    // new WebpackCdnPlugin({
-    //   modules: [
-    //     { name: 'jquery', var: 'jQuery' }
-    //   ],
-    //   publicPath: '/node_modules'
-    // })
+      { from: 'app/styles/img', to: 'img' }
+    ])
   ],
   optimization: {
     runtimeChunk: 'single',

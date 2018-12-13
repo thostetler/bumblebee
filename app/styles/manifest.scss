@@ -1,14 +1,14 @@
-$fa-font-path: './vendor/fa-fonts';  // for referencing Bootstrap CDN font files directly
+$fa-font-path: './vendor/fa/fonts';  // for referencing Bootstrap CDN font files directly
 
-@import '~font-awesome/scss/font-awesome.scss';
+@import './vendor/fa/scss/font-awesome';
 @import './vendor/jquery-ui.theme.min.css';
-@import '~select2/src/scss/core.scss';
+@import './vendor/select2/scss/core.scss';
 
 /* Bootstrap Customizations */
 @import 'ads-sass/bootstrap-variables';
 
 /* Import Bootstrap source */
-@import './vendor/bootstrap/bootstrap';
+@import './vendor/bootstrap/_bootstrap';
 
 /* Import stuff that should be accessible by modules below */
 @import 'ads-sass/ads-variables';
