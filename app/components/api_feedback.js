@@ -62,7 +62,7 @@ function (_, Backbone, Hardened) {
     },
     setCode: function (c) {
       if (!(_codes[c])) {
-        throw new Error('This code is not in the list ApiCodes - please extend js/components/api_feedback first:', this.code);
+        throw new Error('This code is not in the list ApiCodes - please extend components/api_feedback first:', this.code);
       }
       this.code = c;
     },

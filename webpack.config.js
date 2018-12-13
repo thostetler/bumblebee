@@ -32,7 +32,7 @@ module.exports = {
       'discovery.vars': path.resolve(__dirname, 'app.config.js'),
       'utils': path.resolve(__dirname, 'app/utils.js'),
       'cache': 'dsjslib/lib/Cache.js',
-      'underscore': 'lodash/dist/lodash.compat.js',
+      'underscore': 'lodash',
       'marionette': 'backbone.marionette',
       'jsonpath': 'jsonpath/jsonpath.js'
     }

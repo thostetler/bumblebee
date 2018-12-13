@@ -1,13 +1,7 @@
 define([
-  'underscore',
-  'jquery-ui',
-  'jquery'
+  'jquery-ui/ui/widgets/datepicker'
 ],
-function (
-  _,
-  $ui,
-  $
-) {
+function ($DatePicker) {
   var Utils = {
     /**
      * Receives the  ISO8601 date string (actually, browsers will be able to parse
@@ -88,7 +82,7 @@ function (
       // is just UTC+local offset); but it will display things as UTC; confused? ;-)
       localDatePretendingToBeUtc = new Date(utc.getTime() + utc.getTimezoneOffset() * 60000);
 
-      return $.datepicker.formatDate(formatToUse, localDatePretendingToBeUtc);
+      return $DatePicker.formatDate(formatToUse, localDatePretendingToBeUtc);
     },
 
     shortenAbstract: function (abs, maxLen) {

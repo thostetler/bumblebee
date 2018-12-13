@@ -184,7 +184,7 @@
                 <div class="btn-group">
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
                             aria-expanded="false" {{#if orcid.error}}title="{{orcid.error}}"{{/if}}>
-                        <img src="../../styles/img/orcid-active.svg" alt="orcid logo active" class="s-orcid-img"/> Actions <span class="caret"></span>
+                        <img src="img/orcid-active.svg" alt="orcid logo active" class="s-orcid-img"/> Actions <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         {{#each orcid.actions}}
@@ -217,13 +217,13 @@
 
             {{#if bibcode}}
             <button class="btn {{#if orcid.error}}btn-danger{{else}}btn-default{{/if}} btn-sm orcid-action {{orcid.actions.add.action}}"  data-action="{{orcid.actions.add.action}}" {{#if orcid.error}}title="{{orcid.error}}"{{/if}}>
-               <img src="../../styles/img/orcid-inactive.svg" alt="orcid logo inactive" class="s-orcid-img" title="{{orcid.actions.add.caption}}"/>
+               <img src="img/orcid-inactive.svg" alt="orcid logo inactive" class="s-orcid-img" title="{{orcid.actions.add.caption}}"/>
                 Claim in ORCID
             </button>
             {{else}}
             <div class="panel panel-default" style="box-shadow: none">
                 <div class="panel-body">
-                    <img src="../../styles/img/orcid-inactive.svg" alt="orcid logo inactive" class="s-orcid-img" title=""/>
+                    <img src="img/orcid-inactive.svg" alt="orcid logo inactive" class="s-orcid-img" title=""/>
                     Record not known to ADS
                 </div>
             </div>

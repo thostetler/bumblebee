@@ -1,18 +1,12 @@
 define([
   'jquery',
   'underscore',
-  'marionette',
-  'page_managers/templates/results-page-layout.html',
-  'page_managers/templates/results-control-row.html',
   'widgets/base/base_widget',
   './three_column_view',
   './view_mixin',
   'mixins/dependon'
 ],
 function ($, _,
-  Marionette,
-  pageTemplate,
-  controlRowTemplate,
   BaseWidget,
   ThreeColumnView,
   PageManagerViewMixin,

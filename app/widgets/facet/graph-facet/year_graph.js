@@ -1,14 +1,11 @@
 define([
   './base_graph',
   'widgets/facet/graph-facet/templates/year-graph-legend.html',
-  'marionette',
-  'jquery-ui'
+  'jquery-ui/ui/widgets/slider'
 ],
 function (
   BaseGraphView,
-  legendTemplate,
-  Marionette,
-  $ui
+  legendTemplate
 ) {
   var YearGraphView = BaseGraphView.extend({
 

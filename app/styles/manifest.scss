@@ -8,7 +8,7 @@ $fa-font-path: './vendor/fa-fonts';  // for referencing Bootstrap CDN font files
 @import 'ads-sass/bootstrap-variables';
 
 /* Import Bootstrap source */
-@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import './vendor/bootstrap/bootstrap';
 
 /* Import stuff that should be accessible by modules below */
 @import 'ads-sass/ads-variables';

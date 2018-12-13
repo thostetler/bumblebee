@@ -65,7 +65,7 @@ define([
               </div>
               <div className="text-center">
                 <img
-                  src="../../styles/img/orcid-active.svg"
+                  src="img/orcid-active.svg"
                   alt="orcid logo active"
                   className="s-orcid-img"
                   aria-hidden="true"

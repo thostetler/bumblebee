@@ -12,9 +12,7 @@
  * one-to-one relation between router<->navigator
  */
 
-define(['underscore',
-  'jquery',
-  'cache',
+define([
   'components/generic_module',
   'mixins/dependon',
   'components/transition',
@@ -22,9 +20,6 @@ define(['underscore',
   'components/analytics'
 ],
 function (
-  _,
-  $,
-  Cache,
   GenericModule,
   Mixins,
   Transition,

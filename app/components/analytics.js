@@ -74,7 +74,6 @@ define([
   qa.l = Date.now();
   qa('create', config.googleTrackingCode || '', config.googleTrackingOptions);
 
-
   // event handler
   var ga = window[window.GoogleAnalyticsObject];
   window[window.GoogleAnalyticsObject] = function () {

@@ -1,10 +1,7 @@
 
 
 define([
-  'underscore',
-  'jquery',
   'components/generic_module',
-  'components/api_request',
   'mixins/dependon',
   'components/api_response',
   'components/api_query',
@@ -14,10 +11,7 @@ define([
   'moment'
 ],
 function (
-  _,
-  $,
   GenericModule,
-  ApiRequest,
   Mixin,
   ApiResponse,
   ApiQuery,

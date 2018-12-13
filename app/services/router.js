@@ -1,6 +1,5 @@
 define([
   'underscore',
-  'jquery',
   'backbone',
   'components/api_query',
   'mixins/dependon',
@@ -9,11 +8,9 @@ define([
   'components/api_targets',
   'mixins/api_access',
   'components/api_query_updater'
-
 ],
 function (
   _,
-  $,
   Backbone,
   ApiQuery,
   Dependon,

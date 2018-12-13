@@ -1,17 +1,17 @@
 define([
   'react',
   'react-redux',
-  'underscore',
   './toggle_list',
   './reducers',
-  'create-react-class'
+  'create-react-class',
+  'react-addons-css-transition-group'
 ], function (
   React,
   ReactRedux,
-  _,
   ToggleList,
   Reducers,
-  createReactClass
+  createReactClass,
+  ReactCSSTransitionGroup
 ) {
   function mapStateToProps(state, ownProps) {
     return {
@@ -82,9 +82,9 @@ define([
 
       return (
           <div className='facet__container'>
-            <React.addons.CSSTransitionGroup transitionName='swoop' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+            <ReactCSSTransitionGroup transitionName='swoop' transitionEnterTimeout={300} transitionLeaveTimeout={300}>
               { this.createDropdown() }
-            </React.addons.CSSTransitionGroup>
+            </ReactCSSTransitionGroup>
 
             <ToggleList
                 reduxState = { this.props.reduxState }

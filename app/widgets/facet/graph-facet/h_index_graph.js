@@ -3,13 +3,12 @@
 define(['./base_graph',
   'widgets/facet/graph-facet/templates/h-index-graph-legend.html',
   'widgets/facet/graph-facet/templates/h-index-slider-window.html',
-  'marionette'
-],
-
-function (BaseGraphView,
+  'jquery-ui/ui/widgets/slider'
+], function (
+  BaseGraphView,
   legendTemplate,
   sliderWindowTemplate,
-  Marionette) {
+) {
   var HIndexGraphView = BaseGraphView.extend({
 
     legendTemplate: legendTemplate,

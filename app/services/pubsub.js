@@ -3,14 +3,12 @@
  */
 
 define([
+  'underscore',
   'mixins/hardened',
   'services/default_pubsub',
   'components/pubsub_events'
-], function (
-  Hardened,
-  PubSubImplementation,
-  PubSubEvents
-) {
+],
+  function (_, Hardened, PubSubImplementation, PubSubEvents) {
     var PubSub = PubSubImplementation.extend({
 
     /*
