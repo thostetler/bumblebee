@@ -82,12 +82,8 @@ function ($, _,
           return;
         }
 
-        var widget = app._getWidget(widgetName);
-        if (this.persistentWidgets && this.persistentWidgets.indexOf(widgetName) > -1) {
-          // this increments the counter so the widget won't be de-referenced when this
-          // page manager is disassembled
-          app._getWidget(widgetName);
-        }
+        var persist = this.persistentWidgets && this.persistentWidgets.indexOf(widgetName) > -1;
+        var widget = app._getWidget(widgetName, persist);
 
         if (widget) {
           // maybe it is a page-manager (this is a security hole though!)

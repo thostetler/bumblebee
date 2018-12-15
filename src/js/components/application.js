@@ -470,9 +470,9 @@ define([
       return defer.promise();
     },
 
-    _getWidget: function (name) {
+    _getWidget: function (name, persist) {
       var w = this._getOrCreateBarbarian('widget', name);
-      this.__barbarianInstances['widget:' + name].counter++;
+      this.__barbarianInstances['widget:' + name].counter += (persist ? 2 : 1);
       return w;
     },
 
