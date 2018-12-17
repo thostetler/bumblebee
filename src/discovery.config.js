@@ -1,3 +1,5 @@
+window.GoogleAnalyticsObject = '__ga__';
+
 // Main config file for the Discovery application
 require.config({
   // Initialize the application with the main application file or if we run
@@ -140,220 +142,220 @@ require.config({
     }
   },
 
-  bundles: {
-    "common.bundle": [
-      "jquery",
-      "./discovery.config",
-      "js/apps/discovery/main",
-      "analytics",
-      "router",
-      "cache",
-      "es6",
-      "hbs",
-      "immutable",
-      "jquery-querybuilder",
-      "redux-immutable",
-      "babel",
-      "utils"
-    ],
-    "core.bundle": [
-      "js/wraps/discovery_mediator",
-      "js/components/query_mediator",
-      "js/bugutils/diagnostics",
-      "js/wraps/alerts_mediator",
-      "js/modules/orcid/module",
-      "js/services/api",
-      "js/services/pubsub",
-      "js/apps/discovery/navigator",
-      "js/services/storage",
-      "js/components/history_manager",
-      "js/components/user",
-      "js/components/session",
-      "discovery.vars",
-      "js/page_managers/master",
-      "js/components/app_storage",
-      "js/components/recaptcha_manager",
-      "js/components/csrf_manager",
-      "js/components/library_controller",
-      "js/components/doc_stash_controller",
-      "js/widgets/facet/factory"
-    ],
-    "wraps.bundle": [
-      "js/wraps/abstract_page_library_add/widget",
-      "js/wraps/abstract_page_manager/abstract_page_manager",
-      "js/wraps/affiliation_facet",
-      "js/wraps/alerts_mediator",
-      "js/wraps/authentication_page_manager",
-      "js/wraps/author_facet",
-      "js/wraps/author_network",
-      "js/wraps/bibgroup_facet",
-      "js/wraps/bibstem_facet",
-      "js/wraps/citations",
-      "js/wraps/coreads",
-      "js/wraps/data_facet",
-      "js/wraps/database_facet",
-      "js/wraps/discovery_mediator",
-      "js/wraps/error_page_manager/error_page_manager",
-      "js/wraps/export_dropdown",
-      "js/wraps/grants_facet",
-      "js/wraps/graph_tabs",
-      "js/wraps/home_page_manager/home_page_manager",
-      "js/wraps/keyword_facet",
-      "js/wraps/landing_page_manager/landing_page_manager",
-      "js/wraps/libraries_page_manager/libraries_page_manager",
-      "js/wraps/ned_object_facet",
-      "js/wraps/orcid-instructions-page-manager/manager",
-      "js/wraps/orcid_page_manager",
-      "js/wraps/orcid_page_manager/orcid_page_manager",
-      "js/wraps/paper_export",
-      "js/wraps/paper_metrics",
-      "js/wraps/paper_network",
-      "js/wraps/public_libraries_page_manager/public_libraries_manager",
-      "js/wraps/pubtype_facet",
-      "js/wraps/refereed_facet",
-      "js/wraps/references",
-      "js/wraps/results_page_manager",
-      "js/wraps/sidebar-graphics-widget",
-      "js/wraps/simbad_object_facet",
-      "js/wraps/table_of_contents",
-      "js/wraps/user_settings_page_manager/user_page_manager",
-      "js/wraps/visualization_dropdown",
-      "js/wraps/vizier_facet"
-    ],
-    "mixins.bundle": [
-      "js/mixins/add_secondary_sort",
-      "js/mixins/add_stable_index_to_collection",
-      "js/mixins/api_access",
-      "js/mixins/dependon",
-      "js/mixins/discovery_bootstrap",
-      "js/mixins/form_view_functions",
-      "js/mixins/formatter",
-      "js/mixins/hardened",
-      "js/mixins/link_generator_mixin",
-      "js/mixins/openurl_generator",
-      "js/mixins/papers_utils",
-      "js/mixins/user_change_rows",
-      "js/mixins/widget_mixin_method",
-      "js/mixins/widget_pagination",
-      "js/mixins/widget_state_manager",
-      "js/mixins/widget_utility"
-    ],
-    "orcid.bundle": [],
-    "abstract.bundle": [
-      "js/widgets/abstract/widget"
-    ],
-    "alerts.bundle": [
-      "js/widgets/alerts/widget"
-    ],
-    "api_query.bundle": [
-      "js/widgets/api_query/widget"
-    ],
-    "api_request.bundle": [
-      "js/widgets/api_request/widget"
-    ],
-    "api_response.bundle": [
-      "js/widgets/api_response/widget"
-    ],
-    "associated.bundle": [
-      "es6!js/widgets/associated/widget.jsx"
-    ],
-    "authentication.bundle": [
-      "js/widgets/authentication/widget"
-    ],
-    "author_affiliation_tool.bundle": [
-      "es6!js/widgets/author_affiliation_tool/widget.jsx"
-    ],
-    "breadcrumb.bundle": [
-      "js/widgets/breadcrumb/widget"
-    ],
-    "bubble_chart.bundle": [
-      "js/widgets/bubble_chart/widget"
-    ],
-    "citation_helper.bundle": [
-      "js/widgets/citation_helper/widget"
-    ],
-    "classic_form.bundle": [
-      "js/widgets/classic_form/widget"
-    ],
-    "dropdown-menu.bundle": [
-      "js/widgets/dropdown-menu/widget"
-    ],
-    "export.bundle": [
-      "es6!js/widgets/export/widget.jsx"
-    ],
-    "facet.bundle": [
-      "js/widgets/facet/widget"
-    ],
-    "filter_visualizer.bundle": [
-      "js/widgets/filter_visualizer/widget"
-    ],
-    "footer.bundle": [
-      "js/widgets/footer/widget"
-    ],
-    "graphics.bundle": [
-      "js/widgets/graphics/widget"
-    ],
-    "green_button.bundle": [
-      "js/widgets/green_button/widget"
-    ],
-    "libraries_all.bundle": [
-      "js/widgets/libraries_all/widget"
-    ],
-    "library_import.bundle": [
-      "js/widgets/library_import/widget"
-    ],
-    "library_individual.bundle": [
-      "js/widgets/library_individual/widget"
-    ],
-    "library_list.bundle": [
-      "js/widgets/library_list/widget"
-    ],
-    "list_of_things.bundle": [
-      "js/widgets/list_of_things/widget"
-    ],
-    "loading.bundle": [
-      "js/widgets/loading/widget"
-    ],
-    "meta_tags.bundle": [
-      "js/widgets/meta_tags/widget"
-    ],
-    "metrics.bundle": [
-      "js/widgets/metrics/widget"
-    ],
-    "navbar.bundle": [
-      "js/widgets/navbar/widget"
-    ],
-    "orcid-selector.bundle": [
-      "es6!js/widgets/orcid-selector/widget.jsx"
-    ],
-    "paper_search_form.bundle": [
-      "js/widgets/paper_search_form/widget"
-    ],
-    "preferences.bundle": [
-      "js/widgets/preferences/widget"
-    ],
-    "recommender.bundle": [
-      "js/widgets/recommender/widget"
-    ],
-    "resources.bundle": [
-      "es6!js/widgets/resources/widget.jsx"
-    ],
-    "results.bundle": [
-      "js/widgets/results/widget"
-    ],
-    "sort.bundle": [
-      "es6!js/widgets/sort/widget.jsx"
-    ],
-    "user_navbar.bundle": [
-      "js/widgets/user_navbar/widget"
-    ],
-    "user_settings.bundle": [
-      "js/widgets/user_settings/widget"
-    ],
-    "wordcloud.bundle": [
-      "js/widgets/wordcloud/widget"
-    ]
-  },
+  // bundles: {
+  //   "common.bundle": [
+  //     "jquery",
+  //     "./discovery.config",
+  //     "js/apps/discovery/main",
+  //     "analytics",
+  //     "router",
+  //     "cache",
+  //     "es6",
+  //     "hbs",
+  //     "immutable",
+  //     "jquery-querybuilder",
+  //     "redux-immutable",
+  //     "babel",
+  //     "utils"
+  //   ],
+  //   "core.bundle": [
+  //     "js/wraps/discovery_mediator",
+  //     "js/components/query_mediator",
+  //     "js/bugutils/diagnostics",
+  //     "js/wraps/alerts_mediator",
+  //     "js/modules/orcid/module",
+  //     "js/services/api",
+  //     "js/services/pubsub",
+  //     "js/apps/discovery/navigator",
+  //     "js/services/storage",
+  //     "js/components/history_manager",
+  //     "js/components/user",
+  //     "js/components/session",
+  //     "discovery.vars",
+  //     "js/page_managers/master",
+  //     "js/components/app_storage",
+  //     "js/components/recaptcha_manager",
+  //     "js/components/csrf_manager",
+  //     "js/components/library_controller",
+  //     "js/components/doc_stash_controller",
+  //     "js/widgets/facet/factory"
+  //   ],
+  //   "wraps.bundle": [
+  //     "js/wraps/abstract_page_library_add/widget",
+  //     "js/wraps/abstract_page_manager/abstract_page_manager",
+  //     "js/wraps/affiliation_facet",
+  //     "js/wraps/alerts_mediator",
+  //     "js/wraps/authentication_page_manager",
+  //     "js/wraps/author_facet",
+  //     "js/wraps/author_network",
+  //     "js/wraps/bibgroup_facet",
+  //     "js/wraps/bibstem_facet",
+  //     "js/wraps/citations",
+  //     "js/wraps/coreads",
+  //     "js/wraps/data_facet",
+  //     "js/wraps/database_facet",
+  //     "js/wraps/discovery_mediator",
+  //     "js/wraps/error_page_manager/error_page_manager",
+  //     "js/wraps/export_dropdown",
+  //     "js/wraps/grants_facet",
+  //     "js/wraps/graph_tabs",
+  //     "js/wraps/home_page_manager/home_page_manager",
+  //     "js/wraps/keyword_facet",
+  //     "js/wraps/landing_page_manager/landing_page_manager",
+  //     "js/wraps/libraries_page_manager/libraries_page_manager",
+  //     "js/wraps/ned_object_facet",
+  //     "js/wraps/orcid-instructions-page-manager/manager",
+  //     "js/wraps/orcid_page_manager",
+  //     "js/wraps/orcid_page_manager/orcid_page_manager",
+  //     "js/wraps/paper_export",
+  //     "js/wraps/paper_metrics",
+  //     "js/wraps/paper_network",
+  //     "js/wraps/public_libraries_page_manager/public_libraries_manager",
+  //     "js/wraps/pubtype_facet",
+  //     "js/wraps/refereed_facet",
+  //     "js/wraps/references",
+  //     "js/wraps/results_page_manager",
+  //     "js/wraps/sidebar-graphics-widget",
+  //     "js/wraps/simbad_object_facet",
+  //     "js/wraps/table_of_contents",
+  //     "js/wraps/user_settings_page_manager/user_page_manager",
+  //     "js/wraps/visualization_dropdown",
+  //     "js/wraps/vizier_facet"
+  //   ],
+  //   "mixins.bundle": [
+  //     "js/mixins/add_secondary_sort",
+  //     "js/mixins/add_stable_index_to_collection",
+  //     "js/mixins/api_access",
+  //     "js/mixins/dependon",
+  //     "js/mixins/discovery_bootstrap",
+  //     "js/mixins/form_view_functions",
+  //     "js/mixins/formatter",
+  //     "js/mixins/hardened",
+  //     "js/mixins/link_generator_mixin",
+  //     "js/mixins/openurl_generator",
+  //     "js/mixins/papers_utils",
+  //     "js/mixins/user_change_rows",
+  //     "js/mixins/widget_mixin_method",
+  //     "js/mixins/widget_pagination",
+  //     "js/mixins/widget_state_manager",
+  //     "js/mixins/widget_utility"
+  //   ],
+  //   "orcid.bundle": [],
+  //   "abstract.bundle": [
+  //     "js/widgets/abstract/widget"
+  //   ],
+  //   "alerts.bundle": [
+  //     "js/widgets/alerts/widget"
+  //   ],
+  //   "api_query.bundle": [
+  //     "js/widgets/api_query/widget"
+  //   ],
+  //   "api_request.bundle": [
+  //     "js/widgets/api_request/widget"
+  //   ],
+  //   "api_response.bundle": [
+  //     "js/widgets/api_response/widget"
+  //   ],
+  //   "associated.bundle": [
+  //     "es6!js/widgets/associated/widget.jsx"
+  //   ],
+  //   "authentication.bundle": [
+  //     "js/widgets/authentication/widget"
+  //   ],
+  //   "author_affiliation_tool.bundle": [
+  //     "es6!js/widgets/author_affiliation_tool/widget.jsx"
+  //   ],
+  //   "breadcrumb.bundle": [
+  //     "js/widgets/breadcrumb/widget"
+  //   ],
+  //   "bubble_chart.bundle": [
+  //     "js/widgets/bubble_chart/widget"
+  //   ],
+  //   "citation_helper.bundle": [
+  //     "js/widgets/citation_helper/widget"
+  //   ],
+  //   "classic_form.bundle": [
+  //     "js/widgets/classic_form/widget"
+  //   ],
+  //   "dropdown-menu.bundle": [
+  //     "js/widgets/dropdown-menu/widget"
+  //   ],
+  //   "export.bundle": [
+  //     "es6!js/widgets/export/widget.jsx"
+  //   ],
+  //   "facet.bundle": [
+  //     "js/widgets/facet/widget"
+  //   ],
+  //   "filter_visualizer.bundle": [
+  //     "js/widgets/filter_visualizer/widget"
+  //   ],
+  //   "footer.bundle": [
+  //     "js/widgets/footer/widget"
+  //   ],
+  //   "graphics.bundle": [
+  //     "js/widgets/graphics/widget"
+  //   ],
+  //   "green_button.bundle": [
+  //     "js/widgets/green_button/widget"
+  //   ],
+  //   "libraries_all.bundle": [
+  //     "js/widgets/libraries_all/widget"
+  //   ],
+  //   "library_import.bundle": [
+  //     "js/widgets/library_import/widget"
+  //   ],
+  //   "library_individual.bundle": [
+  //     "js/widgets/library_individual/widget"
+  //   ],
+  //   "library_list.bundle": [
+  //     "js/widgets/library_list/widget"
+  //   ],
+  //   "list_of_things.bundle": [
+  //     "js/widgets/list_of_things/widget"
+  //   ],
+  //   "loading.bundle": [
+  //     "js/widgets/loading/widget"
+  //   ],
+  //   "meta_tags.bundle": [
+  //     "js/widgets/meta_tags/widget"
+  //   ],
+  //   "metrics.bundle": [
+  //     "js/widgets/metrics/widget"
+  //   ],
+  //   "navbar.bundle": [
+  //     "js/widgets/navbar/widget"
+  //   ],
+  //   "orcid-selector.bundle": [
+  //     "es6!js/widgets/orcid-selector/widget.jsx"
+  //   ],
+  //   "paper_search_form.bundle": [
+  //     "js/widgets/paper_search_form/widget"
+  //   ],
+  //   "preferences.bundle": [
+  //     "js/widgets/preferences/widget"
+  //   ],
+  //   "recommender.bundle": [
+  //     "js/widgets/recommender/widget"
+  //   ],
+  //   "resources.bundle": [
+  //     "es6!js/widgets/resources/widget.jsx"
+  //   ],
+  //   "results.bundle": [
+  //     "js/widgets/results/widget"
+  //   ],
+  //   "sort.bundle": [
+  //     "es6!js/widgets/sort/widget.jsx"
+  //   ],
+  //   "user_navbar.bundle": [
+  //     "js/widgets/user_navbar/widget"
+  //   ],
+  //   "user_settings.bundle": [
+  //     "js/widgets/user_settings/widget"
+  //   ],
+  //   "wordcloud.bundle": [
+  //     "js/widgets/wordcloud/widget"
+  //   ]
+  // },
 
   // Configuration for the facades (you can pick specific implementation, just for your
   // application) see http://requirejs.org/docs/api.html#config-map
@@ -632,12 +634,13 @@ require.config({
 
   callback: function() {
 
-    window.GoogleAnalyticsObject = '__ga__';
+    require(['discovery.vars', 'google-analytics', 'analytics'], function(config, _, analytics) {
+      var ga = window[window.GoogleAnalyticsObject];
+      ga && (ga.l = Date.now());
+      ga && ga('create', config.googleTrackingCode || '', config.googleTrackingOptions);
 
-    require(['discovery.vars', 'google-analytics', 'analytics'], function(config) {
-      var qa = window[window.GoogleAnalyticsObject];
-      qa.l = Date.now();
-      qa('create', config.googleTrackingCode || '', config.googleTrackingOptions);
+      // initialize the application analytics
+      analytics.init();
     });
 
     require([

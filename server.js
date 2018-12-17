@@ -25,7 +25,7 @@ const targets = {
 let config = {
 
   // root path for web (usually src/ or dist/)
-  root: '/build',
+  root: '/src',
 
   // api route, this will be proxied
   apiPath: '/v1',

@@ -68,21 +68,25 @@ define([
     }
   };
 
-  var ga = window[window.GoogleAnalyticsObject];
-  window[window.GoogleAnalyticsObject] = function () {
-    try {
-      ga.q = ga.q || [];
-      ga.q.push([arguments]);
-      ga.apply(ga, arguments);
-    } catch (e) {
-      console.info('google analytics event not tracked');
-    }
-  };
-
   var Analytics = function () {
     adsLogger.apply(null, _.rest(arguments, 3));
-    window[window.GoogleAnalyticsObject].apply(this, arguments);
+    window[window.GoogleAnalyticsObject] &&
+      window[window.GoogleAnalyticsObject].apply(this, arguments);
   };
+
+  // rather than do this globally, wait for an init call before the first view
+  Analytics.init = function () {
+    var ga = window[window.GoogleAnalyticsObject];
+    window[window.GoogleAnalyticsObject] = function () {
+      try {
+        ga.q = ga.q || [];
+        ga.q.push([arguments]);
+        ga.apply(ga, arguments);
+      } catch (e) {
+        console.info('google analytics event not tracked');
+      }
+    };
+  }
 
   return Analytics;
 });
