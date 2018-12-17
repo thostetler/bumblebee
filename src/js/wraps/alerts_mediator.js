@@ -4,7 +4,6 @@ define([
   'jquery',
   'js/components/alerts_mediator',
   'js/components/api_feedback',
-  'js/widgets/widget_states',
   'js/components/alerts',
   'js/components/api_response'
 ],
@@ -14,7 +13,6 @@ function (
   $,
   AlertsMediator,
   ApiFeedback,
-  WidgetStates,
   Alerts,
   ApiResponse
 ) {

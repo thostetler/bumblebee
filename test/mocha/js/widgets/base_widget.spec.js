@@ -5,8 +5,7 @@ define([
     'js/components/api_response',
     'js/components/api_request',
     'js/components/api_query',
-    'js/bugutils/minimal_pubsub',
-    'js/widgets/widget_states'
+    'js/bugutils/minimal_pubsub'
   ],
   function(
     Marionette,
@@ -15,8 +14,7 @@ define([
     ApiResponse,
     ApiRequest,
     ApiQuery,
-    MinimalPubSub,
-    WidgetStates
+    MinimalPubSub
     ) {
 
     describe("Base Widget (base_widget.spec.js)", function() {

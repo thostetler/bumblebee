@@ -10,6 +10,7 @@ lib-cov
 # Generated SCSS Files
 _*
 bootstrap
+build
 
 pids
 logs

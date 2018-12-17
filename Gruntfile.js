@@ -11,7 +11,8 @@ module.exports = function(grunt) {
         express: 'grunt-express-server',
         hash_require: 'grunt-hash-required',
         bower: 'grunt-bower-task',
-        uglify: 'grunt-contrib-uglify-es'
+        uglify: 'grunt-contrib-uglify-es',
+        'generate-require-config': 'generate-require-config'
       }
     }
   });

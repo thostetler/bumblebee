@@ -4,7 +4,6 @@ define([
   'jquery',
   'js/components/feedback_mediator',
   'js/components/api_feedback',
-  'js/widgets/widget_states',
   'js/components/alerts',
   'js/components/api_response',
   'analytics'
@@ -15,7 +14,6 @@ function (
   $,
   FeedbackMediator,
   ApiFeedback,
-  WidgetStates,
   Alerts,
   ApiResponse,
   analytics

@@ -6,28 +6,22 @@ define([
   'backbone',
   'jquery',
   'underscore',
-  'cache',
   'js/widgets/base/base_widget',
   'hbs!js/widgets/abstract/templates/abstract_template',
-  'js/components/api_query',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
-  'mathjax',
-  'bootstrap'
+  'mathjax'
 ],
 function (
   Marionette,
   Backbone,
   $,
   _,
-  Cache,
   BaseWidget,
   abstractTemplate,
-  ApiQuery,
   LinkGeneratorMixin,
   PapersUtils,
-  MathJax,
-  Bootstrap
+  MathJax
 ) {
   var MAX_COMMENTS = 3;
 
