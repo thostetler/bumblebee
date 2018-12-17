@@ -230,10 +230,7 @@ require.config({
     ],
     'hbs': 'libs/require-handlebars-plugin/hbs',
     'immutable': 'libs/immutable/index',
-    'jquery': [
-      '//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min',
-      'libs/jquery/jquery'
-    ],
+    'jquery': 'libs/jquery/jquery',
     'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',
     'jquery-ui': [
       '//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui.min',
@@ -419,6 +416,10 @@ require.config({
   },
 
   callback: function() {
+
+    require(['jquery'], function ($) {
+      window.$ = $;
+    });
 
     window.GoogleAnalyticsObject = '__ga__';
 

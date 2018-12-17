@@ -16,7 +16,6 @@ var PATHS = {
   'google-analytics': 'empty:',
   'google-recaptcha': 'empty:',
   'jquery-ui' : 'empty:',
-  'jquery' : 'empty:',
   'jsonpath': 'empty:',
   'marionette': 'empty:',
   'mathjax': 'empty:',
@@ -58,16 +57,19 @@ var baseConfig = {
       deps: [],
       create: true,
       include: [
-        'config',
-        'analytics',
-        'router',
-        'cache',
-        'es6',
-        'hbs',
-        'immutable',
-        'jquery-querybuilder',
-        'redux-immutable',
-        'utils',
+        "jquery",
+        "./discovery.config",
+        "js/apps/discovery/main",
+        "analytics",
+        "router",
+        "cache",
+        "es6",
+        "hbs",
+        "immutable",
+        "jquery-querybuilder",
+        "redux-immutable",
+        "babel",
+        "utils"
       ],
       paths: PATHS
     }
@@ -112,18 +114,87 @@ var baseConfig = {
   }
 };
 
-
 module.exports = function (grunt) {
-  var getConfigs = function () {
-    var paths = grunt.file.expand('src/js/widgets/**/widget*.js');
-    var config = {};
-    paths.forEach(function (url) {
+
+  // callback called with URL and name pulled from folder
+  var getByGlob = function (glob, cb) {
+    var urls = []
+    grunt.file.expand(glob).forEach(function (url) {
       var parts = url.split(path.sep);
-      var name = parts[3];
       if (/jsx\.js$/.test(url)) {
         url = url.replace(/^/, 'es6!');
       }
       url = url.replace('src/', '').replace(/\.js$/, '');
+      urls.push(url);
+      cb && cb(url, parts[3]);
+    });
+    return urls;
+  }
+
+  var getConfigs = function () {
+    var config = {};
+
+    var wraps = getByGlob('src/js/wraps/**/*.js');
+    config['wraps'] = {
+      options: {
+        logLevel: 1,
+        baseUrl: 'build',
+        name: 'wraps.bundle',
+        out: 'build/wraps.bundle.js',
+        optimize: 'none',
+        mainConfigFile: 'build/app.config.js',
+        deps: [],
+        create: true,
+        include: wraps,
+        exclude: ['common.bundle', 'core.bundle'],
+        paths: PATHS
+      }
+    };
+
+    var mixins = getByGlob('src/js/mixins/**/*.js');
+    config['mixins'] = {
+      options: {
+        logLevel: 1,
+        baseUrl: 'build',
+        name: 'mixins.bundle',
+        out: 'build/mixins.bundle.js',
+        optimize: 'none',
+        mainConfigFile: 'build/app.config.js',
+        deps: [],
+        create: true,
+        include: mixins,
+        exclude: [
+          'common.bundle',
+          'core.bundle',
+          'wraps.bundle'
+        ],
+        paths: PATHS
+      }
+    };
+
+    var orcid = getByGlob('src/js/orcid/**/*.js');
+    config['orcid'] = {
+      options: {
+        logLevel: 1,
+        baseUrl: 'build',
+        name: 'orcid.bundle',
+        out: 'build/orcid.bundle.js',
+        optimize: 'none',
+        mainConfigFile: 'build/app.config.js',
+        deps: [],
+        create: true,
+        include: orcid,
+        exclude: [
+          'common.bundle',
+          'core.bundle',
+          'wraps.bundle',
+          'mixins.bundle'
+        ],
+        paths: PATHS
+      }
+    };
+
+    getByGlob('src/js/widgets/**/widget*.js', function (url, name) {
       config[name] = {
         options: {
           logLevel: 1,
@@ -135,11 +206,18 @@ module.exports = function (grunt) {
           deps: [],
           create: true,
           include: [url],
-          exclude: ['common.bundle', 'core.bundle'],
+          exclude: [
+            'common.bundle',
+            'core.bundle',
+            'wraps.bundle',
+            'mixins.bundle',
+            'orcid.bundle'
+          ],
           paths: PATHS
         }
       };
     });
+
     return config;
   }
 

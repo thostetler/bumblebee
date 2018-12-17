@@ -24,7 +24,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -57,7 +56,9 @@ module.exports =
       "deps": [],
       "create": true,
       "include": [
-        "config",
+        "jquery",
+        "./discovery.config",
+        "js/apps/discovery/main",
         "analytics",
         "router",
         "cache",
@@ -66,6 +67,7 @@ module.exports =
         "immutable",
         "jquery-querybuilder",
         "redux-immutable",
+        "babel",
         "utils"
       ],
       "paths": {
@@ -84,7 +86,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -157,7 +158,223 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
+        "jsonpath": "empty:",
+        "marionette": "empty:",
+        "mathjax": "empty:",
+        "moment": "empty:",
+        "persist-js": "empty:",
+        "react-bootstrap": "empty:",
+        "react-dom": "empty:",
+        "react-prop-types": "empty:",
+        "react-redux": "empty:",
+        "react": "empty:",
+        "redux-thunk": "empty:",
+        "redux": "empty:",
+        "requirejs": "empty:",
+        "reselect": "empty:",
+        "select2": "empty:",
+        "sinon": "empty:",
+        "sprintf": "empty:",
+        "underscore": "empty:"
+      }
+    }
+  },
+  "wraps": {
+    "options": {
+      "logLevel": 1,
+      "baseUrl": "build",
+      "name": "wraps.bundle",
+      "out": "build/wraps.bundle.js",
+      "optimize": "none",
+      "mainConfigFile": "build/app.config.js",
+      "deps": [],
+      "create": true,
+      "include": [
+        "js/wraps/abstract_page_library_add/widget",
+        "js/wraps/abstract_page_manager/abstract_page_manager",
+        "js/wraps/affiliation_facet",
+        "js/wraps/alerts_mediator",
+        "js/wraps/authentication_page_manager",
+        "js/wraps/author_facet",
+        "js/wraps/author_network",
+        "js/wraps/bibgroup_facet",
+        "js/wraps/bibstem_facet",
+        "js/wraps/citations",
+        "js/wraps/coreads",
+        "js/wraps/data_facet",
+        "js/wraps/database_facet",
+        "js/wraps/discovery_mediator",
+        "js/wraps/error_page_manager/error_page_manager",
+        "js/wraps/export_dropdown",
+        "js/wraps/grants_facet",
+        "js/wraps/graph_tabs",
+        "js/wraps/home_page_manager/home_page_manager",
+        "js/wraps/keyword_facet",
+        "js/wraps/landing_page_manager/landing_page_manager",
+        "js/wraps/libraries_page_manager/libraries_page_manager",
+        "js/wraps/ned_object_facet",
+        "js/wraps/orcid-instructions-page-manager/manager",
+        "js/wraps/orcid_page_manager",
+        "js/wraps/orcid_page_manager/orcid_page_manager",
+        "js/wraps/paper_export",
+        "js/wraps/paper_metrics",
+        "js/wraps/paper_network",
+        "js/wraps/public_libraries_page_manager/public_libraries_manager",
+        "js/wraps/pubtype_facet",
+        "js/wraps/refereed_facet",
+        "js/wraps/references",
+        "js/wraps/results_page_manager",
+        "js/wraps/sidebar-graphics-widget",
+        "js/wraps/simbad_object_facet",
+        "js/wraps/table_of_contents",
+        "js/wraps/user_settings_page_manager/user_page_manager",
+        "js/wraps/visualization_dropdown",
+        "js/wraps/vizier_facet"
+      ],
+      "exclude": [
+        "common.bundle",
+        "core.bundle"
+      ],
+      "paths": {
+        "backbone-validation": "empty:",
+        "backbone.stickit": "empty:",
+        "backbone.wreqr": "empty:",
+        "backbone": "empty:",
+        "bootstrap": "empty:",
+        "classnames": "empty:",
+        "clipboard": "empty:",
+        "create-react-class": "empty:",
+        "d3-cloud": "empty:",
+        "d3": "empty:",
+        "es5-shim": "empty:",
+        "filesaver": "empty:",
+        "google-analytics": "empty:",
+        "google-recaptcha": "empty:",
+        "jquery-ui": "empty:",
+        "jsonpath": "empty:",
+        "marionette": "empty:",
+        "mathjax": "empty:",
+        "moment": "empty:",
+        "persist-js": "empty:",
+        "react-bootstrap": "empty:",
+        "react-dom": "empty:",
+        "react-prop-types": "empty:",
+        "react-redux": "empty:",
+        "react": "empty:",
+        "redux-thunk": "empty:",
+        "redux": "empty:",
+        "requirejs": "empty:",
+        "reselect": "empty:",
+        "select2": "empty:",
+        "sinon": "empty:",
+        "sprintf": "empty:",
+        "underscore": "empty:"
+      }
+    }
+  },
+  "mixins": {
+    "options": {
+      "logLevel": 1,
+      "baseUrl": "build",
+      "name": "mixins.bundle",
+      "out": "build/mixins.bundle.js",
+      "optimize": "none",
+      "mainConfigFile": "build/app.config.js",
+      "deps": [],
+      "create": true,
+      "include": [
+        "js/mixins/add_secondary_sort",
+        "js/mixins/add_stable_index_to_collection",
+        "js/mixins/api_access",
+        "js/mixins/dependon",
+        "js/mixins/discovery_bootstrap",
+        "js/mixins/form_view_functions",
+        "js/mixins/formatter",
+        "js/mixins/hardened",
+        "js/mixins/link_generator_mixin",
+        "js/mixins/openurl_generator",
+        "js/mixins/papers_utils",
+        "js/mixins/user_change_rows",
+        "js/mixins/widget_mixin_method",
+        "js/mixins/widget_pagination",
+        "js/mixins/widget_state_manager",
+        "js/mixins/widget_utility"
+      ],
+      "exclude": [
+        "common.bundle",
+        "core.bundle",
+        "wraps.bundle"
+      ],
+      "paths": {
+        "backbone-validation": "empty:",
+        "backbone.stickit": "empty:",
+        "backbone.wreqr": "empty:",
+        "backbone": "empty:",
+        "bootstrap": "empty:",
+        "classnames": "empty:",
+        "clipboard": "empty:",
+        "create-react-class": "empty:",
+        "d3-cloud": "empty:",
+        "d3": "empty:",
+        "es5-shim": "empty:",
+        "filesaver": "empty:",
+        "google-analytics": "empty:",
+        "google-recaptcha": "empty:",
+        "jquery-ui": "empty:",
+        "jsonpath": "empty:",
+        "marionette": "empty:",
+        "mathjax": "empty:",
+        "moment": "empty:",
+        "persist-js": "empty:",
+        "react-bootstrap": "empty:",
+        "react-dom": "empty:",
+        "react-prop-types": "empty:",
+        "react-redux": "empty:",
+        "react": "empty:",
+        "redux-thunk": "empty:",
+        "redux": "empty:",
+        "requirejs": "empty:",
+        "reselect": "empty:",
+        "select2": "empty:",
+        "sinon": "empty:",
+        "sprintf": "empty:",
+        "underscore": "empty:"
+      }
+    }
+  },
+  "orcid": {
+    "options": {
+      "logLevel": 1,
+      "baseUrl": "build",
+      "name": "orcid.bundle",
+      "out": "build/orcid.bundle.js",
+      "optimize": "none",
+      "mainConfigFile": "build/app.config.js",
+      "deps": [],
+      "create": true,
+      "include": [],
+      "exclude": [
+        "common.bundle",
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle"
+      ],
+      "paths": {
+        "backbone-validation": "empty:",
+        "backbone.stickit": "empty:",
+        "backbone.wreqr": "empty:",
+        "backbone": "empty:",
+        "bootstrap": "empty:",
+        "classnames": "empty:",
+        "clipboard": "empty:",
+        "create-react-class": "empty:",
+        "d3-cloud": "empty:",
+        "d3": "empty:",
+        "es5-shim": "empty:",
+        "filesaver": "empty:",
+        "google-analytics": "empty:",
+        "google-recaptcha": "empty:",
+        "jquery-ui": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -194,7 +411,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -212,7 +432,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -249,7 +468,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -267,7 +489,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -304,7 +525,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -322,7 +546,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -359,7 +582,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -377,7 +603,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -414,7 +639,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -432,7 +660,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -469,7 +696,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -487,7 +717,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -524,7 +753,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -542,7 +774,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -579,7 +810,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -597,7 +831,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -634,7 +867,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -652,7 +888,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -689,7 +924,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -707,7 +945,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -744,7 +981,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -762,7 +1002,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -799,7 +1038,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -817,7 +1059,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -854,7 +1095,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -872,7 +1116,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -909,7 +1152,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -927,7 +1173,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -964,7 +1209,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -982,7 +1230,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1019,7 +1266,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1037,7 +1287,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1074,7 +1323,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1092,7 +1344,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1129,7 +1380,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1147,7 +1401,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1184,7 +1437,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1202,7 +1458,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1239,7 +1494,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1257,7 +1515,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1294,7 +1551,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1312,7 +1572,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1349,7 +1608,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1367,7 +1629,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1404,7 +1665,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1422,7 +1686,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1459,7 +1722,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1477,7 +1743,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1514,7 +1779,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1532,7 +1800,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1569,7 +1836,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1587,7 +1857,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1624,7 +1893,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1642,7 +1914,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1679,7 +1950,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1697,7 +1971,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1734,7 +2007,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1752,7 +2028,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1789,7 +2064,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1807,7 +2085,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1844,7 +2121,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1862,7 +2142,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1899,7 +2178,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1917,7 +2199,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -1954,7 +2235,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -1972,7 +2256,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -2009,7 +2292,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -2027,7 +2313,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -2064,7 +2349,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -2082,7 +2370,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -2119,7 +2406,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -2137,7 +2427,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -2174,7 +2463,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -2192,7 +2484,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",
@@ -2229,7 +2520,10 @@ module.exports =
       ],
       "exclude": [
         "common.bundle",
-        "core.bundle"
+        "core.bundle",
+        "wraps.bundle",
+        "mixins.bundle",
+        "orcid.bundle"
       ],
       "paths": {
         "backbone-validation": "empty:",
@@ -2247,7 +2541,6 @@ module.exports =
         "google-analytics": "empty:",
         "google-recaptcha": "empty:",
         "jquery-ui": "empty:",
-        "jquery": "empty:",
         "jsonpath": "empty:",
         "marionette": "empty:",
         "mathjax": "empty:",

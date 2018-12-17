@@ -142,17 +142,19 @@ require.config({
 
   bundles: {
     "common.bundle": [
+      "jquery",
       "./discovery.config",
       "js/apps/discovery/main",
-      "js/components/analytics",
-      "js/apps/discovery/router",
-      "libs/dsjslib/lib/Cache",
-      "libs/requirejs-babel-plugin/es6",
-      "libs/require-handlebars-plugin/hbs",
-      "libs/immutable/index",
-      "libs/jQuery-QueryBuilder/query-builder",
-      "libs/redux-immutable/index",
-      "js/utils"
+      "analytics",
+      "router",
+      "cache",
+      "es6",
+      "hbs",
+      "immutable",
+      "jquery-querybuilder",
+      "redux-immutable",
+      "babel",
+      "utils"
     ],
     "core.bundle": [
       "js/wraps/discovery_mediator",
@@ -176,6 +178,67 @@ require.config({
       "js/components/doc_stash_controller",
       "js/widgets/facet/factory"
     ],
+    "wraps.bundle": [
+      "js/wraps/abstract_page_library_add/widget",
+      "js/wraps/abstract_page_manager/abstract_page_manager",
+      "js/wraps/affiliation_facet",
+      "js/wraps/alerts_mediator",
+      "js/wraps/authentication_page_manager",
+      "js/wraps/author_facet",
+      "js/wraps/author_network",
+      "js/wraps/bibgroup_facet",
+      "js/wraps/bibstem_facet",
+      "js/wraps/citations",
+      "js/wraps/coreads",
+      "js/wraps/data_facet",
+      "js/wraps/database_facet",
+      "js/wraps/discovery_mediator",
+      "js/wraps/error_page_manager/error_page_manager",
+      "js/wraps/export_dropdown",
+      "js/wraps/grants_facet",
+      "js/wraps/graph_tabs",
+      "js/wraps/home_page_manager/home_page_manager",
+      "js/wraps/keyword_facet",
+      "js/wraps/landing_page_manager/landing_page_manager",
+      "js/wraps/libraries_page_manager/libraries_page_manager",
+      "js/wraps/ned_object_facet",
+      "js/wraps/orcid-instructions-page-manager/manager",
+      "js/wraps/orcid_page_manager",
+      "js/wraps/orcid_page_manager/orcid_page_manager",
+      "js/wraps/paper_export",
+      "js/wraps/paper_metrics",
+      "js/wraps/paper_network",
+      "js/wraps/public_libraries_page_manager/public_libraries_manager",
+      "js/wraps/pubtype_facet",
+      "js/wraps/refereed_facet",
+      "js/wraps/references",
+      "js/wraps/results_page_manager",
+      "js/wraps/sidebar-graphics-widget",
+      "js/wraps/simbad_object_facet",
+      "js/wraps/table_of_contents",
+      "js/wraps/user_settings_page_manager/user_page_manager",
+      "js/wraps/visualization_dropdown",
+      "js/wraps/vizier_facet"
+    ],
+    "mixins.bundle": [
+      "js/mixins/add_secondary_sort",
+      "js/mixins/add_stable_index_to_collection",
+      "js/mixins/api_access",
+      "js/mixins/dependon",
+      "js/mixins/discovery_bootstrap",
+      "js/mixins/form_view_functions",
+      "js/mixins/formatter",
+      "js/mixins/hardened",
+      "js/mixins/link_generator_mixin",
+      "js/mixins/openurl_generator",
+      "js/mixins/papers_utils",
+      "js/mixins/user_change_rows",
+      "js/mixins/widget_mixin_method",
+      "js/mixins/widget_pagination",
+      "js/mixins/widget_state_manager",
+      "js/mixins/widget_utility"
+    ],
+    "orcid.bundle": [],
     "abstract.bundle": [
       "js/widgets/abstract/widget"
     ],
@@ -319,7 +382,6 @@ require.config({
       'libs/lodash/lodash.compat'
     ],
     'async': 'libs/requirejs-plugins/async',
-    'babel': 'libs/requirejs-babel-plugin/babel-5.8.34.min',
     'backbone': [
       '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min',
       'libs/backbone/backbone'
@@ -367,6 +429,7 @@ require.config({
       '//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.10/es5-shim.min',
       'libs/es5-shim/es5-shim'
     ],
+    'babel': 'libs/requirejs-babel-plugin/babel-5.8.34.min',
     'es6': 'libs/requirejs-babel-plugin/es6',
     'filesaver': [
       '//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min',
@@ -382,10 +445,7 @@ require.config({
     ],
     'hbs': 'libs/require-handlebars-plugin/hbs',
     'immutable': 'libs/immutable/index',
-    'jquery': [
-      '//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min',
-      'libs/jquery/jquery'
-    ],
+    'jquery': 'libs/jquery/jquery',
     'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',
     'jquery-ui': [
       '//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui.min',
