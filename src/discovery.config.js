@@ -377,13 +377,26 @@ require.config({
     'main': 'js/apps/discovery/main',
     'router': 'js/apps/discovery/router',
     'analytics': 'js/components/analytics',
+    'discovery.vars': './discovery.vars',
+    'async': 'libs/requirejs-plugins/async',
+    'cache': 'libs/dsjslib/lib/Cache',
+    'chai': 'bower_components/chai/chai',
+    'enzyme': 'libs/enzyme/enzyme',
+    'babel': 'libs/requirejs-babel-plugin/babel-5.8.34.min',
+    'es6': 'libs/requirejs-babel-plugin/es6',
+    'hbs': 'libs/require-handlebars-plugin/hbs',
+    'immutable': 'libs/immutable/index',
+    'jquery': 'libs/jquery/jquery',
+    'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',
+    'mocha': 'libs/mocha/mocha',
+    'redux-immutable': 'libs/redux-immutable/index',
+    'utils': 'js/utils',
 
     // Opt for Lo-Dash Underscore compatibility build over Underscore.
     'underscore': [
       '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.2/lodash.min',
       'libs/lodash/lodash.compat'
     ],
-    'async': 'libs/requirejs-plugins/async',
     'backbone': [
       '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min',
       'libs/backbone/backbone'
@@ -404,8 +417,6 @@ require.config({
       '//ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min',
       'libs/bootstrap/bootstrap'
     ],
-    'cache': 'libs/dsjslib/lib/Cache',
-    'chai': 'bower_components/chai/chai',
     'classnames': [
       '//cdnjs.cloudflare.com/ajax/libs/classnames/2.2.5/index.min',
       'bower_components/classnames/index'
@@ -426,13 +437,10 @@ require.config({
       '//cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min',
       'libs/d3-cloud/d3.layout.cloud'
     ],
-    'enzyme': 'libs/enzyme/enzyme',
     'es5-shim': [
       '//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.10/es5-shim.min',
       'libs/es5-shim/es5-shim'
     ],
-    'babel': 'libs/requirejs-babel-plugin/babel-5.8.34.min',
-    'es6': 'libs/requirejs-babel-plugin/es6',
     'filesaver': [
       '//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min',
       'libs/file-saver/index'
@@ -445,10 +453,6 @@ require.config({
       '//google.com/recaptcha/api.js?&render=explicit&onload=onRecaptchaLoad',
       'data:application/javascript,'
     ],
-    'hbs': 'libs/require-handlebars-plugin/hbs',
-    'immutable': 'libs/immutable/index',
-    'jquery': 'libs/jquery/jquery',
-    'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',
     'jquery-ui': [
       '//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui.min',
       'libs/jqueryui/jquery-ui'
@@ -465,7 +469,6 @@ require.config({
       '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML&amp;delayStartupUntil=configured',
       'libs/mathjax/index'
     ],
-    'mocha': 'libs/mocha/mocha',
     'moment': [
       '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min',
       'libs/momentjs/moment'
@@ -498,7 +501,6 @@ require.config({
       '//cdnjs.cloudflare.com/ajax/libs/redux/3.5.2/redux.min',
       'libs/redux/index'
     ],
-    'redux-immutable': 'libs/redux-immutable/index',
     'redux-thunk': [
       '//cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.1.0/redux-thunk.min',
       'libs/redux-thunk/index'
@@ -515,7 +517,6 @@ require.config({
       '//cdnjs.cloudflare.com/ajax/libs/sprintf/1.0.2/sprintf.min',
       'libs/sprintf/sprintf'
     ],
-    'utils': 'js/utils',
     'reselect': [
       '//cdnjs.cloudflare.com/ajax/libs/reselect/3.0.1/reselect.min',
       'libs/reselect'

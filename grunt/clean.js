@@ -30,6 +30,9 @@ module.exports = {
       'src/libs'
     ]
   },
+  build: {
+    src: ['build']
+  },
   coverage: {
     src: ['test/coverage']
   }

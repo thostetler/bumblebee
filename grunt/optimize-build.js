@@ -1,40 +1,5 @@
-// var path = require('path');
 
-// var PATHS = {
-//   'backbone-validation': 'empty:',
-//   'backbone.stickit': 'empty:',
-//   'backbone.wreqr': 'empty:',
-//   'backbone': 'empty:',
-//   'bootstrap': 'empty:',
-//   'classnames': 'empty:',
-//   'clipboard': 'empty:',
-//   'create-react-class': 'empty:',
-//   'd3-cloud': 'empty:',
-//   'd3': 'empty:',
-//   'es5-shim': 'empty:',
-//   'filesaver': 'empty:',
-//   'google-analytics': 'empty:',
-//   'google-recaptcha': 'empty:',
-//   'jquery-ui' : 'empty:',
-//   'jsonpath': 'empty:',
-//   'marionette': 'empty:',
-//   'mathjax': 'empty:',
-//   'moment': 'empty:',
-//   'persist-js': 'empty:',
-//   'react-bootstrap': 'empty:',
-//   'react-dom' : 'empty:',
-//   'react-prop-types': 'empty:',
-//   'react-redux': 'empty:',
-//   'react' : 'empty:',
-//   'redux-thunk': 'empty:',
-//   'redux': 'empty:',
-//   'requirejs' : 'empty:',
-//   'reselect': 'empty:',
-//   'select2': 'empty:',
-//   'sinon': 'empty:',
-//   'sprintf': 'empty:',
-//   'underscore': 'empty:',
-// };
+
 
 // var baseConfig = {
 //   'build': {
@@ -114,7 +79,178 @@
 //   }
 // };
 
-// module.exports = {};
+module.exports = function (grunt) {
+
+  var PATHS = {
+    'backbone-validation': 'empty:',
+    'backbone.stickit': 'empty:',
+    'backbone.wreqr': 'empty:',
+    'backbone': 'empty:',
+    'bootstrap': 'empty:',
+    'classnames': 'empty:',
+    'clipboard': 'empty:',
+    'create-react-class': 'empty:',
+    'd3-cloud': 'empty:',
+    'd3': 'empty:',
+    'es5-shim': 'empty:',
+    'filesaver': 'empty:',
+    'google-analytics': 'empty:',
+    'google-recaptcha': 'empty:',
+    'jquery-ui' : 'empty:',
+    'jsonpath': 'empty:',
+    'marionette': 'empty:',
+    'mathjax': 'empty:',
+    'moment': 'empty:',
+    'persist-js': 'empty:',
+    'react-bootstrap': 'empty:',
+    'react-dom' : 'empty:',
+    'react-prop-types': 'empty:',
+    'react-redux': 'empty:',
+    'react' : 'empty:',
+    'redux-thunk': 'empty:',
+    'redux': 'empty:',
+    'requirejs' : 'empty:',
+    'reselect': 'empty:',
+    'select2': 'empty:',
+    'sinon': 'empty:',
+    'sprintf': 'empty:',
+    'underscore': 'empty:'
+  };
+
+  var baseConfig = {
+    waitSeconds: 0,
+    logLevel: 1,
+    baseUrl: 'src',
+    optimize: 'none',
+    optimize: 'none',
+    mainConfigFile: 'src/discovery.config.js',
+    deps: [],
+    stubModules: ['babel', 'es6'],
+    create: true,
+    paths: PATHS
+  };
+
+  grunt.registerMultiTask('optimize-build', 'Generate config and optimize build', function () {
+    var _ = require('lodash');
+    var path = require('path');
+    var fullConfig = {};
+
+    // callback called with URL and name pulled from folder
+    var getByGlob = function (globs, cb) {
+      var urls = []
+      grunt.file.expand({ filter: 'isFile' }, globs).forEach(function (url) {
+        var parts = url.split(path.sep);
+        if (/jsx\.js$/.test(url)) {
+          url = url.replace(/^/, 'es6!');
+        }
+        url = url.replace('src/', '').replace(/\.js$/, '');
+        urls.push(url);
+        cb && cb(url, parts[3]);
+      });
+      return urls;
+    };
+
+    var writeOutConfig = function (config) {
+      var output = '// GENERATED FILE (edits will be overwritten)\n\n' +
+        'module.exports =\n' + JSON.stringify(config, null, 2) + ';'
+      fullConfig = config;
+      grunt.file.write(path.resolve(__dirname, 'requirejs.js'), output);
+      grunt.log.writeln('Configuration Generated...');
+    };
+
+    grunt.registerTask('generateConfig', function () {
+      var config = {};
+      var addConfig = function (name, cfg) {
+        config[name] = {};
+        config[name].options = _.extend({}, baseConfig, {
+          name: name + '.bundle',
+          out: 'build/' + name + '.bundle.js'
+        }, cfg);
+      }
+
+      addConfig('analytics', {
+        include: [
+          'analytics'
+        ]
+      });
+
+      addConfig('app', {
+        include: [
+          'router',
+          'discovery.vars',
+          'js/apps/discovery/main',
+          'async',
+          'cache',
+          'babel',
+          'es6',
+          'hbs',
+          'immutable',
+          'jquery',
+          'jquery-querybuilder',
+          'mocha',
+          'redux-immutable',
+          'utils'
+        ].concat(getByGlob([
+          'src/js/apps/**/*.js',
+          'src/js/components/**/*.js',
+          'src/js/mixins/**/*.js',
+          'src/js/modules/**/*.js',
+          'src/js/bugutils/**/*.js',
+          'src/js/page_managers/**/*.js',
+          'src/js/services/**/*.js',
+          'src/js/widgets/**/*widget*.js',
+          'src/js/wraps/**/*.js',
+          '!src/js/apps/bumblebox/**/*',
+          '!src/js/components/analytics.js',
+          '!src/js/apps/discovery/router.js'
+        ])),
+        exclude: ['analytics']
+      });
+      writeOutConfig(config);
+    });
+
+    grunt.registerTask('generateHtmls', function () {
+      var files = [
+        'build/*.html',
+        '!build/google*',
+        '!build/shim*'
+      ];
+      var htmls = grunt.file.expand({ filter: 'isFile' }, files);
+      htmls.map(grunt.file.read).forEach(function (content, i) {
+        var file = htmls[i];
+        grunt.log.subhead('processhtml - ', file);
+        content = content.toString().replace(/discovery\.config/g, 'app.bundle');
+        grunt.file.write(file, content);
+        grunt.log.writeln('file "' + file + '" processed');
+      });
+    });
+
+    grunt.registerTask('applyIncludesToConfig', function () {
+      var content = grunt.file.read('build/discovery.config.js');
+      content = content.toString();
+      config = {};
+      config.bundles = _.reduce(fullConfig, function (acc, v) {
+        acc[v.options.name] = v.options.include;
+        return acc;
+      }, {});
+      var out = '//GENERATED: \nrequirejs.config(' + JSON.stringify(config, null, 2) + ');'
+      grunt.file.write('build/discovery.config.js', content + '\n' + out);
+      grunt.log.writeln('discovery.config.js updated with bundle information');
+    });
+
+    grunt.task.run('clean:build');
+    grunt.task.run('generateConfig');
+    grunt.task.run(['requirejs', 'copy:build']);
+    grunt.task.run('applyIncludesToConfig');
+    // grunt.task.run('generateHtmls');
+  });
+
+  return {
+    options: {},
+    release: {
+    }
+  };
+};
 
 // function (grunt) {
 
@@ -234,12 +370,12 @@
 //   grunt.file.write(path.resolve(__dirname, 'requirejs.js'), output);
 //   grunt.log.writeln('Configuration Generated...');
 
-//   // uncomment to get the generated output to place in discovery config
-//   // var mappedIncludes = {};
-//   // Object.keys(baseConfig).forEach(function (key) {
-//   //   mappedIncludes[key + '.bundle'] = baseConfig[key].options.include;
-//   // });
-//   // console.log(JSON.stringify(mappedIncludes, null, 2));
+  // uncomment to get the generated output to place in discovery config
+  // var mappedIncludes = {};
+  // Object.keys(baseConfig).forEach(function (key) {
+  //   mappedIncludes[key + '.bundle'] = baseConfig[key].options.include;
+  // });
+  // console.log(JSON.stringify(mappedIncludes, null, 2));
 
 //   return {};
 // }
