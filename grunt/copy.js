@@ -277,6 +277,21 @@ module.exports = function (grunt) {
       }]
     },
 
+    build: {
+      files: [{
+        cwd: 'src',
+        src: [
+          './styles/**/*',
+          './discovery.config.js',
+          './discovery.vars.js',
+          './*.html',
+          'libs/**/*'
+        ],
+        dest: 'build/',
+        expand: true
+      }]
+    },
+
     //give the concatenated file a cache busting hash
     bumblebee_app : {
       files : [{

@@ -18,6 +18,11 @@ module.exports = {
     SERVER_ENV: 'dev',
     TARGET: 'prod'
   },
+  build: {
+    NODE_ENV: 'development',
+    SERVER_ENV: 'build',
+    TARGET: 'prod'
+  },
   'release-prod': {
     NODE_ENV: 'production',
     SERVER_ENV: 'release',

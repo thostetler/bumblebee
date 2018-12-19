@@ -12,5 +12,11 @@ module.exports = {
       src: '**/*.js',
       dest: 'dist/js'
     }]
+  },
+  build: {
+    files: [{
+      src: 'build/app.built.js',
+      dest: 'build/app.built.js'
+    }]
   }
 };

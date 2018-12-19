@@ -39,6 +39,8 @@ let config = {
 
 if (process.env.SERVER_ENV === 'release') {
   config = Object.assign(config, { root: '/dist' });
+} else if (process.env.SERVER_ENV === 'build') {
+  config = Object.assign(config, { root: '/build' });
 }
 
 // serve the static assets

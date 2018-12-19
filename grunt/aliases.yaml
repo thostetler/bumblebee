@@ -13,6 +13,12 @@ server: 'server:dev'
     - 'env:dev'
     - 'express:server'
 
+'server:build':
+  description: 'local persisting server pointing to src/ and development api'
+  tasks:
+    - 'env:build'
+    - 'express:server'
+
 'server:dev:once':
   description: 'local run-once server pointing to /src and development api'
   tasks:
