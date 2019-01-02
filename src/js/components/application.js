@@ -149,7 +149,7 @@ define([
           promise = self._loadModules('plugins', plugins);
           if (promise) promises.push(promise);
         }
-  
+
         if (widgets) {
           promise = self._loadModules('widgets', widgets);
           if (promise) promises.push(promise);
@@ -170,7 +170,7 @@ define([
         }
       }
 
-      
+
 
       if (promises.length == 1) {
         promises.push(promise); // hack, so that $.when() always returns []
@@ -354,7 +354,7 @@ define([
       else {
         return run();
       }
-      
+
     },
 
 
@@ -471,7 +471,7 @@ define([
       var defer = $.Deferred();
       var self = this;
 
-      
+
       if (arguments.length > 1) {
         var w = {};
         var promises = [];
@@ -489,9 +489,9 @@ define([
             w[wName] = widget;
           }));
         });
-        $.when(promises).done(function() {
+        $.when.apply($, promises).done(function() {
           defer.resolve(w);
-        })
+        });
       } else if (name) {
         this._getWidget(name).done(function(widget) {
           defer.resolve(widget);
@@ -511,7 +511,7 @@ define([
         });
       }, 1);
 
-      
+
       return defer.promise();
     },
 
@@ -527,7 +527,7 @@ define([
         self.incrRefCount(cat, name);
         defer.resolve(w);
       });
-      
+
       return defer.promise();
     },
 
@@ -713,7 +713,7 @@ define([
         throw new Error(cat + ' cannot be lazy loaded, sorry');
       }
       var thing = placeholder.get(name);
-      
+
       if (thing == null) {
         defer.reject(name + ' does not exist');
       }

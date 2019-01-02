@@ -66,13 +66,15 @@ function ($, _,
        * @param app
        */
     assemble: function (app) {
-      if (this.assembled) return this.view.el;
+      if (this.assembled) {
+        return $.Deferred().resolve(this.view.el).promise();
+      }
+      this.view.render();
+      var $dd = $.Deferred();
 
       this.assembled = true;
-      this.view.render();
 
-      var self = this,
-        el;
+      var self = this, el;
       _.extend(self.widgetDoms, self.getWidgetsFromTemplate(self.view.$el));
       var promises = [];
 
@@ -87,40 +89,43 @@ function ($, _,
         // bad effects when widgets get loaded (slowly) and get inserted into the dom
         // after the whole thing was already rendered; do we want to make assemble
         // asynchronous and wait for all promises to finish?
-
-        var promise = app._getWidget(widgetName).done(function(widget) {
+        var widgetDefer = $.Deferred();
+        app._getWidget(widgetName).done(function(widget) {
           if (self.persistentWidgets && self.persistentWidgets.indexOf(widgetName) > -1) {
             // this increments the counter so the widget won't be de-referenced when this
             // page manager is disassembled
             app.incrRefCount('widget', widgetName);
           }
-  
+
           if (widget) {
             // maybe it is a page-manager (this is a security hole though!)
             if (widget.assemble) {
-              widget.assemble(app);
+              return widget.assemble(app);
             }
-  
+
             // in case the user passed data params on the dom element,
             // create props on the widget
             _.assign(widget, {
               componentParams: $(widgetDom).data()
             });
-  
-            // reducing unneccessary rendering
-            if (widget.getEl) {
-              el = widget.getEl();
-            } else {
-              el = widget.render().el;
-            }
+
+            // reducing unnecessary rendering
+            el = widget.getEl ? widget.getEl() : widget.render().el;
+
             $(self.widgetDoms[widgetName]).empty().append(el);
             self.widgets[widgetName] = widget;
+            widgetDefer.resolve(widget);
+          } else {
+            widgetDefer.reject();
           }
         });
 
-        promises.push(promise);
-        
+        promises.push(widgetDefer.promise());
       }, this);
+      $.when.apply($, promises).then(function () {
+        $dd.resolve(self.view.el);
+      });
+      return $dd.promise();
     },
 
     disAssemble: function (app) {
@@ -148,6 +153,8 @@ function ($, _,
     show: function (pageName) {
       var self = this;
 
+      console.log('show', pageName);
+
       if (!pageName) {
         this.showAll();
       } else {
@@ -168,6 +175,7 @@ function ($, _,
                 return; // skip widgets that are there only for debugging
               }
               $wcontainer.append(widget.el ? widget.el : widget.view.el);
+              console.log(widget);
 
               // set data props from the container on the widget
               _.assign(widget, {

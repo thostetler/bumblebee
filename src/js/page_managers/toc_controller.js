@@ -29,34 +29,37 @@ function (_, Marionette, BasicPageManagerController, TOCWidget, analytics) {
 
       if (this.assembled) return;
 
-      BasicPageManagerController.prototype.assemble.apply(this, arguments);
+      var promise = BasicPageManagerController.prototype.assemble.apply(this, arguments);
 
-      var tocTemplate = Marionette.getOption(this, 'TOCTemplate');
+      promise.then(_.bind(function () {
+        var tocTemplate = Marionette.getOption(this, 'TOCTemplate');
 
-      if (this.TOCEvents) {
-        // initiate the TOC view
-        this.widgets.tocWidget = new TOCWidget(
-          {
+        if (this.TOCEvents) {
+          // initiate the TOC view
+          this.widgets.tocWidget = new TOCWidget(
+            {
+              template: tocTemplate,
+              events: Marionette.getOption(this, 'TOCEvents'),
+              navConfig: Marionette.getOption(this, 'navConfig')
+            }
+          );
+        } else {
+          // initiate the TOC view
+          this.widgets.tocWidget = new TOCWidget({
             template: tocTemplate,
-            events: Marionette.getOption(this, 'TOCEvents'),
             navConfig: Marionette.getOption(this, 'navConfig')
-          }
-        );
-      } else {
-        // initiate the TOC view
-        this.widgets.tocWidget = new TOCWidget({
-          template: tocTemplate,
-          navConfig: Marionette.getOption(this, 'navConfig')
-        });
-      }
+          });
+        }
 
-      // insert the TOC nav view into its slot
-      this.view.$('.nav-container').append(this.widgets.tocWidget.render().el);
+        // insert the TOC nav view into its slot
+        this.view.$('.nav-container').append(this.widgets.tocWidget.render().el);
 
-      _.each(_.keys(this.widgets), function (w) {
-        this.listenTo(this.widgets[w], 'page-manager-event', _.bind(this.onPageManagerEvent, this, this.widgets[w]));
-        this.broadcast('page-manager-message', 'new-widget', w);
-      }, this);
+        _.each(_.keys(this.widgets), function (w) {
+          this.listenTo(this.widgets[w], 'page-manager-event', _.bind(this.onPageManagerEvent, this, this.widgets[w]));
+          this.broadcast('page-manager-message', 'new-widget', w);
+        }, this);
+      }, this));
+      return promise;
     },
 
 
@@ -105,6 +108,7 @@ function (_, Marionette, BasicPageManagerController, TOCWidget, analytics) {
     },
 
     setActive: function (widgetName, subView) {
+      var self = this;
       // now inform the widget of the subView to show
       if (subView && this.widgets[widgetName].setSubView instanceof Function) {
         this.widgets[widgetName].setSubView(subView);
@@ -112,7 +116,16 @@ function (_, Marionette, BasicPageManagerController, TOCWidget, analytics) {
       if (subView) {
         widgetName = widgetName + '__' + subView;
       }
-      this.widgets.tocWidget.collection.selectOne(widgetName);
+      if (Object.keys(self.widgets).length) {
+        this.widgets.tocWidget.collection.selectOne(widgetName);
+      } else {
+        (function check () {
+          if (Object.keys(self.widgets).length) {
+            return self.widgets.tocWidget.collection.selectOne(widgetName);
+          }
+          setTimeout(check, 100);
+        })();
+      }
     },
 
     onDestroy: function () {

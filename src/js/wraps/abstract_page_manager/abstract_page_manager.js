@@ -30,9 +30,12 @@ define([
     },
 
     assemble: function (app) {
-      PageManagerController.prototype.assemble.apply(this, arguments);
-      var storage = app.getObject('AppStorage');
-      if (storage && storage.hasCurrentQuery()) this.addQuery(storage.getCurrentQuery());
+      var promise = PageManagerController.prototype.assemble.apply(this, arguments);
+      promise.then(_.bind(function () {
+        var storage = app.getObject('AppStorage');
+        if (storage && storage.hasCurrentQuery()) this.addQuery(storage.getCurrentQuery());
+      }, this));
+      return promise;
     },
 
     addQuery: function (apiQuery) {

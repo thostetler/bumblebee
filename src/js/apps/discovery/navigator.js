@@ -106,14 +106,22 @@ function (
 
 
       this.set('ClassicSearchForm', function () {
-        app.getObject('MasterPageManager').show('LandingPage', ['ClassicSearchForm']);
-        app.getWidget('LandingPage').done(function (widget) { widget.setActive('ClassicSearchForm'); });
+        app.getObject('MasterPageManager')
+        .show('LandingPage', ['ClassicSearchForm'])
+        .done(function () {
+          app.getWidget('LandingPage')
+          .done(function (widget) { widget.setActive('ClassicSearchForm'); });
+        });
         this.route = '#classic-form';
       });
 
       this.set('PaperSearchForm', function () {
-        app.getObject('MasterPageManager').show('LandingPage', ['PaperSearchForm']);
-        app.getWidget('LandingPage').done(function (widget) { widget.setActive('PaperSearchForm'); });
+        app.getObject('MasterPageManager')
+        .show('LandingPage', ['PaperSearchForm'])
+        .done(function () {
+          app.getWidget('LandingPage')
+          .done(function (widget) { widget.setActive('PaperSearchForm'); });
+        });
         this.route = '#paper-form';
       });
 
@@ -291,8 +299,9 @@ function (
 
       this.set('home-page', function () {
         app.getObject('MasterPageManager').show('HomePage',
-          []);
-        publishPageChange('home-page');
+          []).done(function () {
+            publishPageChange('home-page');
+          });
       });
 
       this.set('authentication-page', function (page, data) {
@@ -306,122 +315,124 @@ function (
         } else {
           this.route = '#user/account/' + subView;
           app.getObject('MasterPageManager').show('AuthenticationPage',
-            ['Authentication']);
-          app.getWidget('Authentication').done(function (w) {
-            w.setSubView(subView);
-          });
+            ['Authentication']).done(function () {
+              app.getWidget('Authentication').done(function (w) {
+                w.setSubView(subView);
+              });
+            });
         }
       });
 
       this.set('results-page', function (widget, args) {
         app.getObject('MasterPageManager').show('SearchPage',
-          searchPageAlwaysVisible);
-        // allowing widgets to override appstorage query (so far only used for orcid redirect)
-        var q = app.getObject('AppStorage').getCurrentQuery();
-        if (q && q.get('__original_url')) {
-          var route = '#search/' + q.get('__original_url');
-          q.unset('__original_url');
-        } else {
-          var route = '#search/' + queryUpdater.clean(q).url();
-        }
-
-        // update the pagination of the results widget
-        if (q instanceof ApiQuery) {
-          var update = {};
-          var par = function (str) {
-            if (_.isString(str)) {
-              try {
-                return parseInt(str);
-              } catch (e) {
-                // do nothing
-              }
+          searchPageAlwaysVisible).done(_.bind(function () {
+            // allowing widgets to override appstorage query (so far only used for orcid redirect)
+            var q = app.getObject('AppStorage').getCurrentQuery();
+            if (q && q.get('__original_url')) {
+              var route = '#search/' + q.get('__original_url');
+              q.unset('__original_url');
+            } else {
+              var route = '#search/' + queryUpdater.clean(q).url();
             }
-            return false;
-          };
 
-          if (q.has('p_')) {
-            var page = par(q.get('p_')[0]);
-            update.page = page;
-          } else {
-            route += '&p_=0';
-          }
+            // update the pagination of the results widget
+            if (q instanceof ApiQuery) {
+              var update = {};
+              var par = function (str) {
+                if (_.isString(str)) {
+                  try {
+                    return parseInt(str);
+                  } catch (e) {
+                    // do nothing
+                  }
+                }
+                return false;
+              };
 
-          if (!_.isEmpty(update)) {
-            app.getWidget('Results').then(function (w) {
-              if (_.isFunction(w.updatePagination)) {
-                w.updatePagination(update);
+              if (q.has('p_')) {
+                var page = par(q.get('p_')[0]);
+                update.page = page;
+              } else {
+                route += '&p_=0';
               }
-            });
-          }
-        }
 
-        // taking care of inserting bigquery key here, not sure if right place
-        // clean(q) above got rid of qid key, reinsert it
-        if (q && q.get('__qid')) {
-          route += ('&__qid=' + q.get('__qid')[0]);
-        }
+              if (!_.isEmpty(update)) {
+                app.getWidget('Results').then(function (w) {
+                  if (_.isFunction(w.updatePagination)) {
+                    w.updatePagination(update);
+                  }
+                });
+              }
+              // taking care of inserting bigquery key here, not sure if right place
+              // clean(q) above got rid of qid key, reinsert it
+              if (q && q.get('__qid')) {
+                route += ('&__qid=' + q.get('__qid')[0]);
+              }
 
-        this.route = route;
-        publishFeedback({ code: ApiFeedback.CODES.UNMAKE_SPACE });
+              this.route = route;
+              publishFeedback({ code: ApiFeedback.CODES.UNMAKE_SPACE });
+            }
+          }, this));
       });
 
       this.set('export', function (nav, options) {
         var format = options.format || 'bibtex';
         var storage = app.getObject('AppStorage');
-
+        var self = this;
         app.getObject('MasterPageManager').show('SearchPage',
-          ['ExportWidget'].concat(searchPageAlwaysVisible.slice(1)));
+          ['ExportWidget'].concat(searchPageAlwaysVisible.slice(1)))
+          .done(function () {
+            app.getWidget('ExportWidget').done(function (widget) {
+              // classic is a special case, it opens in a new tab
+              if (format === 'classic') {
+                if (options.onlySelected && storage.hasSelectedPapers()) {
+                  widget.openClassicExports({ bibcodes: storage.getSelectedPapers() });
+                } else {
+                  widget.openClassicExports({ currentQuery: storage.getCurrentQuery() });
+                }
+                return;
+              } if (format === 'authoraff') {
+                if (options.onlySelected && storage.hasSelectedPapers()) {
+                  widget.getAuthorAffForm({ bibcodes: storage.getSelectedPapers() });
+                } else {
+                  widget.getAuthorAffForm({ currentQuery: storage.getCurrentQuery() });
+                }
+                return;
+              }
 
-        app.getWidget('ExportWidget').done(function (widget) {
-          // classic is a special case, it opens in a new tab
-          if (format === 'classic') {
-            if (options.onlySelected && storage.hasSelectedPapers()) {
-              widget.openClassicExports({ bibcodes: storage.getSelectedPapers() });
-            } else {
-              widget.openClassicExports({ currentQuery: storage.getCurrentQuery() });
-            }
-            return;
-          } if (format === 'authoraff') {
-            if (options.onlySelected && storage.hasSelectedPapers()) {
-              widget.getAuthorAffForm({ bibcodes: storage.getSelectedPapers() });
-            } else {
-              widget.getAuthorAffForm({ currentQuery: storage.getCurrentQuery() });
-            }
-            return;
-          }
+              // first, open central panel
+              publishFeedback({ code: ApiFeedback.CODES.MAKE_SPACE });
 
-          // first, open central panel
-          publishFeedback({ code: ApiFeedback.CODES.MAKE_SPACE });
-
-          // is a special case, it opens in a new tab
-          if (options.onlySelected && storage.hasSelectedPapers()) {
-            widget.renderWidgetForListOfBibcodes(storage.getSelectedPapers(), { format: format });
-          }
-          // all records specifically requested
-          else if (options.onlySelected === false && storage.hasCurrentQuery()) {
-            widget.renderWidgetForCurrentQuery({
-              format: format,
-              currentQuery: storage.getCurrentQuery(),
-              numFound: storage.get('numFound')
+              // is a special case, it opens in a new tab
+              if (options.onlySelected && storage.hasSelectedPapers()) {
+                widget.renderWidgetForListOfBibcodes(storage.getSelectedPapers(), { format: format });
+              }
+              // all records specifically requested
+              else if (options.onlySelected === false && storage.hasCurrentQuery()) {
+                widget.renderWidgetForCurrentQuery({
+                  format: format,
+                  currentQuery: storage.getCurrentQuery(),
+                  numFound: storage.get('numFound')
+                });
+              }
+              // no request for selected or not selected, show selected
+              else if (options.onlySelected === undefined && storage.hasSelectedPapers()) {
+                widget.renderWidgetForListOfBibcodes(storage.getSelectedPapers(), { format: format });
+              }
+              // no selected, show all papers
+              else if (storage.hasCurrentQuery()) {
+                widget.exportQuery({
+                  format: format,
+                  currentQuery: storage.getCurrentQuery(),
+                  numFound: storage.get('numFound')
+                });
+              } else {
+                var alerts = app.getController('AlertsController');
+                alerts.alert({ msg: 'There are no records to export yet (please search or select some)' });
+                self.get('results-page')();
+              }
             });
-          }
-          // no request for selected or not selected, show selected
-          else if (options.onlySelected === undefined && storage.hasSelectedPapers()) {
-            widget.renderWidgetForListOfBibcodes(storage.getSelectedPapers(), { format: format });
-          }
-          // no selected, show all papers
-          else if (storage.hasCurrentQuery()) {
-            widget.exportQuery({
-              format: format,
-              currentQuery: storage.getCurrentQuery(),
-              numFound: storage.get('numFound')
-            });
-          } else {
-            var alerts = app.getController('AlertsController');
-            alerts.alert({ msg: 'There are no records to export yet (please search or select some)' });
-            this.get('results-page')();
-          }
-        });
+          });
       });
 
       this.set('export-query', function () {
