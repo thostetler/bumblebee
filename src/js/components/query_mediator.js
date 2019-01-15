@@ -264,6 +264,12 @@ function (
 
       if (this.__searchCycle.running && this.__searchCycle.waiting && _.keys(this.__searchCycle.waiting)) {
         console.error('The previous search cycle did not finish, and there already comes the next!');
+
+        // in this case, we have pending requests that are now unusable,
+        // add them to the stale request cache
+        var sc = this.__searchCycle;
+        var reqs = _.map(_.extend({}, sc.waiting, sc.inprogress), 'request');
+        this.__staleRequests = this.__staleRequests ? this.__staleRequests.concat(reqs) : reqs;
       }
 
       this.reset();
@@ -295,6 +301,33 @@ function (
         setTimeout(startExecuting, this.shortDelayInMs) : startExecuting();
     },
 
+    /**
+     * Returns true if the request is present in the stale requests cache
+     *
+     * Requests in the cache were pending during the execution of a subsequent
+     * search cycle, meaning we probably want to ignore the results.
+     * @param {ApiRequest} request
+     */
+    __isStaleRequest: function (request) {
+      var getKey = _.bind(this._getCacheKey, this);
+      var staleReqs = this.__staleRequests;
+
+      if (_.isEmpty(staleReqs)) {
+        return false;
+      }
+
+      // find the first index that matches
+      var idx = _.indexOf(staleReqs, function (req, i) {
+        return getKey(req) === getKey(request);
+      });
+      if (!!idx) {
+
+        // if found, remove that request from the list
+        staleReqs = staleReqs.slice(0, idx).concat(staleReqs.slice(idx + 1));
+      }
+
+      return !!idx
+    },
 
     /**
        * Starts executing queries from the search cycle
@@ -346,6 +379,11 @@ function (
 
       this._executeRequest(data.request, data.key)
         .done(function (response, textStatus, jqXHR) {
+
+          // ignore if the request is stale
+          if (self.__isStaleRequest(data.request)) {
+            return;
+          }
           cycle.done[firstReqKey] = data;
           delete cycle.inprogress[firstReqKey];
 
@@ -382,6 +420,11 @@ function (
                   delete cycle.inprogress[psk];
                 })
                 .always(function () {
+
+                  // ignore if the request is stale
+                  if (self.__isStaleRequest(data.request)) {
+                    return;
+                  }
                   if (cycle.finished) return;
 
                   if (_.isEmpty(cycle.inprogress)) {
@@ -405,6 +448,11 @@ function (
           }
         })
         .fail(function (jqXHR, textStatus, errorThrown) {
+
+          // ignore if the request is stale
+          if (self.__isStaleRequest(data.request)) {
+            return;
+          }
           self.__searchCycle.error = true;
           ps.publish(ps.FEEDBACK, new ApiFeedback({
             code: ApiFeedback.CODES.SEARCH_CYCLE_FAILED_TO_START,
@@ -527,9 +575,8 @@ function (
         },
         [{ status: ApiFeedback.CODES.TOO_MANY_FAILURES }, 'Error', 'This request has reached maximum number of failures (wait before retrying)']);
         var d = $.Deferred();
-        return d.reject();
+        return d.reject().promise();
       }
-
 
       if (this._cache) {
         var resp = this._cache.getSync(requestKey);
@@ -600,6 +647,11 @@ function (
 
       // TODO: check the status responses
 
+      // ignore if the request is stale
+      if (qm.__isStaleRequest(this.request)) {
+        return;
+      }
+
       var response = (data.responseHeader && data.responseHeader.params) ? new ApiResponse(data) : new JsonResponse(data);
 
       response.setApiQuery(this.request.get('query'));
@@ -613,7 +665,7 @@ function (
 
       var pubsub = qm.getBeeHive().getService('PubSub'); // we cant use getPubSub() as we are sending the key
 
-      if (pubsub) pubsub.publish(this.key, pubsub.DELIVERING_RESPONSE + this.key.getId(), response);
+      pubsub && pubsub.publish(this.key, pubsub.DELIVERING_RESPONSE + this.key.getId(), response);
 
       if (qm.failedRequestsCache.getIfPresent(this.requestKey)) {
         qm.failedRequestsCache.invalidate(this.requestKey);
@@ -625,6 +677,11 @@ function (
       var query = this.request.get('query');
       if (qm.debug) {
         console.warn('[QM]: request failed', jqXHR, textStatus, errorThrown);
+      }
+
+      // ignore if the request is stale
+      if (qm.__isStaleRequest(this.request)) {
+        return;
       }
 
       var errCount = qm.failedRequestsCache.getSync(this.requestKey) || 0;
