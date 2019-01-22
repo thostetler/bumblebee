@@ -136,6 +136,7 @@ function (
     onMakeSpace: function () {
       var pubsub = this.getPubSub();
       var code = this.model.get('makeSpace') ? 'MAKE_SPACE' : 'UNMAKE_SPACE';
+      console.log('PUBLISHING: ', code);
       pubsub.publish(pubsub.FEEDBACK, new ApiFeedback({ code: ApiFeedback.CODES[code] }));
     },
 
@@ -155,7 +156,6 @@ function (
         this.view.collection.reset(this.hiddenCollection.getVisibleModels());
       }
       this.updateMinAuthorsFromUserData();
-      this.updateSidebarsFromUserData();
     },
 
     onCustomEvent: function (event) {
@@ -167,7 +167,9 @@ function (
     },
 
     dispatchRequest: function (apiQuery) {
+      var makeSpace = this.model.get('makeSpace');
       this.reset();
+      this.model.set('makeSpace', makeSpace);
       this.setCurrentQuery(apiQuery);
       ListOfThingsWidget.prototype.dispatchRequest.call(this, apiQuery);
     },
@@ -221,23 +223,6 @@ function (
       }
     },
 
-    updateSidebarsFromUserData: _.debounce(function () {
-      var userData = this.getUserData();
-
-      // grab the negated current value
-      var makeSpace = !this.model.get('makeSpace') ? 'SHOW' : 'HIDE';
-
-      // get the state from user data or take the current value
-      var sideBarsState = (_.has(userData, 'defaultHideSidebars') ?
-        userData.defaultHideSidebars : makeSpace).toUpperCase();
-
-      // compare them, we don't have to update if nothing is changing
-      if (makeSpace !== sideBarsState) {
-        this.model.set('makeSpace', sideBarsState === 'HIDE');
-        this.model.trigger('change:makeSpace');
-      }
-    }, 300),
-
     processDocs: function (apiResponse, docs, paginationInfo) {
       var params = apiResponse.get('responseHeader.params');
       var start = params.start || 0;
@@ -247,7 +232,6 @@ function (
       var userData = this.getBeeHive().getObject('User').getUserData('USER_DATA');
       var link_server = userData.link_server;
       this.updateMinAuthorsFromUserData();
-      this.updateSidebarsFromUserData();
 
       var appStorage = null;
       if (this.hasBeeHive() && this.getBeeHive().hasObject('AppStorage')) {
