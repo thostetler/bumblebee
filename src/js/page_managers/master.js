@@ -92,6 +92,7 @@ define([
       // scroll to top
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       $('#app-container').scrollTop(0);
+
       // and fix the search bar back in its default spot
       $('.s-search-bar-full-width-container').removeClass('s-search-bar-motion');
       $('.s-quick-add').removeClass('hidden');
@@ -150,21 +151,21 @@ define([
           // it's already selected, trigger a change within the manager
           self.view.changeWithinManager();
         }
-  
+
         var previousPMName = self.currentChild;
         self.currentChild = pageManagerName;
-  
+
         // disassemble the old one (behind the scenes)
         if (previousPMName && previousPMName != pageManagerName) {
           var oldPM = self.collection.find({ id: previousPMName });
-  
+
           if (oldPM && oldPM.get('object')) {
             oldPM.set('numDetach', oldPM.get('numDetach') + 1);
             //XXX:rca - widgets are disappearing, probably must call incrCounter separately
             //oldPM.get('object').disAssemble(app);
           }
         }
-  
+
         self.getPubSub().publish(self.getPubSub().ARIA_ANNOUNCEMENT, pageManagerName);
         defer.resolve();
       }
@@ -175,8 +176,8 @@ define([
         activatePage(pageManagerModel.get('object'));
         return defer.promise();
       }
-      
-      
+
+
       app._getWidget(pageManagerName).done(function(pageManagerWidget) { // will throw error if not there
         pageManagerModel.set('object', pageManagerWidget);
         if (!pageManagerWidget) { console.error('unable to find page manager: ' + pageManagerName); }
@@ -190,11 +191,11 @@ define([
             console.error('eeeek, ' + pageManagerName + ' has no assemble() method!');
             defer.reject();
         }
-  
-        
-      }); 
+
+
+      });
       return defer.promise();
-      
+
     },
 
     // used by discovery mediator

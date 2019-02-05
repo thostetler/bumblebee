@@ -7,7 +7,8 @@ define([
   'js/widgets/base/base_widget',
   './three_column_view',
   './view_mixin',
-  'js/mixins/dependon'
+  'js/mixins/dependon',
+  'hbs!js/wraps/widget/loading/template'
 ],
 function ($, _,
   Marionette,
@@ -16,7 +17,8 @@ function ($, _,
   BaseWidget,
   ThreeColumnView,
   PageManagerViewMixin,
-  Dependon
+  Dependon,
+  LoadingTemplate
 ) {
   var PageManagerController = BaseWidget.extend({
 
@@ -72,6 +74,22 @@ function ($, _,
         return defer.promise();
       }
 
+      $('.dynamic-container').css({
+        minHeight: 800
+      });
+      setTimeout(function () {
+        $('.dynamic-container').html(function (i, html) {
+          console.log(html.length);
+          if (!html.length) {
+            return LoadingTemplate({
+              widgetLoadingSize: 'big',
+              hideCloseButton: true,
+              type: 'cube'
+            });
+          }
+        });
+      }, 500);
+
       this.assembled = true;
       this.view.render();
 
@@ -98,7 +116,7 @@ function ($, _,
             // page manager is disassembled
             app.incrRefCount('widget', widgetName);
           }
-  
+
           if (widget) {
             // maybe it is a page-manager (this is a security hole though!)
             if (widget.assemble) {
@@ -108,14 +126,14 @@ function ($, _,
                 _.assign(widget, {
                   componentParams: $(widgetDom).data()
                 });
-      
+
                 // reducing unneccessary rendering
                 if (widget.getEl) {
                   el = widget.getEl();
                 } else {
                   el = widget.render().el;
                 }
-                $(self.widgetDoms[widgetName]).empty().append(el);
+                $(self.widgetDoms[widgetName]).append(el);
               })
             }
             else {
@@ -125,15 +143,15 @@ function ($, _,
               } else {
                 el = widget.render().el;
               }
-              $(self.widgetDoms[widgetName]).empty().append(el);
+              $(self.widgetDoms[widgetName]).append(el);
             }
             self.widgets[widgetName] = widget;
-            
+
           }
         });
 
         promises.push(promise);
-        
+
       }, this);
 
       var bigPromise = $.when.apply($, promises)
@@ -145,6 +163,10 @@ function ($, _,
           if (arguments.length) console.error(arguments);
           defer.reject();
         });
+
+      defer.promise().done(function () {
+        $('.loading-container', '.dynamic-container').remove();
+      });
       return defer.promise();
     },
 
