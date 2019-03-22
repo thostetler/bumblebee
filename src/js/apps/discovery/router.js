@@ -64,7 +64,7 @@ function (
       var options = options || {};
       // this tells navigator not to create 2 history entries, which causes
       // problems with the back button
-      _.extend({ replace: false }, options);
+      _.extend(options, { replace: false });
       this.getPubSub().publish(this.getPubSub().NAVIGATE, route, options);
     },
 

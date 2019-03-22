@@ -192,7 +192,7 @@ function (
               app.getWidget('SettingsPage').done(function (widget) {
                 widget.setActive(widgetName, subView);
               });
-
+              that.replace = true;
               that.route = '#user/settings/' + subView;
               that.title = 'Settings' + (title ? ' | ' + title : '');
               publishPageChange('settings-page');
@@ -260,7 +260,7 @@ function (
         // {subView: subView, id: id, publicView : false}
 
         data.publicView = data.publicView ? data.publicView : false;
-        this.route = data.publicView ? '#/public-libraries/' + data.id : '#user/libraries/' + data.id;
+        this.route = data.publicView ? '#public-libraries/' + data.id : '#user/libraries/' + data.id;
 
         var pub = data.publicView;
 
@@ -347,7 +347,7 @@ function (
               app.getObject('MasterPageManager').show('PublicLibrariesPage',
                 ['IndividualLibraryWidget', widgetName]).then(function() {
                   renderLibrarySub(id).done(function() {
-                    that.route = '#/public-libraries/' + data.id; // XXX:rca - i think this should be that.route
+                    that.route = '#public-libraries/' + data.id; // XXX:rca - i think this should be that.route
                     defer.resolve();
                   })
                 })
@@ -381,8 +381,8 @@ function (
         app.getObject('MasterPageManager').show('HomePage',
           []).then(function() {
             publishPageChange('home-page');
-            that.title = '';
-            that.route = '';
+            that.title = 'My Account';
+            that.route = '#user/home';
             defer.resolve();
           })
         return defer.promise();
