@@ -22,6 +22,7 @@ define([
     // when someone clicks on submit button
     // parent views/controllers need to listen for "submit-form" event
     triggerSubmit: function (e) {
+      e.preventDefault();
       // (only show error messages if submit == true), so once user has unsuccessfully
       // submitted 1 time
       // don't need to reset because view will be disposed of after successful submit event
