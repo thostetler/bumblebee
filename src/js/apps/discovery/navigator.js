@@ -320,13 +320,18 @@ function (
               } else {
                 // XXX - this was async in the original version; likely wrong
                 // one block should be main...
-                app.getWidget(widgetName).done(function (widget) {
-                  widget.renderWidgetForListOfBibcodes(bibcodes, additional);
-                  defer.resolve();
-                });
-                app.getWidget('IndividualLibraryWidget').done(function (widget) {
-                  widget.setSubView({ subView: subView, publicView: publicView, id: id });
-                  defer.resolve();
+                app.getWidget('LibraryListWidget').done(function (listWidget) {
+                  app.getWidget(widgetName).done(function (subWidget) {
+                    var additional = _.extend({}, additional, {
+                      sort: listWidget.model.get('sort')
+                    });
+                    subWidget.renderWidgetForListOfBibcodes(bibcodes, additional);
+                    app.getWidget('IndividualLibraryWidget').done(function (libWidget) {
+                      console.log(subWidget);
+                      libWidget.setSubView({ subView: subView, publicView: publicView, id: id });
+                      defer.resolve();
+                    });
+                  });
                 });
               }
             });

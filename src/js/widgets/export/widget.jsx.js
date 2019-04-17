@@ -231,7 +231,7 @@ define([
     renderWidgetForListOfBibcodes: function (recs, data) {
       const { dispatch } = this.store;
       const {
-        receiveIds, findAndSetFormat, fetchUsingIds, hardReset,
+        receiveIds, findAndSetFormat, fetchUsingIds, hardReset, setSort,
         setCount, setTotalRecs, takeSnapshot, setOrigin, setCustomFormats
       } = actions;
 
@@ -246,6 +246,10 @@ define([
       dispatch(findAndSetFormat(format.toLowerCase()));
       dispatch(setCount(recs.length));
       dispatch(setTotalRecs(recs.length));
+
+      if (data.sort && _.isString(data.sort)) {
+        dispatch(setSort(data.sort));
+      }
 
       // only fetch using ids if user selected a format
       if (data.format !== 'other') {
