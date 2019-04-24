@@ -316,15 +316,25 @@ function (
         }
       });
 
-      $input.popover({
-        placement: 'bottom',
-        title: 'Empty Search!',
-        content: 'Please enter a query to search.',
-        animation: true,
-        trigger: 'manual'
-      });
-
       this.$('[data-toggle="tooltip"]').tooltip();
+    },
+
+    showPopover: function ($input, options) {
+      try {
+        $input.popover('enable');
+        $input.data('bs.popover').options = _.extend({}, $input.data('bs.popover').options, options);
+        $input.on('show.bs.popover', function () {
+          $(this).on('input.pop change.pop blur.pop', function () {
+            $(this).popover('hide');
+          });
+        });
+        $input.on('hide.bs.popover', function () {
+          $(this).off('input.pop').off('change.pop').off('blur.pop');
+        });
+        $input.popover('show');
+      } catch (e) {
+        return;
+      }
     },
 
     events: {
@@ -519,14 +529,15 @@ function (
       var $input = $('input', e.currentTarget);
       if (_.isString(query) && _.isEmpty(query) && !this.model.get('bigquery')) {
         // show a popup to tell the user to type in a query
-        $input.popover('show');
-        $input.on('input change blur', function () {
-          $(this).popover('hide');
+        this.showPopover($input, {
+          placement: 'bottom',
+          title: 'Empty Search!',
+          content: 'Please enter a query to search.',
+          animation: true,
+          trigger: 'manual'
         });
         return false;
       }
-      $input.popover('hide');
-
 
       // replace uppercased fields with lowercase
       query = query.replace(/([A-Z])\w+:/g, function (letter) { return letter.toLowerCase(); });
@@ -546,20 +557,20 @@ function (
       var validated = this.queryValidator.validate(newQuery);
       if (!validated.result) {
         var tokens = _.pluck(validated.tests, 'token');
-        tokens = (tokens.length > 1) ? tokens.join(', ') : tokens[0];
-        var pubsub = this.getPubSub();
-        pubsub.publish(pubsub.ALERT, new ApiFeedback({
-          code: 0,
-          msg: '<p><i class="fa fa-exclamation-triangle fa-2x" aria-hidden="true"></i> '
-              + 'Sorry! We aren\'t able to understand: <strong><i>' + tokens + '</i></strong></p>'
-              + '<p><strong><a href="/">Try looking at the search examples on the home page</a></strong> or '
-              + '<strong><a href="https://adsabs.github.io/help/search/search-syntax">reading our help page.</a></strong></p>',
-          type: 'info',
-          fade: true
-        }));
+        var mult = false;
+        if (_.isArray(tokens)) {
+          mult = tokens.length > 1;
+          tokens = tokens.join(', ');
+        }
+        this.showPopover($input, {
+          html: true,
+          title: `Invalid Field${mult ? 's' : ''}!`,
+          content: `Cannot process field${mult ? 's' : ''}: <code>${tokens}</code>`
+        });
         return false;
       }
       this.trigger('start_search', newQuery);
+      $input.popover('hide');
 
       // let analytics know what type of query it was
       fields = _.chain(autocompleteArray)
