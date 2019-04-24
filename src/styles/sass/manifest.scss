@@ -1,6 +1,7 @@
 
 $fa-font-path:        "//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts";  // for referencing Bootstrap CDN font files directly
 
+@import '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css';
 @import '../../libs/fontawesome/scss/font-awesome';
 @import '../../styles/smoothness/jquery-ui.min';
 @import '../../libs/select2/select2';

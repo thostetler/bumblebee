@@ -21,7 +21,8 @@
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "redux-immutable": "^4.0.0",
-    "requirejs": "^2.3.5"
+    "requirejs": "^2.3.5",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

@@ -34,6 +34,10 @@ define([
             .createLibrary({ name: name })
             .done(function (data) {
               that.getPubSub().publish(that.getPubSub().NAVIGATE, 'IndividualLibraryWidget', { sub: 'library', id: data.id });
+            })
+            .fail(function (err) {
+              alert('sdlfkj');
+              console.log('sldkfj', arguments);
             });
         }
         this.trigger('page-manager-event', 'apply-function', { func: createLib });

@@ -82,7 +82,7 @@ require.config({
         BreadcrumbsWidget: 'js/widgets/filter_visualizer/widget',
         NavbarWidget: 'js/widgets/navbar/widget',
         UserNavbarWidget: 'js/widgets/user_navbar/widget',
-        AlertsWidget: 'js/widgets/alerts/widget',
+        AlertsWidget: 'es6!js/widgets/alerts/widget',
         ClassicSearchForm: 'js/widgets/classic_form/widget',
         SearchWidget: 'js/widgets/search_bar/search_bar_widget',
         PaperSearchForm: 'js/widgets/paper_search_form/widget',
@@ -248,6 +248,9 @@ require.config({
       '//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui.min',
       'libs/jqueryui/jquery-ui'
     ],
+    'jquery-confirm': [
+      '//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min'
+    ],
     'jsonpath': [
       '//cdn.jsdelivr.net/npm/jsonpath@0.2.12/jsonpath.min',
       'libs/jsonpath/jsonpath'
@@ -309,6 +312,9 @@ require.config({
     'sprintf': [
       '//cdnjs.cloudflare.com/ajax/libs/sprintf/1.0.2/sprintf.min',
       'libs/sprintf/sprintf'
+    ],
+    'toastr': [
+      '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min'
     ],
     'utils': 'js/utils',
     'reselect': [
@@ -387,6 +393,10 @@ require.config({
 
     'redux-immutable': {
       deps: ['immutable']
+    },
+
+    'toastr': {
+      exports: 'toastr'
     }
   }
 });
