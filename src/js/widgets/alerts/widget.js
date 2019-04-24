@@ -13,11 +13,15 @@ define([
   class Toastr {
     constructor(options) {
       this.toast = toastr;
-      this.setOptions(options);
+      this.setOptions({
+        ...options,
+        progressBar: true,
+        closeButton: true,
+        newestOnTop: true
+      });
     }
     setOptions(options) {
       this.toast.options = { ...this.toast.options, ...options };
-      console.log(this.toast.options);
       return this;
     }
     show(type, msg) {
@@ -28,6 +32,22 @@ define([
       this.setOptions({ positionClass: 'toast-bottom-full-width' });
       this.show.apply(this, arguments);
       return this;
+    }
+    announcement() {
+      this.setOptions({ positionClass: 'toast-bottom-full-width' });
+      this.show.apply(this, arguments);
+      return this;
+    }
+    default() {
+      this.setOptions({ positionClass: 'toast-top-right' });
+      this.show.apply(this, arguments);
+      return this;
+    }
+    modal() {
+      console.log('modal');
+    }
+    confirm() {
+      console.log('confirm');
     }
   }
 
@@ -43,8 +63,16 @@ define([
       ps.subscribe(ps.ALERT, this.onAlert.bind(this));
     },
     onAlert: function (feedback) {
+      const options = _.defaults(feedback, {
+        style: 'default',
+        type: 'info'
+      });
+      if (!options.msg) {
+        throw new Error('Alert is missing message');
+      }
+
       console.log('alert', this, arguments);
-      this.toast.banner(feedback.type, feedback.msg);
+      this.toast[options.style](feedback.type, feedback.msg);
     }
   });
 
