@@ -16,19 +16,21 @@ module.exports = function (grunt) {
     const prefix = 'http://localhost:8000';
     const pages = [
       '/',
-      '/abstract',
+      '/classic-form',
+      '/paper-form',
+      '/abs/2014A%26A...569A.111B/abstract',
       '/search/q=star&sort=date desc,bibcode desc',
       '/public-libraries/d9O0aqd2SreUVeK67XX8rw'
     ];
-    const output = pages.reduce(async (out, p) => {
+    let output = '<html><head></head><body>';
+    for(let p of pages) {
       await page.goto(prefix + p, { waitUntil: 'networkidle0' });
-      out += await page.evaluate(() => document.querySelector('body').innerHTML);
-      return out;
-    }, '');
+      output += await page.evaluate(() => document.querySelector('body').innerHTML);
+      console.log('route: [', p, '] DONE');
+    }
+    output += '</body></html>';
 
-    fs.writeFile(path.resolve(__dirname, '../_tmp/out.html'), output, () => {
-      console.log('file written');
-    });
+    grunt.file.write(path.resolve(__dirname, '../_tmp/critical/concatenated.html'), output);
     await browser.close();
     done();
   });

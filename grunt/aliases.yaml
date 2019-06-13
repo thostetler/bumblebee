@@ -111,6 +111,7 @@ release:
     - 'optimize-build'
     - 'string-replace:final'
     - 'cssmin'
+    - 'imageEmbed:release'
     - 'htmlmin'
     - 'sw-precache'
     - 'exec:git_current_version'
