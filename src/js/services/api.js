@@ -40,6 +40,43 @@ function (
       this.setBeeHive(beehive);
     },
 
+    refresh: function () {
+      const { client_id, client_secret, refresh_token, expire_in } = this;
+
+      if (client_id && client_secret && refresh_token && expire_in) {
+        if (this.isExpired()) {
+          const opts = {
+            'url': 'https://devapi.adsabs.harvard.edu/v1/accounts/bootstrap',
+            'method': 'GET',
+            'headers': {
+              'Accept': 'application/json, text/javascript, */*; q=0.01',
+              'Authorization': '',
+              'grant_type': 'refresh_token',
+              'refresh_token': 'blyycFOa9oa0jXPprmEdTF8EuiF53B0U7jr9ayor',
+              'client_id': 'k5ZvRjJJbN7e8QPS31nFuBAu3thbIjFjI2eKC9cb',
+              'client_secret': 'Kp1cRn0e6f3rVz1YvYqR3pB55mReAuJpVIXk9L04jp4iyiQ04hnkVDqTWWcI'
+            }
+          };
+
+          return $.ajax(opts);
+        }
+      }
+      return $.Deferred().reject().promise();
+    },
+
+    /**
+     * returns true if the token expiration is less than 2 minutes
+     */
+    isExpired: function (dateString) {
+      if (dateString) {
+        const now = Moment().utc();
+        const expires = Moment.utc(dateString);
+        const diff = now.diff(expires, 'minutes');
+        return diff > -2;
+      }
+      throw 'no token expire data';
+    },
+
     done: function (data, textStatus, jqXHR) {
       // TODO: check the status responses
       var response = new ApiResponse(data);
@@ -226,19 +263,16 @@ function (
   };
 
   Api.prototype.request = function (request, options) {
-    var that = this;
-    var refreshRetries = 3;
-    var refreshToken = function () {
-      var d = $.Deferred();
-      var req = that.getApiAccess({ tokenRefresh: true, reconnect: true });
-      req.done(function () {
-        d.resolve(that._request(request, options));
+    var refreshToken = () => {
+      const $dd = $.Deferred();
+      var req = this.getApiAccess({ tokenRefresh: true, reconnect: true });
+      req.done(() => {
+        $dd.resolve(this._request(request, options));
       });
-      req.fail(function () {
-        (--refreshRetries > 0)
-          ? _.delay(refreshToken, 1000) : d.reject.apply(d, arguments);
-      });
-      return d.promise();
+      req.fail((...args) => {
+        $dd.reject.apply($dd, args);
+      })
+      return $dd.promise();
     };
 
     if (!this.expire_in) {

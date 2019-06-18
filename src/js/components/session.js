@@ -106,7 +106,9 @@ define([
     },
 
     logout: function () {
+      const isCalled = false;
       this.sendRequestWithNewCSRF(function (csrfToken) {
+        isCalled = true;
         var request = new ApiRequest({
           target: ApiTargets.LOGOUT,
           query: new ApiQuery({}),
@@ -120,6 +122,12 @@ define([
         });
         return this.getBeeHive().getService('Api').request(request);
       });
+
+      setTimeout(() => {
+        if (!isCalled) {
+          this.logoutSuccess();
+        }
+      }, 3000);
     },
 
     register: function (data) {
@@ -218,11 +226,11 @@ define([
     },
 
     logoutSuccess: function (response, status, jqXHR) {
-      var that = this;
-      this.getApiAccess({ reconnect: true }).done(function () {
+      const finishLogout = () => {
         // set session state to logged out
-        that.getBeeHive().getObject('User').completeLogOut();
-      });
+        this.getBeeHive().getObject('User').completeLogOut();
+      }
+      this.getApiAccess({ reconnect: true }).always(finishLogout);
     },
 
     registerSuccess: function (response, status, jqXHR) {
