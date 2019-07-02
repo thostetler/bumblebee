@@ -304,14 +304,14 @@ function (
           if ($('#landing-page-layout').length > 0) {
             return;
           }
-          // navbar is currently 40 px height
-          if ($(window).scrollTop() > 50) {
-            $('.s-quick-add').addClass('hidden');
-            $('.s-search-bar-full-width-container').addClass('s-search-bar-motion');
-          } else {
-            $('.s-search-bar-full-width-container').removeClass('s-search-bar-motion');
-            $('.s-quick-add').removeClass('hidden');
-          }
+          // // navbar is currently 40 px height
+          // if ($(window).scrollTop() > 50) {
+          //   $('.s-quick-add').addClass('hidden');
+          //   $('.s-search-bar-full-width-container').addClass('s-search-bar-motion');
+          // } else {
+          //   $('.s-search-bar-full-width-container').removeClass('s-search-bar-motion');
+          //   $('.s-quick-add').removeClass('hidden');
+          // }
         });
         defer.resolve();
       });

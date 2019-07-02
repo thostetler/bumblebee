@@ -89,6 +89,7 @@ function (
 
     initialize: function (options) {
       this.model = new MainViewModel();
+      this.listenTo(this.model, 'change', _.debounce(_.bind(this.render), 128));
     },
 
     serializeData: function () {
@@ -183,7 +184,6 @@ function (
     },
 
     modelEvents: {
-      'change': 'render',
       'change:showHighlights': 'toggleChildrenHighlights',
       'change:showAbstract': 'toggleChildrenAbstracts'
     },

@@ -116,6 +116,8 @@ define([
         // for testing
         this.template = function () { return ''; };
       }
+
+      this.listenTo(this.model, 'change', _.debounce(_.bind(this.render), 128));
     },
 
     // or else controller will detach, and then never put it back
@@ -167,8 +169,7 @@ define([
     },
 
     modelEvents: {
-      'change:bibcode': 'resetActiveStates',
-      'change': 'render'
+      'change:bibcode': 'resetActiveStates'
     },
 
     collectionEvents: {

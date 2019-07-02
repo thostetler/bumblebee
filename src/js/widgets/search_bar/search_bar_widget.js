@@ -124,15 +124,12 @@ function (
       _.bindAll(this, 'fieldInsert');
       this.queryValidator = new QueryValidator();
       this.defaultDatabases = [];
+
+      this.listenTo(this.model, 'change', _.debounce(_.bind(this.render), 128));
     },
 
     activate: function (beehive) {
       this.setBeeHive(beehive);
-      var that = this;
-    },
-
-    modelEvents: {
-      change: 'render'
     },
 
     onRender: function () {
@@ -148,7 +145,6 @@ function (
       }
 
       var $select = this.$('.quick-add-dropdown');
-
       $select.select2({
         placeholder: 'All Search Terms',
         matcher: oldMatcher(matchStart)

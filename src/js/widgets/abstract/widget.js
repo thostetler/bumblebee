@@ -169,8 +169,8 @@ function (
 
     className: 's-abstract-metadata',
 
-    modelEvents: {
-      change: 'render'
+    initialize: function () {
+      this.listenTo(this.model, 'change', _.debounce(_.bind(this.render), 128));
     },
 
     template: abstractTemplate,

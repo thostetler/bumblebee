@@ -236,7 +236,7 @@ require.config({
     'hbs': 'libs/require-handlebars-plugin/hbs',
     'immutable': 'libs/immutable/index',
     'jquery': [
-      '//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min',
+      '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min',
       'libs/jquery/jquery'
     ],
     'jquery-querybuilder': 'libs/jQuery-QueryBuilder/query-builder',

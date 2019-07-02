@@ -10,5 +10,6 @@
       },
       "modules": false
     }]
-  ]
+  ],
+  "plugins": ["transform-remove-console"]
 }
