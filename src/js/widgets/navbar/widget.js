@@ -291,9 +291,9 @@ define([
     },
 
     getOrcidUserInfo: function () {
-      var orcidApi = this.getBeeHive().getService('OrcidApi');
       // get the orcid username if applicable
-      if (this.model.get('orcidLoggedIn')) {
+      if (this.model.get('orcidLoggedIn') && this.model.get('orcidModeOn')) {
+        var orcidApi = this.getBeeHive().getService('OrcidApi');
         // set the orcid username into the model
         var that = this;
         orcidApi.getUserBio().done(function(bio) {

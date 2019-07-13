@@ -3,7 +3,7 @@ define(['utils'], function (utils) {
   const asyncLoad = {
     load: function (name, req, onload, config) {
 
-      // load our resource right away, don't wait for recaptcha to be ready
+      // load our resource right away, passing in our promise
       onload(utils.getResourceAsync(name));
     }
   };

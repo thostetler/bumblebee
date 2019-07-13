@@ -40,42 +40,31 @@
 
 define([
   'underscore',
-  'bootstrap',
   'jquery',
-  'backbone',
   'js/components/generic_module',
   'js/mixins/dependon',
-  'js/components/pubsub_events',
-  'js/mixins/link_generator_mixin',
   'js/components/api_query',
   'js/components/api_request',
   'js/mixins/hardened',
   'js/components/api_targets',
   'js/components/api_query_updater',
-  'js/components/api_feedback',
-  'js/modules/orcid/work',
-  'js/modules/orcid/profile',
-  'js/modules/orcid/bio'
+  'js/components/api_feedback'
 ],
 function (
   _,
-  Bootstrap,
   $,
-  Backbone,
   GenericModule,
   Mixins,
-  PubSubEvents,
-  LinkGeneratorMixin,
   ApiQuery,
   ApiRequest,
   HardenedMixin,
   ApiTargets,
   ApiQueryUpdater,
-  ApiFeedback,
-  Work,
-  Profile,
-  Bio
+  ApiFeedback
 ) {
+
+  var Work, Profile, Bio
+
   var OrcidApi = GenericModule.extend({
 
     /**
@@ -233,8 +222,21 @@ function (
           dd.reject();
       });
       request.done(function (bio) {
-        var orcidBio = new Bio(bio);
-        dd.resolve(orcidBio);
+
+        require([
+          'async-load!js/modules/orcid/work',
+          'async-load!js/modules/orcid/profile',
+          'async-load!js/modules/orcid/bio'
+        ], (...proms) => {
+          Promise.all(proms).then((res) => {
+            Work = res[0];
+            Profile = res[1];
+            Bio = res[2];
+            
+            var orcidBio = new Bio(bio);
+            dd.resolve(orcidBio);
+          });
+        });
       });
       return dd.promise();
     },

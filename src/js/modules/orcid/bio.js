@@ -1,9 +1,8 @@
 
 define([
   'underscore',
-  'jsonpath',
-  'js/modules/orcid/work'
-], function (_, jp, Work) {
+  'jsonpath'
+], function (_, jp) {
   var PATHS = {
     firstName: '$.name["given-names"].value',
     lastName: '$.name["family-name"].value',
