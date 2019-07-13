@@ -45,9 +45,23 @@ define([
     });
   };
 
+  const getResourceAsync = function (id, timeout = 10000) {
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => reject(), timeout);
+      require(_.isArray(id) ? id : [id], (...args) => {
+        window.clearTimeout(timeoutId);
+        resolve.apply(null, args);
+      }, () => {
+        window.clearTimeout(timeoutId);
+        reject();
+      });
+    })
+  }
+
   return {
     qs: qs,
     updateHash: updateHash,
-    difference: difference
+    difference: difference,
+    getResourceAsync: getResourceAsync
   };
 });
