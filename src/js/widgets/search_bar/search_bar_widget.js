@@ -16,7 +16,7 @@ define([
   'js/mixins/dependon',
   'analytics',
   'js/components/query_validator',
-  'select2',
+  'async-load!select2',
   'libs/select2/matcher'
 ],
 function (
@@ -37,7 +37,7 @@ function (
   Dependon,
   analytics,
   QueryValidator,
-  select2,
+  select2Promise,
   oldMatcher
 ) {
   $.fn.getCursorPosition = function () {
@@ -149,28 +149,32 @@ function (
 
       var $select = this.$('.quick-add-dropdown');
 
-      $select.select2({
-        placeholder: 'All Search Terms',
-        matcher: oldMatcher(matchStart)
-      })
-        .on('change', function (e) {
-          var val = e.target.value;
-          // prevent infinite loop!
-          if (!val) return;
-          var $option = $(this).find('option[value="' + e.target.value + '"]');
-
-          // Grab any default value that is present on the element
-          var defaultValue = $option.data('defaultValue');
-          var label = $option.closest('optgroup').attr('label');
-          $select.val(null).trigger('change');
-          setTimeout(function () {
-            that.selectFieldInsert(val, label, defaultValue);
-            // not entirely sure why this timeout is necessary...
-            // without it, focus is moved from the main query bar
-          }, 100);
+      select2Promise.then((select2) => {
+        $select.select2({
+          placeholder: 'All Search Terms',
+          matcher: oldMatcher(matchStart)
         })
-      // this seems to be necessary to show the placeholder on initial render
-        .val(null).trigger('change');
+          .on('change', function (e) {
+            var val = e.target.value;
+            // prevent infinite loop!
+            if (!val) return;
+            var $option = $(this).find('option[value="' + e.target.value + '"]');
+  
+            // Grab any default value that is present on the element
+            var defaultValue = $option.data('defaultValue');
+            var label = $option.closest('optgroup').attr('label');
+            $select.val(null).trigger('change');
+            setTimeout(function () {
+              that.selectFieldInsert(val, label, defaultValue);
+              // not entirely sure why this timeout is necessary...
+              // without it, focus is moved from the main query bar
+            }, 100);
+          })
+        // this seems to be necessary to show the placeholder on initial render
+          .val(null).trigger('change');
+      }).catch(() => {
+        $select.remove();
+      });
 
       /*
             end code for select

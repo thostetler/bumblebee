@@ -176,6 +176,7 @@ require.config({
     // I can't for the life of my figure out how to swap non-minified libs in dev
     // to minified libs in the r.js optimize task
     'async': 'libs/requirejs-plugins/async',
+    'async-load': 'js/plugins/async-load',
     'babel': 'libs/requirejs-babel-plugin/babel-5.8.34.min',
     'backbone': [
       //'//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min',

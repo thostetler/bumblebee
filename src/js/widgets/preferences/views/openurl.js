@@ -2,12 +2,12 @@ define([
   'marionette',
   'hbs!js/widgets/preferences/templates/openurl',
   'bootstrap',
-  'select2'
+  'async-load!select2'
 ], function (
   Marionette,
   OpenURLTemplate,
   Bootstrap,
-  Select2
+  Select2Promise
 ) {
   var OpenURLView = Marionette.ItemView.extend({
 
@@ -16,7 +16,9 @@ define([
     className: 'panel panel-default s-form-container',
 
     onRender: function () {
-      this.$('select[name=set-link-server]').select2();
+      Select2Promise.then((select2) => {
+        this.$('select[name=set-link-server]').select2();
+      });
     },
 
     serializeData: function () {

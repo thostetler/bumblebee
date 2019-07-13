@@ -11,9 +11,9 @@ define([
   'js/components/api_query_updater',
   'js/components/api_query',
   'js/components/api_feedback',
+  'async-load!d3-cloud',
   'jquery-ui',
-  'bootstrap',
-  'd3-cloud'
+  'bootstrap'
 ], function ($,
   Backbone,
   Marionette,
