@@ -49,7 +49,7 @@ function (
     },
 
     events: {
-      'change input[name=identifier]': 'toggleSelect',
+      'change input.item-selection-checkbox': 'toggleSelect',
       'focus .letter-icon': 'showLinks',
       'mouseenter .letter-icon': 'showLinks',
       'mouseleave .letter-icon': 'hideLinks',
@@ -139,7 +139,7 @@ function (
     },
 
     setToggleTo: function (to) {
-      var $checkbox = $('input[name=identifier]');
+      var $checkbox = $('input.item-selection-checkbox');
       if (to) {
         this.$el.addClass('chosen');
         this.model.set('chosen', true);

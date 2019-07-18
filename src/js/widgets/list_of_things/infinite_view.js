@@ -40,7 +40,7 @@ function (Marionette,
     },
 
     events: {
-      'change input[name=identifier]': 'toggleSelect'
+      'change input.item-selection-checkbox': 'toggleSelect'
     },
 
     toggleSelect: function () {
