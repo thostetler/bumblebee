@@ -27,9 +27,24 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li>
-                    <button type="button" class="btn btn-primary-faded feedback-button" data-toggle="modal" data-target="#feedback-modal">
-                        <i class="fa fa-comment"></i> Feedback
-                    </button>
+                  <button type="button" class="btn btn-primary-faded feedback-button" data-toggle="modal" data-target="#feedback-modal">
+                      <i class="fa fa-comment"></i> Feedback
+                  </button>
+                </li>
+
+                <li>
+                  <button type="button" class="btn btn-primary-faded feedback-button" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-comment"></i> Feedback
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" id="open-feedback-options-list">
+                      <i class="fa fa-mail-forward"></i> Corrections / Updates</a>
+                    </li>
+                    <li><a href="javascript:void(0);" id="open-general-feedback">
+                      <i class="fa fa-commenting"></i> General Feedback
+                    </a></li>
+                  </ul>
                 </li>
 
                 {{#if orcidLoggedIn}}
