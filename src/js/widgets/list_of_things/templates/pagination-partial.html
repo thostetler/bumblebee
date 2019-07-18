@@ -30,7 +30,7 @@
             <nav>
                 <ul class="pager">
                     <li class="{{#unless pageData.previousPossible}} disabled {{/unless}}"><a href="javascript:void(0)" class="page-control previous-page"><i class="fa fa-chevron-circle-left"></i> prev</a></li>
-                    <li><input type="text" value="{{pageData.currentPage}}" class="form-control page-control" style="display:inline-block;width:60px" title="page input"> of {{pageData.totalPages}}</li>
+                    <li><input type="text" value="{{pageData.currentPage}}" class="form-control page-control" style="display:inline-block;width:60px" title="page input" aria-label="page input"> of {{pageData.totalPages}}</li>
                     <li class="{{#unless pageData.nextPossible}} disabled {{/unless}}"><a href="javascript:void(0)" class="page-control next-page">next <i class="fa fa-chevron-circle-right"></i></a></li>
                 </ul>
             </nav>
