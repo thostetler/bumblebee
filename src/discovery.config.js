@@ -177,6 +177,7 @@ require.config({
     // to minified libs in the r.js optimize task
     'async': 'libs/requirejs-plugins/async',
     'async-load': 'js/plugins/async-load',
+    'lazy': 'js/plugins/lazy',
     'babel': 'libs/requirejs-babel-plugin/babel-5.8.34.min',
     'backbone': [
       //'//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min',

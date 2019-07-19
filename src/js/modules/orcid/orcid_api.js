@@ -48,7 +48,10 @@ define([
   'js/mixins/hardened',
   'js/components/api_targets',
   'js/components/api_query_updater',
-  'js/components/api_feedback'
+  'js/components/api_feedback',
+  'js/modules/orcid/work',
+  'js/modules/orcid/profile',
+  'js/modules/orcid/bio'
 ],
 function (
   _,
@@ -60,10 +63,11 @@ function (
   HardenedMixin,
   ApiTargets,
   ApiQueryUpdater,
-  ApiFeedback
+  ApiFeedback,
+  Work,
+  Profile,
+  Bio
 ) {
-
-  var Work, Profile, Bio
 
   var OrcidApi = GenericModule.extend({
 
@@ -222,21 +226,8 @@ function (
           dd.reject();
       });
       request.done(function (bio) {
-
-        require([
-          'async-load!js/modules/orcid/work',
-          'async-load!js/modules/orcid/profile',
-          'async-load!js/modules/orcid/bio'
-        ], (...proms) => {
-          Promise.all(proms).then((res) => {
-            Work = res[0];
-            Profile = res[1];
-            Bio = res[2];
-            
-            var orcidBio = new Bio(bio);
-            dd.resolve(orcidBio);
-          });
-        });
+        var orcidBio = new Bio(bio);
+        dd.resolve(orcidBio);
       });
       return dd.promise();
     },
@@ -402,6 +393,8 @@ function (
      * all is good enough.
      */
     _getUserProfile: function () {
+      debugger;
+
       var self = this;
       var request = this.createRequest(this.getUrl('profile_full'));
 

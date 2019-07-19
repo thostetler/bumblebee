@@ -105,7 +105,7 @@ function (
 
       // Check if the Orcid access was revoked by the user
       // It will only be considered 'revoked' if a 401 is received by the API handler
-      var checkOrcidToken = function () {
+      var checkOrcidToken = () => {
         var orcidApi = beehive.getService('OrcidApi');
         var user = beehive.getObject('User');
 
