@@ -14,54 +14,51 @@
         <i class="fa fa-book fa-lg"></i> Add papers to library &nbsp; <i class="fa fa-lg fa-caret-down"></i>
     </div>
     <div class="collapse {{#if libraryDrawerOpen }} in {{/if}}" id="library-console">
-
-        {{#compare selected 0 operator=">"}}
-        add
-        <select class="form-control input-sm s-all-vs-selected" name="all-vs-selected" id="all-vs-selected">
-            <option value="selected" {{#compare selectedVsAll "selected"}} selected="true"{{/compare}}> selected papers only </option>
-            <option value="all"  {{#compare selectedVsAll "all"}} selected="true"{{/compare}}> all results</option>
-        </select>
-        {{else}}
-        add  <b>all results</b> <i class="icon-help" data-toggle="popover" data-content="All papers in your search results will be added, up to 1,000 records. To add only selected papers, click on the checkboxes next to the paper titles."></i>
-        from this query
-        {{/compare}}
-
-
-        <div class="libraries-container">
-
-            {{#if libraries}}
-            <div style="margin-top: 8px" class="">
-                <label for="#library-select">to an <b>existing library:</b></label>
-                <select id="library-select" name="library-select" class="form-control input-sm s-library-select">
-                    {{#each libraries}}
-                    <option value="{{this.id}}" {{#compare id ../selectedLibrary}} selected="true" {{/compare}}>{{this.name}}</option>
-                    {{/each}}
-                </select>
-                <button class="btn btn-sm btn-success submit-add-to-library">submit</button>
+        <div class="libraries-container clearfix">
+          <form class="col-md-12" id="add-to-library-form">
+            <div class="form-group">
+              {{#compare selected 0 operator=">"}}
+              <label for="#all-vs-selected">Selection:</label>
+              <select name="all-vs-selected" id="all-vs-selected" class="form-control input-sm">
+                <option value="selected" {{#compare selectedVsAll "selected"}} selected="true"{{/compare}}>selected papers only</option>
+                <option value="all" {{#compare selectedVsAll "all"}} selected="true"{{/compare}}>all results</option>
+              </select>
+              {{else}}
+              <p><strong>Selection:</strong> all results <i class="icon-help" data-toggle="popover" data-content="All papers in your search results will be added, up to 1,000 records. To add only selected papers, click on the checkboxes next to the paper titles."></i></p>
+              {{/compare}}
             </div>
-            <div style="margin:10px 0 4px 0">
-                OR
+            {{#if libraries}}
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="create-new-library-chkbox" {{#if isCreatingNew}} checked {{/if}}> Create new library?
+              </label>
+            </div>
+            {{#unless isCreatingNew}}
+            <div class="form-group">
+              <label for="#library-select">Add to existing library:</label>
+              <select name="library-select" id="library-select" class="form-control input-sm">
+                {{#each libraries}}
+                <option value="{{this.id}}" {{#compare id ../selectedLibrary}} selected="true" {{/compare}}>{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            {{/unless}}
+            {{/if}}
+            {{#if isCreatingNew}}
+            <div class="form-group">
+              <label for="#create-new">New library name:</label>
+              <input type="text" id="create-new" name="create-new" class="form-control input-sm" placeholder="New Library">
             </div>
             {{/if}}
-
-            <label for="#create-new">create a new library </label>
-            <input id="create-new"
-                   class="form-control input-sm new-library-name s-display-inline"
-                   type="text"
-                   name="new-library-name"
-                   placeholder="New Library Name"
-                   value="{{newLibraryName}}"
-                   style="max-width:166px;margin-bottom:10px;"/>
-            <button class="btn btn-sm btn-success submit-create-library"></i>submit</button>
-
+            <button type="submit" class="btn btn-default btn-sm">Submit</button>
+            <hr class="separator">
+            {{#if libraries}}
+            <div class="form-group">
+              <a href="#user/libraries">Go to my libraries</a>
+            </div>
+            {{/if}}
+          </form>
         </div>
-
-          {{#if libraries}}
-          <div style="margin-top:10px">
-            <a href="#user/libraries">Go to my libraries</a>
-          </div>
-
-          {{/if}}
 
         <div style="margin-top:6px" class="feedback s-feedback">
 

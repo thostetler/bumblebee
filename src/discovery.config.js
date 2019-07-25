@@ -88,7 +88,7 @@ require.config({
         SearchWidget: 'js/widgets/search_bar/search_bar_widget',
         PaperSearchForm: 'js/widgets/paper_search_form/widget',
         Results: 'js/widgets/results/widget',
-        QueryInfo: 'js/widgets/query_info/query_info_widget',
+        QueryInfo: 'es6!js/widgets/query_info/query_info_widget',
         QueryDebugInfo: 'js/widgets/api_query/widget',
         ExportWidget: 'es6!js/widgets/export/widget.jsx',
         Sort: 'es6!js/widgets/sort/widget.jsx',
@@ -265,6 +265,12 @@ require.config({
       '//cdn.jsdelivr.net/npm/persist-js@0.3.1/src/persist.min',
       'libs/persist-js/src/persist'
     ],
+    'preact': [
+      '//cdnjs.cloudflare.com/ajax/libs/preact/8.4.2/preact.min'
+    ],
+    'preact-redux': [
+      '//cdn.jsdelivr.net/npm/preact-redux@2.1.0/dist/preact-redux.min'
+    ],
     'react': [
       '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-with-addons.min',
       'libs/react/index'
@@ -379,6 +385,10 @@ require.config({
 
     'persist-js': {
       exports: 'Persist'
+    },
+
+    'preact': {
+      exports: 'preact'
     }
   }
 });
