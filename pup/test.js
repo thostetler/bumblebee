@@ -6,13 +6,17 @@ const pixelmatch = require('pixelmatch');
 const PNG = require('pngjs').PNG;
 const width = 1400;
 const height = 1600;
+const baseUrl = 'http://localhost:8000';
 const results = {
   successes: [],
   failures: [],
   time: +new Date()
 };
 
-const delay = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout));
+const delay = (timeout) => new Promise((resolve) => {
+  if (timeout === 0) { return resolve(); }
+  setTimeout(resolve, timeout)
+});
 
 const getImagePath = (name, force = false) => {
   if (!name) throw 'no name!'
@@ -57,15 +61,16 @@ const compareImages = (name, keepDiff = false) => {
   // delete tmp file
   fs.unlinkSync(tmpPath);
 
-  console.log(`${ name } :: ${ numDiffPixels } pixels different`);
+  console.log(numDiffPixels > 0 ? '(FAIL)': '(PASS)', '::', name, numDiffPixels > 0 ? `--- ${ numDiffPixels } pixels different` : '');
 };
 
 const test = async ({
   name,
-  url,
+  path,
   pageOptions = {},
   forceReloadBaseImage = false,
   delayAfterInitialLoad = 0,
+  delayBeforeScreenshot = 0,
   keepDiff = false,
   launchOptions = {},
   waitAndClick = false,
@@ -75,9 +80,8 @@ const test = async ({
   const browser = await puppeteer.launch(launchOptions);
   const page = await browser.newPage();
   await page.setViewport({ width, height });
-  await page.goto(url, { waitUntil: 'networkidle2', ...pageOptions });
+  await page.goto(baseUrl + path, { waitUntil: 'networkidle2', ...pageOptions });
   await delay(delayAfterInitialLoad);
-  await actions({ page, browser, delay });
   if (typeof waitAndClick === 'string') {
     await page.waitForSelector(waitAndClick);
     await page.click(waitAndClick);
@@ -89,6 +93,8 @@ const test = async ({
       document.querySelector(selector)[event]();
     }, selector, event);
   }
+  await actions({ page, browser, delay });
+  await delay(delayBeforeScreenshot);
   await page.screenshot({
     path: await getImagePath(name, forceReloadBaseImage),
     fullPage: true
@@ -111,6 +117,7 @@ const displayResults = () => {
       console.log(f, 'FAIL');
     });
   }
+  process.exit(results.failures.length);
 }
 
 const restrictedSet = tests.filter((t) => t.only);
