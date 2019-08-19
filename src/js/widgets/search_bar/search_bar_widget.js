@@ -538,7 +538,7 @@ function (
 
 
       // replace uppercased fields with lowercase
-      query = query.replace(/([A-Z])\w+:/g, function (letter) { return letter.toLowerCase(); });
+      query = query.replace(/([A-z])+[:\(]/g, function (l) { return l.toLowerCase(); });
       // store the query in case it gets changed (which happens when there is an object query)
       this.original_query = query;
 
