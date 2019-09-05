@@ -142,7 +142,7 @@ require.config({
         IndividualLibraryWidget: 'js/widgets/library_individual/widget',
         LibraryActionsWidget: 'es6!js/widgets/library_actions/widget.jsx',
         AllLibrariesWidget: 'js/widgets/libraries_all/widget',
-        LibraryListWidget: 'js/widgets/library_list/widget'
+        LibraryListWidget: 'js/widgets/librarylist/widget'  //'js/widgets/library_list/widget'
       },
       plugins: {}
     }
@@ -272,6 +272,7 @@ require.config({
       '//cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.32.1/react-bootstrap.min',
       'libs/react-bootstrap/index',
     ],
+    'react-window': 'libs/react-window/index',
     'react-dom': [
       '//cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min',
       'libs/react-dom/index'

@@ -214,6 +214,15 @@ module.exports = function (grunt) {
           rename: function (dest, src) {
             return dest + src.replace('react-dom.min', 'index');
           }
+        },
+        {
+          cwd: 'node_modules/react-window/dist',
+          src: 'index-dev.umd.js',
+          dest: 'src/libs/react-window/',
+          expand: true,
+          rename: function (dest, src) {
+            return dest + src.replace('index-dev.umd', 'index');
+          }
         }
       ]
     },
