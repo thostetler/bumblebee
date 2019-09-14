@@ -214,6 +214,15 @@ module.exports = function (grunt) {
           rename: function (dest, src) {
             return dest + src.replace('react-dom.min', 'index');
           }
+        },
+        {
+          cwd: 'node_modules/bowser',
+          src: 'es5.js',
+          dest: 'src/libs/bowser/',
+          expand: true,
+          rename: function (dest, src) {
+            return dest + src.replace('es5', 'index');
+          }
         }
       ]
     },
