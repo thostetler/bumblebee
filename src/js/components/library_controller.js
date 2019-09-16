@@ -445,15 +445,61 @@ function (
       return this.composeRequest(endpoint, 'POST', { data: data });
     },
 
+    /**
+     * Transfers a library from current owner to a new owner
+     *
+     * @param {string} libId library identifier
+     * @param {string} newOwnerEmail new owner email address
+     */
     transferOwnership: function (libId, newOwnerEmail) {
-      if (!newOwnerEmail || !_.isString(newOwnerEmail)) {
+      if (!_.isString(newOwnerEmail)) {
         throw 'new owner email address must be a string';
       }
-      if (!libId || !_.isString(libId)) {
+      if (!_.isString(libId)) {
         throw 'library Id must be a string';
       }
       const endpoint = ApiTargets.LIBRARY_TRANSFER + '/' + libId;
       const data = { email: newOwnerEmail };
+      return this.composeRequest(endpoint, 'POST', { data });
+    },
+
+    /**
+     * Returns a list of email addresses with their permissions specified
+     *
+     * @param {string} libId library identifier
+     */
+    getPermissions: function (libId) {
+      if (!_.isString(libId)) {
+        throw 'library Id must be a string';
+      }
+      const endpoint = ApiTargets.PERMISSIONS + '/' + libId;
+      return this.composeRequest(endpoint, 'GET');
+    },
+
+    /**
+     * Sets permissions for a particular library identifier
+     *
+     * @param {string} libId library identifier
+     * @param {{
+     *  email: string,
+     *  permission: { read?: boolean, write?: boolean, admin?: boolean }
+     * }} options email and permission data to set
+     */
+    setPermissions: function (libId, { email, permission }) {
+      if (!_.isString(libId)) {
+        throw 'library Id must be a string';
+      }
+
+      if (!_.isString(email)) {
+        throw 'email must be a string';
+      }
+
+      if (!_.isPlainObject(permission)) {
+        throw 'permission must be plain object';
+      }
+
+      const endpoint = ApiTargets.PERMISSIONS + '/' + libId;
+      const data = { email, permission };
       return this.composeRequest(endpoint, 'POST', { data });
     },
 
@@ -588,6 +634,8 @@ function (
       // currently called by library individual widget to get
       // lists of bibs to pass to export, metrics, vis widgets etc
       getLibraryBibcodes: 'getLibraryBibcodes',
+      getPermissions: 'getPermissions',
+      setPermissions: 'setPermissions',
 
       performLibraryOperation: 'performLibraryOperation'
     }

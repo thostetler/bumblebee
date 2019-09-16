@@ -138,7 +138,23 @@ function (
       this.updateSubView();
     },
 
+    onLibraryPermissionsEvent: function (ev, { data, done, fail }) {
+      const libController = this.getBeeHive().getObject('LibraryController');
+      const libId = this.model.get('id');
+
+      if (ev === 'getPermissions') {
+        libController.getPermissions(libId).done(done).fail(fail);
+      } else if (ev === 'getCurrentUser') {
+        done(this.headerModel.get('owner'));
+      } else if (ev === 'updatePermission') {
+        libController.setPermissions(libId, data).done(done).fail(fail);
+      }
+    },
+
     handleAdminEvents: function (event, arg1, arg2) {
+      if (event === 'library-permissions') {
+        return this.onLibraryPermissionsEvent(arg1, arg2);
+      }
       var that = this;
 
       const libController = this.getBeeHive().getObject('LibraryController');

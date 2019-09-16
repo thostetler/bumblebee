@@ -1,12 +1,9 @@
 define(['marionette',
   'hbs!js/widgets/library_individual/templates/manage-permissions-container',
   'hbs!js/widgets/library_individual/templates/make-public',
-  'hbs!../templates/transfer-ownership-modal'
-], function (Marionette, ManagePermissionsContainer, MakePublicTemplate, transferOwnershipModal) {
-  var PermissionsModel = Backbone.Model.extend({});
-  var PermissionsCollection = Backbone.Collection.extend({
-    model: PermissionsModel
-  });
+  'hbs!../templates/transfer-ownership-modal',
+  'es6!js/react/components/library_collaborators/index'
+], function (Marionette, ManagePermissionsContainer, MakePublicTemplate, transferOwnershipModal, LibraryCollaboratorsView) {
 
   const TransferOwnershipModalView = Backbone.View.extend({
     initialize() {
@@ -73,7 +70,7 @@ define(['marionette',
         loading: true,
         error: false
       });
-      
+
       const msg = 'Are you sure?';
       if (confirm(msg)) {
         this.onConfirm(e);
@@ -117,9 +114,11 @@ define(['marionette',
       var options = options || {};
       this.model.set('host', window.location.host);
       this.modal = new TransferOwnershipModalView();
+      this.libraryCollaboratorsView = new LibraryCollaboratorsView();
 
       // just forward any trigger calls
       this.modal.on('all', (...args) => this.trigger(...args));
+      this.libraryCollaboratorsView.on('all', (...args) => this.trigger(...args));
     },
     events: {
       'click .public-button': 'togglePublicState'
@@ -133,9 +132,8 @@ define(['marionette',
     },
     template: ManagePermissionsContainer,
     onRender: function () {
-      this.$('.public-container').html(MakePublicTemplate(this.model
-        .toJSON()));
-
+      this.$('.public-container').html(MakePublicTemplate(this.model.toJSON()));
+      this.libraryCollaboratorsView.render($('#libraryCollaborators', this.$el).get(0));
       this.modal.render();
     }
   });
