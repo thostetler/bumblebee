@@ -4,19 +4,19 @@ define(['react', 'react-bootstrap', 'es6!./RolePill.jsx'], function(
   RolePill,
 ) {
   /**
-   * @typedef {{
-   *    admin: { enabled: boolean, selected: boolean },
-   *    write: { enabled: boolean, selected: boolean },
-   *    read: { enabled: boolean, selected: boolean },
-   *    roles: string[]
-   *  }} RoleSelectorState
-   */
-
-  /**
-   * @typedef {{
-   *   onChange: function,
-   *   selected: string[]
-   * }} RoleSelectorProps
+   * @typedef RoleType
+   * @property {boolean} enabled
+   * @property {boolean} selected
+   *
+   * @typedef RoleSelectorState
+   * @property {RoleType} admin
+   * @property {RoleType} write
+   * @property {RoleType} read
+   * @property {string[]} roles
+   *
+   * @typedef RoleSelectorProps
+   * @property {function} onChange
+   * @property {string[]} selected
    */
 
   /**

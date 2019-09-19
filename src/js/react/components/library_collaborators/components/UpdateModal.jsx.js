@@ -5,11 +5,10 @@ define([
   'es6!./RoleSelector.jsx',
 ], function(_, React, {Modal, Form}, RoleSelector) {
   /**
-   * @typedef {{
-   *    admin: boolean,
-   *    write: boolean,
-   *    read: boolean
-   *  }} UpdatePermissionsModalState
+   * @typedef UpdatePermissionsModalState
+   * @property {boolean} admin
+   * @property {boolean} write
+   * @property {boolean} read
    */
 
   /**
