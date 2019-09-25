@@ -38,6 +38,10 @@ define([
   var QueryDisplayView = Marionette.ItemView.extend({
     className: 'query-info-widget s-query-info-widget',
     template: queryInfoTemplate,
+    initialize() {
+      this.onOpen = this.onOpen.bind(this);
+      this.onClose = this.onClose.bind(this);
+    },
 
     serializeData: function() {
       var data = this.model.toJSON();
@@ -50,12 +54,13 @@ define([
       'change:loggedIn': 'render',
       'change:libraries': 'render',
       'change:feedback': 'render',
+      'change:libraryDrawerOpen': 'render',
     },
 
     triggers: {
       'click .clear-selected': 'clear-selected',
       'click .limit-to-selected': 'limit-to-selected',
-      'click .exclude-selected': 'exclude-selected'
+      'click .exclude-selected': 'exclude-selected',
     },
 
     events: {
@@ -125,12 +130,28 @@ define([
       );
     },
 
+    onOpen() {
+      this.model.set('libraryDrawerOpen', true);
+      this.model.trigger('change:libraryDrawerOpen');
+    },
+
+    onClose() {
+      this.model.set('libraryDrawerOpen', false);
+      this.model.trigger('change:libraryDrawerOpen');
+    },
+
     onRender: function() {
       this.$('.icon-help').popover({
         trigger: 'hover',
         placement: 'right',
         html: true,
       });
+
+      this.$('#library-console')
+        .off('show.bs.collapse', this.onOpen)
+        .on('show.bs.collapse', this.onOpen)
+        .off('hide.bs.collapse', this.onClose)
+        .on('hide.bs.collapse', this.onClose);
     },
   });
 
@@ -219,12 +240,12 @@ define([
       ps.publish(ps.CUSTOM_EVENT, 'second-order-search/limit');
     },
 
-    excludeSelected: function () {
+    excludeSelected: function() {
       const ps = this.getPubSub();
       ps.publish(ps.CUSTOM_EVENT, 'second-order-search/exclude');
     },
 
-    libraryAddSubmit: function (data) {
+    libraryAddSubmit: function(data) {
       var options = {};
       var that = this;
 
@@ -269,8 +290,8 @@ define([
     },
 
     libraryCreateSubmit: function(data) {
-      var options = {};
-      var that = this;
+      var options = {},
+        that = this;
       // are we adding the current query or just the selected bibcodes?
       // if it's an abstract page widget, will have this._bibcode val
       if (this.abstractPage) {
@@ -308,9 +329,9 @@ define([
     },
 
     clearFeedbackWithDelay: function() {
-      var that = this;
-      // ten seconds
-      var timeout = 30000;
+      var that = this,
+        // ten seconds
+        timeout = 30000;
 
       setTimeout(function() {
         that.model.unset('feedback');

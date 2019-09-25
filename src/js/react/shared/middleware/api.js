@@ -16,14 +16,28 @@ define([], function() {
       };
 
       const fail = (error = defaultFail) => {
-        const { responseJSON } = error;
+        const { responseJSON, statusText, status } = error;
+        let errorMsg = defaultFail.responseJSON.error;
+        if (responseJSON) {
+          errorMsg = responseJSON.error || responseJSON.message || responseJSON.msg;
+        } else if (statusText) {
+          errorMsg = statusText;
+        }
+
         dispatch({
           type: `${action.scope}_API_REQUEST_FAILURE`,
-          error: responseJSON.error,
+          error: errorMsg,
+          status,
         });
       };
 
-      const { target, query = {}, type = 'GET', data } = action.options;
+      const {
+        target,
+        query = {},
+        type = 'GET',
+        data,
+        headers,
+      } = action.options;
 
       if (!target) {
         return;
@@ -36,7 +50,12 @@ define([], function() {
           type,
           done,
           fail,
-          data,
+          data: JSON.stringify(data),
+          headers: {
+            Accept: 'application/json; charset=utf-8',
+            'Content-Type': 'application/json; charset=utf-8',
+            ...headers,
+          },
         },
       });
     }
