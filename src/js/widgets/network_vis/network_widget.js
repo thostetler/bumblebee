@@ -422,7 +422,7 @@ function (Marionette,
 
     changeRows: function (e) {
       var num = parseInt(this.$('.network-rows').val());
-      this.$('.network-metadata').html(loadingTemplate);
+      this.$('.network-container').empty().html(loadingTemplate);
       if (num) {
         this.model.set('userVal', _.min([this.model.get('max'), num]));
       }
@@ -432,7 +432,8 @@ function (Marionette,
     modelEvents: {
       'change:graphData': 'render',
       'change:max': 'renderMetadata',
-      'change:current': 'renderMetadata'
+      'change:current': 'renderMetadata',
+      'change:loading': 'render'
     },
 
     onRender: function () {
@@ -449,21 +450,18 @@ function (Marionette,
 
       // show loading view
       if (this.model.get('loading')) {
-        this.$('.network-metadata').html('');
-        this.$('.network-container').html(loadingTemplate());
+        this.$('.network-container').empty().html(loadingTemplate);
         return;
       }
 
       if (!this.model.get('graphData') || _.isEmpty(this.model.get('graphData'))) {
-        this.$('.network-metadata').html('');
-        this.$('.network-container').html(notEnoughDataTemplate({ cachedQuery: cachedQ }));
+        this.$('.network-container').empty().html(notEnoughDataTemplate({ cachedQuery: cachedQ }));
         return;
       }
       // it's a paper network with no summary info
       if (!this.model.get('graphData').summaryGraph && !this.model.get('graphData').root) {
         // maybe later show something if we just have the fullGraph
-        this.$('.network-metadata').html('');
-        this.$('.network-container').html(notEnoughDataTemplate({ cachedQuery: cachedQ }));
+        this.$('.network-container').empty().html(notEnoughDataTemplate({ cachedQuery: cachedQ }));
         return;
       }
       // all the data the graph view will need
@@ -1310,10 +1308,7 @@ function (Marionette,
     renderWidgetForListOfBibcodes: function (bibcodes) {
       // so the earlier state of the widget is not preserved
       this.resetWidget();
-
-      // force a reset even if the data is the same
-      // so the earlier state of the widget is not preserved
-      this.model.set({ graphData: {}, loading: true });
+      this.model.trigger('change:loading');
 
       var request = new ApiRequest({
         target: Marionette.getOption(this, 'endpoint'),
@@ -1336,6 +1331,7 @@ function (Marionette,
       // force a reset even if the data is the same
       // so the earlier state of the widget is not preserved
       this.resetWidget();
+      this.model.trigger('change:loading');
 
       var query = this.getCurrentQuery().clone();
       query.unlock();
