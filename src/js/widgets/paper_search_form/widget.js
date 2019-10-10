@@ -16,9 +16,7 @@ define([
   var FormModel = Backbone.Model.extend({
 
     defaults: function () {
-      return {
-        loggedIn: undefined
-      };
+      return {};
     }
 
   });
@@ -219,8 +217,6 @@ define([
     },
 
     onShow: function () {
-      var loggedIn = this.getBeeHive().getObject('User').isLoggedIn();
-      this.model.set({ loggedIn: loggedIn });
       this.view.render();
       this.setFocus('input#pub-input');
     }

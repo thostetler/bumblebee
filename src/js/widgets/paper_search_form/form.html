@@ -35,7 +35,6 @@
   </form>
 
   <form class="bibcode-form col-md-6 clearfix">
-    {{#if loggedIn}}
     <div class="form-group">
       <label for="#bibcode-textarea">List of Bibcodes</label>
       <div class="s-light-font">
@@ -49,11 +48,5 @@
         <button class="btn btn-primary author-submit" disabled="true" type="submit"><i class="fa fa-search"></i> Search</button>
       </div>
     </div>
-    {{else}}
-    <b>List of Bibcodes Form</b>
-    <div style="padding-top:20px">
-      <a href="#user/account/login" class="btn btn-success"> <i class="fa fa-sign-in"></i> log in to ADS to use this form</a>
-    </div>
-    {{/if}}
   </form>
 </div>
