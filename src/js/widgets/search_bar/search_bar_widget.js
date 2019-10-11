@@ -73,6 +73,26 @@ function (
     });
   };
 
+  /**
+   * @typedef DocsQuery
+   * @property {boolean} isDocsQuery
+   * @property {boolean} isLibrary
+   * @property {string} docValue
+   *
+   * parses a query looking for docs() field
+   * @param {ApiQuery} apiQuery
+   * @returns {DocsQuery}
+   */
+  const _parseDocsQuery = (apiQuery) => {
+    const q = apiQuery.get('q');
+    const match = /^docs\((library\/)?.*?\)/.exec(q);
+    return {
+      isDocsQuery: !!match,
+      isLibrary: match && match.length > 1,
+      docValue: match ? match[0] : ''
+    };
+  }
+
   // get what is currently selected in the window
   function getSelectedText(el) {
     var text = '';
@@ -108,7 +128,8 @@ function (
         citationCount: undefined,
         numFound: undefined,
         bigquery: false,
-        bigquerySource: undefined
+        bigquerySource: undefined,
+        parsedQuery: undefined
       };
     }
   });
@@ -362,7 +383,14 @@ function (
     },
 
     setFormVal: function (v) {
-      this.$('.q').val(this.model.get('bigquery') ? '' : v);
+      let value = v;
+      if (this.model.get('bigquery')) {
+        const { isDocsQuery, docValue } = this.model.get('parsedQuery');
+        if (isDocsQuery) {
+          value = value.replace(docValue, '');
+        }
+      }
+      this.$('.q').val(value);
       this.toggleClear();
     },
 
@@ -591,7 +619,7 @@ function (
     },
 
     showBigquery: function () {
-      this.trigger('show_big_query');
+      this.trigger('clear_big_query');
     }
   });
 
@@ -615,22 +643,18 @@ function (
         var query = this._currentQuery.clone();
         // awkward but need to remove qid + provide __clearBigQuery
         // for querymediator to do the correct thing
+
         query.unset('__qid');
         query.unset('__bigquerySource');
         query.set('__clearBigQuery', 'true');
 
-        const bigQuery = this.model.get('bigquery');
-
         // unload the bigquery from the model
         this.clearBigQueryPill();
+        const { isDocsQuery } = _parseDocsQuery(this.getCurrentQuery());
 
-        if (bigQuery && !bigQuery.isDocsQuery) {
+        if (!isDocsQuery) {
           this.navigate(query);
         }
-      });
-
-      this.listenTo(this.view, 'show_big_query', function (query) {
-        this.clearBigQueryPill();
       });
 
       this.listenTo(this.view, 'render', function () {
@@ -809,33 +833,26 @@ function (
       this.focusInput(page);
     },
 
-    _isDocsQuery: function (apiQuery) {
-      if (typeof apiQuery.get === 'function') {
-        const q = apiQuery.get('q');
-        const match = /^docs\((library\/)?/.exec(q);
-        if (match) {
-          return { isDocsQuery: true, isLibrary: match.length > 1 };
-        }
-      }
-    },
-
     handleFeedback: function (feedback) {
       if (feedback.code === ApiFeedback.CODES.SEARCH_CYCLE_STARTED
             || feedback.code === ApiFeedback.CODES.SEARCH_CYCLE_FAILED_TO_START) {
-        var query = feedback.query ? feedback.query : feedback.request.get('query');
+        var query = feedback.query
+          ? feedback.query : feedback.request
+            ? feedback.request.get('query') : this.getCurrentQuery();
 
         // Grab the original (no simbid refs) query string for the view
         var newq = query.get('__original_query')
           ? query.get('__original_query')[0] : query.get('q').join(' ');
 
         this.setCurrentQuery(query);
-        const docsQuery = this._isDocsQuery(query);
+        const parsedQuery = _parseDocsQuery(query);
 
         this.model.set({
           bigquerySource: query.get('__bigquerySource')
-              ? query.get('__bigquerySource')[0] : (docsQuery && docsQuery.isLibrary) ? 'Library' : 'Bulk query',
-          bigquery: !!query.get('__qid') || (docsQuery && docsQuery.isDocsQuery),
-          numFound: feedback.numFound
+              ? query.get('__bigquerySource')[0] : (parsedQuery && parsedQuery.isLibrary) ? 'Library' : 'Bulk query',
+          bigquery: !!query.get('__qid') || (parsedQuery && parsedQuery.isDocsQuery),
+          numFound: feedback.numFound,
+          parsedQuery: parsedQuery
         });
 
         this.view.setFormVal(newq);
