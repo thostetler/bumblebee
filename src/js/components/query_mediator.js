@@ -790,8 +790,11 @@ function (
         if (_.has(TUGBOAT_MESSAGES, msg)) {
           var updatedMsg = TUGBOAT_MESSAGES[msg];
           if (msg === 'UNRECOGNIZABLE_VALUE' && uParams.length > 0) {
-            var param = encodeURIComponent(uParams.pop());
-            updatedMsg = updatedMsg.replace('{}', /^\w+$/.test(param) ? param : 'parameter');
+            const paramsSet = uParams.map(p => {
+              const param = encodeURIComponent(p);
+              return `<code>${ param.replace(/%20/gi, ' ') }</code>`;
+            });
+            updatedMsg = updatedMsg.replace('{}', `<br/>${ paramsSet.join('<br/>')}<br/>`);
           }
           acc.push(updatedMsg);
         }
