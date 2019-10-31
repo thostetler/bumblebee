@@ -17,6 +17,22 @@ define([
   FormTemplate,
   AutocompleteData
 ) {
+  let fullBibstemList = [];
+  const getFullBibstemList = (cb) => {
+    if (typeof cb !== 'function') {
+      return;
+    }
+    if (fullBibstemList.length <= 0) {
+      return require(['js/widgets/paper_search_form/fullterms'], (list) => {
+        fullBibstemList = list;
+        cb(fullBibstemList);
+      }, () => {
+        cb(null);
+      });
+    }
+    cb(fullBibstemList);
+  };
+
   const renderAutoCompleteItem = function(ul, item) {
     const re = new RegExp('(' + this.term + ')', 'i');
     const label = item.label.replace(
@@ -70,11 +86,52 @@ define([
     $input.data('ui-autocomplete')._renderItem = renderAutoCompleteItem;
   };
 
+  const LoadAllBibsCheckbox = Backbone.View.extend({
+    initialize() {
+      this.model = new (Backbone.Model.extend({
+        defaults: {
+          loading: false,
+          done: false,
+        },
+      }))();
+    },
+    render() {
+      if (this.model.get('loading')) {
+        return `
+          <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading...
+        `;
+      } else if (this.model.get('done')) {
+        return `
+          <label for="load-all-bibstems">
+            <input type="checkbox" disabled class="disable" name="load-all-bibstems" id="load-all-bibstems"> Load all bibstems? (this may be slow)
+          </label>
+        `;
+      }
+      return `
+        <label for="load-all-bibstems">
+          <input type="checkbox" name="load-all-bibstems" id="load-all-bibstems"> Load all bibstems? (this may be slow)
+        </label>
+      `;
+    },
+    events: {
+      'click #load-all-bibstems': 'onClick',
+    },
+    onClick(e) {
+      console.log('clicked', e);
+    },
+  });
+
   const View = Marionette.ItemView.extend({
     template: FormTemplate,
     className: 'paper-search-form',
+    initialize() {
+      this.loadAllBibsChbx = new LoadAllBibsCheckbox();
+    },
     onRender() {
       createAutoComplete(this.el);
+      $('#load-all-bibstems-container', this.el).html(
+        this.loadAllBibsChbx.render()
+      );
       setTimeout(() => {
         $('input', this.el)
           .get(0)
@@ -82,7 +139,7 @@ define([
       }, 100);
     },
     events: {
-      'submit form': 'submit',
+      'submit form': 'submit'
     },
     _submit: _.debounce(
       function(e) {
@@ -147,12 +204,12 @@ define([
   });
 
   const extractBibcodeFromReference = (data) => {
-    const {score, bibcode} = data;
+    const { score, bibcode } = data;
     if (score !== '0.0' && bibcode) {
       return bibcode;
     }
     return null;
-  }
+  };
 
   const PaperForm = BaseWidget.extend({
     initialize() {
