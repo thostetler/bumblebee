@@ -19,7 +19,8 @@ define([], function() {
         const { responseJSON, statusText, status } = error;
         let errorMsg = defaultFail.responseJSON.error;
         if (responseJSON) {
-          errorMsg = responseJSON.error || responseJSON.message || responseJSON.msg;
+          errorMsg =
+            responseJSON.error || responseJSON.message || responseJSON.msg;
         } else if (statusText) {
           errorMsg = statusText;
         }

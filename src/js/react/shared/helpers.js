@@ -28,11 +28,32 @@ define([], function() {
       callback({ trigger, dispatch, getState, next, action });
   };
 
+  const apiSuccess = _.memoize((str) => `${str}_API_REQUEST_SUCCESS`);
+  const apiPending = _.memoize((str) => `${str}_API_REQUEST_PENDING`);
+  const apiFailure = _.memoize((str) => `${str}_API_REQUEST_FAILURE`);
+
+  const parseScope = (requestType) => {
+    const [scope, status] = requestType.split('_API_REQUEST_');
+    return { scope, status };
+  };
+
+  const delay = (cb) => {
+    if (cb.toKey) {
+      window.clearTimeout(cb.toKey);
+    }
+    cb.toKey = setTimeout(cb, 3000);
+  };
+
   return {
     withContext,
     escape,
     unescape,
     middleware,
     isEmpty,
+    apiSuccess,
+    apiPending,
+    apiFailure,
+    parseScope,
+    delay,
   };
 });
