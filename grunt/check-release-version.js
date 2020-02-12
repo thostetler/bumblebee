@@ -23,7 +23,10 @@ module.exports = function(grunt) {
           // check for the existence of release file
           console.log('found release file!');
           const buffer = fs.readFileSync(releaseFilePath);
-          version = buffer.toString().trim();
+          version = buffer
+            .toString()
+            .replace(/\n/g, '')
+            .trim();
         } else {
           // otherwise, get the latest version from github
           console.log(
