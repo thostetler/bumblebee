@@ -29,6 +29,9 @@ define([
   };
 
   const BumblebeeWidget = BaseWidget.extend({
+    getBeeHive() {
+      return window.bbb.getBeeHive().getHardenedInstance();
+    },
     initialize({ componentId, initialData }) {
       this.view.on({
         sendRequest: _.bind(this.onSendRequest, this),
@@ -59,34 +62,34 @@ define([
         cb(this.initialData);
       }
     },
-    activate(beehive) {
-      this.setBeeHive(beehive);
-      const ps = this.getPubSub();
-      ps.subscribe(
-        ps.USER_ANNOUNCEMENT,
+    activate() {
+      this.subscribeToPubSub(
+        'USER_ANNOUNCEMENT',
         this.handleUserAnnouncement.bind(this)
       );
     },
     handleUserAnnouncement(event, data) {
-      const user = this.getBeeHive().getObject('User');
+      const user = getBeeHive().getObject('User');
       if (event == user.USER_SIGNED_IN) {
       } else if (event == user.USER_SIGNED_OUT) {
       }
     },
     isLoggedIn(cb) {
-      const user = this.getBeeHive().getObject('User');
-      cb(user.isLoggedIn());
+      const user = getBeeHive().getObject('User');
+      if (typeof cb === 'function') {
+        cb(user.isLoggedIn());
+      }
     },
     onGetCurrentQuery(callback) {
       callback(this.getCurrentQuery());
     },
     subscribeToPubSub(event, callback) {
-      const ps = this.getPubSub();
-      ps.subscribe(ps[event], callback);
+      const ps = getPubSub();
+      subscribe(ps[event], callback);
     },
     publishToPubSub(event, ...args) {
-      const ps = this.getPubSub();
-      ps.publish(ps[event], ...args);
+      const ps = getPubSub();
+      publish(ps[event], ...args);
     },
     doSearch(queryParams) {
       const query = new ApiQuery();
@@ -98,13 +101,13 @@ define([
       });
     },
     onSendRequest({ options, target, query }) {
-      const ps = this.getPubSub();
+      const ps = getPubSub();
       const request = new ApiRequest({
         target,
         query: new ApiQuery(query),
         options,
       });
-      ps.publish(ps.EXECUTE_REQUEST, request);
+      this.publishToPubSub('EXECUTE_REQUEST', request);
     },
     analyticsEvent(...args) {
       analytics(...args);
