@@ -4,9 +4,9 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
+  'js/widgets/list_of_things/templates/item-template',
   'analytics',
-  'mathjax',
+  // 'mathjax',
 ], function(
   Marionette,
   Backbone,
@@ -14,8 +14,8 @@ define([
   ApiQuery,
   BaseWidget,
   ItemTemplate,
-  analytics,
-  MathJax
+  analytics
+  // MathJax
 ) {
   var ItemView = Marionette.ItemView.extend({
     tagName: 'li',
@@ -48,7 +48,7 @@ define([
     onRender: function() {
       // this is necessary on every render after the initial one, since the
       // containe rview also calls mathjax initially
-      if (MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
+      // if (MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
       $('>', this.$el).on('keyup', (e) => {
         if (e.which === 13) {
           $('a.abs-redirect-link', this.$el)

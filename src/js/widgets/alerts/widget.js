@@ -5,29 +5,10 @@
  */
 
 define([
-  'marionette',
   'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  // list of possible alerts
-  'js/components/alerts',
   './modal_view',
   './page_top_alert',
-  'jquery',
-  'jquery-ui',
-  'bootstrap',
-], function(
-  Marionette,
-  BaseWidget,
-  ApiQuery,
-  Alerts,
-  ApiFeedback,
-  ModalView,
-  BannerView,
-  $,
-  $ui,
-  bootstrap
-) {
+], function(BaseWidget, ModalView, BannerView) {
   var AlertModel = Backbone.Model.extend({
     defaults: {
       type: 'info',

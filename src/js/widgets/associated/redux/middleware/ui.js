@@ -1,4 +1,4 @@
-define(['es6!../modules/api', 'es6!../modules/ui'], function(api, ui) {
+define(['../modules/api', '../modules/ui'], function(api, ui) {
   const { LINK_CLICKED } = ui.actions;
 
   const { SEND_ANALYTICS } = api.actions;

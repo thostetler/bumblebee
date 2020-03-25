@@ -1,4 +1,4 @@
-define(['es6!../constants/actionNames', 'moment'], function(ACTIONS, Moment) {
+define(['../constants/actionNames', 'moment'], function(ACTIONS, Moment) {
   const currentYear = Number(new Moment().year());
 
   // Initial state

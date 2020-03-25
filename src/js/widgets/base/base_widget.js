@@ -1,5 +1,4 @@
 define([
-  'backbone',
   'marionette',
   'js/components/api_query',
   'js/components/api_request',
@@ -8,7 +7,6 @@ define([
   'js/mixins/dependon',
   'js/mixins/widget_state_manager',
 ], function(
-  Backbone,
   Marionette,
   ApiQuery,
   ApiRequest,

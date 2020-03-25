@@ -1,7 +1,7 @@
 define([
   'js/page_managers/controller',
   'js/page_managers/one_column_view',
-  'hbs!js/wraps/error_page_manager/404',
+  'js/wraps/error_page_manager/404',
 ], function(PageManagerController, PageManagerView, PageManagerTemplate) {
   var PageManager = PageManagerController.extend({
     createView: function(options) {

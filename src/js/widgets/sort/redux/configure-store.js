@@ -1,4 +1,4 @@
-define(['redux', 'redux-thunk', 'es6!./modules/sort-app'], function(
+define(['redux', 'redux-thunk', './modules/sort-app'], function(
   Redux,
   ReduxThunk,
   SortApp

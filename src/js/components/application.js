@@ -39,15 +39,13 @@
  *
  *
  */
-
 define([
   'underscore',
   'jquery',
   'backbone',
-  'module',
   'js/components/beehive',
   'js/mixins/api_access',
-], function(_, $, Backbone, module, BeeHive, ApiAccess) {
+], function(_, $, Backbone, BeeHive, ApiAccess) {
   var Application = function(options) {
     options || (options = {});
     this.aid = _.uniqueId('application');
@@ -239,7 +237,7 @@ define([
 
       // console.log('registering', section, modules);
 
-      if (section == 'controllers') {
+      if (section === 'controllers') {
         hasKey = _.bind(this.hasController, this);
         removeKey = _.bind(function(key) {
           this.__controllers.remove(key);
@@ -247,15 +245,15 @@ define([
         addKey = _.bind(function(key, module) {
           this.__controllers.add(key, module);
         }, this);
-      } else if (section == 'services') {
+      } else if (section === 'services') {
         hasKey = _.bind(beehive.hasService, beehive);
         removeKey = _.bind(beehive.removeService, beehive);
         addKey = _.bind(beehive.addService, beehive);
-      } else if (section == 'objects') {
+      } else if (section === 'objects') {
         hasKey = _.bind(beehive.hasObject, beehive);
         removeKey = _.bind(beehive.removeObject, beehive);
         addKey = _.bind(beehive.addObject, beehive);
-      } else if (section == 'modules') {
+      } else if (section === 'modules') {
         createInstance = function(key, module) {
           return module;
         };
@@ -266,7 +264,7 @@ define([
         addKey = _.bind(function(key, module) {
           this.__modules.add(key, module);
         }, this);
-      } else if (section == 'widgets') {
+      } else if (section === 'widgets') {
         hasKey = _.bind(this.hasWidget, this);
         removeKey = _.bind(function(key) {
           this.__widgets.remove(key);
@@ -277,7 +275,7 @@ define([
         createInstance = function(key, module) {
           return module;
         };
-      } else if (section == 'plugins') {
+      } else if (section === 'plugins') {
         hasKey = _.bind(this.hasPlugin, this);
         removeKey = _.bind(function(key) {
           this.__plugins.remove(key);
@@ -383,7 +381,8 @@ define([
         if (self.debug) console.time('startLoading' + sectionName);
         // start loading the modules
         // console.log('loading', implNames, impls)
-        require(impls, callback, errback);
+        console.log('REQUIRE', impls);
+        // require(impls, callback, errback);
         return self._setTimeout(defer).promise();
       };
 

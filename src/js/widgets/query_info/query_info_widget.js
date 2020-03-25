@@ -2,24 +2,16 @@ define([
   'marionette',
   'backbone',
   'underscore',
-  'js/components/api_request',
-  'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/query_info/query_info_template',
+  'js/widgets/query_info/query_info_template',
   'js/mixins/formatter',
-  'bootstrap',
-  'js/components/api_feedback',
 ], function(
   Marionette,
   Backbone,
   _,
-  ApiRequest,
-  ApiQuery,
   BaseWidget,
   queryInfoTemplate,
-  FormatMixin,
-  Bootstrap,
-  ApiFeedback
+  FormatMixin
 ) {
   var QueryModel = Backbone.Model.extend({
     defaults: {
@@ -55,7 +47,7 @@ define([
     triggers: {
       'click .clear-selected': 'clear-selected',
       'click .limit-to-selected': 'limit-to-selected',
-      'click .exclude-selected': 'exclude-selected'
+      'click .exclude-selected': 'exclude-selected',
     },
 
     events: {
@@ -219,12 +211,12 @@ define([
       ps.publish(ps.CUSTOM_EVENT, 'second-order-search/limit');
     },
 
-    excludeSelected: function () {
+    excludeSelected: function() {
       const ps = this.getPubSub();
       ps.publish(ps.CUSTOM_EVENT, 'second-order-search/exclude');
     },
 
-    libraryAddSubmit: function (data) {
+    libraryAddSubmit: function(data) {
       var options = {};
       var that = this;
 

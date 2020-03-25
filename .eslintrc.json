@@ -50,5 +50,12 @@
     "space-before-blocks": "off",
     "quote-props": "off",
     "react/jsx-filename-extension": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [["js", "./src/js"]]
+      }
+    }
   }
 }

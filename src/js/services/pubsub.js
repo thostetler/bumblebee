@@ -3,12 +3,11 @@
  */
 
 define([
-  'backbone',
   'underscore',
   'js/mixins/hardened',
-  'pubsub_service_impl',
+  'js/services/default_pubsub',
   'js/components/pubsub_events',
-], function(Backbone, _, Hardened, PubSubImplementation, PubSubEvents) {
+], function(_, Hardened, PubSubImplementation, PubSubEvents) {
   var PubSub = PubSubImplementation.extend({
     /*
      * Wraps itself into a Facade that can be shared with other modules

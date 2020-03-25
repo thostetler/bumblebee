@@ -1,7 +1,7 @@
 define([
   'underscore',
   'marionette',
-  'hbs!js/widgets/preferences/templates/application',
+  'js/widgets/preferences/templates/application',
   'js/widgets/config',
 ], function(_, Marionette, ApplicationTemplate, config) {
   var DEFAULTS = {

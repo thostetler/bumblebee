@@ -6,8 +6,7 @@ define([
   'marionette',
   'backbone',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/loading/loading-template',
-  'bootstrap',
+  'js/widgets/loading/loading-template',
 ], function(Marionette, Backbone, BaseWidget, loadingTemplate) {
   var LoadingModel = Backbone.Model.extend({});
 

@@ -1,8 +1,8 @@
 define([
   'js/page_managers/toc_controller',
   'js/page_managers/three_column_view',
-  'hbs!js/wraps/abstract_page_manager/abstract-page-layout',
-  'hbs!js/wraps/abstract_page_manager/abstract-nav',
+  'js/wraps/abstract_page_manager/abstract-page-layout',
+  'js/wraps/abstract_page_manager/abstract-nav',
   'utils',
   'analytics',
 ], function(

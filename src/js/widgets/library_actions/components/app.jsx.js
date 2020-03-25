@@ -1,9 +1,9 @@
 define([
   'underscore',
   'react',
-  'es6!./multi-control.jsx',
-  'es6!./select.jsx',
-  'es6!./radio-group.jsx',
+  './multi-control.jsx',
+  './select.jsx',
+  './radio-group.jsx',
 ], function(_, React, MultiControl, Select, RadioGroup) {
   const descriptions = {
     union:

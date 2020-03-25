@@ -1,8 +1,8 @@
 define([
   'react',
-  'react-prop-types',
+  'prop-types',
   'react-bootstrap',
-  'es6!./PermissionEntry.jsx',
+  './PermissionEntry.jsx',
 ], function(React, PropTypes, { Table }, PermissionEntry) {
   const initialState = {};
   class PermissionList extends React.Component {

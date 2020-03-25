@@ -3,7 +3,7 @@ define([
   'backbone',
   'underscore',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/meta_tags/template/metatags',
+  'js/widgets/meta_tags/template/metatags',
   'js/mixins/link_generator_mixin',
 ], function($, Backbone, _, BaseWidget, metatagsTemplate, LinkGenerator) {
   var View = Backbone.View.extend({

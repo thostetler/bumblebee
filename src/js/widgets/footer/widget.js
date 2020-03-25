@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/footer/footer'], function(
+define(['marionette', 'js/widgets/footer/footer'], function(
   Marionette,
   FooterTemplate
 ) {

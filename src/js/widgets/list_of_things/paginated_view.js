@@ -10,17 +10,17 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
-  'hbs!js/widgets/list_of_things/templates/results-container-template',
+  'js/widgets/list_of_things/templates/item-template',
+  'js/widgets/list_of_things/templates/results-container-template',
   'js/mixins/link_generator_mixin',
   'js/mixins/add_stable_index_to_collection',
-  'hbs!js/widgets/list_of_things/templates/empty-view-template',
-  'hbs!js/widgets/list_of_things/templates/error-view-template',
-  'hbs!js/widgets/list_of_things/templates/initial-view-template',
+  'js/widgets/list_of_things/templates/empty-view-template',
+  'js/widgets/list_of_things/templates/error-view-template',
+  'js/widgets/list_of_things/templates/initial-view-template',
   './item_view',
   'analytics',
-  'mathjax',
-  'hbs!js/wraps/widget/loading/template',
+  'mathjax/es5/tex-chtml',
+  'js/wraps/widget/loading/template',
 ], function(
   _,
   Marionette,
@@ -123,7 +123,7 @@ define([
 
     onRender: function() {
       if (MathJax) {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
+        // MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
       }
     },
 

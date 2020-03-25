@@ -1,5 +1,5 @@
 define([
-  'es6!js/widgets/export/widget.jsx',
+  'js/widgets/export/widget.jsx',
   'js/components/api_query',
   'js/components/json_response',
 ], function(ExportWidget, ApiQuery, JsonResponse) {

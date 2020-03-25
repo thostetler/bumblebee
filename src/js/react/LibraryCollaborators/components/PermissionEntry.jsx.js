@@ -1,9 +1,9 @@
 define([
   'react',
-  'react-prop-types',
+  'prop-types',
   'react-bootstrap',
   '../constants',
-  'es6!./ManageButton.jsx',
+  './ManageButton.jsx',
 ], function(
   React,
   PropTypes,

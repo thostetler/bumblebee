@@ -4,7 +4,7 @@ define([
   'react',
   'react-dom',
   'js/widgets/base/base_widget',
-  'es6!./components/app.jsx',
+  './components/app.jsx',
 ], function(_, Backbone, React, ReactDOM, BaseWidget, App) {
   const Model = Backbone.Model.extend({
     defaults: {

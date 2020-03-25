@@ -8,14 +8,11 @@ define([
   'backbone',
   'jquery',
   'underscore',
-  'cache',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/abstract/templates/abstract_template',
-  'js/components/api_query',
+  'js/widgets/abstract/templates/abstract_template',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
-  'mathjax',
-  'bootstrap',
+  // 'mathjax',
   'utils',
 ], function(
   Marionette,
@@ -24,14 +21,11 @@ define([
   Backbone,
   $,
   _,
-  Cache,
   BaseWidget,
   abstractTemplate,
-  ApiQuery,
   LinkGeneratorMixin,
   PapersUtils,
-  MathJax,
-  Bootstrap,
+  // MathJax,
   utils
 ) {
   const MAX_AUTHORS = 20;
@@ -221,16 +215,16 @@ define([
       });
 
       if (MathJax) {
-        MathJax.Hub.Queue([
-          'Typeset',
-          MathJax.Hub,
-          this.$('.s-abstract-title', this.el).get(0),
-        ]);
-        MathJax.Hub.Queue([
-          'Typeset',
-          MathJax.Hub,
-          this.$('.s-abstract-text', this.el).get(0),
-        ]);
+        // MathJax.Hub.Queue([
+        //   'Typeset',
+        //   MathJax.Hub,
+        //   this.$('.s-abstract-title', this.el).get(0),
+        // ]);
+        // MathJax.Hub.Queue([
+        //   'Typeset',
+        //   MathJax.Hub,
+        //   this.$('.s-abstract-text', this.el).get(0),
+        // ]);
       }
     },
   });

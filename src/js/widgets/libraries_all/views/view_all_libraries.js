@@ -1,11 +1,11 @@
 define([
   'marionette',
-  'hbs!js/widgets/libraries_all/templates/libraries-list-container',
-  'hbs!js/widgets/libraries_all/templates/library-item',
-  'hbs!js/widgets/libraries_all/templates/no-libraries',
-  'hbs!js/widgets/libraries_all/templates/loading-libraries',
-  'hbs!js/widgets/libraries_all/templates/error-libraries',
-  'hbs!js/widgets/libraries_all/templates/no-result',
+  'js/widgets/libraries_all/templates/libraries-list-container',
+  'js/widgets/libraries_all/templates/library-item',
+  'js/widgets/libraries_all/templates/no-libraries',
+  'js/widgets/libraries_all/templates/loading-libraries',
+  'js/widgets/libraries_all/templates/error-libraries',
+  'js/widgets/libraries_all/templates/no-result',
   'moment',
 ], function(
   Marionette,

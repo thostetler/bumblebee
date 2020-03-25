@@ -6,8 +6,8 @@ define([
   'jquery',
   'js/components/api_query',
   'js/components/api_targets',
-  'filesaver',
-], function(_, $, ApiQuery, ApiTargets) {
+  'file-saver',
+], function(_, $, ApiQuery, ApiTargets, { Blob, saveAs }) {
   // set of action names
   const actions = {
     SET_TAB: 'SET_TAB',

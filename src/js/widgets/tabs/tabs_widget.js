@@ -4,18 +4,10 @@
 define([
   'underscore',
   'marionette',
-  'bootstrap',
-  'hbs!js/widgets/tabs/templates/tabs_inner',
-  'hbs!js/widgets/tabs/templates/tabs_outer',
-  'hbs!js/widgets/tabs/templates/tabs_title',
-], function(
-  _,
-  Marionette,
-  Bootstrap,
-  innerTemplate,
-  outerTemplate,
-  titleTemplate
-) {
+  'js/widgets/tabs/templates/tabs_inner',
+  'js/widgets/tabs/templates/tabs_outer',
+  'js/widgets/tabs/templates/tabs_title',
+], function(_, Marionette, innerTemplate, outerTemplate, titleTemplate) {
   var TabsWidget = Marionette.ItemView.extend({
     // expects in options a list of views like this:
     // {tabs: [{title : (title for tab) , widget: (actual widget), id : (unique id)}, {default : true/false} (a tab widget has only one default tab)]}

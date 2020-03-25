@@ -5,30 +5,24 @@
 
 define([
   'jquery',
-  'backbone',
   'underscore',
   'js/components/navigator',
   'js/components/api_feedback',
   'js/components/api_query_updater',
-  'js/components/json_response',
   'js/components/api_query',
   'js/components/api_request',
   'js/components/api_targets',
-  'hbs!404',
-  'hbs!js/apps/discovery/templates/orcid-modal-template',
+  'js/apps/discovery/templates/orcid-modal-template',
   'js/mixins/api_access',
 ], function(
   $,
-  Backbone,
   _,
   Navigator,
   ApiFeedback,
   ApiQueryUpdater,
-  JsonResponse,
   ApiQuery,
   ApiRequest,
   ApiTargets,
-  ErrorTemplate,
   OrcidModalTemplate,
   ApiAccessMixin
 ) {

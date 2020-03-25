@@ -1,4 +1,4 @@
-define(['redux', 'redux-thunk', 'es6!./modules/orcid-selector-app'], function(
+define(['redux', 'redux-thunk', './modules/orcid-selector-app'], function(
   Redux,
   ReduxThunk,
   OrcidSelectorApp

@@ -3,41 +3,29 @@ define([
   'marionette',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/search_bar/templates/search_bar_template',
-  'hbs!js/widgets/search_bar/templates/search_form_template',
-  'hbs!js/widgets/search_bar/templates/option-dropdown',
-  'js/components/api_request',
-  'js/components/api_targets',
+  'js/widgets/search_bar/templates/search_bar_template',
+  'js/widgets/search_bar/templates/option-dropdown',
   'js/components/api_feedback',
   'js/mixins/formatter',
   './autocomplete',
-  'bootstrap', // if bootstrap is missing, jQuery events get propagated
-  'jquery-ui',
   'js/mixins/dependon',
   'analytics',
   'js/components/query_validator',
   'select2',
-  'libs/select2/matcher',
+  'jquery-ui/ui/widgets/autocomplete',
 ], function(
   _,
   Marionette,
   ApiQuery,
   BaseWidget,
   SearchBarTemplate,
-  SearchFormTemplate,
   OptionDropdownTemplate,
-  ApiRequest,
-  ApiTargets,
   ApiFeedback,
   FormatMixin,
   autocompleteArray,
-  bootstrap,
-  jqueryUI,
   Dependon,
   analytics,
-  QueryValidator,
-  select2,
-  oldMatcher
+  QueryValidator
 ) {
   $.fn.getCursorPosition = function() {
     var input = this.get(0);
@@ -154,7 +142,7 @@ define([
       $select
         .select2({
           placeholder: 'All Search Terms',
-          matcher: oldMatcher(matchStart),
+          // matcher: oldMatcher(matchStart),
         })
         .on('change', function(e) {
           var val = e.target.value;

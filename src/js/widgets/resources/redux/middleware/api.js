@@ -1,8 +1,4 @@
-define(['underscore', 'es6!../modules/api', 'es6!../modules/ui'], function(
-  _,
-  api,
-  ui
-) {
+define(['underscore', '../modules/api', '../modules/ui'], function(_, api, ui) {
   const {
     QUERY_PROVIDED,
     RECEIVED_RESPONSE,

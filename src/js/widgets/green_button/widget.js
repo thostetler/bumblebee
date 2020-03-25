@@ -16,9 +16,9 @@ define([
   'js/components/alerts',
 
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/green_button/templates/widget-view',
-  'hbs!js/widgets/green_button/templates/item-view',
-  'hbs!js/widgets/green_button/templates/empty-view',
+  'js/widgets/green_button/templates/widget-view',
+  'js/widgets/green_button/templates/item-view',
+  'js/widgets/green_button/templates/empty-view',
 ], function(
   _,
   $,

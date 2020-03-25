@@ -2,10 +2,9 @@ define([
   'underscore',
   'js/components/generic_module',
   'js/mixins/dependon',
-  'persist-js',
-  'module',
-], function(_, GenericModule, Mixins, PersistJS, module) {
-  var namespace = module.config().namespace || '';
+  'localforage',
+], function(_, GenericModule, Mixins, localforage) {
+  var namespace = 'bumblebee';
 
   var LocalStorage = GenericModule.extend({
     constructor: function(opts) {
@@ -18,24 +17,27 @@ define([
     },
 
     _createStore: function(name) {
-      var s = new PersistJS.Store(name, {
-        about: 'This is bumblebee persistent storage',
-        defer: true,
+      const store = localforage.createInstance({
+        name,
       });
-      var keys = s.get('#keys');
+      store.config({
+        name: 'Bumblebee',
+        description: 'This is bumblebee storage',
+      });
+      var keys = store.getItem('#keys');
       if (!keys) {
-        s.set('#keys', '{}');
+        store.setItem('#keys', {});
       } else {
         try {
           keys = JSON.parse(keys);
           if (!_.isObject(keys)) {
-            s.set('#keys', '{}');
+            store.setItem('#keys', {});
           }
         } catch (e) {
-          s.set('#keys', '{}');
+          store.setItem('#keys', {});
         }
       }
-      return s;
+      return store;
     },
 
     set: function(key, value) {
@@ -43,13 +45,13 @@ define([
       if (!_.isString(value)) {
         value = JSON.stringify(value);
       }
-      this._store.set(key, value);
+      this._store.setItem(key, value);
       this._setKey(key);
     },
 
     get: function(key) {
       this._checkKey(key);
-      var v = this._store.get(key);
+      var v = this._store.getItem(key);
       if (!v) return v;
       try {
         return JSON.parse(v);
@@ -65,27 +67,28 @@ define([
     },
 
     clear: function() {
-      var keys = this.get('#keys');
+      var keys = this.getItem('#keys');
+
       for (var k in keys) {
-        this._store.remove(k);
+        this._store.removeItem(k);
       }
-      this._store.set('#keys', '{}');
+      this._store.setItem('#keys', {});
     },
 
     keys: function() {
-      return JSON.parse(this._store.get('#keys'));
+      return this._store.getItem('#keys');
     },
 
     _setKey: function(key) {
       var keys = this.keys() || {};
       keys[key] = 1;
-      this._store.set('#keys', JSON.stringify(keys));
+      this._store.setItem('#keys', keys);
     },
 
     _delKey: function(key) {
       var keys = this.keys() || {};
       delete keys[key];
-      this._store.set('#keys', JSON.stringify(keys));
+      this._store.setItem('#keys', keys);
     },
 
     _checkKey: function(key) {

@@ -39,13 +39,9 @@
 
 define([
   'underscore',
-  'bootstrap',
   'jquery',
-  'backbone',
   'js/components/generic_module',
   'js/mixins/dependon',
-  'js/components/pubsub_events',
-  'js/mixins/link_generator_mixin',
   'js/components/api_query',
   'js/components/api_request',
   'js/mixins/hardened',
@@ -57,13 +53,9 @@ define([
   'js/modules/orcid/bio',
 ], function(
   _,
-  Bootstrap,
   $,
-  Backbone,
   GenericModule,
   Mixins,
-  PubSubEvents,
-  LinkGeneratorMixin,
   ApiQuery,
   ApiRequest,
   HardenedMixin,

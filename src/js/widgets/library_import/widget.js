@@ -2,11 +2,10 @@ define([
   'js/widgets/base/base_widget',
   'js/components/api_request',
   'js/components/api_targets',
-  'hbs!js/widgets/library_import/templates/tab-container',
-  'hbs!js/widgets/library_import/templates/import-view-labs',
-  'hbs!js/widgets/library_import/templates/import-view-classic',
-  'hbs!js/widgets/library_import/templates/success-template',
-  'bootstrap',
+  'js/widgets/library_import/templates/tab-container',
+  'js/widgets/library_import/templates/import-view-labs',
+  'js/widgets/library_import/templates/import-view-classic',
+  'js/widgets/library_import/templates/success-template',
 ], function(
   BaseWidget,
   ApiRequest,
@@ -14,8 +13,7 @@ define([
   TabContainerTemplate,
   ADS2ImportView,
   ClassicImportView,
-  SuccessTemplate,
-  Bootstrap
+  SuccessTemplate
 ) {
   /* config vars */
 

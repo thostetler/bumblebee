@@ -54,16 +54,17 @@ define(['jquery', 'underscore', 'analytics'], function($, _, analytics) {
     const timeoutId = setTimeout(() => {
       $dd.reject();
     }, 3000);
-    window.require(
-      ['bowser'],
-      (bowser) => {
-        window.clearTimeout(timeoutId);
-        $dd.resolve(bowser.parse(window.navigator.userAgent));
-      },
-      () => {
-        $dd.reject();
-      }
-    );
+    window.require &&
+      window.require(
+        ['bowser'],
+        (bowser) => {
+          window.clearTimeout(timeoutId);
+          $dd.resolve(bowser.parse(window.navigator.userAgent));
+        },
+        () => {
+          $dd.reject();
+        }
+      );
 
     return $dd.promise();
   };

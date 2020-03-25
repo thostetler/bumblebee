@@ -1,9 +1,9 @@
 define([
   'underscore',
-  'es6!../models/authorAffiliation',
-  'es6!../constants/actionNames',
-  'filesaver',
-], function(_, authorAffiliation, ACTIONS) {
+  '../models/authorAffiliation',
+  '../constants/actionNames',
+  'file-saver',
+], function(_, authorAffiliation, ACTIONS, { saveAs }) {
   /**
    * Format the data into something the server will accept
    *

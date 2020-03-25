@@ -2,22 +2,13 @@
  * This module contains a set of utilities to bootstrap Discovery app
  */
 define([
+  'jquery',
   'underscore',
   'backbone',
   'js/components/api_query',
   'js/components/api_request',
-  'js/components/pubsub_events',
-  'hbs',
   'js/components/api_targets',
-], function(
-  _,
-  Backbone,
-  ApiQuery,
-  ApiRequest,
-  PubSubEvents,
-  HandleBars,
-  ApiTargets
-) {
+], function($, _, Backbone, ApiQuery, ApiRequest, ApiTargets) {
   var startGlobalHandler = function() {
     var routes = [
       'classic-form',

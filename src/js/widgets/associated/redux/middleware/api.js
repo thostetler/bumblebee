@@ -1,8 +1,4 @@
-define(['underscore', 'es6!../modules/api', 'es6!../modules/ui'], function(
-  _,
-  api,
-  ui
-) {
+define(['underscore', '../modules/api', '../modules/ui'], function(_, api, ui) {
   const { RECEIVED_RESPONSE, SEND_ANALYTICS, FALLBACK_ON_ERROR } = api.actions;
 
   const { SET_LOADING, SET_HAS_ERROR, SET_ITEMS } = ui.actions;

@@ -1,8 +1,8 @@
 define([
   'underscore',
   'marionette',
-  'hbs!js/page_managers/templates/results-page-layout',
-  'hbs!js/page_managers/templates/results-control-row',
+  'js/page_managers/templates/results-page-layout',
+  'js/page_managers/templates/results-control-row',
   'js/widgets/base/base_widget',
 ], function(_, Marionette, pageTemplate, controlRowTemplate) {
   /*

@@ -3,7 +3,7 @@ define([
   'd3',
   'jquery',
   'jquery-ui',
-  'hbs!js/widgets/facet/graph-facet/templates/graph',
+  'js/widgets/facet/graph-facet/templates/graph',
 ], function(Marionette, d3, $, $ui, FacetGraphTemplate) {
   var ZoomableGraphView = Marionette.ItemView.extend({
     className: 'graph-facet',

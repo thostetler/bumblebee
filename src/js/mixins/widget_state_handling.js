@@ -8,8 +8,8 @@ define([
   'underscore',
   'jquery',
   'js/widgets/widget_states',
-  'hbs!js/widgets/base/templates/loading-template',
-  'hbs!js/widgets/base/templates/loading-template-small',
+  'js/widgets/base/templates/loading-template',
+  'js/widgets/base/templates/loading-template-small',
 ], function(_, $, WidgetStates, LoadingTemplate, LoadingTemplateSmall) {
   /**
    * This function tries hard to grab the topmost container (view)

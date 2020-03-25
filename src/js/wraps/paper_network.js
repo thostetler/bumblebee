@@ -1,23 +1,19 @@
 define([
   'marionette',
   'js/widgets/network_vis/network_widget',
-  'js/components/api_query_updater',
-  'hbs!js/wraps/templates/paper-network-data',
-  'hbs!js/wraps/templates/paper-network-container',
-  'hbs!js/widgets/network_vis/templates/not-enough-data-template',
-  'hbs!js/wraps/templates/paper-network-link-data',
+  'js/wraps/templates/paper-network-data',
+  'js/wraps/templates/paper-network-container',
+  'js/widgets/network_vis/templates/not-enough-data-template',
+  'js/wraps/templates/paper-network-link-data',
   'js/components/api_targets',
-  'bootstrap',
 ], function(
   Marionette,
   NetworkWidget,
-  ApiQueryUpdater,
   GroupDataTemplate,
   ContainerTemplate,
   NotEnoughDataTemplate,
   LinkDataTemplate,
-  ApiTargets,
-  bs
+  ApiTargets
 ) {
   var options = {};
 
