@@ -1,8 +1,8 @@
 define([
   'react',
   'react-redux',
-  'react-prop-types',
-  'es6!./toggle_list.jsx',
+  'prop-types',
+  './toggle_list.jsx',
   'react-transition-group',
   './reducers',
 ], function(

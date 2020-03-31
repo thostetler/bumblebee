@@ -1,4 +1,28 @@
-define(['underscore', 'jquery'], function(_, $) {
+define([
+  'underscore',
+  'jquery',
+  'config/discovery.vars',
+  'analytics_lib',
+  '@analytics/google-analytics',
+], function(
+  _,
+  $,
+  { googleTrackingCode: trackingId },
+  { default: Analytics },
+  { default: googleAnalytics }
+) {
+  const analytics = Analytics({
+    app: 'bumblebee',
+    version: 100,
+    plugins: [
+      googleAnalytics({
+        trackingId,
+      }),
+    ],
+  });
+
+  console.log(analytics);
+
   /*
    * Set of targets
    * each has a set of hooks which coorespond to the event label passed
@@ -70,34 +94,34 @@ define(['underscore', 'jquery'], function(_, $) {
     }
   };
 
-  var ga = window[window.GoogleAnalyticsObject];
-  window[window.GoogleAnalyticsObject] = function(...args) {
-    try {
-      const $dd = $.Deferred();
-      ga.q = ga.q || [];
-      ga.q.push(args);
-      ga.apply(ga, [
-        ...args,
-        {
-          hitCallback: () => {
-            $dd.resolve();
-          },
-        },
-      ]);
-      setTimeout(() => $dd.resolve(), 1000);
-      return $dd.promise();
-    } catch (e) {
-      console.info('google analytics event not tracked');
-    }
-  };
+  // var ga = window[window.GoogleAnalyticsObject];
+  // window[window.GoogleAnalyticsObject] = function(...args) {
+  //   try {
+  //     const $dd = $.Deferred();
+  //     ga.q = ga.q || [];
+  //     ga.q.push(args);
+  //     ga.apply(ga, [
+  //       ...args,
+  //       {
+  //         hitCallback: () => {
+  //           $dd.resolve();
+  //         },
+  //       },
+  //     ]);
+  //     setTimeout(() => $dd.resolve(), 1000);
+  //     return $dd.promise();
+  //   } catch (e) {
+  //     console.info('google analytics event not tracked');
+  //   }
+  // };
 
-  var Analytics = function() {
+  var Analytics1 = function() {
     adsLogger.apply(null, _.rest(arguments, 3));
-    return (
-      window[window.GoogleAnalyticsObject] &&
-      window[window.GoogleAnalyticsObject].apply(this, arguments)
-    );
+    // return (
+    //   window[window.GoogleAnalyticsObject] &&
+    //   window[window.GoogleAnalyticsObject].apply(this, arguments)
+    // );
   };
 
-  return Analytics;
+  return Analytics1;
 });

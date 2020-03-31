@@ -24,6 +24,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
     alias: {
       cache: 'dsjslib/lib/Cache.js',
+      analytics_lib: path.resolve(__dirname, 'node_modules/analytics'),
       analytics: 'js/components/analytics',
       utils: 'js/utils',
       'config/discovery.vars$': 'config/discovery.vars.js',

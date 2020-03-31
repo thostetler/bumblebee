@@ -1,4 +1,4 @@
-define(['react', 'd3', 'react-prop-types'], function(React, d3, PropTypes) {
+define(['react', 'd3', 'prop-types'], function(React, d3, PropTypes) {
   const format = (count) => {
     return d3
       .format('s')(count)
