@@ -1,17 +1,10 @@
+$fa-font-path: '//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts'; // for referencing Bootstrap CDN font files directly
 
-$fa-font-path:        "//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts";  // for referencing Bootstrap CDN font files directly
+@import '~jquery-ui/themes/base/all.css';
+@import '~select2/dist/css/select2.css';
+@import '~font-awesome/scss/font-awesome.scss';
 
-@import '../../libs/fontawesome/scss/font-awesome';
-@import '../../styles/smoothness/jquery-ui.min';
-@import '../../libs/select2/select2';
-
-//not using at the moment
-//@import '../../libs/animate.css/animate';
-
-@import 'ads-sass/bootstrap-variables';
-
-/* Import Bootstrap source */
-@import '../../libs/bootstrap-sass/_bootstrap';
+@import 'custom-bootstrap';
 
 /* Import stuff that should be accessible by modules below */
 @import 'ads-sass/ads-variables';

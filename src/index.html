@@ -5,33 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEST SITE</title>
     <script>
-      window.MathJax = {
-        tex: {
-          tags: 'ams',
-          inlineMath: [
-            ['$', '$'],
-            ['\\(', '\\)'],
-          ],
-          displayMath: [
-            ['$$', '$$'],
-            ['\\[', '\\]'],
-          ],
-          processEscapes: true,
-          autoload: {
-            color: [],
-            colorV2: ['color'],
-          },
-          packages: { '[+]': ['noerrors'] },
-        },
-        options: {
-          ignoreHtmlClass: 'tex2jax_ignore',
-          processHtmlClass: 'tex2jax_process',
-        },
-        loader: {
-          load: ['[tex]/noerrors'],
-        },
-      };
+      window.MathJax={tex:{tags:"ams",inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],processEscapes:!0,autoload:{color:[],colorV2:["color"]},packages:{"[+]":["noerrors"]}},options:{ignoreHtmlClass:"tex2jax_ignore",processHtmlClass:"tex2jax_process"},loader:{load:["[tex]/noerrors"]}};
     </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   </head>
   <body>
     <div id="app-container">

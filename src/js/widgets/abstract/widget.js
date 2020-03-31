@@ -12,7 +12,6 @@ define([
   'js/widgets/abstract/templates/abstract_template',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
-  // 'mathjax',
   'utils',
 ], function(
   Marionette,
@@ -25,7 +24,6 @@ define([
   abstractTemplate,
   LinkGeneratorMixin,
   PapersUtils,
-  // MathJax,
   utils
 ) {
   const MAX_AUTHORS = 20;
@@ -214,18 +212,18 @@ define([
         container: 'body',
       });
 
-      if (MathJax) {
-        // MathJax.Hub.Queue([
-        //   'Typeset',
-        //   MathJax.Hub,
-        //   this.$('.s-abstract-title', this.el).get(0),
-        // ]);
-        // MathJax.Hub.Queue([
-        //   'Typeset',
-        //   MathJax.Hub,
-        //   this.$('.s-abstract-text', this.el).get(0),
-        // ]);
-      }
+      // if (MathJax) {
+      // MathJax.Hub.Queue([
+      //   'Typeset',
+      //   MathJax.Hub,
+      //   this.$('.s-abstract-title', this.el).get(0),
+      // ]);
+      // MathJax.Hub.Queue([
+      //   'Typeset',
+      //   MathJax.Hub,
+      //   this.$('.s-abstract-text', this.el).get(0),
+      // ]);
+      // }
     },
   });
 

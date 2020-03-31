@@ -19,7 +19,6 @@ define([
   'js/widgets/list_of_things/templates/initial-view-template',
   './item_view',
   'analytics',
-  'mathjax/es5/tex-chtml',
   'js/wraps/widget/loading/template',
 ], function(
   _,
@@ -37,7 +36,6 @@ define([
   InitialViewTemplate,
   ItemView,
   analytics,
-  MathJax,
   loadingTemplate
 ) {
   /**
@@ -122,9 +120,9 @@ define([
     },
 
     onRender: function() {
-      if (MathJax) {
+      // if (MathJax) {
         // MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
-      }
+      // }
     },
 
     className: 'list-of-things',

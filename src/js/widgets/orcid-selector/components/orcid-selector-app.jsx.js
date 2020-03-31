@@ -60,7 +60,7 @@ define(['react', 'prop-types'], function(React, PropTypes) {
               <div className="sr-only">Orcid Bulk Actions</div>
               <div className="text-center">
                 <img
-                  src="../../styles/img/orcid-active.svg"
+                  src="@imgs/orcid-active.svg"
                   alt="orcid logo active"
                   className="s-orcid-img"
                   aria-hidden="true"

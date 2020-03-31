@@ -3,6 +3,7 @@ import 'bootstrap-sass/assets/javascripts/bootstrap';
 import Application from 'js/components/application';
 import DiscoveryBootstrap from 'js/mixins/discovery_bootstrap';
 import Router from 'js/apps/discovery/router';
+import '../styles/sass/manifest.scss';
 import appModules from './core';
 
 window.$ = $;

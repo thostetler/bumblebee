@@ -15,6 +15,8 @@ module.exports = {
       _: 'lodash',
       Marionette: 'marionette',
       Backbone: 'backbone',
+      MathJax: 'mathjax',
+      d3: 'd3',
     }),
   ],
   resolve: {
@@ -27,6 +29,7 @@ module.exports = {
       'config/discovery.vars$': 'config/discovery.vars.js',
       underscore: 'lodash',
       marionette: 'backbone.marionette',
+      '@imgs': 'styles/img',
     },
   },
   module: {
@@ -38,11 +41,31 @@ module.exports = {
             loader: 'handlebars-loader',
             options: {
               extensions: ['.html'],
-              ignorePartials: true,
+              partialDirs: path.resolve(__dirname, 'src'),
               helperDirs: path.resolve(__dirname, 'src/js/handlebars/'),
+              inlineRequires: '@imgs',
             },
           },
         ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        loader: 'url-loader',
+        options: {
+          esModule: false,
+          quality: 85,
+          limit: 819200, // 800KB
+          outputPath: 'static/assets/',
+          publicPath: 'static/assets/',
+        },
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ['file-loader'],
       },
       {
         test: /\.(jsx\.)?js$/,
