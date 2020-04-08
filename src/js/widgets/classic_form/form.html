@@ -10,7 +10,7 @@
   </div>
 
   <div data-field="database">
-    <b>Limit query to: </b>&nbsp;<label>
+    <span class="text-bold">Limit query to: </span>&nbsp;<label>
       <input type="checkbox" checked="true" name="astronomy" />
       Astronomy </label
     >&nbsp;&nbsp;
@@ -20,7 +20,8 @@
   </div>
   <div class="clearfix">
     <div class="col-sm-6" data-field="author" data-textInput="true">
-      <div class="classic-form__logic-group logic-group">
+      <div class="classic-form__logic-group logic-group" role="group" aria-labelledby="author-logic">
+        <div class="sr-only" id="author-logic">Author logic</div>
         <label>
           <input type="radio" name="author-logic" value="AND" checked="true" />
           and
@@ -43,7 +44,8 @@
     </div>
     <div class="col-sm-6" data-field="object" data-textInput="true">
       <div class="pull-right-sm">
-        <div class="classic-form__logic-group logic-group">
+        <div class="classic-form__logic-group logic-group" role="group" aria-labelledby="object-logic">
+          <div class="sr-only" id="object-logic">Object logic</div>
           <label>
             <input
               type="radio"
@@ -116,7 +118,8 @@
     </div>
   </div>
   <div data-field="title" data-textInput="true">
-    <div class="classic-form__logic-group logic-group pull-right">
+    <div class="classic-form__logic-group logic-group pull-right" role="group" aria-labelledby="title-logic">
+      <div class="sr-only" id="title-logic">Title logic</div>
       <label>
         <input type="radio" name="title-logic" value="AND" checked="true" /> and
       </label>
@@ -137,7 +140,8 @@
     </div>
   </div>
   <div data-field="abs" data-textInput="true">
-    <div class="classic-form__logic-group logic-group pull-right">
+    <div class="classic-form__logic-group logic-group pull-right" role="group" aria-labelledby="abstract-logic">
+      <div class="sr-only" id="abstract-logic">Abstract logic</div>
       <label>
         <input type="radio" name="abstract-logic" value="AND" checked="true" />
         and
@@ -171,7 +175,7 @@
   </div>
   <div data-field="bibstem" data-textInput="true">
     <div class="logic-group">
-      <input type="checkbox" class="hidden" value="OR" checked="true" />
+      <input type="checkbox" class="hidden" value="OR" checked="true" aria-hidden="true" />
     </div>
     <label for="classic-bibstem">Publication(s)</label>
     <p class="help-block small">Press Return Key To Add Publication</p>
