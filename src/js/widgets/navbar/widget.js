@@ -133,6 +133,25 @@ define([
       }
     },
 
+    trapFocus: function($modal) {
+      const selector = 'button[data-dismiss="modal"]';
+
+      $(`${selector}:last`, $modal)
+        .on('keydown', function(e) {
+          if ($('this:focus') && e.which === 9 && !e.shiftKey) {
+            e.preventDefault();
+            $(`${selector}:first`).focus();
+          }
+        })
+        .focus();
+      $(`${selector}:first`).on('keydown', function(e) {
+        if ($('this:focus') && e.which === 9 && e.shiftKey) {
+          e.preventDefault();
+          $(`${selector}:last`).focus();
+        }
+      });
+    },
+
     onRender: function() {
       // only append a single time
       if ($('#feedback-modal').length === 0) {
@@ -172,6 +191,7 @@ define([
         $fg.html(
           '<button class="btn btn-success" type="submit" value="Send">Submit</button>'
         );
+        $('button[data-dismiss="modal"]', $modal).off('keydown');
         showListView();
       });
 
@@ -246,6 +266,8 @@ define([
             return url.replace(/\?.*$/, '');
           });
         }
+
+        this.trapFocus($modal);
       });
 
       setTimeout(() => {
