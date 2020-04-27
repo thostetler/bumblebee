@@ -7,6 +7,8 @@ define([], function() {
     UPDATE_SEARCH_BAR: 'UPDATE_SEARCH_BAR',
     GET_FULL_LIST: 'GET_FULL_LIST',
     EMIT_ANALYTICS: 'EMIT_ANALYTICS',
+    SET_TAB: 'SET_TAB',
+    SET_ORACLE_TARGET: 'SET_ORACLE_TARGET',
   };
 
   const actionCreators = {
@@ -15,7 +17,6 @@ define([], function() {
       scope: actions.GET_RECOMMENDATIONS,
       options: {
         type: 'POST',
-        target: `_oracle/readhist`,
         data: {
           function: func,
           sort,
@@ -52,6 +53,14 @@ define([], function() {
     emitAnalytics: (payload) => ({
       type: actions.EMIT_ANALYTICS,
       payload,
+    }),
+    setTab: (tab) => ({
+      type: actions.SET_TAB,
+      payload: tab,
+    }),
+    setOracleTarget: (target) => ({
+      type: actions.SET_ORACLE_TARGET,
+      payload: target,
     }),
   };
 

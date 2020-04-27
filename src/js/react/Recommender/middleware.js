@@ -11,6 +11,17 @@ define(['../shared/helpers', './actions'], function(
     EMIT_ANALYTICS,
   }
 ) {
+  const updateTarget = middleware(({ next, action, getState }) => {
+    if (action.type === 'API_REQUEST' && action.scope === GET_RECOMMENDATIONS) {
+      const { oracleTarget } = getState();
+      action = {
+        ...action,
+        options: { ...action.options, target: oracleTarget },
+      };
+    }
+    next(action);
+  });
+
   const getRecommendations = middleware(({ next, action, dispatch }) => {
     next(action);
 
@@ -69,5 +80,11 @@ define(['../shared/helpers', './actions'], function(
     }
   });
 
-  return { getRecommendations, updateSearchBar, getFullList, analytics };
+  return {
+    getRecommendations,
+    updateSearchBar,
+    getFullList,
+    analytics,
+    updateTarget,
+  };
 });

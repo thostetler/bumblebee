@@ -2,24 +2,36 @@ define([
   'react',
   'react-bootstrap',
   'react-prop-types',
+  'react-redux',
+  '../actions',
   'es6!./RecommendedList.jsx',
   'es6!./SearchExamples.jsx',
 ], function(
   React,
   { Nav, NavItem },
   PropTypes,
+  { useDispatch, useSelector },
+  { setTab },
   RecommendedList,
   SearchExamples
 ) {
+  const selector = (state) => ({
+    tab: state.tab,
+  });
+
   const App = () => {
-    const [selected, onSelected] = React.useState(2);
+    const dispatch = useDispatch();
+    const { tab } = useSelector(selector);
+    const onSelected = (key) => {
+      dispatch(setTab(key));
+    };
 
     return (
       <div>
         <Nav
           bsStyle="tabs"
           justified
-          activeKey={selected}
+          activeKey={tab}
           onSelect={(key) => onSelected(key)}
         >
           <NavItem eventKey={1} href="javascript:void(0);">
@@ -30,7 +42,7 @@ define([
           </NavItem>
         </Nav>
         <div style={{ minHeight: 200, padding: '1rem 0' }}>
-          {selected === 1 ? <RecommendedList /> : <SearchExamples />}
+          {tab === 1 ? <RecommendedList /> : <SearchExamples />}
         </div>
       </div>
     );

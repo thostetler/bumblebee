@@ -1,6 +1,6 @@
 define(['redux', './actions'], function(
   { combineReducers },
-  { SET_DOCS, SET_QUERY }
+  { SET_DOCS, SET_QUERY, SET_TAB, SET_ORACLE_TARGET }
 ) {
   const requestState = {
     GET_RECOMMENDATIONS: { status: null, result: null, error: null },
@@ -50,9 +50,27 @@ define(['redux', './actions'], function(
     return state;
   };
 
+  const tabState = 2;
+  const tab = (state = tabState, action) => {
+    if (action.type === SET_TAB && action.payload) {
+      return action.payload;
+    }
+    return state;
+  };
+
+  const oracleTargetState = '_oracle/readhist';
+  const oracleTarget = (state = oracleTargetState, action) => {
+    if (action.type === SET_ORACLE_TARGET && action.payload) {
+      return action.payload;
+    }
+    return state;
+  };
+
   return combineReducers({
     requests,
     docs,
     query,
+    tab,
+    oracleTarget,
   });
 });
