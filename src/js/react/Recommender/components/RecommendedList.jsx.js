@@ -9,7 +9,7 @@ define([
   PropTypes,
   { useSelector, useDispatch },
   { Button },
-  { getRecommendations, getFullList }
+  { getRecommendations, getFullList, emitAnalytics }
 ) {
   const Paper = ({ title, bibcode, author, totalAuthors }) => {
     return (
@@ -75,8 +75,15 @@ define([
       );
     }, []);
     const onGetMore = () => {
-      // TODO: get this working
       dispatch(getFullList());
+      dispatch(
+        emitAnalytics([
+          'send',
+          'event',
+          'interaction',
+          'recommender/get-full-list-clicked',
+        ])
+      );
     };
     const { getRecommendationsRequest, getDocsRequest, docs } = useSelector(
       selector

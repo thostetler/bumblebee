@@ -6,6 +6,7 @@ define([], function() {
     SET_QUERY: 'SET_QUERY',
     UPDATE_SEARCH_BAR: 'UPDATE_SEARCH_BAR',
     GET_FULL_LIST: 'GET_FULL_LIST',
+    EMIT_ANALYTICS: 'EMIT_ANALYTICS',
   };
 
   const actionCreators = {
@@ -47,6 +48,10 @@ define([], function() {
     }),
     getFullList: () => ({
       type: actions.GET_FULL_LIST,
+    }),
+    emitAnalytics: (payload) => ({
+      type: actions.EMIT_ANALYTICS,
+      payload,
     }),
   };
 

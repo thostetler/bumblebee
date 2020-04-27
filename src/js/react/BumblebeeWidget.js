@@ -87,16 +87,7 @@ define([
       const ps = getPubSub();
       subscribe(ps.USER_ANNOUNCEMENT, this.handleUserAnnouncement.bind(this));
     },
-<<<<<<< HEAD
     handleUserAnnouncement() {},
-=======
-    handleUserAnnouncement(event, data) {
-      // const user = getBeeHive().getObject('User');
-      // if (event == user.USER_SIGNED_IN) {
-      // } else if (event == user.USER_SIGNED_OUT) {
-      // }
-    },
->>>>>>> 74a28a85... initial stuff
     isLoggedIn(cb) {
       const user = this.getBeeHive().getObject('User');
       if (typeof cb === 'function') {

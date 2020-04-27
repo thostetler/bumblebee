@@ -8,6 +8,7 @@ define(['../shared/helpers', './actions'], function(
     setQuery,
     UPDATE_SEARCH_BAR,
     GET_FULL_LIST,
+    EMIT_ANALYTICS,
   }
 ) {
   const getRecommendations = middleware(({ next, action, dispatch }) => {
@@ -60,5 +61,13 @@ define(['../shared/helpers', './actions'], function(
     }
   });
 
-  return { getRecommendations, updateSearchBar, getFullList };
+  const analytics = middleware(({ next, action, trigger }) => {
+    next(action);
+
+    if (action.type === EMIT_ANALYTICS) {
+      trigger('analyticsEvent', ...action.payload);
+    }
+  });
+
+  return { getRecommendations, updateSearchBar, getFullList, analytics };
 });
