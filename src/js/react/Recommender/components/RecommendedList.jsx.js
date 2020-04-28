@@ -11,13 +11,27 @@ define([
   { Button },
   { getRecommendations, getFullList, emitAnalytics }
 ) {
-  const Paper = ({ title, bibcode, author, totalAuthors }) => {
+  const Paper = ({ title, bibcode, author, totalAuthors, onClick }) => {
+    const el = React.useRef(null);
+    React.useEffect(() => {
+      if (el.current) {
+        el.current.addEventListener('click', onClick);
+      }
+      return () => {
+        if (el.current) {
+          el.current.removeEventListener('click', onClick);
+        }
+      };
+    }, []);
+
     return (
       <li style={{ marginTop: '1rem' }}>
-        <a href={`#/abs/${bibcode}/abstract`}>{title}</a>
+        <a href={`#/abs/${bibcode}/abstract`} ref={el}>
+          {title}
+        </a>
         <ul className="list-inline">
           {author.map((entry, i) => (
-            <li>{`${entry}${i < 2 ? ';' : ''}`}</li>
+            <li key={entry}>{`${entry}${i < 2 ? ';' : ''}`}</li>
           ))}
           {totalAuthors > 3 && <li>...</li>}
         </ul>
@@ -29,6 +43,7 @@ define([
     bibcode: '',
     author: [],
     totalAuthors: 0,
+    onClick: () => {},
   };
 
   Paper.propTypes = {
@@ -36,6 +51,7 @@ define([
     bibcode: PropTypes.string,
     author: PropTypes.arrayOf(PropTypes.string),
     totalAuthors: PropTypes.number,
+    onClick: PropTypes.func,
   };
 
   const Message = ({ children }) => (
@@ -63,31 +79,37 @@ define([
 
   const RecommendedList = () => {
     const dispatch = useDispatch();
-    React.useEffect(() => {
-      dispatch(
-        getRecommendations({
-          function: 'similar',
-          sort: 'entry_date',
-          numDocs: 5,
-          cutoffDays: 5,
-          topNReads: 10,
-        })
-      );
-    }, []);
     const onGetMore = () => {
       dispatch(getFullList());
-      dispatch(
-        emitAnalytics([
-          'send',
-          'event',
-          'interaction',
-          'recommender/get-full-list-clicked',
-        ])
-      );
     };
     const { getRecommendationsRequest, getDocsRequest, docs } = useSelector(
       selector
     );
+    React.useEffect(() => {
+      if (docs.length === 0) {
+        dispatch(
+          getRecommendations({
+            function: 'similar',
+            sort: 'entry_date',
+            numDocs: 5,
+            cutoffDays: 5,
+            topNReads: 10,
+          })
+        );
+      }
+    }, [docs]);
+
+    const onPaperSelect = ({ bibcode }, index) => {
+      dispatch(
+        emitAnalytics([
+          'send',
+          'event',
+          'interaction.select-paper',
+          index,
+          { bibcode },
+        ])
+      );
+    };
 
     if (
       getRecommendationsRequest.status === 'pending' ||
@@ -127,12 +149,14 @@ define([
     return (
       <div>
         <ul className="list-unstyled">
-          {docs.map(({ title, bibcode, author, totalAuthors }) => (
+          {docs.map(({ title, bibcode, author, totalAuthors }, index) => (
             <Paper
+              key={bibcode}
               title={title}
               bibcode={bibcode}
               author={author}
               totalAuthors={totalAuthors}
+              onClick={() => onPaperSelect(docs[index], index)}
             />
           ))}
         </ul>

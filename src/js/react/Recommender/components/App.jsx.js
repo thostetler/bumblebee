@@ -11,7 +11,7 @@ define([
   { Nav, NavItem },
   PropTypes,
   { useDispatch, useSelector },
-  { setTab },
+  { setTab, emitAnalytics },
   RecommendedList,
   SearchExamples
 ) {
@@ -24,6 +24,14 @@ define([
     const { tab } = useSelector(selector);
     const onSelected = (key) => {
       dispatch(setTab(key));
+      dispatch(
+        emitAnalytics([
+          'send',
+          'event',
+          'interaction.main-page',
+          key === 1 ? 'recommender' : 'help',
+        ])
+      );
     };
 
     return (
