@@ -73,7 +73,9 @@ define([
       }
     },
     dispatch({ type, ...args }) {
-      this._store.dispatch({ type, ...args });
+      if (this._store && typeof this._store.dispatch === 'function') {
+        this._store.dispatch({ type, ...args });
+      }
     },
     getState() {
       return this._store.getState();
