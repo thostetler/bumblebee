@@ -1,6 +1,6 @@
 define(['redux', './actions'], function(
   { combineReducers },
-  { SET_DOCS, SET_QUERY, SET_TAB, SET_ORACLE_TARGET }
+  { SET_DOCS, SET_QUERY, SET_TAB, SET_ORACLE_TARGET, SET_QUERY_PARAMS }
 ) {
   const requestState = {
     GET_RECOMMENDATIONS: { status: null, result: null, error: null },
@@ -66,11 +66,29 @@ define(['redux', './actions'], function(
     return state;
   };
 
+  const queryParamsState = {
+    function: 'similar',
+    sort: 'entry_date',
+    numDocs: 5,
+    cutoffDays: 5,
+    topNReads: 10,
+  };
+  const queryParams = (state = queryParamsState, action) => {
+    if (action.type === SET_QUERY_PARAMS && action.payload) {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    return state;
+  };
+
   return combineReducers({
     requests,
     docs,
     query,
     tab,
     oracleTarget,
+    queryParams,
   });
 });

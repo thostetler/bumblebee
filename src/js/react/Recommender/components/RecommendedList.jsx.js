@@ -87,15 +87,7 @@ define([
     );
     React.useEffect(() => {
       if (docs.length === 0) {
-        dispatch(
-          getRecommendations({
-            function: 'similar',
-            sort: 'entry_date',
-            numDocs: 5,
-            cutoffDays: 5,
-            topNReads: 10,
-          })
-        );
+        dispatch(getRecommendations());
       }
     }, [docs]);
 

@@ -9,22 +9,12 @@ define([], function() {
     EMIT_ANALYTICS: 'EMIT_ANALYTICS',
     SET_TAB: 'SET_TAB',
     SET_ORACLE_TARGET: 'SET_ORACLE_TARGET',
+    SET_QUERY_PARAMS: 'SET_QUERY_PARAMS',
   };
 
   const actionCreators = {
-    getRecommendations: ({ func, sort, numDocs, cutOffDays, topNReads }) => ({
-      type: 'API_REQUEST',
-      scope: actions.GET_RECOMMENDATIONS,
-      options: {
-        type: 'POST',
-        data: {
-          function: func,
-          sort,
-          num_docs: numDocs,
-          cutoff_days: cutOffDays,
-          top_n_reads: topNReads,
-        },
-      },
+    getRecommendations: () => ({
+      type: actions.GET_RECOMMENDATIONS,
     }),
     getDocs: (query) => ({
       type: 'API_REQUEST',
@@ -42,6 +32,10 @@ define([], function() {
     setQuery: (query) => ({
       type: actions.SET_QUERY,
       payload: query,
+    }),
+    setQueryParams: (payload) => ({
+      type: actions.SET_QUERY_PARAMS,
+      payload,
     }),
     updateSearchBar: (text) => ({
       type: actions.UPDATE_SEARCH_BAR,
