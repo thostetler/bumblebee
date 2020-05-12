@@ -9,16 +9,7 @@ define(['../helpers'], function({ middleware }) {
     }
   });
 
-  const injector = middleware(
-    ({ trigger, next, action, dispatch, getState }) => {
-      next(action);
-
-      trigger('_injector', { dispatch, getState });
-    }
-  );
-
   return {
     getInitialData,
-    injector,
   };
 });
