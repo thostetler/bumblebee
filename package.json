@@ -103,6 +103,8 @@
     "needle": "~0.7.1",
     "nyc": "^11.2.1",
     "phantomjs": "^2.1.7",
+    "pixelmatch": "^5.2.1",
+    "pngjs": "^6.0.0",
     "prettier": "^1.19.1",
     "puppeteer": "^1.14.0",
     "react-bootstrap": "^0.32.4",
