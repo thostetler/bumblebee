@@ -5,7 +5,6 @@ define([
   'js/mixins/side_bar_manager',
   'jquery',
   'utils',
-  'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver',
 ], function(
   PageManagerController,
   PageManagerView,
