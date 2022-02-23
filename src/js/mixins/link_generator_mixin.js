@@ -429,9 +429,14 @@ define(['underscore', 'js/mixins/openurl_generator'], function(
    * @param {string} target - the source target (i.e. PUB_HTML)
    * @returns {string} - the new url
    */
-  const _createGatewayUrl = function(bibcode, target) {
+  const _createGatewayUrl = function(bibcode, target, redirect) {
     if (_.isString(bibcode) && _.isString(target)) {
-      return GATEWAY_BASE_URL + enc(bibcode) + '/' + target;
+      if (_.isString(redirect)) {
+        return `${GATEWAY_BASE_URL}${enc(bibcode)}/${target}?url=${btoa(
+          redirect
+        )}`;
+      }
+      return `${GATEWAY_BASE_URL}${enc(bibcode)}/${target}`;
     }
     return '';
   };
@@ -471,7 +476,11 @@ define(['underscore', 'js/mixins/openurl_generator'], function(
       //   - the user HAS a library link server
       if (identifier && linkServer && countOpenUrls < 1) {
         fullTextSources.push({
-          url: getOpenUrl({ metadata: data, linkServer }),
+          url: createGatewayUrl(
+            data.bibcode,
+            'OPENURL',
+            getOpenUrl({ metadata: data, linkServer })
+          ),
           openUrl: true,
           type: 'INSTITUTION',
           shortName: 'My Institution',
