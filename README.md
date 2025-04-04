@@ -2,7 +2,7 @@
 
 ## bumblebee
 
-Official web application built for the [Astrophysics Data System](https://ui.adsabs.harvard.edu) and its API.
+Official web application built for the [Astrophysics Data System](https://ui.adsabs.harvard.edu) and its API. This repository contains the frontend code.
 
 ### Development
 
