@@ -1,4 +1,5 @@
-define(['underscore', 'js/components/transition'], function(_, Transition) {
+import _ from 'underscore';
+import Transition from 'js/components/transition';
   var TransitionCatalog = function(options) {
     this._catalog = {};
   };
@@ -18,5 +19,5 @@ define(['underscore', 'js/components/transition'], function(_, Transition) {
     },
   });
 
-  return TransitionCatalog;
-});
+  export default TransitionCatalog;
+

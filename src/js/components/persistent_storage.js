@@ -1,10 +1,8 @@
-define([
-  'underscore',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'persist-js',
-  'module',
-], function(_, GenericModule, Mixins, PersistJS, module) {
+import _ from 'underscore';
+import GenericModule from 'js/components/generic_module';
+import Mixins from 'js/mixins/dependon';
+import PersistJS from 'persist-js';
+import module from 'module';
   var namespace = module.config().namespace || '';
 
   var LocalStorage = GenericModule.extend({
@@ -97,5 +95,5 @@ define([
 
   _.extend(LocalStorage.prototype, Mixins.BeeHive);
 
-  return LocalStorage;
-});
+  export default LocalStorage;
+

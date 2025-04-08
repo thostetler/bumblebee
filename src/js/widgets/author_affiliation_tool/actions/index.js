@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'js/widgets/author_affiliation_tool/models/authorAffiliation',
-  'js/widgets/author_affiliation_tool/constants/actionNames',
-  'filesaver',
-], function(_, authorAffiliation, ACTIONS) {
+import _ from 'underscore';
+import authorAffiliation from 'js/widgets/author_affiliation_tool/models/authorAffiliation';
+import ACTIONS from 'js/widgets/author_affiliation_tool/constants/actionNames';
+import 'filesaver';
   /**
    * Format the data into something the server will accept
    *
@@ -519,5 +517,5 @@ define([
     actions.showMessage('info', 'Exporting...');
   };
 
-  return actions;
-});
+  export default actions;
+

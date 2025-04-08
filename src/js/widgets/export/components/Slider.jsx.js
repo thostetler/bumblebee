@@ -1,4 +1,5 @@
-define(['react', 'prop-types'], function(React, ReactPropTypes) {
+import React from 'react';
+import ReactPropTypes from 'prop-types';
   const Slider = ({ count, setCount }) => (
     <div>
       <label htmlFor="ex-range">
@@ -21,5 +22,5 @@ define(['react', 'prop-types'], function(React, ReactPropTypes) {
     setCount: ReactPropTypes.func.isRequired,
   };
 
-  return Slider;
-});
+  export default Slider;
+

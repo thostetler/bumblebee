@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'marionette',
-  'hbs!js/widgets/preferences/templates/application',
-  'js/widgets/config',
-], function (_, Marionette, ApplicationTemplate, config) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import ApplicationTemplate from 'hbs!js/widgets/preferences/templates/application';
+import config from 'js/widgets/config';
   var DEFAULTS = {
     numAuthors: {
       initialOptions: _.range(1, 11).concat(['all']),
@@ -378,5 +376,5 @@ define([
     },
   });
 
-  return ApplicationView;
-});
+  export default ApplicationView;
+

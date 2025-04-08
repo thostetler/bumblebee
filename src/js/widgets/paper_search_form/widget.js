@@ -1,22 +1,11 @@
-define([
-  'underscore',
-  'jquery',
-  'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'hbs!js/widgets/paper_search_form/form',
-  'js/widgets/paper_search_form/topterms',
-], function(
-  _,
-  $,
-  BaseWidget,
-  ApiQuery,
-  ApiRequest,
-  ApiTargets,
-  FormTemplate,
-  AutocompleteData
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import FormTemplate from 'hbs!js/widgets/paper_search_form/form';
+import AutocompleteData from 'js/widgets/paper_search_form/topterms';
   const renderAutoCompleteItem = function(ul, item) {
     const re = new RegExp('(' + this.term + ')', 'i');
     const label = item.label.replace(
@@ -279,5 +268,5 @@ define([
       this.view.triggerMethod('show');
     },
   });
-  return PaperForm;
-});
+  export default PaperForm;
+

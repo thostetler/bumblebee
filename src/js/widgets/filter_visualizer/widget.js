@@ -9,29 +9,16 @@
  * TODO: it needs to react on browser-back/forward
  */
 
-define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'marionette',
-  'js/components/api_query',
-  'js/components/pubsub_events',
-  'hbs!js/widgets/filter_visualizer/templates/widget-view',
-  'hbs!js/widgets/filter_visualizer/templates/item-view',
-  'js/components/api_feedback',
-  'js/mixins/dependon',
-], function(
-  _,
-  $,
-  Backbone,
-  Marionette,
-  ApiQuery,
-  PubSubEvents,
-  WidgetTemplate,
-  ItemTemplate,
-  ApiFeedback,
-  Dependon
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import ApiQuery from 'js/components/api_query';
+import PubSubEvents from 'js/components/pubsub_events';
+import WidgetTemplate from 'hbs!js/widgets/filter_visualizer/templates/widget-view';
+import ItemTemplate from 'hbs!js/widgets/filter_visualizer/templates/item-view';
+import ApiFeedback from 'js/components/api_feedback';
+import Dependon from 'js/mixins/dependon';
   // Model
   var KeyValue = Backbone.Model.extend({});
 
@@ -547,5 +534,5 @@ define([
   });
   _.extend(WidgetController.prototype, Dependon.BeeHive);
 
-  return WidgetController;
-});
+  export default WidgetController;
+

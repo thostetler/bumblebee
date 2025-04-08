@@ -1,18 +1,9 @@
-define([
-  'js/page_managers/controller',
-  'js/page_managers/three_column_view',
-  'hbs!js/page_managers/templates/results-page-layout',
-  'js/mixins/side_bar_manager',
-  'jquery',
-  'utils',
-], function(
-  PageManagerController,
-  PageManagerView,
-  PageManagerTemplate,
-  SideBarManagerMixin,
-  $,
-  utils
-) {
+import PageManagerController from 'js/page_managers/controller';
+import PageManagerView from 'js/page_managers/three_column_view';
+import PageManagerTemplate from 'hbs!js/page_managers/templates/results-page-layout';
+import SideBarManagerMixin from 'js/mixins/side_bar_manager';
+import $ from 'jquery';
+import utils from 'utils';
   var PageManager = PageManagerController.extend({
     initialize: function() {
       PageManagerController.prototype.initialize.apply(this, arguments);
@@ -299,5 +290,5 @@ define([
   });
 
   _.extend(PageManager.prototype, SideBarManagerMixin);
-  return PageManager;
-});
+  export default PageManager;
+

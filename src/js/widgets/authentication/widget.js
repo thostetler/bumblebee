@@ -1,36 +1,19 @@
-define([
-  'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_feedback',
-  'js/mixins/form_view_functions',
-  'js/widgets/success/view',
-  'js/components/api_targets',
-  'hbs!js/widgets/authentication/templates/log-in',
-  'hbs!js/widgets/authentication/templates/register',
-  'hbs!js/widgets/authentication/templates/container',
-  'hbs!js/widgets/authentication/templates/reset-password-1',
-  'hbs!js/widgets/authentication/templates/reset-password-2',
-  'hbs!js/widgets/authentication/templates/resend-verification-email',
-  'js/components/user',
-  'analytics',
-  'backbone-validation',
-  'backbone.stickit',
-], function(
-  Marionette,
-  BaseWidget,
-  ApiFeedback,
-  FormFunctions,
-  SuccessView,
-  ApiTargets,
-  LogInTemplate,
-  RegisterTemplate,
-  ContainerTemplate,
-  ResetPassword1Template,
-  ResetPassword2Template,
-  ResendVerificationEmail,
-  User,
-  analytics
-) {
+import Marionette from 'marionette';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiFeedback from 'js/components/api_feedback';
+import FormFunctions from 'js/mixins/form_view_functions';
+import SuccessView from 'js/widgets/success/view';
+import ApiTargets from 'js/components/api_targets';
+import LogInTemplate from 'hbs!js/widgets/authentication/templates/log-in';
+import RegisterTemplate from 'hbs!js/widgets/authentication/templates/register';
+import ContainerTemplate from 'hbs!js/widgets/authentication/templates/container';
+import ResetPassword1Template from 'hbs!js/widgets/authentication/templates/reset-password-1';
+import ResetPassword2Template from 'hbs!js/widgets/authentication/templates/reset-password-2';
+import ResendVerificationEmail from 'hbs!js/widgets/authentication/templates/resend-verification-email';
+import User from 'js/components/user';
+import analytics from 'analytics';
+import 'backbone-validation';
+import 'backbone.stickit';
   // Creating module level variable since I can't figure out best way to pass this value into a subview from the model
   // This value should be always available, and unchanging, so should be safe to set like this here
   // TODO: figure out how to make this value available to the subview without having to set it like this
@@ -651,5 +634,5 @@ define([
     },
   });
 
-  return AuthenticationWidget;
-});
+  export default AuthenticationWidget;
+

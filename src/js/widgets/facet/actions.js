@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   // http://redux.js.org/docs/basics/Actions.html
 
   var actions = {};
@@ -110,7 +110,7 @@ define(['underscore'], function(_) {
     };
   };
 
-  return function() {
+  export default function() {
     return Object.create(actions);
   };
-});
+

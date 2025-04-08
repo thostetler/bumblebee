@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   /**
    * Simple Message
    */
@@ -10,5 +10,5 @@ define(['react'], function(React) {
     </div>
   );
 
-  return Message;
-});
+  export default Message;
+

@@ -1,22 +1,11 @@
-define([
-  'underscore',
-  'jquery',
-  'js/components/feedback_mediator',
-  'js/components/api_feedback',
-  'js/widgets/widget_states',
-  'js/components/alerts',
-  'js/components/api_response',
-  'analytics',
-], function(
-  _,
-  $,
-  FeedbackMediator,
-  ApiFeedback,
-  WidgetStates,
-  Alerts,
-  ApiResponse,
-  analytics
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import FeedbackMediator from 'js/components/feedback_mediator';
+import ApiFeedback from 'js/components/api_feedback';
+import WidgetStates from 'js/widgets/widget_states';
+import Alerts from 'js/components/alerts';
+import ApiResponse from 'js/components/api_response';
+import analytics from 'analytics';
   var handlers = {};
 
   handlers[ApiFeedback.CODES.MAKE_SPACE] = function() {
@@ -471,7 +460,7 @@ define([
     });
   };
 
-  return function() {
+  export default function() {
     var mediator = new (FeedbackMediator.extend({
       _tmp: {},
 
@@ -639,4 +628,4 @@ define([
     });
     return mediator;
   };
-});
+

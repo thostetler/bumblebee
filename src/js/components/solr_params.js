@@ -20,12 +20,10 @@ Instead, import 'api_query' and configure it properly
  * @class ParameterStore
  */
 
-define([
-  'js/components/multi_params',
-  'backbone',
-  'underscore',
-  'jquery',
-], function(MultiParams, Backbone, _, $) {
+import MultiParams from 'js/components/multi_params';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import $ from 'jquery';
   var SolrParams = MultiParams.extend({
     fieldsToConcatenate: [],
     defaultOperator: ' ',
@@ -74,5 +72,5 @@ define([
     },
   });
 
-  return SolrParams;
-});
+  export default SolrParams;
+

@@ -1,8 +1,6 @@
-define(['js/react/MyAdsDashboard/actions', 'redux', 'js/react/MyAdsDashboard/constants'], function(
-  actions,
-  { combineReducers },
-  { page: PAGE }
-) {
+import actions from 'js/react/MyAdsDashboard/actions';
+import { combineReducers } from 'redux';
+import { page: PAGE } from 'js/react/MyAdsDashboard/constants';
   const {
     SET_NOTIFICATIONS,
     SET_EDITING_NOTIFICATION,
@@ -98,11 +96,11 @@ define(['js/react/MyAdsDashboard/actions', 'redux', 'js/react/MyAdsDashboard/con
     return state;
   };
 
-  return combineReducers({
+  export default combineReducers({
     notifications,
     page,
     requests,
     editingNotification,
     queryKey,
   });
-});
+

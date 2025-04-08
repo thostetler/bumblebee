@@ -1,8 +1,6 @@
-define(['js/widgets/facet/factory', 'analytics'], function(
-  FacetFactory,
-  analytics
-) {
-  return function() {
+import FacetFactory from 'js/widgets/facet/factory';
+import analytics from 'analytics';
+  export default function() {
     var widget = FacetFactory.makeBasicCheckboxFacet({
       facetField: 'property',
       facetTitle: 'Refereed',
@@ -85,4 +83,4 @@ define(['js/widgets/facet/factory', 'analytics'], function(
     };
     return widget;
   };
-});
+

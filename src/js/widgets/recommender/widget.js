@@ -1,21 +1,11 @@
-define([
-  'marionette',
-  'js/components/api_query',
-  'js/components/api_targets',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/recommender/templates/recommender_template',
-  'bootstrap',
-  'analytics',
-], function(
-  Marionette,
-  ApiQuery,
-  ApiTargets,
-  ApiRequest,
-  BaseWidget,
-  RecommenderTemplate,
-  analytics
-) {
+import Marionette from 'marionette';
+import ApiQuery from 'js/components/api_query';
+import ApiTargets from 'js/components/api_targets';
+import ApiRequest from 'js/components/api_request';
+import BaseWidget from 'js/widgets/base/base_widget';
+import RecommenderTemplate from 'hbs!js/widgets/recommender/templates/recommender_template';
+import analytics from 'bootstrap';
+import 'analytics';
   var RecommenderView = Marionette.ItemView.extend({
     initialize: function() {
       this.listenTo(this.collection, 'reset', this.render);
@@ -110,5 +100,5 @@ define([
     },
   });
 
-  return RecommenderWidget;
-});
+  export default RecommenderWidget;
+

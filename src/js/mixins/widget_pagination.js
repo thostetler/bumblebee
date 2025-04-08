@@ -3,7 +3,7 @@
  *
  *
  */
-define(['underscore'], function(_) {
+import _ from 'underscore';
   var PaginatorInteraction = {
     /**
      * This method will automatically paginate through results, provided
@@ -150,5 +150,5 @@ define(['underscore'], function(_) {
     },
   };
 
-  return PaginatorInteraction;
-});
+  export default PaginatorInteraction;
+

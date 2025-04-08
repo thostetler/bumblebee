@@ -2,13 +2,11 @@
  * A generic class that holds the application storage
  */
 
-define([
-  'backbone',
-  'underscore',
-  'js/components/api_query',
-  'js/mixins/hardened',
-  'js/mixins/dependon',
-], function(Backbone, _, ApiQuery, Hardened, Dependon) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import ApiQuery from 'js/components/api_query';
+import Hardened from 'js/mixins/hardened';
+import Dependon from 'js/mixins/dependon';
   var AppStorage = Backbone.Model.extend({
     activate: function(beehive) {
       this.setBeeHive(beehive);
@@ -186,5 +184,5 @@ define([
   });
 
   _.extend(AppStorage.prototype, Hardened, Dependon.BeeHive);
-  return AppStorage;
-});
+  export default AppStorage;
+

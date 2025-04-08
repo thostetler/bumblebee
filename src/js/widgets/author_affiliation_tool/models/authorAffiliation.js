@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   /**
    * Take in an array of affiliations, and figure out which should be
    * selected
@@ -60,7 +60,7 @@ define(['underscore'], function(_) {
     return out;
   };
 
-  return {
+  export default {
     create: authorAffiliationFactory,
   };
-});
+

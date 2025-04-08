@@ -1,46 +1,23 @@
-define([
-  'underscore',
-  'marionette',
-  'd3',
-  'js/widgets/base/base_widget',
-  'js/widgets/metrics/extractor_functions',
-  'js/components/api_response',
-  'js/components/json_response',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/mixins/dependon',
-  'hbs!js/widgets/metrics/templates/metrics_container',
-  'hbs!js/widgets/metrics/templates/graph_template',
-  'hbs!js/widgets/metrics/templates/paper_table',
-  'hbs!js/widgets/metrics/templates/citations_table',
-  'hbs!js/widgets/metrics/templates/indices_table',
-  'hbs!js/widgets/metrics/templates/reads_table',
-  'bootstrap',
-  'js/components/api_feedback',
-  'js/components/api_targets',
-  'js/widgets/metrics/d3-tip',
-], function(
-  _,
-  Marionette,
-  d3,
-  BaseWidget,
-  DataExtractor,
-  ApiResponse,
-  JsonResponse,
-  ApiRequest,
-  ApiQuery,
-  Dependon,
-  MetricsContainer,
-  GraphTemplate,
-  PaperTableTemplate,
-  CitationsTableTemplate,
-  IndicesTableTemplate,
-  ReadsTableTemplate,
-  bs,
-  ApiFeedback,
-  ApiTargets,
-  _d3Tip
-) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import d3 from 'd3';
+import BaseWidget from 'js/widgets/base/base_widget';
+import DataExtractor from 'js/widgets/metrics/extractor_functions';
+import ApiResponse from 'js/components/api_response';
+import JsonResponse from 'js/components/json_response';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import Dependon from 'js/mixins/dependon';
+import MetricsContainer from 'hbs!js/widgets/metrics/templates/metrics_container';
+import GraphTemplate from 'hbs!js/widgets/metrics/templates/graph_template';
+import PaperTableTemplate from 'hbs!js/widgets/metrics/templates/paper_table';
+import CitationsTableTemplate from 'hbs!js/widgets/metrics/templates/citations_table';
+import IndicesTableTemplate from 'hbs!js/widgets/metrics/templates/indices_table';
+import ReadsTableTemplate from 'hbs!js/widgets/metrics/templates/reads_table';
+import bs from 'bootstrap';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiTargets from 'js/components/api_targets';
+import _d3Tip from 'js/widgets/metrics/d3-tip';
   /*
     NOTE: importing d3-tip from the metrics folder bc it is a modified file made to
     work with AMD
@@ -1676,5 +1653,5 @@ define([
 
   _.extend(MetricsWidget.prototype, Dependon.BeeHive);
 
-  return MetricsWidget;
-});
+  export default MetricsWidget;
+

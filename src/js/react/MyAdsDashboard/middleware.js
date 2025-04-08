@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'js/react/MyAdsDashboard/actions',
-  'js/react/MyAdsDashboard/constants',
-  'js/react/shared/helpers',
-], function(_, actions, { page }, { middleware, apiSuccess }) {
+import _ from 'underscore';
+import actions from 'js/react/MyAdsDashboard/actions';
+import { page } from 'js/react/MyAdsDashboard/constants';
+import { middleware, apiSuccess } from 'js/react/shared/helpers';
   const {
     SET_NOTIFICATIONS,
     SET_EDITING_NOTIFICATION,
@@ -172,7 +170,7 @@ define([
     }
   );
 
-  return {
+  export default {
     resetAfterRequest,
     updateNotifications,
     resetEditingNotificationAfterGoTo,
@@ -181,4 +179,4 @@ define([
     runQueries,
     updateOnNavigate,
   };
-});
+

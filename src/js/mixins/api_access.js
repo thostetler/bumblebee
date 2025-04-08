@@ -1,15 +1,13 @@
-define([
-  'underscore',
-  'backbone',
-  'js/components/api_query',
-  'js/components/api_request',
-], function (_, Backbone, ApiQuery, ApiRequest) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
   /*
    * this simple mixin contacts the api (getApiAccess), and if the {reconnect: true} option
    * is passed to getApiAccess, will save the relevant data.
    * */
 
-  return {
+  export default {
     /**
      * After bootstrap receives all data, this routine should decide what to do with
      * them
@@ -76,4 +74,4 @@ define([
       return defer;
     },
   };
-});
+

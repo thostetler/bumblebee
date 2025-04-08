@@ -1,15 +1,7 @@
-define([
-  'underscore',
-  'react',
-  'prop-types',
-  'react-bootstrap',
-  'js/react/MyAdsFreeform/constants',
-  'js/react/shared/helpers',
-], function(
-  _,
-  React,
-  PropTypes,
-  {
+import _ from 'underscore';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
     FormGroup,
     FormControl,
     ControlLabel,
@@ -17,10 +9,9 @@ define([
     Radio,
     Button,
     ButtonToolbar,
-  },
-  { Frequency },
-  { isEmpty }
-) {
+  } from 'react-bootstrap';
+import { Frequency } from 'js/react/MyAdsFreeform/constants';
+import { isEmpty } from 'js/react/shared/helpers';
   const initialState = {
     name: '',
     frequency: Frequency.DAILY,
@@ -158,5 +149,5 @@ define([
     requests: PropTypes.object,
   };
 
-  return SaveQueryForm;
-});
+  export default SaveQueryForm;
+

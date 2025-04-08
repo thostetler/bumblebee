@@ -1,14 +1,7 @@
-define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/three_column_view',
-  'hbs!js/wraps/user_settings_page_manager/user-settings-layout',
-  'hbs!js/wraps/user_settings_page_manager/user_nav',
-], function(
-  PageManagerController,
-  PageManagerView,
-  PageManagerTemplate,
-  TOCTemplate
-) {
+import PageManagerController from 'js/page_managers/toc_controller';
+import PageManagerView from 'js/page_managers/three_column_view';
+import PageManagerTemplate from 'hbs!js/wraps/user_settings_page_manager/user-settings-layout';
+import TOCTemplate from 'hbs!js/wraps/user_settings_page_manager/user_nav';
   var PageManager = PageManagerController.extend({
     TOCTemplate: TOCTemplate,
 
@@ -81,5 +74,5 @@ define([
       },
     },
   });
-  return PageManager;
-});
+  export default PageManager;
+

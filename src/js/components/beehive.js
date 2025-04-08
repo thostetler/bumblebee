@@ -5,14 +5,12 @@
  * is where setup happens; application will load beehive)
  */
 
-define([
-  'backbone',
-  'underscore',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/services_container',
-], function(Backbone, _, GenericModule, Dependon, Hardened, ServicesContainer) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import Hardened from 'js/mixins/hardened';
+import ServicesContainer from 'js/components/services_container';
   var hiveOptions = [];
   var BeeHive = GenericModule.extend({
     initialize: function(options) {
@@ -121,5 +119,5 @@ define([
     },
   });
 
-  return BeeHive;
-});
+  export default BeeHive;
+

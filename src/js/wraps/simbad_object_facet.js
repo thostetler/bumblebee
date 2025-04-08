@@ -1,27 +1,14 @@
-define([
-  'js/components/api_response',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/components/solr_response',
-  'js/widgets/facet/factory',
-  'js/components/api_targets',
-  'analytics',
-  'cache',
-  'underscore',
-  'js/widgets/facet/reducers',
-], function(
-  ApiResponse,
-  ApiRequest,
-  ApiQuery,
-  SolrResponse,
-  FacetFactory,
-  ApiTargets,
-  analytics,
-  Cache,
-  _,
-  Reducers
-) {
-  return function() {
+import ApiResponse from 'js/components/api_response';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import SolrResponse from 'js/components/solr_response';
+import FacetFactory from 'js/widgets/facet/factory';
+import ApiTargets from 'js/components/api_targets';
+import analytics from 'analytics';
+import Cache from 'cache';
+import _ from 'underscore';
+import Reducers from 'js/widgets/facet/reducers';
+  export default function() {
     var widget = FacetFactory.makeHierarchicalCheckboxFacet({
       facetField: 'simbad_object_facet_hier',
       facetTitle: 'SIMBAD Objects',
@@ -229,4 +216,4 @@ define([
     };
     return widget;
   };
-});
+

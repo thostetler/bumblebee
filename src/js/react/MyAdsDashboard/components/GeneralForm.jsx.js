@@ -1,14 +1,7 @@
-define([
-  'react',
-  'react-bootstrap',
-  'js/react/shared/helpers',
-  'prop-types',
-], function(
-  React,
-  { Form, FormGroup, ControlLabel, FormControl, Checkbox, Radio, Button },
-  { isEmpty },
-  PropTypes
-) {
+import React from 'react';
+import { Form, FormGroup, ControlLabel, FormControl, Checkbox, Radio, Button } from 'react-bootstrap';
+import { isEmpty } from 'js/react/shared/helpers';
+import PropTypes from 'prop-types';
   const getStatusMessage = ({ status, error, editing, noSuccess }) => {
     switch (status) {
       case 'pending':
@@ -270,5 +263,5 @@ define([
     }
   }
 
-  return GeneralForm;
-});
+  export default GeneralForm;
+

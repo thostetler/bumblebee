@@ -1,16 +1,8 @@
-define([
-  'marionette',
-  'hbs!js/widgets/library_individual/templates/manage-permissions-container',
-  'hbs!js/widgets/library_individual/templates/make-public',
-  'hbs!js/widgets/library_individual/templates/transfer-ownership-modal',
-  'reactify!js/react/BumblebeeWidget?LibraryCollaborators',
-], function(
-  Marionette,
-  ManagePermissionsContainer,
-  MakePublicTemplate,
-  transferOwnershipModal,
-  LibraryCollaboratorsComponent
-) {
+import Marionette from 'marionette';
+import ManagePermissionsContainer from 'hbs!js/widgets/library_individual/templates/manage-permissions-container';
+import MakePublicTemplate from 'hbs!js/widgets/library_individual/templates/make-public';
+import transferOwnershipModal from 'hbs!js/widgets/library_individual/templates/transfer-ownership-modal';
+import LibraryCollaboratorsComponent from 'reactify!js/react/BumblebeeWidget?LibraryCollaborators';
   var PermissionsModel = Backbone.Model.extend({});
   var PermissionsCollection = Backbone.Collection.extend({
     model: PermissionsModel,
@@ -173,5 +165,5 @@ define([
       this.modal.render();
     },
   });
-  return ManagePermissionsView;
-});
+  export default ManagePermissionsView;
+

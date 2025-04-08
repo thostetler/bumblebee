@@ -1,8 +1,6 @@
-define(['react', 'react-bootstrap', 'prop-types'], function(
-  React,
-  { Alert },
-  PropTypes
-) {
+import React from 'react';
+import { Alert } from 'react-bootstrap';
+import PropTypes from 'prop-types';
   const TYPES = {
     pending: 'warning',
     error: 'danger',
@@ -37,5 +35,5 @@ define(['react', 'react-bootstrap', 'prop-types'], function(
     request: PropTypes.object,
   };
 
-  return ApiMessage;
-});
+  export default ApiMessage;
+

@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   const style = {
     icon: {
       fontSize: 120,
@@ -22,5 +22,5 @@ define(['react'], function(React) {
     </div>
   );
 
-  return Loading;
-});
+  export default Loading;
+

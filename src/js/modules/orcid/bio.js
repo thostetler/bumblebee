@@ -1,8 +1,6 @@
-define(['underscore', 'jsonpath', 'js/modules/orcid/work'], function(
-  _,
-  jp,
-  Work
-) {
+import _ from 'underscore';
+import jp from 'jsonpath';
+import Work from 'js/modules/orcid/work';
   var PATHS = {
     firstName: '$.name["given-names"].value',
     lastName: '$.name["family-name"].value',
@@ -42,5 +40,5 @@ define(['underscore', 'jsonpath', 'js/modules/orcid/work'], function(
       this
     );
   };
-  return Bio;
-});
+  export default Bio;
+

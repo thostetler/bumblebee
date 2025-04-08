@@ -1,8 +1,6 @@
-define(['react', 'prop-types', 'js/react/LibraryCollaborators/constants'], function(
-  React,
-  PropTypes,
-  { Permissions }
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Permissions } from 'js/react/LibraryCollaborators/constants';
   const ManageButton = ({
     permission = Permissions.READ,
     onChange,
@@ -50,5 +48,5 @@ define(['react', 'prop-types', 'js/react/LibraryCollaborators/constants'], funct
     onChange: PropTypes.func,
   };
 
-  return ManageButton;
-});
+  export default ManageButton;
+

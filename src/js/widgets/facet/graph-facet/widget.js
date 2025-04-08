@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'utils',
-  'js/widgets/base/base_widget',
-  'js/components/api_query_updater',
-], function(_, utils, BaseWidget, ApiQueryUpdater) {
+import _ from 'underscore';
+import utils from 'utils';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiQueryUpdater from 'js/components/api_query_updater';
   var BaseFacetWidget = BaseWidget.extend({
     initialize: function(options) {
       options = options || {};
@@ -134,5 +132,5 @@ define([
     },
   });
 
-  return BaseFacetWidget;
-});
+  export default BaseFacetWidget;
+

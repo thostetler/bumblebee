@@ -28,6 +28,9 @@
     "R": true,
     "Sentry": true
   },
+  "settings": {
+    "import/resolver": "webpack"
+  },
   "rules": {
     "max-len": ["off", 120],
     "prettier/prettier": "warn",

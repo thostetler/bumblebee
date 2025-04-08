@@ -1,10 +1,8 @@
-define([
-  'react',
-  'suit',
-  'react-redux',
-  'styled-components',
-  'js/react/FeedbackForms/models/index',
-], function(React, { FeedbackForms }, { useSelector }, styled, { FORMS }) {
+import React from 'react';
+import { FeedbackForms } from 'suit';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { FORMS } from 'js/react/FeedbackForms/models/index';
   const Container = styled.div`
     padding: 4rem 1rem;
   `;
@@ -31,5 +29,5 @@ define([
     );
   };
 
-  return App;
-});
+  export default App;
+

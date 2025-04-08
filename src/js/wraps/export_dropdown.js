@@ -1,8 +1,6 @@
-define([
-  'underscore',
-  'js/widgets/config',
-  'js/widgets/dropdown-menu/widget',
-], function(_, config, DropdownWidget) {
+import _ from 'underscore';
+import config from 'js/widgets/config';
+import DropdownWidget from 'js/widgets/dropdown-menu/widget';
   var links = [
     {
       description: 'in BibTeX',
@@ -40,7 +38,7 @@ define([
   var rightAlign = false;
   var selectedOption = true;
 
-  return function() {
+  export default function() {
     var Dropdown = new DropdownWidget({
       links: links,
       btnType: btnType,
@@ -86,4 +84,4 @@ define([
 
     return Dropdown;
   };
-});
+

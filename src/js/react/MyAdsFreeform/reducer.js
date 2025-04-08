@@ -1,7 +1,5 @@
-define(['redux', 'js/react/MyAdsFreeform/actions'], function(
-  { combineReducers },
-  { SET_UPDATE_DATA, RESET, ERROR, ERROR_RESET, SET_LOGIN_STATUS }
-) {
+import { combineReducers } from 'redux';
+import { SET_UPDATE_DATA, RESET, ERROR, ERROR_RESET, SET_LOGIN_STATUS } from 'js/react/MyAdsFreeform/actions';
   const requestState = {
     ADD_NOTIFICATION: { status: null, result: null, error: null },
     GET_QID: { status: null, result: null, error: null },
@@ -58,10 +56,10 @@ define(['redux', 'js/react/MyAdsFreeform/actions'], function(
     return state;
   };
 
-  return combineReducers({
+  export default combineReducers({
     requests,
     updateData,
     generalError,
     loggedIn,
   });
-});
+

@@ -1,5 +1,5 @@
-define(['js/react/Recommender/models/searchExamples'], function(searchExamples) {
-  return {
+import searchExamples from 'js/react/Recommender/models/searchExamples';
+  export default {
     searchExamples,
   };
-});
+

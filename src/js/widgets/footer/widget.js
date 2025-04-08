@@ -1,11 +1,9 @@
-define(['marionette', 'hbs!js/widgets/footer/footer'], function(
-  Marionette,
-  FooterTemplate
-) {
+import Marionette from 'marionette';
+import FooterTemplate from 'hbs!js/widgets/footer/footer';
   var Footer = Marionette.ItemView.extend({
     template: FooterTemplate,
     className: 'footer s-footer',
   });
 
-  return Footer;
-});
+  export default Footer;
+

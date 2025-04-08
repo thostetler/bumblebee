@@ -1,43 +1,23 @@
 /**
  * Created by alex on 5/19/14.
  */
-define([
-  'marionette',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'clipboard',
-  'backbone',
-  'jquery',
-  'underscore',
-  'cache',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/abstract/templates/abstract_template',
-  'js/components/api_query',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/papers_utils',
-  'mathjax',
-  'bootstrap',
-  'utils',
-  'analytics',
-], function(
-  Marionette,
-  ApiRequest,
-  ApiTargets,
-  Clipboard,
-  Backbone,
-  $,
-  _,
-  Cache,
-  BaseWidget,
-  abstractTemplate,
-  ApiQuery,
-  LinkGeneratorMixin,
-  PapersUtils,
-  MathJax,
-  Bootstrap,
-  utils,
-  analytics
-) {
+import Marionette from 'marionette';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import Clipboard from 'clipboard';
+import Backbone from 'backbone';
+import $ from 'jquery';
+import _ from 'underscore';
+import Cache from 'cache';
+import BaseWidget from 'js/widgets/base/base_widget';
+import abstractTemplate from 'hbs!js/widgets/abstract/templates/abstract_template';
+import ApiQuery from 'js/components/api_query';
+import LinkGeneratorMixin from 'js/mixins/link_generator_mixin';
+import PapersUtils from 'js/mixins/papers_utils';
+import MathJax from 'mathjax';
+import Bootstrap from 'bootstrap';
+import utils from 'utils';
+import analytics from 'analytics';
   const MAX_AUTHORS = 20;
 
   var AbstractModel = Backbone.Model.extend({
@@ -612,5 +592,5 @@ define([
     },
   });
 
-  return AbstractWidget;
-});
+  export default AbstractWidget;
+

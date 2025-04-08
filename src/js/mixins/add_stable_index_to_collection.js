@@ -5,7 +5,7 @@
  *
  *
  */
-define(['underscore'], function(_) {
+import _ from 'underscore';
   var WidgetPaginator = {
     /**
      * returns zero-indexed start val (we expect the page
@@ -55,5 +55,5 @@ define(['underscore'], function(_) {
     },
   };
 
-  return WidgetPaginator;
-});
+  export default WidgetPaginator;
+

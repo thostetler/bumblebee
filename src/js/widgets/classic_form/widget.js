@@ -1,22 +1,11 @@
-define([
-  'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_query_updater',
-  'hbs!js/widgets/classic_form/form',
-  'js/widgets/paper_search_form/topterms',
-  'analytics',
-  'js/widgets/sort/widget.jsx',
-  'js/widgets/sort/redux/modules/sort-app',
-], function(
-  BaseWidget,
-  ApiQuery,
-  ApiQueryUpdater,
-  FormTemplate,
-  AutocompleteData,
-  analytics,
-  SortWidget,
-  SortActions
-) {
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiQuery from 'js/components/api_query';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import FormTemplate from 'hbs!js/widgets/classic_form/form';
+import AutocompleteData from 'js/widgets/paper_search_form/topterms';
+import analytics from 'analytics';
+import SortWidget from 'js/widgets/sort/widget.jsx';
+import SortActions from 'js/widgets/sort/redux/modules/sort-app';
   // for autocomplete
   function split(val) {
     return val.split(/,\s*/);
@@ -701,5 +690,5 @@ define([
     dontKillMe: true,
   });
 
-  return FormWidget;
-});
+  export default FormWidget;
+

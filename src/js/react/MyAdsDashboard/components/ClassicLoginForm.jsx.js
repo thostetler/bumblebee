@@ -1,7 +1,5 @@
-define(['react', 'react-bootstrap'], function(
-  React,
-  { Form, FormGroup, FormControl, ControlLabel, HelpBlock, Button, Alert }
-) {
+import React from 'react';
+import { Form, FormGroup, FormControl, ControlLabel, HelpBlock, Button, Alert } from 'react-bootstrap';
   const loginStatusMessage = ({ status, error }) => {
     switch (status) {
       case 'pending':
@@ -259,5 +257,5 @@ define(['react', 'react-bootstrap'], function(
     onChangeUser: () => {},
   };
 
-  return ClassicLoginForm;
-});
+  export default ClassicLoginForm;
+

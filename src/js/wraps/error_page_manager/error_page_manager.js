@@ -1,14 +1,7 @@
-define([
-  'js/page_managers/controller',
-  'js/page_managers/one_column_view',
-  'hbs!js/wraps/error_page_manager/404',
-  'utils',
-], function(
-  PageManagerController,
-  PageManagerView,
-  PageManagerTemplate,
-  utils
-) {
+import PageManagerController from 'js/page_managers/controller';
+import PageManagerView from 'js/page_managers/one_column_view';
+import PageManagerTemplate from 'hbs!js/wraps/error_page_manager/404';
+import utils from 'utils';
   const initialState = {
     error: {
       message: 'Page Not Found',
@@ -36,5 +29,5 @@ define([
       }
     },
   });
-  return PageManager;
-});
+  export default PageManager;
+

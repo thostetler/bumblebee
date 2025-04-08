@@ -18,12 +18,10 @@
  *
  */
 
-define([
-  'backbone',
-  'underscore',
-  'js/components/generic_module',
-  'js/modules/orcid/orcid_api',
-], function(Backbone, _, GenericModule, OrcidApi) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import GenericModule from 'js/components/generic_module';
+import OrcidApi from 'js/modules/orcid/orcid_api';
   var OrcidModule = GenericModule.extend({
     activate: function(beehive) {
       var config = beehive.getObject('DynamicConfig');
@@ -77,7 +75,7 @@ define([
     },
   });
 
-  return function() {
+  export default function() {
     return {
       activate: function(beehive) {
         var om = new OrcidModule();
@@ -85,4 +83,4 @@ define([
       },
     };
   };
-});
+

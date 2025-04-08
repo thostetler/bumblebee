@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   /**
    * Validator object
    * provides value checking
@@ -134,5 +134,5 @@ define(['underscore'], function(_) {
     };
   }
 
-  return QueryValidator;
-});
+  export default QueryValidator;
+

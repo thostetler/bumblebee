@@ -1,15 +1,8 @@
 /* eslint-disable max-classes-per-file */
-define([
-  'underscore',
-  'react',
-  'react-bootstrap',
-  'js/react/MyAdsDashboard/models/arxivClasses',
-], function(
-  _,
-  React,
-  { Checkbox, ListGroup, ListGroupItem },
-  ArxivClassesModel
-) {
+import _ from 'underscore';
+import React from 'react';
+import { Checkbox, ListGroup, ListGroupItem } from 'react-bootstrap';
+import ArxivClassesModel from 'js/react/MyAdsDashboard/models/arxivClasses';
   const initialState = {
     groups: {
       ...ArxivClassesModel,
@@ -343,5 +336,5 @@ define([
     }
   }
 
-  return ArxivClassList;
-});
+  export default ArxivClassList;
+

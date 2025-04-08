@@ -5,25 +5,15 @@
  * It is installed as return OrcidExtension(WidgetClass)
  */
 
-define([
-  'underscore',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_query_updater',
-  'js/components/api_targets',
-  'js/modules/orcid/work',
-  'js/components/api_feedback',
-  'js/mixins/dependon',
-], function(
-  _,
-  ApiQuery,
-  ApiRequest,
-  ApiQueryUpdater,
-  ApiTargets,
-  Work,
-  ApiFeedback
-) {
-  return function(WidgetClass) {
+import _ from 'underscore';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import ApiTargets from 'js/components/api_targets';
+import Work from 'js/modules/orcid/work';
+import ApiFeedback from 'js/components/api_feedback';
+import 'js/mixins/dependon';
+  export default function(WidgetClass) {
     var queryUpdater = new ApiQueryUpdater('OrcidExtension');
     var processDocs = WidgetClass.prototype.processDocs;
     var activate = WidgetClass.prototype.activate;
@@ -866,4 +856,4 @@ define([
 
     return WidgetClass;
   };
-});
+

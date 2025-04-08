@@ -1,8 +1,6 @@
-define(['js/widgets/facet/factory', 'analytics'], function(
-  FacetFactory,
-  analytics
-) {
-  return function() {
+import FacetFactory from 'js/widgets/facet/factory';
+import analytics from 'analytics';
+  export default function() {
     var widget = FacetFactory.makeHierarchicalCheckboxFacet({
       facetField: 'grant_facet_hier',
       facetTitle: 'Grants',
@@ -73,4 +71,4 @@ define(['js/widgets/facet/factory', 'analytics'], function(
     };
     return widget;
   };
-});
+

@@ -1,16 +1,8 @@
-define([
-  'react',
-  'prop-types',
-  'react-bootstrap',
-  'js/react/LibraryCollaborators/constants',
-  'js/react/LibraryCollaborators/components/ManageButton.jsx',
-], function(
-  React,
-  PropTypes,
-  { Button, Modal },
-  { Permissions },
-  ManageButton
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Button, Modal } from 'react-bootstrap';
+import { Permissions } from 'js/react/LibraryCollaborators/constants';
+import ManageButton from 'js/react/LibraryCollaborators/components/ManageButton.jsx';
   const ConfirmModal = ({ show, onHide, onOk, children }) => {
     return (
       <Modal
@@ -133,5 +125,5 @@ define([
     pendingPermissionChange: PropTypes.bool,
     isNew: PropTypes.bool,
   };
-  return PermissionEntry;
-});
+  export default PermissionEntry;
+

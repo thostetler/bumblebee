@@ -24,44 +24,17 @@
  * define() is a 'require.js' thing - it defines a model; the signature is:
  *  define(['list', 'of', 'imports'], function(my, foo, bar) {return something})
  */
-define([
-  // here we are importing using symbolic names, e.g. 'underscore' - this name
-  // is mapped to the underscore library (in our discovery.config.js)
-
-  'underscore', // very useful utilities
-  'jquery', // if you don't know jquery, then shame on you!
-  'backbone', // Model-View-Controller framework (for building applications)
-  'marionette', // Extension on top of Backbone; does useful things for us
-
-  // here we are importing our own components, you will notice the path is relative
-  // to the src/ folder
-
-  'js/components/api_query', // the holy trinity of BBB - query says what to do
-  'js/components/api_request', // requests says where and how
-  'js/components/api_response', // and response brings it back
-
-  'js/widgets/base/base_widget', // (almost all) BBB widgets extend base_widget
-
-  'js/bugutils/minimal_pubsub', // will create a test pubsub queue (very useful!)
-  'test/mocha/js/widgets/test_json/test1', // and example response (to give to widget)
-
-  // 'hbs!' is 'handlebars' template pre-processor, it will load the file and give you
-  // executable template
-  'hbs!js/widgets/hello_world/templates/layout',
-], function(
-  // all of the following names must correspond to the import above
-  _,
-  $,
-  Backbone,
-  Marionette,
-  ApiQuery,
-  ApiRequest,
-  ApiResponse,
-  BaseWidget,
-  MinimalPubSub,
-  TestData,
-  WidgetTemplate
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import BaseWidget from 'js/widgets/base/base_widget';
+import MinimalPubSub from 'js/bugutils/minimal_pubsub';
+import TestData from 'test/mocha/js/widgets/test_json/test1';
+import WidgetTemplate from 'hbs!js/widgets/hello_world/templates/layout';
   /**
    * Model is a very useful thing, it has methods to save, load, and query itself.
    * For most part, you just need to know these:
@@ -204,5 +177,5 @@ define([
     },
   });
 
-  return Controller;
-});
+  export default Controller;
+

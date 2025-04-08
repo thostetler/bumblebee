@@ -1,5 +1,5 @@
-define([], function() {
-  return {
+
+  export default {
     export: {
       formats: [
         {
@@ -126,4 +126,4 @@ define([], function() {
       ],
     },
   };
-});
+

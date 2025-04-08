@@ -1,13 +1,11 @@
 /**
  * Main collection point for all the actions
  */
-define([
-  'underscore',
-  'jquery',
-  'js/components/api_query',
-  'js/components/api_targets',
-  'filesaver',
-], function(_, $, ApiQuery, ApiTargets) {
+import _ from 'underscore';
+import $ from 'jquery';
+import ApiQuery from 'js/components/api_query';
+import ApiTargets from 'js/components/api_targets';
+import 'filesaver';
   // set of action names
   const actions = {
     SET_TAB: 'SET_TAB',
@@ -382,5 +380,5 @@ define([
     saveAs(blob, `export-${state.format.value}.${state.format.ext}`, true);
   };
 
-  return actions;
-});
+  export default actions;
+

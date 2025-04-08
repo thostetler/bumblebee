@@ -1,13 +1,11 @@
-define([
-  'redux',
-  'js/widgets/resources/redux/modules/api',
-  'js/widgets/resources/redux/modules/ui',
-  'js/widgets/resources/redux/middleware/api',
-  'js/widgets/resources/redux/middleware/ui',
-], function(Redux, api, ui, apiMiddleware, uiMiddleware) {
+import Redux from 'redux';
+import api from 'js/widgets/resources/redux/modules/api';
+import ui from 'js/widgets/resources/redux/modules/ui';
+import apiMiddleware from 'js/widgets/resources/redux/middleware/api';
+import uiMiddleware from 'js/widgets/resources/redux/middleware/ui';
   const { createStore, applyMiddleware, combineReducers } = Redux;
 
-  return function configureStore(context) {
+  export default function configureStore(context) {
     const middleware = applyMiddleware.apply(Redux, [
       ...uiMiddleware,
       ...apiMiddleware(context),
@@ -21,4 +19,4 @@ define([
     const store = createStore(reducer, composeEnhancers(middleware));
     return store;
   };
-});
+

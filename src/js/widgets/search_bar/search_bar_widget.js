@@ -1,48 +1,24 @@
-define([
-  'underscore',
-  'marionette',
-  'bowser',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/search_bar/templates/search_bar_template',
-  'hbs!js/widgets/search_bar/templates/search_form_template',
-  'hbs!js/widgets/search_bar/templates/option-dropdown',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/components/api_feedback',
-  'js/mixins/formatter',
-  'js/widgets/search_bar/autocomplete',
-  'js/widgets/search_bar/quick-field-desc',
-  'bootstrap', // if bootstrap is missing, jQuery events get propagated
-  'jquery-ui',
-  'js/mixins/dependon',
-  'analytics',
-  'js/components/query_validator',
-  'select2',
-  'libs/select2/matcher',
-], function(
-  _,
-  Marionette,
-  bowser,
-  ApiQuery,
-  BaseWidget,
-  SearchBarTemplate,
-  SearchFormTemplate,
-  OptionDropdownTemplate,
-  ApiRequest,
-  ApiTargets,
-  ApiFeedback,
-  FormatMixin,
-  { render: renderAutocomplete, autocompleteSource: autocompleteArray },
-  quickFieldDesc,
-  bootstrap,
-  jqueryUI,
-  Dependon,
-  analytics,
-  QueryValidator,
-  select2,
-  oldMatcher
-) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import bowser from 'bowser';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import SearchBarTemplate from 'hbs!js/widgets/search_bar/templates/search_bar_template';
+import SearchFormTemplate from 'hbs!js/widgets/search_bar/templates/search_form_template';
+import OptionDropdownTemplate from 'hbs!js/widgets/search_bar/templates/option-dropdown';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import ApiFeedback from 'js/components/api_feedback';
+import FormatMixin from 'js/mixins/formatter';
+import { render: renderAutocomplete, autocompleteSource: autocompleteArray } from 'js/widgets/search_bar/autocomplete';
+import quickFieldDesc from 'js/widgets/search_bar/quick-field-desc';
+import bootstrap from 'bootstrap';
+import jqueryUI from 'jquery-ui';
+import Dependon from 'js/mixins/dependon';
+import analytics from 'analytics';
+import QueryValidator from 'js/components/query_validator';
+import select2 from 'select2';
+import oldMatcher from 'libs/select2/matcher';
   /**
    * The default databases to filter by if the user has not set any in their preferences
    * @type {string[]}
@@ -916,5 +892,5 @@ define([
   });
 
   _.extend(SearchBarWidget.prototype, Dependon.BeeHive);
-  return SearchBarWidget;
-});
+  export default SearchBarWidget;
+

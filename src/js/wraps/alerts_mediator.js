@@ -1,20 +1,10 @@
-define([
-  'underscore',
-  'jquery',
-  'js/components/alerts_mediator',
-  'js/components/api_feedback',
-  'js/widgets/widget_states',
-  'js/components/alerts',
-  'js/components/api_response',
-], function(
-  _,
-  $,
-  AlertsMediator,
-  ApiFeedback,
-  WidgetStates,
-  Alerts,
-  ApiResponse
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import AlertsMediator from 'js/components/alerts_mediator';
+import ApiFeedback from 'js/components/api_feedback';
+import WidgetStates from 'js/widgets/widget_states';
+import Alerts from 'js/components/alerts';
+import ApiResponse from 'js/components/api_response';
   var Mediator = AlertsMediator.extend({
     activate: function(beehive, app) {
       AlertsMediator.prototype.activate.apply(this, arguments);
@@ -93,5 +83,5 @@ define([
     },
   });
 
-  return Mediator;
-});
+  export default Mediator;
+

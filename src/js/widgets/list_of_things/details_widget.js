@@ -4,19 +4,11 @@
  * so widgets on the abstract page (references, citations, etc)
  */
 
-define([
-  'js/widgets/list_of_things/widget',
-  'js/mixins/add_stable_index_to_collection',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/papers_utils',
-  'js/components/api_query',
-], function(
-  ListOfThings,
-  PaginationMixin,
-  LinkGenerator,
-  PapersUtilsMixin,
-  ApiQuery
-) {
+import ListOfThings from 'js/widgets/list_of_things/widget';
+import PaginationMixin from 'js/mixins/add_stable_index_to_collection';
+import LinkGenerator from 'js/mixins/link_generator_mixin';
+import PapersUtilsMixin from 'js/mixins/papers_utils';
+import ApiQuery from 'js/components/api_query';
   var DetailsWidget = ListOfThings.extend({
     defaultQueryArguments: {
       fl:
@@ -157,5 +149,5 @@ define([
   _.extend(DetailsWidget.prototype, LinkGenerator);
   _.extend(DetailsWidget.prototype, PapersUtilsMixin);
 
-  return DetailsWidget;
-});
+  export default DetailsWidget;
+

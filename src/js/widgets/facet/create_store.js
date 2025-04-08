@@ -1,10 +1,8 @@
-define([
-  'underscore',
-  'redux',
-  'redux-thunk',
-  'js/widgets/facet/reducers',
-], function(_, Redux, Thunk, Reducer) {
-  return function createStore(config) {
+import _ from 'underscore';
+import Redux from 'redux';
+import Thunk from 'redux-thunk';
+import Reducer from 'js/widgets/facet/reducers';
+  export default function createStore(config) {
     // pass in specific default config vars (e.g. preprocessors)
     // these come from the facet widget's initialize method
     var config = {
@@ -17,5 +15,5 @@ define([
       Redux.applyMiddleware(Thunk.default)
     );
   };
-  return createStore;
-});
+  export default createStore;
+

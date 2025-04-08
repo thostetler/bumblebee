@@ -9,23 +9,13 @@
  *
  * */
 
-define([
-  'js/widgets/base/base_widget',
-  'js/components/generic_module',
-  'js/page_managers/controller',
-  'hbs!js/page_managers/templates/aria-announcement',
-  'hbs!js/page_managers/templates/master-page-manager',
-  'marionette',
-  'js/mixins/dependon',
-], function(
-  BaseWidget,
-  GenericModule,
-  PageManagerController,
-  AriaAnnouncementTemplate,
-  MasterPageManagerTemplate,
-  Marionette,
-  Dependon
-) {
+import BaseWidget from 'js/widgets/base/base_widget';
+import GenericModule from 'js/components/generic_module';
+import PageManagerController from 'js/page_managers/controller';
+import AriaAnnouncementTemplate from 'hbs!js/page_managers/templates/aria-announcement';
+import MasterPageManagerTemplate from 'hbs!js/page_managers/templates/master-page-manager';
+import Marionette from 'marionette';
+import Dependon from 'js/mixins/dependon';
   var WidgetData = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -253,5 +243,5 @@ define([
   });
 
   _.extend(MasterPageManager.prototype, Dependon.App);
-  return MasterPageManager;
-});
+  export default MasterPageManager;
+

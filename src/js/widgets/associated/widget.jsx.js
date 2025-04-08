@@ -1,34 +1,17 @@
-define([
-  'underscore',
-  'backbone',
-  'react',
-  'react-dom',
-  'react-redux',
-  'analytics',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/widgets/base/base_widget',
-  'js/widgets/associated/redux/configure-store',
-  'js/widgets/associated/redux/modules/api',
-  'js/widgets/associated/redux/modules/ui',
-  'js/widgets/associated/containers/app',
-], function(
-  _,
-  Backbone,
-  React,
-  ReactDOM,
-  ReactRedux,
-  analytics,
-  ApiQuery,
-  ApiRequest,
-  ApiTargets,
-  BaseWidget,
-  configureStore,
-  api,
-  ui,
-  App
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactRedux from 'react-redux';
+import analytics from 'analytics';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import BaseWidget from 'js/widgets/base/base_widget';
+import configureStore from 'js/widgets/associated/redux/configure-store';
+import api from 'js/widgets/associated/redux/modules/api';
+import ui from 'js/widgets/associated/redux/modules/ui';
+import App from 'js/widgets/associated/containers/app';
   const View = Backbone.View.extend({
     initialize: function(options) {
       // provide this with all the options passed in
@@ -126,5 +109,5 @@ define([
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

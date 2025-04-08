@@ -1,9 +1,7 @@
-define([
-  'marionette',
-  'js/widgets/base/base_widget',
-  'js/widgets/libraries_all/views/view_all_libraries',
-  'utils',
-], function(Marionette, BaseWidget, LibrariesView, utils) {
+import Marionette from 'marionette';
+import BaseWidget from 'js/widgets/base/base_widget';
+import LibrariesView from 'js/widgets/libraries_all/views/view_all_libraries';
+import utils from 'utils';
   var LibraryModel = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -199,5 +197,5 @@ define([
     },
   });
 
-  return LibrariesWidget;
-});
+  export default LibrariesWidget;
+

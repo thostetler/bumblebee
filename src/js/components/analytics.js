@@ -1,4 +1,4 @@
-define([], function () {
+
   /*
    * Set of targets
    * each has a set of hooks which coorespond to the event label passed
@@ -213,5 +213,5 @@ define([], function () {
     return value;
   }
 
-  return Analytics;
-});
+  export default Analytics;
+

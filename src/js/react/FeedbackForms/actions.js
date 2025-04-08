@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     SET_BIBCODE: 'SET_BIBCODE',
     SET_FORM: 'SET_FORM',
@@ -15,5 +15,5 @@ define([], function() {
     }),
   };
 
-  return { ...actions, ...actionCreators };
-});
+  export default { ...actions, ...actionCreators };
+

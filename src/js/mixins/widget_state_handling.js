@@ -4,13 +4,11 @@
  * 'view_states')
  *
  */
-define([
-  'underscore',
-  'jquery',
-  'js/widgets/widget_states',
-  'hbs!js/widgets/base/templates/loading-template',
-  'hbs!js/widgets/base/templates/loading-template-small',
-], function(_, $, WidgetStates, LoadingTemplate, LoadingTemplateSmall) {
+import _ from 'underscore';
+import $ from 'jquery';
+import WidgetStates from 'js/widgets/widget_states';
+import LoadingTemplate from 'hbs!js/widgets/base/templates/loading-template';
+import LoadingTemplateSmall from 'hbs!js/widgets/base/templates/loading-template-small';
   /**
    * This function tries hard to grab the topmost container (view)
    * of the widget (just using some probable locations)
@@ -110,5 +108,5 @@ define([
     },
   };
 
-  return Mixin;
-});
+  export default Mixin;
+

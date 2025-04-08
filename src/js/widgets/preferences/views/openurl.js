@@ -1,9 +1,7 @@
-define([
-  'marionette',
-  'hbs!js/widgets/preferences/templates/openurl',
-  'bootstrap',
-  'select2',
-], function(Marionette, OpenURLTemplate, Bootstrap, Select2) {
+import Marionette from 'marionette';
+import OpenURLTemplate from 'hbs!js/widgets/preferences/templates/openurl';
+import Bootstrap from 'bootstrap';
+import Select2 from 'select2';
   var OpenURLView = Marionette.ItemView.extend({
     template: OpenURLTemplate,
 
@@ -122,5 +120,5 @@ define([
     },
   });
 
-  return OpenURLView;
-});
+  export default OpenURLView;
+

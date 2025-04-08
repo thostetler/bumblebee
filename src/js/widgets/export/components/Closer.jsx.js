@@ -1,4 +1,5 @@
-define(['react', 'prop-types'], function(React, ReactPropTypes) {
+import React from 'react';
+import ReactPropTypes from 'prop-types';
   const Closer = ({ onClick }) => {
     const handleClick = (e) => {
       e.preventDefault();
@@ -23,5 +24,5 @@ define(['react', 'prop-types'], function(React, ReactPropTypes) {
     onClick: ReactPropTypes.func.isRequired,
   };
 
-  return Closer;
-});
+  export default Closer;
+

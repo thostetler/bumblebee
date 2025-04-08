@@ -1,4 +1,5 @@
-define(['jquery', 'analytics'], function($, analytics) {
+import $ from 'jquery';
+import analytics from 'analytics';
   const autocompleteSource = [
     { value: 'author:""', label: 'Author', match: 'author:"' },
 
@@ -394,5 +395,5 @@ define(['jquery', 'analytics'], function($, analytics) {
     });
   };
 
-  return { render, autocompleteSource };
-});
+  export default { render, autocompleteSource };
+

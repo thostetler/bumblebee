@@ -1,22 +1,11 @@
-define([
-  'marionette',
-  'backbone',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
-  'analytics',
-  'mathjax',
-], function(
-  Marionette,
-  Backbone,
-  ApiRequest,
-  ApiQuery,
-  BaseWidget,
-  ItemTemplate,
-  analytics,
-  MathJax
-) {
+import Marionette from 'marionette';
+import Backbone from 'backbone';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/item-template';
+import analytics from 'analytics';
+import MathJax from 'mathjax';
   var ItemView = Marionette.ItemView.extend({
     tagName: 'li',
     template: ItemTemplate,
@@ -241,5 +230,5 @@ define([
     },
   });
 
-  return ItemView;
-});
+  export default ItemView;
+

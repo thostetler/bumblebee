@@ -1,16 +1,8 @@
-define([
-  'react',
-  'react-bootstrap',
-  'js/react/LibraryCollaborators/components/AddCollaboratorModal.jsx',
-  'js/react/LibraryCollaborators/components/PermissionList.jsx',
-  'prop-types',
-], function(
-  React,
-  { Button, Alert },
-  AddCollaboratorModal,
-  PermissionList,
-  PropTypes
-) {
+import React from 'react';
+import { Button, Alert } from 'react-bootstrap';
+import AddCollaboratorModal from 'js/react/LibraryCollaborators/components/AddCollaboratorModal.jsx';
+import PermissionList from 'js/react/LibraryCollaborators/components/PermissionList.jsx';
+import PropTypes from 'prop-types';
   const renderAlerts = ({ add, get, edit }) => {
     if (
       edit.status === 'pending' ||
@@ -178,5 +170,5 @@ define([
     requests: PropTypes.object,
   };
 
-  return Dashboard;
-});
+  export default Dashboard;
+

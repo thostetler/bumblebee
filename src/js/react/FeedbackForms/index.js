@@ -1,31 +1,19 @@
-define([
-  'js/react/FeedbackForms/components/App.jsx',
-  'js/react/WithBackboneView',
-  'js/react/configureStore',
-  'react-redux',
-  'js/react/FeedbackForms/actions',
-  'js/react/FeedbackForms/middleware',
-  'js/react/FeedbackForms/reducer',
-  'js/react/shared/helpers',
-  'js/react/shared/middleware/index',
-], function(
-  App,
-  WithBackboneView,
-  configureStore,
-  { connect },
-  actions,
-  middleware,
-  reducer,
-  { withContext },
-  sharedMiddleware
-) {
+import App from 'js/react/FeedbackForms/components/App.jsx';
+import WithBackboneView from 'js/react/WithBackboneView';
+import configureStore from 'js/react/configureStore';
+import { connect } from 'react-redux';
+import actions from 'js/react/FeedbackForms/actions';
+import middleware from 'js/react/FeedbackForms/middleware';
+import reducer from 'js/react/FeedbackForms/reducer';
+import { withContext } from 'js/react/shared/helpers';
+import sharedMiddleware from 'js/react/shared/middleware/index';
   const mapStateToProps = ({}) => ({});
   const {} = actions;
   const actionCreators = {};
   const middlewares = [middleware, ...sharedMiddleware];
 
-  return WithBackboneView(
+  export default WithBackboneView(
     connect(mapStateToProps, actionCreators)(App),
     (context) => configureStore(context, reducer, withContext(...middlewares))
   );
-});
+

@@ -1,7 +1,5 @@
-define(['underscore', 'js/components/persistent_storage'], function(
-  _,
-  PersistentStorage
-) {
+import _ from 'underscore';
+import PersistentStorage from 'js/components/persistent_storage';
   // TODO:rca - make sure that the service is loaded at the bootstrap and persisted
   // before the app exits (and that nothing can change the data inbetween; we can
   // let them do that; but we'll not care for it
@@ -30,7 +28,7 @@ define(['underscore', 'js/components/persistent_storage'], function(
     },
   });
 
-  return function() {
+  export default function() {
     return new Storage({ name: 'storage-service' });
   };
-});
+

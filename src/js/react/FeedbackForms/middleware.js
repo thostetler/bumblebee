@@ -1,7 +1,5 @@
-define(['js/react/FeedbackForms/actions', 'js/react/shared/helpers'], function(
-  { CHECK_BIBCODES },
-  { middleware }
-) {
+import { CHECK_BIBCODES } from 'js/react/FeedbackForms/actions';
+import { middleware } from 'js/react/shared/helpers';
   const checkBibcodes = middleware(({ action, next, trigger }) => {
     next(action);
 
@@ -25,5 +23,5 @@ define(['js/react/FeedbackForms/actions', 'js/react/shared/helpers'], function(
     }
   });
 
-  return { checkBibcodes };
-});
+  export default { checkBibcodes };
+

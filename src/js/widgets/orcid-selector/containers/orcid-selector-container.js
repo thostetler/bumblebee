@@ -1,8 +1,6 @@
-define([
-  'react-redux',
-  'js/widgets/orcid-selector/redux/modules/orcid-selector-app',
-  'js/widgets/orcid-selector/components/orcid-selector-app.jsx',
-], function(ReactRedux, actions, OrcidSelectorApp) {
+import ReactRedux from 'react-redux';
+import actions from 'js/widgets/orcid-selector/redux/modules/orcid-selector-app';
+import OrcidSelectorApp from 'js/widgets/orcid-selector/components/orcid-selector-app.jsx';
   // actions
   const { sendEvent } = actions;
 
@@ -18,8 +16,8 @@ define([
     onUpdate: () => dispatch(sendEvent('orcid-bulk-update')),
   });
 
-  return ReactRedux.connect(
+  export default ReactRedux.connect(
     mapStateToProps,
     mapDispatchToProps
   )(OrcidSelectorApp);
-});
+

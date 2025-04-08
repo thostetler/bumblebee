@@ -1,16 +1,8 @@
-define([
-  'react',
-  'prop-types',
-  'react-redux',
-  'js/react/Recommender/models/index',
-  'js/react/Recommender/actions',
-], function (
-  React,
-  PropTypes,
-  {useDispatch},
-  {searchExamples},
-  {updateSearchBar, emitAnalytics},
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
+import {searchExamples} from 'js/react/Recommender/models/index';
+import {updateSearchBar, emitAnalytics} from 'js/react/Recommender/actions';
   const Dl = ({children}) => {
     return <dl className="dl-horizontal">{children}</dl>;
   };
@@ -108,5 +100,5 @@ define([
     );
   });
 
-  return SearchExamples;
-});
+  export default SearchExamples;
+

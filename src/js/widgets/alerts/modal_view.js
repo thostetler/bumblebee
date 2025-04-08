@@ -1,7 +1,5 @@
-define([
-  'marionette',
-  'hbs!js/widgets/alerts/templates/modal_template',
-], function(Marionette, ModalTemplate) {
+import Marionette from 'marionette';
+import ModalTemplate from 'hbs!js/widgets/alerts/templates/modal_template';
   var ModalView = Marionette.ItemView.extend({
     id: '#alert-modal-content',
     template: ModalTemplate,
@@ -54,5 +52,5 @@ define([
     },
   });
 
-  return ModalView;
-});
+  export default ModalView;
+

@@ -1,8 +1,6 @@
-define(['underscore', 'backbone', 'js/mixins/hardened'], function(
-  _,
-  Backbone,
-  Hardened
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import Hardened from 'js/mixins/hardened';
   var ApiFeedback = function(options) {
     _.extend(this, _.defaults(options || {}, { code: 200, msg: undefined }));
     this.setCode(this.code);
@@ -91,5 +89,5 @@ define(['underscore', 'backbone', 'js/mixins/hardened'], function(
   );
 
   ApiFeedback.extend = Backbone.Model.extend;
-  return ApiFeedback;
-});
+  export default ApiFeedback;
+

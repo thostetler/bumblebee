@@ -1,15 +1,13 @@
-define(['underscore', 'js/react/LibraryCollaborators/actions', 'js/react/shared/helpers'], function(
-  _,
-  {
+import _ from 'underscore';
+import {
     GET_COLLABORATORS,
     SET_COLLABORATORS,
     ADD_COLLABORATOR,
     EDIT_COLLABORATOR,
     SET_LIBRARY_DATA,
     getCollaborators,
-  },
-  { delay, middleware, apiSuccess, parseScope }
-) {
+  } from 'js/react/LibraryCollaborators/actions';
+import { delay, middleware, apiSuccess, parseScope } from 'js/react/shared/helpers';
   const collaborators = middleware(({ next, action, dispatch, getState }) => {
     next(action);
 
@@ -39,8 +37,8 @@ define(['underscore', 'js/react/LibraryCollaborators/actions', 'js/react/shared/
     }
   });
 
-  return {
+  export default {
     collaborators,
     requestReset,
   };
-});
+

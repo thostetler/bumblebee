@@ -1,11 +1,9 @@
-define([
-  'jquery',
-  'underscore',
-  'analytics',
-  'react',
-  'js/components/api_query',
-  'js/components/api_request',
-], function($, _, analytics, React, ApiQuery, ApiRequest) {
+import $ from 'jquery';
+import _ from 'underscore';
+import analytics from 'analytics';
+import React from 'react';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
   const qs = function(key, str, separator) {
     // eslint-disable-next-line no-useless-escape
     const k = key.replace(/[*+?^$.[\]{}()|\\\/]/g, '\\$&'); // escape RegEx meta chars
@@ -187,7 +185,7 @@ define([
     return defaultMessage;
   };
 
-  return {
+  export default {
     qs: qs,
     updateHash: updateHash,
     difference: difference,
@@ -200,4 +198,4 @@ define([
     makeApiRequest: makeApiRequest,
     extractErrorMessageFromAjax,
   };
-});
+

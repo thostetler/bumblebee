@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   /**
    * Last active date section
    */
@@ -10,5 +10,5 @@ define(['react'], function(React) {
     </div>
   );
 
-  return LastActiveDateRow;
-});
+  export default LastActiveDateRow;
+

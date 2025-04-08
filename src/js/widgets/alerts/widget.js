@@ -4,30 +4,16 @@
  * controller which decides what to do.
  */
 
-define([
-  'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  // list of possible alerts
-  'js/components/alerts',
-  'js/widgets/alerts/modal_view',
-  'js/widgets/alerts/page_top_alert',
-  'jquery',
-  'jquery-ui',
-  'bootstrap',
-], function(
-  Marionette,
-  BaseWidget,
-  ApiQuery,
-  Alerts,
-  ApiFeedback,
-  ModalView,
-  BannerView,
-  $,
-  $ui,
-  bootstrap
-) {
+import Marionette from 'marionette';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiQuery from 'js/components/api_query';
+import Alerts from 'js/components/api_feedback';
+import ApiFeedback from 'js/components/alerts';
+import ModalView from 'js/widgets/alerts/modal_view';
+import BannerView from 'js/widgets/alerts/page_top_alert';
+import $ from 'jquery';
+import $ui from 'jquery-ui';
+import bootstrap from 'bootstrap';
   var AlertModel = Backbone.Model.extend({
     defaults: {
       type: 'info',
@@ -146,5 +132,5 @@ define([
     },
   });
 
-  return AlertsWidget;
-});
+  export default AlertsWidget;
+

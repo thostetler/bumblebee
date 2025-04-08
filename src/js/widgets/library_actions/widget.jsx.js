@@ -1,11 +1,9 @@
-define([
-  'underscore',
-  'backbone',
-  'react',
-  'react-dom',
-  'js/widgets/base/base_widget',
-  'js/widgets/library_actions/components/app.jsx',
-], function(_, Backbone, React, ReactDOM, BaseWidget, App) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import BaseWidget from 'js/widgets/base/base_widget';
+import App from 'js/widgets/library_actions/components/app.jsx';
   const Model = Backbone.Model.extend({
     defaults: {
       items: [],
@@ -140,5 +138,5 @@ define([
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

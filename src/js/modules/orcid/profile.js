@@ -1,8 +1,6 @@
-define(['underscore', 'jsonpath', 'js/modules/orcid/work'], function(
-  _,
-  jp,
-  Work
-) {
+import _ from 'underscore';
+import jp from 'jsonpath';
+import Work from 'js/modules/orcid/work';
   var PATHS = {
     workSummaries: '$',
   };
@@ -113,5 +111,5 @@ define(['underscore', 'jsonpath', 'js/modules/orcid/work'], function(
     });
   };
 
-  return Profile;
-});
+  export default Profile;
+

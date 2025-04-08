@@ -1,4 +1,5 @@
-define(['underscore', 'jsonpath'], function(_, jp) {
+import _ from 'underscore';
+import jp from 'jsonpath';
   var ADSPATHS = {
     status: '$.status',
     title: '$.title',
@@ -371,5 +372,5 @@ define(['underscore', 'jsonpath'], function(_, jp) {
     return work;
   };
 
-  return Work;
-});
+  export default Work;
+

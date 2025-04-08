@@ -1,4 +1,4 @@
-define([], function() {
+
   const authors = [
     'Penrose, Roger',
     'Genzel, Reinhard',
@@ -121,5 +121,5 @@ define([], function() {
     },
   ];
 
-  return searchExamples;
-});
+  export default searchExamples;
+

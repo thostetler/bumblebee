@@ -1,38 +1,19 @@
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'react',
-  'react-redux',
-  'react-dom',
-  'redux',
-  'redux-thunk',
-  'js/components/api_targets',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-  'js/widgets/author_affiliation_tool/containers/App.jsx',
-  'js/widgets/author_affiliation_tool/constants/actionNames',
-  'js/widgets/author_affiliation_tool/actions/index',
-  'js/widgets/author_affiliation_tool/reducers/index',
-], function(
-  $,
-  _,
-  Backbone,
-  React,
-  ReactRedux,
-  ReactDOM,
-  Redux,
-  ReduxThunk,
-  ApiTargets,
-  ApiQuery,
-  ApiRequest,
-  BaseWidget,
-  App,
-  ACTIONS,
-  actions,
-  reducers
-) {
+import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactRedux from 'react-redux';
+import ReactDOM from 'react-dom';
+import Redux from 'redux';
+import ReduxThunk from 'redux-thunk';
+import ApiTargets from 'js/components/api_targets';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import BaseWidget from 'js/widgets/base/base_widget';
+import App from 'js/widgets/author_affiliation_tool/containers/App.jsx';
+import ACTIONS from 'js/widgets/author_affiliation_tool/constants/actionNames';
+import actions from 'js/widgets/author_affiliation_tool/actions/index';
+import reducers from 'js/widgets/author_affiliation_tool/reducers/index';
   /**
    * Main entry point
    * this is where react will take over control of the view
@@ -258,5 +239,5 @@ define([
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

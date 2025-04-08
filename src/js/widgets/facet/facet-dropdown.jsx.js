@@ -1,8 +1,6 @@
-define(['react', 'prop-types', 'react-redux'], function(
-  React,
-  PropTypes,
-  { useSelector }
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
   const Dropdown = ({ activeFacets, onSubmitFilter }) => {
     const { logicOptions, facetTitle } = useSelector((state) => ({
       logicOptions: state.config.logicOptions,
@@ -75,5 +73,5 @@ define(['react', 'prop-types', 'react-redux'], function(
     onSubmitFilter: PropTypes.func,
   };
 
-  return Dropdown;
-});
+  export default Dropdown;
+

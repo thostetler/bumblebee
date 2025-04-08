@@ -1,7 +1,5 @@
-define(['underscore', 'js/mixins/openurl_generator'], function (
-  _,
-  {getOpenUrl},
-) {
+import _ from 'underscore';
+import {getOpenUrl} from 'js/mixins/openurl_generator';
   const GATEWAY_BASE_URL = '/link_gateway/';
 
   const DEFAULT_ORDERING = [
@@ -751,7 +749,7 @@ define(['underscore', 'js/mixins/openurl_generator'], function (
     return '';
   };
 
-  return {
+  export default {
     LINK_TYPES: LINK_TYPES,
     parseLinksData: parseLinksData,
     parseResourcesData: parseResourcesData,
@@ -760,4 +758,4 @@ define(['underscore', 'js/mixins/openurl_generator'], function (
     _processLinkData: _processLinkData,
     _parseLinksDataForModel: _parseLinksDataForModel,
   };
-});
+

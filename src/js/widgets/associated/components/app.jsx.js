@@ -1,4 +1,6 @@
-define(['underscore', 'react', 'prop-types'], function(_, React, PropTypes) {
+import _ from 'underscore';
+import React from 'react';
+import PropTypes from 'prop-types';
   // component styles
   const styles = {
     list: {
@@ -138,5 +140,5 @@ define(['underscore', 'react', 'prop-types'], function(_, React, PropTypes) {
     handleLinkClick: () => {},
   };
 
-  return App;
-});
+  export default App;
+

@@ -1,4 +1,5 @@
-define(['react', 'prop-types'], function(React, ReactPropTypes) {
+import React from 'react';
+import ReactPropTypes from 'prop-types';
   const Setup = ({
     onApply,
     setFormat,
@@ -223,5 +224,5 @@ define(['react', 'prop-types'], function(React, ReactPropTypes) {
     autoSubmit: ReactPropTypes.bool.isRequired,
   };
 
-  return Setup;
-});
+  export default Setup;
+

@@ -1,11 +1,9 @@
-define(['redux', 'redux-thunk', 'js/widgets/orcid-selector/redux/modules/orcid-selector-app'], function(
-  Redux,
-  ReduxThunk,
-  OrcidSelectorApp
-) {
+import Redux from 'redux';
+import ReduxThunk from 'redux-thunk';
+import OrcidSelectorApp from 'js/widgets/orcid-selector/redux/modules/orcid-selector-app';
   const { createStore, applyMiddleware } = Redux;
 
-  return function configureStore(context) {
+  export default function configureStore(context) {
     const middleware = applyMiddleware(
       ReduxThunk.default.withExtraArgument(context)
     );
@@ -13,4 +11,4 @@ define(['redux', 'redux-thunk', 'js/widgets/orcid-selector/redux/modules/orcid-s
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
     return createStore(OrcidSelectorApp.reducer, composeEnhancers(middleware));
   };
-});
+

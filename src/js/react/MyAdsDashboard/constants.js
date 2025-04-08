@@ -1,4 +1,4 @@
-define([], function() {
+
   const page = {
     // pages
     DASHBOARD: 'dashboard',
@@ -13,7 +13,7 @@ define([], function() {
     GENERAL_FORM: 'general-form'
   };
 
-  return {
+  export default {
     page,
   };
-});
+

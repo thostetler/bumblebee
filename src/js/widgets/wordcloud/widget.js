@@ -1,33 +1,18 @@
-define([
-  'jquery',
-  'backbone',
-  'marionette',
-  'd3',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/wordcloud/templates/wordcloud-template',
-  'hbs!js/widgets/wordcloud/templates/selected-list-template',
-  'js/components/api_targets',
-  'js/components/api_query_updater',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  'jquery-ui',
-  'bootstrap',
-  'd3-cloud',
-], function(
-  $,
-  Backbone,
-  Marionette,
-  d3,
-  ApiRequest,
-  BaseWidget,
-  WordCloudTemplate,
-  SelectedListTemplate,
-  ApiTargets,
-  ApiQueryUpdater,
-  ApiQuery,
-  ApiFeedback
-) {
+import $ from 'jquery';
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import d3 from 'd3';
+import ApiRequest from 'js/components/api_request';
+import BaseWidget from 'js/widgets/base/base_widget';
+import WordCloudTemplate from 'hbs!js/widgets/wordcloud/templates/wordcloud-template';
+import SelectedListTemplate from 'hbs!js/widgets/wordcloud/templates/selected-list-template';
+import ApiTargets from 'js/components/api_targets';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import ApiQuery from 'js/components/api_query';
+import ApiFeedback from 'js/components/api_feedback';
+import 'jquery-ui';
+import 'bootstrap';
+import 'd3-cloud';
   var helpText =
     '<p>This word cloud allows you to view interesting words from the titles and abstracts of your search results.</p>' +
     '<p> Move the slider towards <strong> Frequent</strong> to view a word cloud that is simply composed of the words that appeared most' +
@@ -671,5 +656,5 @@ define([
     },
   });
 
-  return WordCloudWidget;
-});
+  export default WordCloudWidget;
+

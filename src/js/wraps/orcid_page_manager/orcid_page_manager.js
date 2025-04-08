@@ -1,8 +1,6 @@
-define([
-  'js/page_managers/controller',
-  'js/page_managers/one_column_view',
-  'hbs!js/wraps/orcid_page_manager/orcid-page-layout',
-], function(PageManagerController, PageManagerView, PageManagerTemplate) {
+import PageManagerController from 'js/page_managers/controller';
+import PageManagerView from 'js/page_managers/one_column_view';
+import PageManagerTemplate from 'hbs!js/wraps/orcid_page_manager/orcid-page-layout';
   var PageManager = PageManagerController.extend({
     createView: function(options) {
       options = options || {};
@@ -15,5 +13,5 @@ define([
     },
   });
 
-  return PageManager;
-});
+  export default PageManager;
+

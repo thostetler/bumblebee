@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     GET_RECOMMENDATIONS: 'GET_RECOMMENDATIONS',
     GET_DOCS: 'GET_DOCS',
@@ -63,5 +63,5 @@ define([], function() {
     }),
   };
 
-  return { ...actions, ...actionCreators };
-});
+  export default { ...actions, ...actionCreators };
+

@@ -1,24 +1,12 @@
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'js/components/api_query',
-  'js/mixins/dependon',
-  'js/components/api_feedback',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/components/api_query_updater',
-], function(
-  $,
-  _,
-  Backbone,
-  ApiQuery,
-  Dependon,
-  ApiFeedback,
-  ApiRequest,
-  ApiTargets,
-  ApiQueryUpdater
-) {
+import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
+import Dependon from 'js/mixins/dependon';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import ApiQueryUpdater from 'js/components/api_query_updater';
   var Router = Backbone.Router.extend({
     initialize: function(options) {
       options = options || {};
@@ -57,5 +45,5 @@ define([
   });
 
   _.extend(Router.prototype, Dependon.BeeHive);
-  return Router;
-});
+  export default Router;
+

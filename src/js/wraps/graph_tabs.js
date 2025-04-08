@@ -1,19 +1,10 @@
-define([
-  'js/widgets/tabs/tabs_widget',
-  'js/widgets/facet/factory',
-  'js/widgets/facet/graph-facet/year_graph',
-  'js/widgets/facet/graph-facet/h_index_graph',
-  'js/mixins/formatter',
-  'analytics',
-], function(
-  TabsWidget,
-  FacetFactory,
-  YearGraphView,
-  HIndexGraph,
-  FormatMixin,
-  analytics
-) {
-  return function() {
+import TabsWidget from 'js/widgets/tabs/tabs_widget';
+import FacetFactory from 'js/widgets/facet/factory';
+import YearGraphView from 'js/widgets/facet/graph-facet/year_graph';
+import HIndexGraph from 'js/widgets/facet/graph-facet/h_index_graph';
+import FormatMixin from 'js/mixins/formatter';
+import analytics from 'analytics';
+  export default function() {
     var yearGraphWidget = FacetFactory.makeGraphFacet({
       graphView: YearGraphView,
       facetField: 'year',
@@ -288,4 +279,4 @@ define([
 
     return tab;
   };
-});
+

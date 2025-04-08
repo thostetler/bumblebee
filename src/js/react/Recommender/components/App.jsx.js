@@ -1,20 +1,10 @@
-define([
-  'react',
-  'react-bootstrap',
-  'prop-types',
-  'react-redux',
-  'js/react/Recommender/actions',
-  'js/react/Recommender/components/RecommendedList.jsx',
-  'js/react/Recommender/components/SearchExamples.jsx',
-], function (
-  React,
-  {Nav, NavItem},
-  PropTypes,
-  {useDispatch, useSelector},
-  {setTab, emitAnalytics},
-  RecommendedList,
-  SearchExamples,
-) {
+import React from 'react';
+import {Nav, NavItem} from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
+import {setTab, emitAnalytics} from 'js/react/Recommender/actions';
+import RecommendedList from 'js/react/Recommender/components/RecommendedList.jsx';
+import SearchExamples from 'js/react/Recommender/components/SearchExamples.jsx';
   const selector = (state) => ({
     tab: state.tab,
   });
@@ -70,5 +60,5 @@ define([
     );
   };
 
-  return App;
-});
+  export default App;
+

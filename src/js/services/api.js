@@ -1,26 +1,13 @@
-define([
-  'underscore',
-  'jquery',
-  'js/components/generic_module',
-  'js/components/api_request',
-  'js/mixins/dependon',
-  'js/components/api_response',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  'js/mixins/hardened',
-  'js/mixins/api_access',
-], function(
-  _,
-  $,
-  GenericModule,
-  ApiRequest,
-  Mixin,
-  ApiResponse,
-  ApiQuery,
-  ApiFeedback,
-  Hardened,
-  ApiAccess,
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import GenericModule from 'js/components/generic_module';
+import ApiRequest from 'js/components/api_request';
+import Mixin from 'js/mixins/dependon';
+import ApiResponse from 'js/components/api_response';
+import ApiQuery from 'js/components/api_query';
+import ApiFeedback from 'js/components/api_feedback';
+import Hardened from 'js/mixins/hardened';
+import ApiAccess from 'js/mixins/api_access';
   var Api = GenericModule.extend({
     url: '/api/1/', // usually overriden during app bootstrap
     clientVersion: null,
@@ -290,5 +277,5 @@ define([
 
   _.extend(Api.prototype, Mixin.BeeHive, Hardened, ApiAccess);
 
-  return Api;
-});
+  export default Api;
+

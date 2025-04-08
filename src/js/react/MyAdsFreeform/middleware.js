@@ -1,6 +1,5 @@
-define(['underscore', 'js/react/MyAdsFreeform/actions', 'js/react/shared/helpers'], function(
-  _,
-  {
+import _ from 'underscore';
+import {
     SET_UPDATE_DATA,
     GET_QID,
     SAVE_NEW_NOTIFICATION,
@@ -11,9 +10,8 @@ define(['underscore', 'js/react/MyAdsFreeform/actions', 'js/react/shared/helpers
     addNotification,
     makeError,
     getQID,
-  },
-  { middleware }
-) {
+  } from 'js/react/MyAdsFreeform/actions';
+import { middleware } from 'js/react/shared/helpers';
   const apiSuccess = _.memoize((str) => `${str}_API_REQUEST_SUCCESS`);
 
   const filterQueryParams = (queryParams) => {
@@ -105,10 +103,10 @@ define(['underscore', 'js/react/MyAdsFreeform/actions', 'js/react/shared/helpers
     }
   });
 
-  return {
+  export default {
     saveNotification,
     requestReset,
     errorReset,
     loggedInStatus,
   };
-});
+

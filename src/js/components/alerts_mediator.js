@@ -4,25 +4,14 @@
  * messages.
  */
 
-define([
-  'underscore',
-  'jquery',
-  'cache',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/api_feedback',
-  'js/mixins/hardened',
-  'js/components/alerts',
-], function(
-  _,
-  $,
-  Cache,
-  GenericModule,
-  Dependon,
-  ApiFeedback,
-  Hardened,
-  Alerts
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Cache from 'cache';
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import ApiFeedback from 'js/components/api_feedback';
+import Hardened from 'js/mixins/hardened';
+import Alerts from 'js/components/alerts';
   var AlertsMediator = GenericModule.extend({
     initialize: function(options) {
       _.extend(this, _.pick(options, ['debug', 'widgetName']));
@@ -157,5 +146,5 @@ define([
   _.extend(AlertsMediator.prototype, Dependon.BeeHive, Dependon.App);
   _.extend(AlertsMediator.prototype, Hardened);
 
-  return AlertsMediator;
-});
+  export default AlertsMediator;
+

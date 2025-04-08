@@ -6,7 +6,8 @@
  * ** note: brought into the main source in order to support Babel 7+
  */
 
-define(['babel', 'module'], function(babel, _module) {
+import babel from 'babel';
+import _module from 'module';
   var fetchText,
     buildMap = {};
   if (typeof window !== 'undefined' && window.navigator && window.document) {
@@ -34,7 +35,7 @@ define(['babel', 'module'], function(babel, _module) {
     };
   }
 
-  return {
+  export default {
     version: '0.5.0',
 
     load: function(name, req, onload, config) {
@@ -96,4 +97,4 @@ define(['babel', 'module'], function(babel, _module) {
       }
     },
   };
-});
+

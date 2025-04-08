@@ -1,9 +1,7 @@
-define(['react', 'd3', 'prop-types', 'react-redux'], function(
-  React,
-  d3,
-  PropTypes,
-  { useSelector }
-) {
+import React from 'react';
+import d3 from 'd3';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
   const format = (count) => {
     return d3
       .format('s')(count)
@@ -264,5 +262,5 @@ define(['react', 'd3', 'prop-types', 'react-redux'], function(
     id: PropTypes.string.isRequired,
   };
 
-  return ToggleList;
-});
+  export default ToggleList;
+

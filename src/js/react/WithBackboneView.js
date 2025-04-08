@@ -1,9 +1,7 @@
-define(['underscore', 'react', 'react-dom', 'react-redux'], function(
-  _,
-  React,
-  ReactDOM,
-  { Provider }
-) {
+import _ from 'underscore';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
   const WithBackboneView = (component, getStore) => {
     const view = Backbone.View.extend({
       initialize() {
@@ -53,5 +51,5 @@ define(['underscore', 'react', 'react-dom', 'react-redux'], function(
     return view;
   };
 
-  return WithBackboneView;
-});
+  export default WithBackboneView;
+

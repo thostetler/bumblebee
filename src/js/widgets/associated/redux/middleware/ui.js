@@ -1,4 +1,5 @@
-define(['js/widgets/associated/redux/modules/api', 'js/widgets/associated/redux/modules/ui'], function(api, ui) {
+import api from 'js/widgets/associated/redux/modules/api';
+import ui from 'js/widgets/associated/redux/modules/ui';
   const { LINK_CLICKED } = ui.actions;
 
   const { SEND_ANALYTICS } = api.actions;
@@ -13,5 +14,5 @@ define(['js/widgets/associated/redux/modules/api', 'js/widgets/associated/redux/
     }
   };
 
-  return [linkClicked];
-});
+  export default [linkClicked];
+

@@ -1,8 +1,6 @@
-define(['underscore', 'js/widgets/associated/redux/modules/api', 'js/widgets/associated/redux/modules/ui'], function(
-  _,
-  api,
-  ui
-) {
+import _ from 'underscore';
+import api from 'js/widgets/associated/redux/modules/api';
+import ui from 'js/widgets/associated/redux/modules/ui';
   const { RECEIVED_RESPONSE, SEND_ANALYTICS, FALLBACK_ON_ERROR } = api.actions;
 
   const { SET_LOADING, SET_HAS_ERROR, SET_ITEMS } = ui.actions;
@@ -108,5 +106,5 @@ define(['underscore', 'js/widgets/associated/redux/modules/api', 'js/widgets/ass
   const withContext = (...fns) => (context) =>
     fns.map((fn) => _.partial(fn, context));
 
-  return withContext(processResponse, sendAnalytics, fallbackOnError);
-});
+  export default withContext(processResponse, sendAnalytics, fallbackOnError);
+

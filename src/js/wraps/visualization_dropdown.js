@@ -1,4 +1,4 @@
-define(['js/widgets/dropdown-menu/widget'], function(DropdownWidget) {
+import DropdownWidget from 'js/widgets/dropdown-menu/widget';
   // config
 
   var links = [
@@ -29,7 +29,7 @@ define(['js/widgets/dropdown-menu/widget'], function(DropdownWidget) {
   var rightAlign = true;
   var selectedOption = true;
 
-  return function() {
+  export default function() {
     var VisDropdown = new DropdownWidget({
       links: links,
       btnType: btnType,
@@ -41,4 +41,4 @@ define(['js/widgets/dropdown-menu/widget'], function(DropdownWidget) {
 
     return VisDropdown;
   };
-});
+

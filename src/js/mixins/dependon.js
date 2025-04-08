@@ -6,11 +6,9 @@
  * This module contains a set of utilities that can be added to classes
  * to give them certain functionality
  */
-define([
-  'underscore',
-  'js/components/pubsub_events',
-  'js/components/pubsub_key',
-], function(_, PubSubEvents, PubSubKey) {
+import _ from 'underscore';
+import PubSubEvents from 'js/components/pubsub_events';
+import PubSubKey from 'js/components/pubsub_key';
   var Mixin = {
     /*
      * BeeHive is the object that allows modules to get access to objects
@@ -120,5 +118,5 @@ define([
     },
   };
 
-  return Mixin;
-});
+  export default Mixin;
+

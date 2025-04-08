@@ -1,10 +1,8 @@
-define([
-  'underscore',
-  'marionette',
-  'hbs!js/page_managers/templates/results-page-layout',
-  'hbs!js/page_managers/templates/results-control-row',
-  'js/widgets/base/base_widget',
-], function(_, Marionette, pageTemplate, controlRowTemplate) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import pageTemplate from 'hbs!js/page_managers/templates/results-page-layout';
+import controlRowTemplate from 'hbs!js/page_managers/templates/results-control-row';
+import 'js/widgets/base/base_widget';
   /*
    * keeps track of the open/closed state of the three columns
    * */
@@ -164,5 +162,5 @@ define([
       }
     },
   });
-  return ThreeColumnView;
-});
+  export default ThreeColumnView;
+

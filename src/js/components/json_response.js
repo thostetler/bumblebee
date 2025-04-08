@@ -4,11 +4,9 @@
  * (e.g. solr_response)
  */
 
-define(['underscore', 'backbone', 'js/components/api_query'], function(
-  _,
-  Backbone,
-  ApiQuery
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
   var JSONResponse = function(attributes, options) {
     var defaults;
     var attrs = attributes || {};
@@ -231,8 +229,8 @@ define(['underscore', 'backbone', 'js/components/api_query'], function(
   // use the bb extend function for classes hierarchy
   JSONResponse.extend = Backbone.Model.extend;
 
-  return JSONResponse;
-});
+  export default JSONResponse;
+
 /**
  * Created by rchyla on 3/3/14.
  */

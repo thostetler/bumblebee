@@ -1,9 +1,7 @@
-define([
-  'js/widgets/facet/graph-facet/base_graph',
-  'hbs!js/widgets/facet/graph-facet/templates/h-index-graph-legend',
-  'hbs!js/widgets/facet/graph-facet/templates/h-index-slider-window',
-  'marionette',
-], function(BaseGraphView, legendTemplate, sliderWindowTemplate, Marionette) {
+import BaseGraphView from 'js/widgets/facet/graph-facet/base_graph';
+import legendTemplate from 'hbs!js/widgets/facet/graph-facet/templates/h-index-graph-legend';
+import sliderWindowTemplate from 'hbs!js/widgets/facet/graph-facet/templates/h-index-slider-window';
+import Marionette from 'marionette';
   var HIndexGraphView = BaseGraphView.extend({
     legendTemplate: legendTemplate,
 
@@ -485,5 +483,5 @@ define([
     },
   });
 
-  return HIndexGraphView;
-});
+  export default HIndexGraphView;
+

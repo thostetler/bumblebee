@@ -1,31 +1,17 @@
 /*
  * A generic class that lazy-loads User info
  */
-define([
-  'backbone',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/mixins/hardened',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/api_query',
-  'js/components/user',
-  'js/components/api_feedback',
-  'js/mixins/api_access',
-  'utils',
-], function(
-  Backbone,
-  ApiRequest,
-  ApiTargets,
-  Hardened,
-  GenericModule,
-  Dependon,
-  ApiQuery,
-  User,
-  ApiFeedback,
-  ApiAccess,
-  utils
-) {
+import Backbone from 'backbone';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import Hardened from 'js/mixins/hardened';
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import ApiQuery from 'js/components/api_query';
+import User from 'js/components/user';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiAccess from 'js/mixins/api_access';
+import utils from 'utils';
   var SessionModel = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -423,5 +409,5 @@ define([
 
   _.extend(Session.prototype, Dependon.BeeHive, Hardened, ApiAccess);
 
-  return Session;
-});
+  export default Session;
+

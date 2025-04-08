@@ -1,4 +1,5 @@
-define(['underscore', 'react'], function(_, React) {
+import _ from 'underscore';
+import React from 'react';
   class MultiControl extends React.Component {
     constructor(props) {
       super(props);
@@ -90,5 +91,5 @@ define(['underscore', 'react'], function(_, React) {
     max: Number.MAX_SAFE_INTEGER,
   };
 
-  return MultiControl;
-});
+  export default MultiControl;
+

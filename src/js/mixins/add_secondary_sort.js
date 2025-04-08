@@ -1,5 +1,5 @@
-define([], function() {
-  return {
+
+  export default {
     // add secondary sort with correct asc/desc
     addSecondarySort: function(apiQuery) {
       // ensure we always apply a default sort
@@ -14,4 +14,4 @@ define([], function() {
       apiQuery.set('sort', primarySort + ', ' + secondarySort);
     },
   };
-});
+

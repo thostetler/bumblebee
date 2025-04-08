@@ -3,14 +3,15 @@ Example module that simply prints 'hello x'
 as a main page
 */
 
-define(['underscore', 'jquery'], function(_, $) {
+import _ from 'underscore';
+import $ from 'jquery';
   var showName = function(selector, n) {
     console.log(selector);
     console.log(n);
     var temp = _.template('Hello <%= name %>');
     $(selector).html(temp({ name: n }));
   };
-  return {
+  export default {
     showName: showName,
   };
-});
+

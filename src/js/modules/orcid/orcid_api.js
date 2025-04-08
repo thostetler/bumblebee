@@ -37,43 +37,23 @@
  *
  */
 
-define([
-  'underscore',
-  'bootstrap',
-  'jquery',
-  'backbone',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/pubsub_events',
-  'js/mixins/link_generator_mixin',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/mixins/hardened',
-  'js/components/api_targets',
-  'js/components/api_query_updater',
-  'js/components/api_feedback',
-  'js/modules/orcid/work',
-  'js/modules/orcid/profile',
-  'js/modules/orcid/bio',
-], function(
-  _,
-  Bootstrap,
-  $,
-  Backbone,
-  GenericModule,
-  Mixins,
-  PubSubEvents,
-  LinkGeneratorMixin,
-  ApiQuery,
-  ApiRequest,
-  HardenedMixin,
-  ApiTargets,
-  ApiQueryUpdater,
-  ApiFeedback,
-  Work,
-  Profile,
-  Bio
-) {
+import _ from 'underscore';
+import Bootstrap from 'bootstrap';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import GenericModule from 'js/components/generic_module';
+import Mixins from 'js/mixins/dependon';
+import PubSubEvents from 'js/components/pubsub_events';
+import LinkGeneratorMixin from 'js/mixins/link_generator_mixin';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import HardenedMixin from 'js/mixins/hardened';
+import ApiTargets from 'js/components/api_targets';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import ApiFeedback from 'js/components/api_feedback';
+import Work from 'js/modules/orcid/work';
+import Profile from 'js/modules/orcid/profile';
+import Bio from 'js/modules/orcid/bio';
   var OrcidApi = GenericModule.extend({
     /**
      * Initialize the service
@@ -1273,5 +1253,5 @@ define([
   _.extend(OrcidApi.prototype, Mixins.BeeHive);
   _.extend(OrcidApi.prototype, HardenedMixin);
 
-  return OrcidApi;
-});
+  export default OrcidApi;
+

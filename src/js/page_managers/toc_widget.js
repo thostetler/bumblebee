@@ -1,4 +1,5 @@
-define(['backbone', 'marionette'], function(Backbone, Marionette) {
+import Backbone from 'backbone';
+import Marionette from 'marionette';
   /*
    * widget to coordinate the showing of other widgets within the framework of a TOC page manager
    * You need to provide a template with a nav that looks like this: (with the data attributes
@@ -281,5 +282,5 @@ define(['backbone', 'marionette'], function(Backbone, Marionette) {
     },
   });
 
-  return TocNavigationView;
-});
+  export default TocNavigationView;
+

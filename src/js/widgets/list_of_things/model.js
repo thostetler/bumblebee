@@ -1,9 +1,7 @@
-define([
-  'backbone',
-  'underscore',
-  'bowser',
-  'js/mixins/add_stable_index_to_collection',
-], function(Backbone, _, bowser, WidgetPaginationMixin) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import bowser from 'bowser';
+import WidgetPaginationMixin from 'js/mixins/add_stable_index_to_collection';
   var ItemModel = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -265,5 +263,5 @@ define([
     },
   });
   _.extend(ListOfThingsCollection.prototype, WidgetPaginationMixin);
-  return ListOfThingsCollection;
-});
+  export default ListOfThingsCollection;
+

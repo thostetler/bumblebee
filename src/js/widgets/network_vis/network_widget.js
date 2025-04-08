@@ -1,41 +1,21 @@
-define([
-  'marionette',
-  'd3',
-  'js/components/api_targets',
-  'js/mixins/user_change_rows',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'js/components/api_query_updater',
-  'hbs!js/widgets/network_vis/templates/author-details-template',
-  'hbs!js/widgets/network_vis/templates/container-template',
-  'hbs!js/widgets/network_vis/templates/filter-container-template',
-  'hbs!js/widgets/network_vis/templates/graph-container-template',
-  'hbs!js/widgets/network_vis/templates/group-details-template',
-  'hbs!js/widgets/network_vis/templates/not-enough-data-template',
-  'hbs!js/widgets/network_vis/templates/network_metadata',
-  'hbs!js/widgets/network_vis/templates/loading-template',
-  'hbs!js/widgets/network_vis/templates/default-details-template',
-  'bootstrap',
-], function(
-  Marionette,
-  d3,
-  ApiTargets,
-  UserChangeMixin,
-  ApiRequest,
-  ApiQuery,
-  BaseWidget,
-  ApiQueryUpdater,
-  authorDetailsTemplate,
-  containerTemplate,
-  filterContainerTemplate,
-  graphContainerTemplate,
-  groupDetailsTemplate,
-  notEnoughDataTemplate,
-  metadataTemplate,
-  loadingTemplate,
-  DefaultDetailsTemplate
-) {
+import Marionette from 'marionette';
+import d3 from 'd3';
+import ApiTargets from 'js/components/api_targets';
+import UserChangeMixin from 'js/mixins/user_change_rows';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import authorDetailsTemplate from 'hbs!js/widgets/network_vis/templates/author-details-template';
+import containerTemplate from 'hbs!js/widgets/network_vis/templates/container-template';
+import filterContainerTemplate from 'hbs!js/widgets/network_vis/templates/filter-container-template';
+import graphContainerTemplate from 'hbs!js/widgets/network_vis/templates/graph-container-template';
+import groupDetailsTemplate from 'hbs!js/widgets/network_vis/templates/group-details-template';
+import notEnoughDataTemplate from 'hbs!js/widgets/network_vis/templates/not-enough-data-template';
+import metadataTemplate from 'hbs!js/widgets/network_vis/templates/network_metadata';
+import loadingTemplate from 'hbs!js/widgets/network_vis/templates/loading-template';
+import DefaultDetailsTemplate from 'hbs!js/widgets/network_vis/templates/default-details-template';
+import 'bootstrap';
   function isInt(value) {
     return (
       !isNaN(value) &&
@@ -1656,5 +1636,5 @@ define([
     },
   });
 
-  return NetworkWidget;
-});
+  export default NetworkWidget;
+

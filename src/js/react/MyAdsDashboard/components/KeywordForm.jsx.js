@@ -1,8 +1,6 @@
-define(['react', 'react-bootstrap', 'prop-types'], function(
-  React,
-  { Form, FormGroup, ControlLabel, FormControl, HelpBlock },
-  PropTypes
-) {
+import React from 'react';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import PropTypes from 'prop-types';
   const getStatusMessage = ({ status, error, editing }) => {
     switch (status) {
       case 'pending':
@@ -190,5 +188,5 @@ define(['react', 'react-bootstrap', 'prop-types'], function(
     }
   }
 
-  return KeywordForm;
-});
+  export default KeywordForm;
+

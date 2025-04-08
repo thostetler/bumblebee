@@ -1,24 +1,12 @@
-define([
-  'jquery',
-  'underscore',
-  'marionette',
-  'hbs!js/page_managers/templates/results-page-layout',
-  'hbs!js/page_managers/templates/results-control-row',
-  'js/widgets/base/base_widget',
-  'js/page_managers/three_column_view',
-  'js/page_managers/view_mixin',
-  'js/mixins/dependon',
-], function(
-  $,
-  _,
-  Marionette,
-  pageTemplate,
-  controlRowTemplate,
-  BaseWidget,
-  ThreeColumnView,
-  PageManagerViewMixin,
-  Dependon
-) {
+import $ from 'jquery';
+import _ from 'underscore';
+import Marionette from 'marionette';
+import pageTemplate from 'hbs!js/page_managers/templates/results-page-layout';
+import controlRowTemplate from 'hbs!js/page_managers/templates/results-control-row';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ThreeColumnView from 'js/page_managers/three_column_view';
+import PageManagerViewMixin from 'js/page_managers/view_mixin';
+import Dependon from 'js/mixins/dependon';
   var PRIORITY_WIDGETS = ['ShowAbstract'];
 
   var PageManagerController = BaseWidget.extend({
@@ -309,5 +297,5 @@ define([
       },
     }
   );
-  return PageManagerController;
-});
+  export default PageManagerController;
+

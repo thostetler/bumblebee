@@ -1,10 +1,8 @@
-define([
-  'react',
-  'prop-types',
-  'react-bootstrap',
-  'js/react/MyAdsFreeform/components/CollapsePanel.jsx',
-  'js/react/MyAdsFreeform/containers/SaveQueryForm',
-], function(React, PropTypes, { Alert }, CollapsePanel, SaveQueryForm) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Alert } from 'react-bootstrap';
+import CollapsePanel from 'js/react/MyAdsFreeform/components/CollapsePanel.jsx';
+import SaveQueryForm from 'js/react/MyAdsFreeform/containers/SaveQueryForm';
   const Message = ({ children, show, type, ...otherProps }) => {
     return show ? (
       <Alert bsStyle={type} {...otherProps}>
@@ -120,5 +118,5 @@ define([
     loggedIn: PropTypes.bool,
   };
 
-  return MyADSFreeform;
-});
+  export default MyADSFreeform;
+

@@ -1,10 +1,8 @@
-define([
-  'underscore',
-  'react',
-  'js/widgets/library_actions/components/multi-control.jsx',
-  'js/widgets/library_actions/components/select.jsx',
-  'js/widgets/library_actions/components/radio-group.jsx',
-], function(_, React, MultiControl, Select, RadioGroup) {
+import _ from 'underscore';
+import React from 'react';
+import MultiControl from 'js/widgets/library_actions/components/multi-control.jsx';
+import Select from 'js/widgets/library_actions/components/select.jsx';
+import RadioGroup from 'js/widgets/library_actions/components/radio-group.jsx';
   const descriptions = {
     union:
       'Take the union of the source and the secondary libraries. This finds all records contained in any of the input libraries. The result is saved to a new library',
@@ -354,5 +352,5 @@ define([
     onSubmit: () => {},
   };
 
-  return App;
-});
+  export default App;
+

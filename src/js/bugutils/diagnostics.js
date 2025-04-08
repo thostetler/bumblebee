@@ -7,27 +7,15 @@
  *    d.compareTwoSearchInstances(u1,u2).done(d.printComparison)
  */
 
-define([
-  'jquery',
-  'underscore',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/mixins/dependon',
-  'js/components/generic_module',
-  'sprintf',
-  'js/components/api_targets',
-], function(
-  $,
-  _,
-  ApiQuery,
-  ApiRequest,
-  ApiResponse,
-  Dependon,
-  GenericModule,
-  sprintf,
-  ApiTargets
-) {
+import $ from 'jquery';
+import _ from 'underscore';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import Dependon from 'js/mixins/dependon';
+import GenericModule from 'js/components/generic_module';
+import sprintf from 'sprintf';
+import ApiTargets from 'js/components/api_targets';
   var Diagnostics = GenericModule.extend({
     activate: function(beehive, app) {
       this.setApp(app);
@@ -366,5 +354,5 @@ define([
 
   _.extend(Diagnostics.prototype, Dependon.App, Dependon.BeeHive);
 
-  return Diagnostics;
-});
+  export default Diagnostics;
+

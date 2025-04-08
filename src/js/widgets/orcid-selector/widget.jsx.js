@@ -1,24 +1,12 @@
-define([
-  'underscore',
-  'backbone',
-  'react',
-  'react-redux',
-  'react-dom',
-  'js/widgets/orcid-selector/redux/configure-store',
-  'js/widgets/orcid-selector/redux/modules/orcid-selector-app',
-  'js/widgets/base/base_widget',
-  'js/widgets/orcid-selector/containers/orcid-selector-container',
-], function(
-  _,
-  Backbone,
-  React,
-  ReactRedux,
-  ReactDOM,
-  configureStore,
-  OrcidSelectorApp,
-  BaseWidget,
-  OrcidSelectorContainer
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactRedux from 'react-redux';
+import ReactDOM from 'react-dom';
+import configureStore from 'js/widgets/orcid-selector/redux/configure-store';
+import OrcidSelectorApp from 'js/widgets/orcid-selector/redux/modules/orcid-selector-app';
+import BaseWidget from 'js/widgets/base/base_widget';
+import OrcidSelectorContainer from 'js/widgets/orcid-selector/containers/orcid-selector-container';
   /**
    * Main App View
    *
@@ -105,5 +93,5 @@ define([
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

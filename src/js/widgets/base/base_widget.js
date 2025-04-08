@@ -1,22 +1,11 @@
-define([
-  'backbone',
-  'marionette',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/mixins/widget_mixin_method',
-  'js/components/api_targets',
-  'js/mixins/dependon',
-  'js/mixins/widget_state_manager',
-], function(
-  Backbone,
-  Marionette,
-  ApiQuery,
-  ApiRequest,
-  WidgetMixin,
-  ApiTargets,
-  Dependon,
-  WidgetStateManagerMixin
-) {
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import WidgetMixin from 'js/mixins/widget_mixin_method';
+import ApiTargets from 'js/components/api_targets';
+import Dependon from 'js/mixins/dependon';
+import WidgetStateManagerMixin from 'js/mixins/widget_state_manager';
   /**
    * Default PubSub based widget; the main functionality is inside
    *
@@ -308,5 +297,5 @@ define([
 
   _.extend(BaseWidget.prototype, Dependon.BeeHive, WidgetStateManagerMixin);
 
-  return BaseWidget;
-});
+  export default BaseWidget;
+

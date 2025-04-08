@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   class Select extends React.Component {
     onChange(e) {
       this.props.onChange(e.target.value);
@@ -38,5 +38,5 @@ define(['react'], function(React) {
     onChange: () => {},
   };
 
-  return Select;
-});
+  export default Select;
+

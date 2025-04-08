@@ -2,29 +2,16 @@
  * Created by rchyla on 3/19/14.
  */
 
-define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'marionette',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/components/pubsub_events',
-  'hbs!js/widgets/api_request/templates/widget-view',
-  'hbs!js/widgets/api_request/templates/item-view',
-  'js/mixins/dependon',
-], function(
-  _,
-  $,
-  Backbone,
-  Marionette,
-  ApiRequest,
-  ApiQuery,
-  PubSubEvents,
-  WidgetTemplate,
-  ItemTemplate,
-  Dependon
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import PubSubEvents from 'js/components/pubsub_events';
+import WidgetTemplate from 'hbs!js/widgets/api_request/templates/widget-view';
+import ItemTemplate from 'hbs!js/widgets/api_request/templates/item-view';
+import Dependon from 'js/mixins/dependon';
   // Model
   var KeyValue = Backbone.Model.extend({});
 
@@ -220,5 +207,5 @@ define([
   });
 
   _.extend(WidgetController.prototype, Dependon.BeeHive);
-  return WidgetController;
-});
+  export default WidgetController;
+

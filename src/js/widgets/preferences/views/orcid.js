@@ -1,8 +1,6 @@
-define([
-  'marionette',
-  'hbs!js/widgets/preferences/templates/orcid',
-  'hbs!js/widgets/preferences/templates/orcid-name-row-template',
-], function(Marionette, orcidTemplate, orcidNameRowTemplate) {
+import Marionette from 'marionette';
+import orcidTemplate from 'hbs!js/widgets/preferences/templates/orcid';
+import orcidNameRowTemplate from 'hbs!js/widgets/preferences/templates/orcid-name-row-template';
   var OrcidView = Marionette.ItemView.extend({
     template: orcidTemplate,
 
@@ -63,5 +61,5 @@ define([
     },
   });
 
-  return OrcidView;
-});
+  export default OrcidView;
+

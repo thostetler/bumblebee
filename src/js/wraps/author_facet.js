@@ -1,5 +1,6 @@
-define(['underscore', 'js/widgets/facet/factory'], function(_, FacetFactory) {
-  return function(options) {
+import _ from 'underscore';
+import FacetFactory from 'js/widgets/facet/factory';
+  export default function(options) {
     var widget = FacetFactory.makeHierarchicalCheckboxFacet(
       _.extend(
         {
@@ -17,4 +18,4 @@ define(['underscore', 'js/widgets/facet/factory'], function(_, FacetFactory) {
 
     return widget;
   };
-});
+

@@ -1,10 +1,8 @@
-define([
-  'backbone',
-  'marionette',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-], function(Backbone, Marionette, ApiQuery, ApiRequest, BaseWidget) {
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import BaseWidget from 'js/widgets/base/base_widget';
   var Factory = {
     createSimpleWidget: function(view, coll) {
       var t = new BaseWidget();
@@ -24,5 +22,5 @@ define([
     },
   };
 
-  return Factory;
-});
+  export default Factory;
+

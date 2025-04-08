@@ -1,4 +1,4 @@
-define([], function() {
+
   var States = {
     READY: 0,
     LOADING: 1,
@@ -6,5 +6,5 @@ define([], function() {
     FAILED: 3,
   };
 
-  return States;
-});
+  export default States;
+

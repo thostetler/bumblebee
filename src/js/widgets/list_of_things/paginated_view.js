@@ -3,43 +3,23 @@
  *
  */
 
-define([
-  'underscore',
-  'marionette',
-  'backbone',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
-  'hbs!js/widgets/list_of_things/templates/results-container-template',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/add_stable_index_to_collection',
-  'hbs!js/widgets/list_of_things/templates/empty-view-template',
-  'hbs!js/widgets/list_of_things/templates/error-view-template',
-  'hbs!js/widgets/list_of_things/templates/initial-view-template',
-  'js/widgets/list_of_things/item_view',
-  'analytics',
-  'mathjax',
-  'hbs!js/wraps/widget/loading/template',
-], function (
-  _,
-  Marionette,
-  Backbone,
-  ApiRequest,
-  ApiQuery,
-  BaseWidget,
-  ItemTemplate,
-  ResultsContainerTemplate,
-  LinkGenerator,
-  WidgetPaginationMixin,
-  EmptyViewTemplate,
-  ErrorViewTemplate,
-  InitialViewTemplate,
-  ItemView,
-  analytics,
-  MathJax,
-  loadingTemplate,
-) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import Backbone from 'backbone';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/item-template';
+import ResultsContainerTemplate from 'hbs!js/widgets/list_of_things/templates/results-container-template';
+import LinkGenerator from 'js/mixins/link_generator_mixin';
+import WidgetPaginationMixin from 'js/mixins/add_stable_index_to_collection';
+import EmptyViewTemplate from 'hbs!js/widgets/list_of_things/templates/empty-view-template';
+import ErrorViewTemplate from 'hbs!js/widgets/list_of_things/templates/error-view-template';
+import InitialViewTemplate from 'hbs!js/widgets/list_of_things/templates/initial-view-template';
+import ItemView from 'js/widgets/list_of_things/item_view';
+import analytics from 'analytics';
+import MathJax from 'mathjax';
+import loadingTemplate from 'hbs!js/wraps/widget/loading/template';
   /**
    * A simple model that holds attributes of the
    * paginated view. Changes in this model are
@@ -325,5 +305,5 @@ define([
     },
   });
 
-  return ListOfThingsView;
-});
+  export default ListOfThingsView;
+

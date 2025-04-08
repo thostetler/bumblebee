@@ -1,16 +1,8 @@
-define([
-  'react',
-  'prop-types',
-  'react-bootstrap',
-  'js/react/LibraryCollaborators/constants',
-  'js/react/LibraryCollaborators/components/ManageButton.jsx',
-], function(
-  React,
-  PropTypes,
-  { Modal, Button, FormControl, ControlLabel, FormGroup },
-  { Permissions },
-  ManageButton
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Modal, Button, FormControl, ControlLabel, FormGroup } from 'react-bootstrap';
+import { Permissions } from 'js/react/LibraryCollaborators/constants';
+import ManageButton from 'js/react/LibraryCollaborators/components/ManageButton.jsx';
   const initialState = {
     permission: Permissions.READ,
     email: '',
@@ -111,5 +103,5 @@ define([
     onHide: PropTypes.func.isRequired,
   };
 
-  return AddCollaboratorModal;
-});
+  export default AddCollaboratorModal;
+

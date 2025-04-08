@@ -5,7 +5,9 @@
  even if you try to set strings, you will always have
  list of strings
  */
-define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import $ from 'jquery';
   var Model = Backbone.Model.extend({
     locked: false,
     _checkLock: function() {
@@ -271,5 +273,5 @@ define(['backbone', 'underscore', 'jquery'], function(Backbone, _, $) {
     },
   });
 
-  return Model;
-});
+  export default Model;
+

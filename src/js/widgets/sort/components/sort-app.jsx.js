@@ -1,4 +1,5 @@
-define(['react', 'prop-types'], function(React, PropTypes) {
+import React from 'react';
+import PropTypes from 'prop-types';
   const SortApp = ({ setSort, setDirection, app }) => {
     const { options, sort, direction } = app;
 
@@ -76,5 +77,5 @@ define(['react', 'prop-types'], function(React, PropTypes) {
     setDirection: PropTypes.func.isRequired,
   };
 
-  return SortApp;
-});
+  export default SortApp;
+

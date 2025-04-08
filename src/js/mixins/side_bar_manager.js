@@ -1,10 +1,8 @@
 /**
  * manages the state of the side bars
  */
-define(['backbone', 'js/components/api_feedback'], function(
-  Backbone,
-  ApiFeedback
-) {
+import Backbone from 'backbone';
+import ApiFeedback from 'js/components/api_feedback';
   var state = new (Backbone.Model.extend({
     defaults: {
       recent: true,
@@ -143,5 +141,5 @@ define(['backbone', 'js/components/api_feedback'], function(
     },
   };
 
-  return SideBarManager;
-});
+  export default SideBarManager;
+

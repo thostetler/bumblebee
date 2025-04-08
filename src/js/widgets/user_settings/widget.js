@@ -1,28 +1,15 @@
-define([
-  'marionette',
-  'js/widgets/base/base_widget',
-  'js/mixins/form_view_functions',
-  'js/widgets/success/view',
-  'js/components/api_feedback',
-  'hbs!js/widgets/user_settings/templates/api_key',
-  'hbs!js/widgets/user_settings/templates/change_email',
-  'hbs!js/widgets/user_settings/templates/change_password',
-  'hbs!js/widgets/user_settings/templates/delete_account',
-  'backbone-validation',
-  'backbone.stickit',
-  'bootstrap',
-], function(
-  Marionette,
-  BaseWidget,
-  FormFunctions,
-  SuccessView,
-  ApiFeedback,
-  TokenTemplate,
-  EmailTemplate,
-  PasswordTemplate,
-  DeleteAccountTemplate,
-  Bootstrap
-) {
+import Marionette from 'marionette';
+import BaseWidget from 'js/widgets/base/base_widget';
+import FormFunctions from 'js/mixins/form_view_functions';
+import SuccessView from 'js/widgets/success/view';
+import ApiFeedback from 'js/components/api_feedback';
+import TokenTemplate from 'hbs!js/widgets/user_settings/templates/api_key';
+import EmailTemplate from 'hbs!js/widgets/user_settings/templates/change_email';
+import PasswordTemplate from 'hbs!js/widgets/user_settings/templates/change_password';
+import DeleteAccountTemplate from 'hbs!js/widgets/user_settings/templates/delete_account';
+import Bootstrap from 'backbone-validation';
+import 'backbone.stickit';
+import 'bootstrap';
   var passwordRegex = /(?=.*\d)(?=.*[a-zA-Z]).{5,}/;
 
   var FormView;
@@ -416,5 +403,5 @@ define([
     },
   });
 
-  return UserSettings;
-});
+  export default UserSettings;
+

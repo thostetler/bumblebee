@@ -1,6 +1,5 @@
-define(['js/react/shared/helpers', 'js/react/Recommender/actions'], function(
-  { middleware, apiSuccess, apiFailure, parseScope },
-  {
+import { middleware, apiSuccess, apiFailure, parseScope } from 'js/react/shared/helpers';
+import {
     GET_RECOMMENDATIONS,
     getDocs,
     GET_DOCS,
@@ -11,8 +10,7 @@ define(['js/react/shared/helpers', 'js/react/Recommender/actions'], function(
     EMIT_ANALYTICS,
     updateUserName,
     setTab,
-  }
-) {
+  } from 'js/react/Recommender/actions';
   const updateTarget = middleware(({ next, action, getState }) => {
     if (action.type === 'API_REQUEST' && action.scope === GET_RECOMMENDATIONS) {
       const { oracleTarget } = getState();
@@ -124,7 +122,7 @@ define(['js/react/shared/helpers', 'js/react/Recommender/actions'], function(
     }
   });
 
-  return {
+  export default {
     getRecommendations,
     updateSearchBar,
     getFullList,
@@ -132,4 +130,4 @@ define(['js/react/shared/helpers', 'js/react/Recommender/actions'], function(
     updateTarget,
     updateUser,
   };
-});
+

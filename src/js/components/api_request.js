@@ -2,12 +2,10 @@
  * Created by rchyla on 3/28/14.
  */
 
-define([
-  'underscore',
-  'backbone',
-  'js/components/facade',
-  'js/components/default_request',
-], function(_, Backbone, Facade, ApiRequestImpl) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import Facade from 'js/components/facade';
+import ApiRequestImpl from 'js/components/default_request';
   var hardenedInterface = {
     // add makes no sense with request
     get: 'get a key',
@@ -62,5 +60,5 @@ define([
     },
   });
 
-  return ApiRequest;
-});
+  export default ApiRequest;
+

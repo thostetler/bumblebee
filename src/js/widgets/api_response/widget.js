@@ -7,25 +7,14 @@
  * It also listens to DELIVERING_RESPONSE event
  */
 
-define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'marionette',
-  'js/components/api_response',
-  'hbs!js/widgets/api_response/templates/widget-view',
-  'js/components/pubsub_events',
-  'js/mixins/dependon',
-], function(
-  _,
-  $,
-  Backbone,
-  Marionette,
-  ApiResponse,
-  WidgetTemplate,
-  PubSubEvents,
-  Dependon
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import ApiResponse from 'js/components/api_response';
+import WidgetTemplate from 'hbs!js/widgets/api_response/templates/widget-view';
+import PubSubEvents from 'js/components/pubsub_events';
+import Dependon from 'js/mixins/dependon';
   var Model = Backbone.Model.extend({});
 
   var WidgetView = Marionette.ItemView.extend({
@@ -163,5 +152,5 @@ define([
 
   _.extend(WidgetController.prototype, Dependon.BeeHive);
 
-  return WidgetController;
-});
+  export default WidgetController;
+

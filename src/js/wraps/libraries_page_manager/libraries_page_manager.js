@@ -1,16 +1,8 @@
-define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/toc_widget',
-  'js/page_managers/three_column_view',
-  'hbs!js/wraps/libraries_page_manager/libraries-page-layout',
-  'hbs!js/wraps/libraries_page_manager/libraries-nav',
-], function(
-  TOCController,
-  TOCView,
-  PageManagerView,
-  PageManagerTemplate,
-  TOCTemplate
-) {
+import TOCController from 'js/page_managers/toc_controller';
+import TOCView from 'js/page_managers/toc_widget';
+import PageManagerView from 'js/page_managers/three_column_view';
+import PageManagerTemplate from 'hbs!js/wraps/libraries_page_manager/libraries-page-layout';
+import TOCTemplate from 'hbs!js/wraps/libraries_page_manager/libraries-nav';
   var PageManager = TOCController.extend({
     TOCTemplate: TOCTemplate,
 
@@ -64,5 +56,5 @@ define([
 
     navConfig: [],
   });
-  return PageManager;
-});
+  export default PageManager;
+

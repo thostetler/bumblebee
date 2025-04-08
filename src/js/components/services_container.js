@@ -2,12 +2,10 @@
  * Created by rchyla on 3/18/14.
  */
 
-define([
-  'js/components/facade',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'underscore',
-], function(Facade, GenericModule, Hardened, _) {
+import Facade from 'js/components/facade';
+import GenericModule from 'js/components/generic_module';
+import Hardened from 'js/mixins/hardened';
+import _ from 'underscore';
   var Services = GenericModule.extend({
     initialize: function(options) {
       this._services = _.has(options, 'services')
@@ -92,5 +90,5 @@ define([
     },
   });
 
-  return Services;
-});
+  export default Services;
+

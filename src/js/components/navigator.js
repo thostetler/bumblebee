@@ -12,25 +12,14 @@
  * one-to-one relation between router<->navigator
  */
 
-define([
-  'underscore',
-  'jquery',
-  'cache',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/transition',
-  'js/components/transition_catalog',
-  'analytics',
-], function (
-  _,
-  $,
-  Cache,
-  GenericModule,
-  Mixins,
-  Transition,
-  TransitionCatalog,
-  analytics,
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Cache from 'cache';
+import GenericModule from 'js/components/generic_module';
+import Mixins from 'js/mixins/dependon';
+import Transition from 'js/components/transition';
+import TransitionCatalog from 'js/components/transition_catalog';
+import analytics from 'analytics';
   // Document Title Constants
   var APP_TITLE = 'Astrophysics Data System';
   var TITLE_SEP = ' - ';
@@ -319,5 +308,5 @@ define([
   });
 
   _.extend(Navigator.prototype, Mixins.BeeHive);
-  return Navigator;
-});
+  export default Navigator;
+

@@ -5,7 +5,7 @@
  * and any related limits
  */
 
-define([], function () {
+
   var config = {
     BOOTSTRAP: '/accounts/bootstrap',
     SEARCH: 'search/query',
@@ -131,5 +131,5 @@ define([], function () {
     config.FEEDBACK,
   ];
 
-  return config;
-});
+  export default config;
+

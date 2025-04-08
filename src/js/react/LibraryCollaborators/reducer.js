@@ -1,9 +1,7 @@
-define(['underscore', 'redux', 'js/react/LibraryCollaborators/constants', 'js/react/LibraryCollaborators/actions'], function(
-  _,
-  { combineReducers },
-  { Permissions },
-  { SET_LIBRARY_DATA }
-) {
+import _ from 'underscore';
+import { combineReducers } from 'redux';
+import { Permissions } from 'js/react/LibraryCollaborators/constants';
+import { SET_LIBRARY_DATA } from 'js/react/LibraryCollaborators/actions';
   const getPermissionType = (type) => {
     if (type.includes('admin')) {
       return Permissions.ADMIN;
@@ -83,9 +81,9 @@ define(['underscore', 'redux', 'js/react/LibraryCollaborators/constants', 'js/re
     return state;
   };
 
-  return combineReducers({
+  export default combineReducers({
     requests,
     library,
     collaborators,
   });
-});
+

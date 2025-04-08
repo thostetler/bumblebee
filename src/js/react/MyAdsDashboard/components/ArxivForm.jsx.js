@@ -1,14 +1,7 @@
-define([
-  'react',
-  'react-bootstrap',
-  'js/react/MyAdsDashboard/components/ArxivClassList.jsx',
-  'prop-types',
-], function(
-  React,
-  { Form, FormGroup, ControlLabel, FormControl, HelpBlock },
-  ArxivClassList,
-  PropTypes
-) {
+import React from 'react';
+import { Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import ArxivClassList from 'js/react/MyAdsDashboard/components/ArxivClassList.jsx';
+import PropTypes from 'prop-types';
   const getStatusMessage = ({ status, error, editing }) => {
     switch (status) {
       case 'pending':
@@ -270,5 +263,5 @@ define([
     }),
   };
 
-  return ArxivForm;
-});
+  export default ArxivForm;
+

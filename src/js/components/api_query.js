@@ -12,12 +12,10 @@
 
  */
 
-define([
-  'backbone',
-  'underscore',
-  'js/components/solr_params',
-  'js/components/facade',
-], function(Backbone, _, ApiQueryImplementation, Facade) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import ApiQueryImplementation from 'js/components/solr_params';
+import Facade from 'js/components/facade';
   var hardenedInterface = {
     add: 'add values',
     set: 'set (replace existing)',
@@ -73,5 +71,5 @@ define([
     },
   });
 
-  return ApiQuery;
-});
+  export default ApiQuery;
+

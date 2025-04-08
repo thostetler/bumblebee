@@ -1,4 +1,4 @@
-define(['js/widgets/author_affiliation_tool/constants/actionNames'], function(ACTIONS) {
+import ACTIONS from 'js/widgets/author_affiliation_tool/constants/actionNames';
   const currentYear = new Date().getFullYear();
 
   // Initial state
@@ -102,5 +102,5 @@ define(['js/widgets/author_affiliation_tool/constants/actionNames'], function(AC
     }
   };
 
-  return reducer;
-});
+  export default reducer;
+

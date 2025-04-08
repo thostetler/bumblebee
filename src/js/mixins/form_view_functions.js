@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   // some functions to be used by form views which auto-validate
   var formFunctions = {
     // for the view
@@ -86,5 +86,5 @@ define(['underscore'], function(_) {
     },
   };
 
-  return formFunctions;
-});
+  export default formFunctions;
+

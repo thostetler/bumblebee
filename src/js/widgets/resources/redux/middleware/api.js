@@ -1,8 +1,6 @@
-define(['underscore', 'js/widgets/resources/redux/modules/api', 'js/widgets/resources/redux/modules/ui'], function(
-  _,
-  api,
-  ui
-) {
+import _ from 'underscore';
+import api from 'js/widgets/resources/redux/modules/api';
+import ui from 'js/widgets/resources/redux/modules/ui';
   const {
     QUERY_PROVIDED,
     RECEIVED_RESPONSE,
@@ -178,10 +176,10 @@ define(['underscore', 'js/widgets/resources/redux/modules/api', 'js/widgets/reso
   const withContext = (...fns) => (context) =>
     fns.map((fn) => _.partial(fn, context));
 
-  return withContext(
+  export default withContext(
     displayDocuments,
     processResponse,
     fetchData,
     sendAnalytics
   );
-});
+

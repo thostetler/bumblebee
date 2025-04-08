@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   const capitalize = (word) => {
     if (word.length < 3) return word;
     return word.toLowerCase()[0].toUpperCase() + word.slice(1);
@@ -60,5 +60,5 @@ define(['react'], function(React) {
     onChange: () => {},
   };
 
-  return RadioGroup;
-});
+  export default RadioGroup;
+

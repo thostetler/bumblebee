@@ -1,4 +1,6 @@
-define(['underscore', 'react', 'prop-types'], function(_, React, PropTypes) {
+import _ from 'underscore';
+import React from 'react';
+import PropTypes from 'prop-types';
   // No Results View
   const NoResults = () => (
     <h3 className="s-right-col-widget-title">No Sources Found</h3>
@@ -151,5 +153,5 @@ define(['underscore', 'react', 'prop-types'], function(_, React, PropTypes) {
     hasError: null,
   };
 
-  return App;
-});
+  export default App;
+

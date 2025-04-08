@@ -1,4 +1,4 @@
-define([], function() {
+
   function hasNonZero(arr) {
     return (
       arr.filter(function(x) {
@@ -179,5 +179,5 @@ define([], function() {
     ];
   };
 
-  return DataExtractor;
-});
+  export default DataExtractor;
+

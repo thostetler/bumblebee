@@ -1,4 +1,5 @@
-define(['react', 'js/react/MyAdsDashboard/constants'], function(React, { page }) {
+import React from 'react';
+import { page } from 'js/react/MyAdsDashboard/constants';
   class SelectTemplate extends React.Component {
     render() {
       return (
@@ -61,5 +62,5 @@ define(['react', 'js/react/MyAdsDashboard/constants'], function(React, { page })
     }
   }
 
-  return SelectTemplate;
-});
+  export default SelectTemplate;
+

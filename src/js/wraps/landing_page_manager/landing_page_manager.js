@@ -1,14 +1,7 @@
-define([
-  'js/page_managers/toc_controller',
-  'js/page_managers/one_column_view',
-  'hbs!js/wraps/landing_page_manager/landing-page-layout',
-  'hbs!js/wraps/landing_page_manager/landing-page-nav',
-], function(
-  PageManagerController,
-  PageManagerView,
-  PageManagerTemplate,
-  TOCTemplate
-) {
+import PageManagerController from 'js/page_managers/toc_controller';
+import PageManagerView from 'js/page_managers/one_column_view';
+import PageManagerTemplate from 'hbs!js/wraps/landing_page_manager/landing-page-layout';
+import TOCTemplate from 'hbs!js/wraps/landing_page_manager/landing-page-nav';
   var PageManager = PageManagerController.extend({
     /**
      * Attempt to get the current default home page from user data
@@ -126,5 +119,5 @@ define([
       },
     },
   });
-  return PageManager;
-});
+  export default PageManager;
+

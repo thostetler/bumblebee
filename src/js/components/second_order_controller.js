@@ -1,18 +1,9 @@
-define([
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'analytics',
-], function(
-  GenericModule,
-  Dependon,
-  ApiQuery,
-  ApiRequest,
-  ApiTargets,
-  analytics
-) {
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import analytics from 'analytics';
   /**
    * Triggered via pubsub event, this will take a set of identifiers
    * and generate a bigquery id, then replace the current query
@@ -305,5 +296,5 @@ define([
 
   _.extend(SecondOrderController.prototype, Dependon.BeeHive);
 
-  return SecondOrderController;
-});
+  export default SecondOrderController;
+

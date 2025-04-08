@@ -1,4 +1,4 @@
-define([], function() {
+
   const ARXIV_CLASSES = {
     "astro-ph": {
       "key": "astro-ph",
@@ -883,5 +883,5 @@ define([], function() {
     }
   };
 
-  return ARXIV_CLASSES;
-});
+  export default ARXIV_CLASSES;
+

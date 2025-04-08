@@ -1,4 +1,4 @@
-define(['analytics'], function(analytics) {
+import analytics from 'analytics';
   const STORAGE_KEY = 'darkSwitch';
   let darkSwitch;
   const getDarkSwitchValue = () => {
@@ -71,4 +71,4 @@ define(['analytics'], function(analytics) {
   };
 
   init();
-});
+

@@ -1,38 +1,19 @@
-define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'react',
-  'react-dom',
-  'redux',
-  'react-redux',
-  'redux-thunk',
-  'js/widgets/base/base_widget',
-  'js/widgets/export/reducers/index',
-  'js/widgets/export/actions/index',
-  'js/widgets/export/containers/App.jsx',
-  'js/components/api_query',
-  'js/components/api_targets',
-  'js/components/api_feedback',
-  'js/widgets/config',
-], function(
-  $,
-  _,
-  Backbone,
-  React,
-  ReactDOM,
-  Redux,
-  ReactRedux,
-  ReduxThunk,
-  BaseWidget,
-  reducers,
-  actions,
-  App,
-  ApiQuery,
-  ApiTargets,
-  ApiFeedback,
-  config
-) {
+import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Redux from 'redux';
+import ReactRedux from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import BaseWidget from 'js/widgets/base/base_widget';
+import reducers from 'js/widgets/export/reducers/index';
+import actions from 'js/widgets/export/actions/index';
+import App from 'js/widgets/export/containers/App.jsx';
+import ApiQuery from 'js/components/api_query';
+import ApiTargets from 'js/components/api_targets';
+import ApiFeedback from 'js/components/api_feedback';
+import config from 'js/widgets/config';
   var View = Backbone.View.extend({
     /**
      * Initialize the view
@@ -386,5 +367,5 @@ define([
     processResponse: _.noop,
   });
 
-  return Widget;
-});
+  export default Widget;
+

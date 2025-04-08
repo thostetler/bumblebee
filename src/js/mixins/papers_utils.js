@@ -1,5 +1,5 @@
-define(['underscore'], function(_) {
-  return {
+import _ from 'underscore';
+  export default {
     /**
      * Receives the  ISO8601 date string (actually, browsers will be able to parse
      * range of date strings, but you should be careful and not count on that!)
@@ -106,4 +106,4 @@ define(['underscore'], function(_) {
       return data;
     },
   };
-});
+

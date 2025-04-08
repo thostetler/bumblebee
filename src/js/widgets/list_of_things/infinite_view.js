@@ -5,12 +5,10 @@
  *
  */
 
-define([
-  'marionette',
-  'backbone',
-  'hbs!js/widgets/list_of_things/templates/expanding-item-template',
-  'hbs!js/widgets/list_of_things/templates/expanding-results-container-template',
-], function(Marionette, Backbone, ItemTemplate, ResultsContainerTemplate) {
+import Marionette from 'marionette';
+import Backbone from 'backbone';
+import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/expanding-item-template';
+import ResultsContainerTemplate from 'hbs!js/widgets/list_of_things/templates/expanding-results-container-template';
   var ItemView = Marionette.ItemView.extend({
     // should it be hidden initially?
     className: function() {
@@ -135,5 +133,5 @@ define([
       }
     },
   });
-  return ListView;
-});
+  export default ListView;
+

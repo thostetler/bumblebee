@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   /**
    * Affiliation section of the row
    */
@@ -16,5 +16,5 @@ define(['react'], function(React) {
     </div>
   );
 
-  return AffiliationRow;
-});
+  export default AffiliationRow;
+

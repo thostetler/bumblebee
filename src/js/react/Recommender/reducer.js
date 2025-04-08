@@ -1,14 +1,12 @@
-define(['redux', 'js/react/Recommender/actions'], function(
-  { combineReducers },
-  {
+import { combineReducers } from 'redux';
+import {
     SET_DOCS,
     SET_QUERY,
     SET_TAB,
     SET_ORACLE_TARGET,
     SET_QUERY_PARAMS,
     UPDATE_USERNAME,
-  }
-) {
+  } from 'js/react/Recommender/actions';
   const requestState = {
     GET_RECOMMENDATIONS: { status: null, result: null, error: null },
     GET_DOCS: { status: null, result: null, error: null },
@@ -98,7 +96,7 @@ define(['redux', 'js/react/Recommender/actions'], function(
     return state;
   };
 
-  return combineReducers({
+  export default combineReducers({
     requests,
     docs,
     query,
@@ -107,4 +105,4 @@ define(['redux', 'js/react/Recommender/actions'], function(
     queryParams,
     userName,
   });
-});
+

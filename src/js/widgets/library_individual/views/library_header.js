@@ -1,7 +1,5 @@
-define([
-  'marionette',
-  'hbs!js/widgets/library_individual/templates/library-header',
-], function(Marionette, LibraryHeaderTemplate) {
+import Marionette from 'marionette';
+import LibraryHeaderTemplate from 'hbs!js/widgets/library_individual/templates/library-header';
   var LibraryTitleModel = Backbone.Model.extend({
     initialize: function(vals, options) {
       options = options || {};
@@ -171,5 +169,5 @@ define([
 
   LibraryTitleView.Model = LibraryTitleModel;
 
-  return LibraryTitleView;
-});
+  export default LibraryTitleView;
+

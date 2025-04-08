@@ -1,4 +1,4 @@
-define([], function() {
+
   var f = {};
 
   /*
@@ -28,5 +28,5 @@ define([], function() {
     return withCommas.join('') + extra;
   };
 
-  return f;
-});
+  export default f;
+

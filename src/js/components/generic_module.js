@@ -3,7 +3,8 @@
  * just complicates things. For simple things, just use this class.
  */
 
-define(['backbone', 'underscore'], function(Backbone, _) {
+import Backbone from 'backbone';
+import _ from 'underscore';
   // A list of options to be attached directly to the module, if provided.
   var moduleOptions = ['className', 'activate'];
 
@@ -27,5 +28,5 @@ define(['backbone', 'underscore'], function(Backbone, _) {
 
   // give the module subclassing functionality
   Module.extend = Backbone.Model.extend;
-  return Module;
-});
+  export default Module;
+

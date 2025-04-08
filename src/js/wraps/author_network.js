@@ -1,7 +1,5 @@
-define([
-  'js/widgets/network_vis/network_widget',
-  'js/components/api_targets',
-], function(NetworkWidget, ApiTargets) {
+import NetworkWidget from 'js/widgets/network_vis/network_widget';
+import ApiTargets from 'js/components/api_targets';
   var options = {};
 
   options.endpoint = ApiTargets.SERVICE_AUTHOR_NETWORK;
@@ -16,7 +14,7 @@ define([
 
   options.networkType = 'author';
 
-  return function() {
+  export default function() {
     return new NetworkWidget(options);
   };
-});
+

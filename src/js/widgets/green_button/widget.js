@@ -2,39 +2,20 @@
  * A widget for the internal ADS Deployment
  */
 
-define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'marionette',
-  'bootstrap',
-
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_feedback',
-  'js/components/alerts',
-
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/green_button/templates/widget-view',
-  'hbs!js/widgets/green_button/templates/item-view',
-  'hbs!js/widgets/green_button/templates/empty-view',
-], function(
-  _,
-  $,
-  Backbone,
-  Marionette,
-  Bootstrap,
-  ApiQuery,
-  ApiRequest,
-  ApiResponse,
-  ApiFeedback,
-  Alerts,
-  BaseWidget,
-  WidgetTemplate,
-  ItemTemplate,
-  EmptyTemplate
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import Marionette from 'marionette';
+import Bootstrap from 'bootstrap';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import ApiFeedback from 'js/components/api_feedback';
+import Alerts from 'js/components/alerts';
+import BaseWidget from 'js/widgets/base/base_widget';
+import WidgetTemplate from 'hbs!js/widgets/green_button/templates/widget-view';
+import ItemTemplate from 'hbs!js/widgets/green_button/templates/item-view';
+import EmptyTemplate from 'hbs!js/widgets/green_button/templates/empty-view';
   var Environment = Backbone.Model.extend({
     defaults: {
       msg: undefined,
@@ -549,5 +530,5 @@ define([
     },
   });
 
-  return Controller;
-});
+  export default Controller;
+

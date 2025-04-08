@@ -1,48 +1,24 @@
-define([
-  'marionette',
-  'js/widgets/list_of_things/item_view',
-  'js/widgets/list_of_things/widget',
-  'js/widgets/list_of_things/paginated_view',
-  'js/widgets/list_of_things/model',
-  'hbs!js/widgets/library_list/templates/library-container',
-  'hbs!js/widgets/library_list/templates/library-item-edit',
-  'hbs!js/widgets/library_list/templates/empty-collection',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/papers_utils',
-  'js/mixins/formatter',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_targets',
-  'js/mixins/add_stable_index_to_collection',
-  'js/mixins/add_secondary_sort',
-  'bootstrap',
-  'hbs!js/wraps/widget/loading/template',
-  'js/widgets/sort/widget.jsx',
-  'js/widgets/sort/redux/modules/sort-app',
-], function(
-  Marionette,
-  DefaultItemView,
-  ListOfThingsWidget,
-  ListOfThingsPaginatedContainerView,
-  PaginatedCollection,
-  LibraryContainer,
-  LibraryItemEditTemplate,
-  EmptyCollectionTemplate,
-  LinkGeneratorMixin,
-  PapersUtilsMixin,
-  FormatMixin,
-  ApiQuery,
-  ApiRequest,
-  ApiResponse,
-  ApiTargets,
-  PaginationMixin,
-  SecondarySort,
-  Bootstrap,
-  loadingTemplate,
-  SortWidget,
-  SortActions
-) {
+import Marionette from 'marionette';
+import DefaultItemView from 'js/widgets/list_of_things/item_view';
+import ListOfThingsWidget from 'js/widgets/list_of_things/widget';
+import ListOfThingsPaginatedContainerView from 'js/widgets/list_of_things/paginated_view';
+import PaginatedCollection from 'js/widgets/list_of_things/model';
+import LibraryContainer from 'hbs!js/widgets/library_list/templates/library-container';
+import LibraryItemEditTemplate from 'hbs!js/widgets/library_list/templates/library-item-edit';
+import EmptyCollectionTemplate from 'hbs!js/widgets/library_list/templates/empty-collection';
+import LinkGeneratorMixin from 'js/mixins/link_generator_mixin';
+import PapersUtilsMixin from 'js/mixins/papers_utils';
+import FormatMixin from 'js/mixins/formatter';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import ApiTargets from 'js/components/api_targets';
+import PaginationMixin from 'js/mixins/add_stable_index_to_collection';
+import SecondarySort from 'js/mixins/add_secondary_sort';
+import Bootstrap from 'bootstrap';
+import loadingTemplate from 'hbs!js/wraps/widget/loading/template';
+import SortWidget from 'js/widgets/sort/widget.jsx';
+import SortActions from 'js/widgets/sort/redux/modules/sort-app';
   var LibraryItemView = DefaultItemView.extend({
     template: LibraryItemEditTemplate,
 
@@ -536,5 +512,5 @@ define([
   _.extend(LibraryCollectionView.prototype, PapersUtilsMixin);
   _.extend(LibraryCollectionView.prototype, FormatMixin);
 
-  return LibraryCollectionView;
-});
+  export default LibraryCollectionView;
+

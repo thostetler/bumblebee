@@ -1,9 +1,7 @@
-define([
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/pubsub_key',
-], function(GenericModule, Dependon, Hardened, PubSubKey) {
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import Hardened from 'js/mixins/hardened';
+import PubSubKey from 'js/components/pubsub_key';
   var History = GenericModule.extend({
     initialize: function() {
       this._history = [];
@@ -35,5 +33,5 @@ define([
 
   _.extend(History.prototype, Dependon.BeeHive, Hardened);
 
-  return History;
-});
+  export default History;
+

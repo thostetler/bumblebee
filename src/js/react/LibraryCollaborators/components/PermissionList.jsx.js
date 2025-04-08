@@ -1,9 +1,7 @@
-define([
-  'react',
-  'prop-types',
-  'react-bootstrap',
-  'js/react/LibraryCollaborators/components/PermissionEntry.jsx',
-], function(React, PropTypes, { Table }, PermissionEntry) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table } from 'react-bootstrap';
+import PermissionEntry from 'js/react/LibraryCollaborators/components/PermissionEntry.jsx';
   const initialState = {};
   class PermissionList extends React.Component {
     constructor(props) {
@@ -53,5 +51,5 @@ define([
     onChangePermission: PropTypes.func,
   };
 
-  return PermissionList;
-});
+  export default PermissionList;
+

@@ -1,9 +1,7 @@
-define([
-  'js/react/MyAdsDashboard/components/CitationsForm.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index',
-  'js/react/MyAdsDashboard/constants',
-], function(CitationsForm, { connect }, actions, { page }) {
+import CitationsForm from 'js/react/MyAdsDashboard/components/CitationsForm.jsx';
+import { connect } from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
+import { page } from 'js/react/MyAdsDashboard/constants';
   const mapStateToProps = ({
     requests,
     notifications,
@@ -28,5 +26,5 @@ define([
     onSuccess: () => goTo(page.DASHBOARD),
     onCancel: () => goTo(page.DASHBOARD),
   };
-  return connect(mapStateToProps, actionCreators)(CitationsForm);
-});
+  export default connect(mapStateToProps, actionCreators)(CitationsForm);
+

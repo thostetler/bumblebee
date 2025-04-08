@@ -15,7 +15,8 @@
  *  var htmlInterface = new Facade(remoteInterface, htmlRemote);
  *
  */
-define(['underscore', 'js/components/facade'], function(_, Facade) {
+import _ from 'underscore';
+import Facade from 'js/components/facade';
   // The Facade encapsulates objectIn according to the description
   // The exposed facade is guaranteed to have exactly the functions described in description.
   var Facade = function(description, objectIn) {
@@ -109,5 +110,5 @@ define(['underscore', 'js/components/facade'], function(_, Facade) {
     return facade;
   };
 
-  return Facade;
-});
+  export default Facade;
+

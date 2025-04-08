@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'react-redux',
-  'js/widgets/associated/redux/modules/ui',
-  'js/widgets/associated/components/app.jsx',
-], function(_, ReactRedux, ui, App) {
+import _ from 'underscore';
+import ReactRedux from 'react-redux';
+import ui from 'js/widgets/associated/redux/modules/ui';
+import App from 'js/widgets/associated/components/app.jsx';
   // actions
   const { handleLinkClick } = ui;
 
@@ -19,5 +17,5 @@ define([
     handleLinkClick: (link) => dispatch(handleLinkClick(link)),
   });
 
-  return ReactRedux.connect(mapStateToProps, mapDispatchToProps)(App);
-});
+  export default ReactRedux.connect(mapStateToProps, mapDispatchToProps)(App);
+

@@ -1,8 +1,6 @@
-define(['clipboard', 'react', 'prop-types'], function(
-  Clipboard,
-  React,
-  ReactPropTypes
-) {
+import Clipboard from 'clipboard';
+import React from 'react';
+import ReactPropTypes from 'prop-types';
   class ClipboardBtn extends React.Component {
     componentWillUnmount() {
       this.clipboard.destroy();
@@ -35,5 +33,5 @@ define(['clipboard', 'react', 'prop-types'], function(
     onCopy: ReactPropTypes.func.isRequired,
   };
 
-  return ClipboardBtn;
-});
+  export default ClipboardBtn;
+

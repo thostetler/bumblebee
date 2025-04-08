@@ -1,7 +1,6 @@
-define(['underscore', 'react', 'react-bootstrap', 'prop-types'], function(
-  { uniqueId },
-  React,
-  {
+import { uniqueId } from 'underscore';
+import React from 'react';
+import {
     Form,
     FormControl,
     Button,
@@ -10,9 +9,8 @@ define(['underscore', 'react', 'react-bootstrap', 'prop-types'], function(
     OverlayTrigger,
     Alert,
     InputGroup,
-  },
-  PropTypes
-) {
+  } from 'react-bootstrap';
+import PropTypes from 'prop-types';
   const initialState = {
     text: '',
     type: '',
@@ -272,5 +270,5 @@ define(['underscore', 'react', 'react-bootstrap', 'prop-types'], function(
     onRemove: () => {},
   };
 
-  return CitationsEntry;
-});
+  export default CitationsEntry;
+

@@ -1,5 +1,6 @@
-define(['underscore', 'js/widgets/facet/factory'], function(_, FacetFactory) {
-  return function() {
+import _ from 'underscore';
+import FacetFactory from 'js/widgets/facet/factory';
+  export default function() {
     var widget = FacetFactory.makeBasicCheckboxFacet({
       facetField: 'bibgroup_facet',
       facetTitle: 'Bib Groups',
@@ -23,4 +24,4 @@ define(['underscore', 'js/widgets/facet/factory'], function(_, FacetFactory) {
 
     return widget;
   };
-});
+

@@ -1,21 +1,12 @@
 /**
  * Created by alex on 5/12/14.
  */
-define([
-  'underscore',
-  'marionette',
-  'bootstrap',
-  'hbs!js/widgets/tabs/templates/tabs_inner',
-  'hbs!js/widgets/tabs/templates/tabs_outer',
-  'hbs!js/widgets/tabs/templates/tabs_title',
-], function(
-  _,
-  Marionette,
-  Bootstrap,
-  innerTemplate,
-  outerTemplate,
-  titleTemplate
-) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import Bootstrap from 'bootstrap';
+import innerTemplate from 'hbs!js/widgets/tabs/templates/tabs_inner';
+import outerTemplate from 'hbs!js/widgets/tabs/templates/tabs_outer';
+import titleTemplate from 'hbs!js/widgets/tabs/templates/tabs_title';
   var TabsWidget = Marionette.ItemView.extend({
     // expects in options a list of views like this:
     // {tabs: [{title : (title for tab) , widget: (actual widget), id : (unique id)}, {default : true/false} (a tab widget has only one default tab)]}
@@ -142,5 +133,5 @@ define([
     },
   });
 
-  return TabsWidget;
-});
+  export default TabsWidget;
+

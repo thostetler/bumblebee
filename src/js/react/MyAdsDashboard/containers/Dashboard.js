@@ -1,9 +1,7 @@
-define([
-  'js/react/MyAdsDashboard/components/Dashboard.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index',
-  'js/react/MyAdsDashboard/constants',
-], function(Dashboard, { connect }, actions, { page }) {
+import Dashboard from 'js/react/MyAdsDashboard/components/Dashboard.jsx';
+import { connect } from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
+import { page } from 'js/react/MyAdsDashboard/constants';
   const mapStateToProps = ({ notifications, requests }) => ({
     notifications,
     getNotificationsRequest: requests.GET_NOTIFICATIONS,
@@ -35,5 +33,5 @@ define([
     createNewNotification: () => goTo(page.SELECT_TEMPLATE),
   };
 
-  return connect(mapStateToProps, actionCreators)(Dashboard);
-});
+  export default connect(mapStateToProps, actionCreators)(Dashboard);
+

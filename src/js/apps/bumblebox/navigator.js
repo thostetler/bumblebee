@@ -3,12 +3,10 @@
  * the application) - this is a companion to the 'router'
  */
 
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'js/components/navigator',
-], function($, Backbone, _, Navigator) {
+import $ from 'jquery';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import Navigator from 'js/components/navigator';
   var NavigatorService = Navigator.extend({
     start: function(app) {
       this.set('index-page', function() {
@@ -27,5 +25,5 @@ define([
       });
     },
   });
-  return NavigatorService;
-});
+  export default NavigatorService;
+

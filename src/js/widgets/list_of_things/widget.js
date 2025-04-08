@@ -13,33 +13,18 @@
  *
  */
 
-define([
-  'marionette',
-  'backbone',
-  'utils',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/components/api_feedback',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
-  'hbs!js/widgets/list_of_things/templates/results-container-template',
-  'js/mixins/add_stable_index_to_collection',
-  'js/widgets/list_of_things/model',
-  'js/widgets/list_of_things/paginated_view',
-], function(
-  Marionette,
-  Backbone,
-  utils,
-  ApiRequest,
-  ApiQuery,
-  ApiFeedback,
-  BaseWidget,
-  ItemTemplate,
-  ResultsContainerTemplate,
-  PaginationMixin,
-  PaginatedCollection,
-  PaginatedView
-) {
+import Marionette from 'marionette';
+import Backbone from 'backbone';
+import utils from 'utils';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import ApiFeedback from 'js/components/api_feedback';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/item-template';
+import ResultsContainerTemplate from 'hbs!js/widgets/list_of_things/templates/results-container-template';
+import PaginationMixin from 'js/mixins/add_stable_index_to_collection';
+import PaginatedCollection from 'js/widgets/list_of_things/model';
+import PaginatedView from 'js/widgets/list_of_things/paginated_view';
   var ListOfThingsWidget = BaseWidget.extend({
     initialize: function(options) {
       options = options || {};
@@ -660,5 +645,5 @@ define([
 
   _.extend(ListOfThingsWidget.prototype, PaginationMixin);
 
-  return ListOfThingsWidget;
-});
+  export default ListOfThingsWidget;
+

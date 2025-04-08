@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   function reducer(state, action) {
     if (!state) state = reducer.getDefaultState();
 
@@ -272,5 +272,5 @@ define(['underscore'], function(_) {
     return _.assign({}, this.defaultState, { config: state.config });
   };
 
-  return reducer;
-});
+  export default reducer;
+

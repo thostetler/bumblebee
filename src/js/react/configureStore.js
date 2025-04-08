@@ -1,4 +1,4 @@
-define(['redux'], function({ Redux, createStore, applyMiddleware, compose }) {
+import { Redux, createStore, applyMiddleware, compose } from 'redux';
   const configureStore = (context, rootReducer, rootMiddleware) => {
     const middleware = applyMiddleware.apply(Redux, rootMiddleware(context));
     const composeEnhancers =
@@ -7,5 +7,5 @@ define(['redux'], function({ Redux, createStore, applyMiddleware, compose }) {
     return store;
   };
 
-  return configureStore;
-});
+  export default configureStore;
+

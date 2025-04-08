@@ -1,10 +1,8 @@
 /* eslint-disable no-script-url */
-define([
-  'react',
-  'react-bootstrap',
-  'react-aria-menubutton',
-  'prop-types',
-], function(React, { Label }, { Button, Wrapper, Menu, MenuItem }, PropTypes) {
+import React from 'react';
+import { Label } from 'react-bootstrap';
+import { Button, Wrapper, Menu, MenuItem } from 'react-aria-menubutton';
+import PropTypes from 'prop-types';
   const renderRunButtons = (item) => {
     let labels = [];
     if (item.type === 'template') {
@@ -155,5 +153,5 @@ define([
     dropup: PropTypes.bool,
   };
 
-  return ActionsDropdown;
-});
+  export default ActionsDropdown;
+

@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   /**
    * @typedef Metadata
    * @property {string[]} page
@@ -143,7 +143,7 @@ define(['underscore'], function(_) {
     return encodeURI(openUrl + fields.join('&'));
   };
 
-  return {
+  export default {
     getOpenUrl,
   };
-});
+

@@ -1,8 +1,6 @@
-define([
-  'js/widgets/query_info/query_info_widget',
-  'js/widgets/base/base_widget',
-  'hbs!js/wraps/abstract_page_library_add/template',
-], function(QueryInfoWidget, BaseWidget, template) {
+import QueryInfoWidget from 'js/widgets/query_info/query_info_widget';
+import BaseWidget from 'js/widgets/base/base_widget';
+import template from 'hbs!js/wraps/abstract_page_library_add/template';
   var AbstractLibraryWidget = QueryInfoWidget.extend({
     // flag for functions that send bibs to library
     abstractPage: true,
@@ -59,5 +57,5 @@ define([
     },
   });
 
-  return AbstractLibraryWidget;
-});
+  export default AbstractLibraryWidget;
+

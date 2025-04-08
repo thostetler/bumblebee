@@ -1,7 +1,5 @@
-define(['marionette', 'js/components/api_targets'], function(
-  Marionette,
-  ApiTargets
-) {
+import Marionette from 'marionette';
+import ApiTargets from 'js/components/api_targets';
   /*
    * use this model as a base for any widget that needs to request
    * varying numbers of records from solr and visualize/export/etc them
@@ -55,5 +53,5 @@ define(['marionette', 'js/components/api_targets'], function(
     },
   });
 
-  return mixin;
-});
+  export default mixin;
+

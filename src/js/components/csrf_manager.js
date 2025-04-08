@@ -3,21 +3,12 @@
  * a new csrf token has been requested
  *
  * */
-define([
-  'backbone',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/mixins/dependon',
-], function(
-  Backbone,
-  GenericModule,
-  Hardened,
-  ApiRequest,
-  ApiTargets,
-  Dependon
-) {
+import Backbone from 'backbone';
+import GenericModule from 'js/components/generic_module';
+import Hardened from 'js/mixins/hardened';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import Dependon from 'js/mixins/dependon';
   var CSRFManager = GenericModule.extend({
     activate: function(beehive) {
       this.setBeeHive(beehive);
@@ -55,5 +46,5 @@ define([
 
   _.extend(CSRFManager.prototype, Hardened, Dependon.BeeHive);
 
-  return CSRFManager;
-});
+  export default CSRFManager;
+

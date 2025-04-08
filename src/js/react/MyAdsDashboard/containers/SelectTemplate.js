@@ -1,12 +1,6 @@
-define([
-  'js/react/MyAdsDashboard/components/SelectTemplate.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index'
-], function(
-  SelectTemplate,
-  {connect},
-  actions
-) {
+import SelectTemplate from 'js/react/MyAdsDashboard/components/SelectTemplate.jsx';
+import {connect} from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
 
   const mapStateToProps = ({}) => ({});
 
@@ -18,5 +12,5 @@ define([
     goTo
   };
 
-  return connect(mapStateToProps, actionCreators)(SelectTemplate);
-});
+  export default connect(mapStateToProps, actionCreators)(SelectTemplate);
+

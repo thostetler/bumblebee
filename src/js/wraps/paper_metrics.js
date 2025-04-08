@@ -1,7 +1,5 @@
-define(['js/widgets/metrics/widget', 'js/components/api_feedback'], function(
-  MetricsWidget,
-  ApiFeedback
-) {
+import MetricsWidget from 'js/widgets/metrics/widget';
+import ApiFeedback from 'js/components/api_feedback';
   var Widget = MetricsWidget.extend({
     initialize: function(options) {
       var name = 'ShowMetrics';
@@ -76,5 +74,5 @@ define(['js/widgets/metrics/widget', 'js/components/api_feedback'], function(
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

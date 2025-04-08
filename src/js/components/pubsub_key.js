@@ -15,7 +15,7 @@
  * functionality
  */
 
-define(['underscore'], function(_) {
+import _ from 'underscore';
   var PubSubKey = function(options) {
     _.extend(this, options);
   };
@@ -48,5 +48,5 @@ define(['underscore'], function(_) {
       });
     },
   });
-  return PubSubKey;
-});
+  export default PubSubKey;
+

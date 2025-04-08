@@ -17,7 +17,8 @@
  *   be called for every queued request, instead of just the final one.
  *   Default: false
  * */
-define(['underscore', 'js/components/api_request'], function(_, ApiRequest) {
+import _ from 'underscore';
+import ApiRequest from 'js/components/api_request';
   var ApiRequestQueue = ApiRequest.extend({
     _queue: [],
     _lock: false,
@@ -93,5 +94,5 @@ define(['underscore', 'js/components/api_request'], function(_, ApiRequest) {
     },
   });
 
-  return ApiRequestQueue;
-});
+  export default ApiRequestQueue;
+

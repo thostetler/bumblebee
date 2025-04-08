@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   const style = {
     position: 'absolute',
     right: '5px',
@@ -27,5 +27,5 @@ define(['react'], function(React) {
     );
   };
 
-  return Closer;
-});
+  export default Closer;
+

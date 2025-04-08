@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     ADD_NOTIFICATION: 'ADD_NOTIFICATION',
     ERROR_RESET: 'ERROR_RESET',
@@ -46,8 +46,8 @@ define([], function() {
     }),
   };
 
-  return {
+  export default {
     ...actions,
     ...actionCreators,
   };
-});
+

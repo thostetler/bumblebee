@@ -1,8 +1,6 @@
-define(['react', 'prop-types', 'react-bootstrap'], function(
-  React,
-  PropTypes,
-  { Panel }
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Panel } from 'react-bootstrap';
   const initialState = {
     open: false,
     hovered: false,
@@ -78,5 +76,5 @@ define(['react', 'prop-types', 'react-bootstrap'], function(
     render: PropTypes.func,
   };
 
-  return CollapsePanel;
-});
+  export default CollapsePanel;
+

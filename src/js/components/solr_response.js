@@ -7,13 +7,11 @@
  * by SOLR.
  */
 
-define([
-  'js/components/json_response',
-  'js/components/solr_params',
-  'backbone',
-  'underscore',
-  'jquery',
-], function(JsonResponse, SolrParams, Backbone, _, $) {
+import JsonResponse from 'js/components/json_response';
+import SolrParams from 'js/components/solr_params';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import $ from 'jquery';
 
   /*
    * Cleans the parameters object by removing empty values
@@ -48,5 +46,5 @@ define([
     },
   });
 
-  return SolrResponse;
-});
+  export default SolrResponse;
+

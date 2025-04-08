@@ -2,13 +2,11 @@
  * Created by alex on 7/24/14.
  */
 
-define([
-  'marionette',
-  'backbone',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/loading/loading-template',
-  'bootstrap',
-], function(Marionette, Backbone, BaseWidget, loadingTemplate) {
+import Marionette from 'marionette';
+import Backbone from 'backbone';
+import BaseWidget from 'js/widgets/base/base_widget';
+import loadingTemplate from 'hbs!js/widgets/loading/loading-template';
+import 'bootstrap';
   var LoadingModel = Backbone.Model.extend({});
 
   var LoadingView = Marionette.ItemView.extend({
@@ -63,5 +61,5 @@ define([
     },
   });
 
-  return LoadingWidget;
-});
+  export default LoadingWidget;
+

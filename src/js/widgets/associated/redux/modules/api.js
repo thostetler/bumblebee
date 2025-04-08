@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     CURRENT_QUERY_UPDATED: '[api] CURRENT_QUERY_UPDATED',
     FETCH_DATA: '[api] FETCH_DATA',
@@ -39,7 +39,7 @@ define([], function() {
   const fallbackOnError = () => ({ type: actions.FALLBACK_ON_ERROR });
   const setBibcode = (result) => ({ type: actions.SET_BIBCODE, result });
 
-  return {
+  export default {
     reducer,
     initialState,
     actions,
@@ -48,4 +48,4 @@ define([], function() {
     fallbackOnError,
     setBibcode,
   };
-});
+

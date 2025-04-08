@@ -1,4 +1,4 @@
-define([], function() {
+
   // set of targets corresponding to actions (helps with dispatching)
   const target = {
     fetchData: 'FETCHING_DATA',
@@ -15,5 +15,5 @@ define([], function() {
     setShowReload: 'SET_SHOW_RELOAD',
   };
 
-  return target;
-});
+  export default target;
+

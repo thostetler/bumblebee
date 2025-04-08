@@ -1,9 +1,7 @@
-define([
-  'backbone',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'js/mixins/dependon',
-], function(Backbone, GenericModule, Hardened, Dependon) {
+import Backbone from 'backbone';
+import GenericModule from 'js/components/generic_module';
+import Hardened from 'js/mixins/hardened';
+import Dependon from 'js/mixins/dependon';
   /*
    * this is used to store docs requested by results widget
    * for the use of other widgets, to reduce api requests
@@ -40,5 +38,5 @@ define([
 
   _.extend(DocStashController.prototype, Hardened, Dependon.BeeHive);
 
-  return DocStashController;
-});
+  export default DocStashController;
+

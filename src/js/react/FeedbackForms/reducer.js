@@ -1,8 +1,6 @@
-define(['redux', 'js/react/FeedbackForms/actions', 'js/react/FeedbackForms/models/index'], function(
-  { combineReducers },
-  { SET_BIBCODE, SET_FORM },
-  { FORMS }
-) {
+import { combineReducers } from 'redux';
+import { SET_BIBCODE, SET_FORM } from 'js/react/FeedbackForms/actions';
+import { FORMS } from 'js/react/FeedbackForms/models/index';
   const mainState = {
     bibcode: null,
     form: 'missingreferences',
@@ -38,8 +36,8 @@ define(['redux', 'js/react/FeedbackForms/actions', 'js/react/FeedbackForms/model
     }
   };
 
-  return combineReducers({
+  export default combineReducers({
     main,
     user,
   });
-});
+

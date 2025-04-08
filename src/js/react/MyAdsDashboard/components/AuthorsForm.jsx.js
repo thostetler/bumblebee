@@ -1,18 +1,9 @@
-define([
-  'underscore',
-  'react',
-  'react-bootstrap',
-  'js/react/MyAdsDashboard/components/CitationsEntry.jsx',
-  'js/react/shared/helpers',
-  'prop-types',
-], function(
-  _,
-  React,
-  { Form, Alert, FormGroup, FormControl, ControlLabel, HelpBlock },
-  CitationsEntry,
-  { escape, unescape },
-  PropTypes
-) {
+import _ from 'underscore';
+import React from 'react';
+import { Form, Alert, FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
+import CitationsEntry from 'js/react/MyAdsDashboard/components/CitationsEntry.jsx';
+import { escape, unescape } from 'js/react/shared/helpers';
+import PropTypes from 'prop-types';
   const getStatusMessage = ({ status, error, editing }) => {
     switch (status) {
       case 'pending':
@@ -225,5 +216,5 @@ define([
     }
   }
 
-  return AuthorsForm;
-});
+  export default AuthorsForm;
+

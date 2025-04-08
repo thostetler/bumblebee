@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     // requests
     ADD_NOTIFICATION: 'ADD_NOTIFICATION',
@@ -128,8 +128,8 @@ define([], function() {
     }),
   };
 
-  return {
+  export default {
     ...actions,
     ...actionCreators,
   };
-});
+

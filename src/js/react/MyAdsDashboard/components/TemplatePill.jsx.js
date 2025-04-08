@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   /**
    * @typedef TemplateType
    * @property {string} color
@@ -50,5 +50,5 @@ define(['react'], function(React) {
     );
   };
 
-  return TemplatePill;
-});
+  export default TemplatePill;
+

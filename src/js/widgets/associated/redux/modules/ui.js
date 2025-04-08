@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     LINK_CLICKED: '[ui] LINK_CLICKED',
     SET_LOADING: '[ui] SET_LOADING',
@@ -33,7 +33,7 @@ define([], function() {
   const setError = (result) => ({ type: actions.SET_HAS_ERROR, result });
   const reset = () => ({ type: actions.RESET });
 
-  return {
+  export default {
     reducer,
     initialState,
     actions,
@@ -41,4 +41,4 @@ define([], function() {
     setError,
     reset,
   };
-});
+

@@ -1,13 +1,11 @@
 /**
  * Collects and combines all reducers
  */
-define([
-  'underscore',
-  'js/components/api_targets',
-  'js/widgets/export/actions/index',
-  'js/widgets/config',
-  'redux',
-], function(_, ApiTargets, actions, config, Redux) {
+import _ from 'underscore';
+import ApiTargets from 'js/components/api_targets';
+import actions from 'js/widgets/export/actions/index';
+import config from 'js/widgets/config';
+import Redux from 'redux';
   const {
     SET_QUERY,
     SET_FORMAT,
@@ -257,5 +255,5 @@ define([
     return appReducer(state, action);
   };
 
-  return rootReducer;
-});
+  export default rootReducer;
+

@@ -1,30 +1,15 @@
-define([
-  'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_response',
-  'js/components/json_response',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/mixins/dependon',
-  'hbs!js/widgets/citation_helper/templates/citation_helper_template',
-  'bootstrap',
-  'js/components/api_feedback',
-  'js/components/api_targets',
-  'analytics',
-], function(
-  Marionette,
-  BaseWidget,
-  ApiResponse,
-  JsonResponse,
-  ApiRequest,
-  ApiQuery,
-  Dependon,
-  CitationHelperTemplate,
-  bs,
-  ApiFeedback,
-  ApiTargets,
-  analytics
-) {
+import Marionette from 'marionette';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiResponse from 'js/components/api_response';
+import JsonResponse from 'js/components/json_response';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import Dependon from 'js/mixins/dependon';
+import CitationHelperTemplate from 'hbs!js/widgets/citation_helper/templates/citation_helper_template';
+import bs from 'bootstrap';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiTargets from 'js/components/api_targets';
+import analytics from 'analytics';
   var Model = Backbone.Model.extend({
     defaults: {
       items: [],
@@ -267,5 +252,5 @@ define([
 
   _.extend(CitationHelperWidget.prototype, Dependon.BeeHive);
 
-  return CitationHelperWidget;
-});
+  export default CitationHelperWidget;
+

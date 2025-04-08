@@ -1,8 +1,6 @@
-define([
-  'marionette',
-  'hbs!js/widgets/user_navbar/nav_template',
-  'js/mixins/dependon',
-], function(Marionette, NavTemplate, Dependon) {
+import Marionette from 'marionette';
+import NavTemplate from 'hbs!js/widgets/user_navbar/nav_template';
+import Dependon from 'js/mixins/dependon';
   var NavModel = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -63,5 +61,5 @@ define([
 
   _.extend(NavWidget.prototype, Dependon.BeeHive);
 
-  return NavWidget;
-});
+  export default NavWidget;
+

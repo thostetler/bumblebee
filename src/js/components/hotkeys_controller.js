@@ -1,10 +1,8 @@
-define([
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/api_feedback',
-  'hotkeys',
-], function(GenericModule, Dependon, Hardened, ApiFeedback, hotkeys) {
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import Hardened from 'js/mixins/hardened';
+import ApiFeedback from 'js/components/api_feedback';
+import hotkeys from 'hotkeys';
   const MODIFIER = 'alt+shift';
 
   const mod = (val) => {
@@ -98,5 +96,5 @@ define([
 
   _.extend(HotkeysController.prototype, Dependon.BeeHive, Hardened);
 
-  return HotkeysController;
-});
+  export default HotkeysController;
+

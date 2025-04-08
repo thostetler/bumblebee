@@ -1,10 +1,8 @@
-define([
-  'marionette',
-  'd3',
-  'jquery',
-  'jquery-ui',
-  'hbs!js/widgets/facet/graph-facet/templates/graph',
-], function(Marionette, d3, $, $ui, FacetGraphTemplate) {
+import Marionette from 'marionette';
+import d3 from 'd3';
+import $ from 'jquery';
+import $ui from 'jquery-ui';
+import FacetGraphTemplate from 'hbs!js/widgets/facet/graph-facet/templates/graph';
   var ZoomableGraphView = Marionette.ItemView.extend({
     className: 'graph-facet',
 
@@ -104,5 +102,5 @@ define([
     },
   });
 
-  return ZoomableGraphView;
-});
+  export default ZoomableGraphView;
+

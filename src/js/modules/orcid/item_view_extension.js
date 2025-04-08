@@ -5,8 +5,9 @@
  * orcid/extension provides functionality for the widget controllers)
  *
  */
-define(['backbone', 'underscore'], function(Backbone, _) {
-  return {
+import Backbone from 'backbone';
+import _ from 'underscore';
+  export default {
     showOrcidActions: function(isWorkInCollection) {
       var $icon = this.$('.mini-orcid-icon');
       $icon.removeClass('green');
@@ -68,4 +69,4 @@ define(['backbone', 'underscore'], function(Backbone, _) {
       return false;
     },
   };
-});
+

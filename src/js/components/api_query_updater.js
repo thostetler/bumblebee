@@ -15,7 +15,8 @@
  *
  */
 
-define(['underscore', 'js/components/api_query'], function(_, ApiQuery) {
+import _ from 'underscore';
+import ApiQuery from 'js/components/api_query';
   var ApiQueryUpdater = function(contextIdentifier, options) {
     if (!contextIdentifier || !_.isString(contextIdentifier)) {
       throw new Error(
@@ -651,5 +652,5 @@ define(['underscore', 'js/components/api_query'], function(_, ApiQuery) {
     },
   });
 
-  return ApiQueryUpdater;
-});
+  export default ApiQueryUpdater;
+

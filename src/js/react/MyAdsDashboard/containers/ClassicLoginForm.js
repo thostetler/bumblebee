@@ -1,8 +1,6 @@
-define([
-  'js/react/MyAdsDashboard/components/ClassicLoginForm.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index',
-], function(ClassicLoginForm, { connect }, actions) {
+import ClassicLoginForm from 'js/react/MyAdsDashboard/components/ClassicLoginForm.jsx';
+import { connect } from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
   const mapStateToProps = ({ requests }) => ({
     classicMirrorsRequest: requests.FETCH_CLASSIC_MIRRORS,
     loginClassicRequest: requests.LOGIN_CLASSIC,
@@ -23,5 +21,5 @@ define([
     loginClassicCheck,
   };
 
-  return connect(mapStateToProps, actionCreators)(ClassicLoginForm);
-});
+  export default connect(mapStateToProps, actionCreators)(ClassicLoginForm);
+

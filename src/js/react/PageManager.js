@@ -1,4 +1,4 @@
-define(['js/page_managers/controller'], function(PageManagerController) {
+import PageManagerController from 'js/page_managers/controller';
   const PageManager = PageManagerController.extend({
     async assemble() {
       // noop
@@ -25,5 +25,5 @@ define(['js/page_managers/controller'], function(PageManagerController) {
     },
   });
 
-  return PageManager;
-});
+  export default PageManager;
+

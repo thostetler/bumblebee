@@ -1,8 +1,6 @@
-define([
-  'react',
-  'js/widgets/author_affiliation_tool/components/LastActiveDateRow.jsx',
-  'js/widgets/author_affiliation_tool/components/AffiliationRow.jsx',
-], function(React, LastActiveDateRow, AffiliationRow) {
+import React from 'react';
+import LastActiveDateRow from 'js/widgets/author_affiliation_tool/components/LastActiveDateRow.jsx';
+import AffiliationRow from 'js/widgets/author_affiliation_tool/components/AffiliationRow.jsx';
   /**
    * Simple Row which contains the Affiliation and LastActiveDate sections
    */
@@ -37,5 +35,5 @@ define([
     );
   };
 
-  return Row;
-});
+  export default Row;
+

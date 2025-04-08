@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   /**
    * Dropdown containing export format strings for the user to select
    */
@@ -18,5 +18,5 @@ define(['react'], function(React) {
     </select>
   );
 
-  return ExportFormatControl;
-});
+  export default ExportFormatControl;
+

@@ -1,4 +1,4 @@
-define([], function() {
+
   /**
    * middleware wrapper with a function that, when called,
    * binds it's first argument to the first argument of the middleware function
@@ -44,7 +44,7 @@ define([], function() {
     cb.toKey = setTimeout(cb, 3000);
   };
 
-  return {
+  export default {
     withContext,
     escape,
     unescape,
@@ -56,4 +56,4 @@ define([], function() {
     parseScope,
     delay,
   };
-});
+

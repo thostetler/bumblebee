@@ -1,22 +1,11 @@
-define([
-  'js/widgets/base/base_widget',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'hbs!js/widgets/library_import/templates/tab-container',
-  'hbs!js/widgets/library_import/templates/import-view-labs',
-  'hbs!js/widgets/library_import/templates/import-view-classic',
-  'hbs!js/widgets/library_import/templates/success-template',
-  'bootstrap',
-], function(
-  BaseWidget,
-  ApiRequest,
-  ApiTargets,
-  TabContainerTemplate,
-  ADS2ImportView,
-  ClassicImportView,
-  SuccessTemplate,
-  Bootstrap
-) {
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import TabContainerTemplate from 'hbs!js/widgets/library_import/templates/tab-container';
+import ADS2ImportView from 'hbs!js/widgets/library_import/templates/import-view-labs';
+import ClassicImportView from 'hbs!js/widgets/library_import/templates/import-view-classic';
+import SuccessTemplate from 'hbs!js/widgets/library_import/templates/success-template';
+import Bootstrap from 'bootstrap';
   /* config vars */
 
   var CLASSIC = 'classic';
@@ -274,5 +263,5 @@ define([
     },
   });
 
-  return ImportWidget;
-});
+  export default ImportWidget;
+

@@ -1,4 +1,4 @@
-define([], function() {
+
   const actions = {
     QUERY_PROVIDED: '[api] QUERY_PROVIDED',
     RECEIVED_RESPONSE: '[api] RECEIVED_RESPONSE',
@@ -36,7 +36,7 @@ define([], function() {
   });
   const setLinkServer = (result) => ({ type: actions.SET_LINK_SERVER, result });
 
-  return {
+  export default {
     reducer,
     initialState,
     actions,
@@ -44,4 +44,4 @@ define([], function() {
     processResponse,
     setLinkServer,
   };
-});
+

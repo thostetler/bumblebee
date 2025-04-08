@@ -1,26 +1,13 @@
-define([
-  'react',
-  'js/react/MyAdsDashboard/constants',
-  'js/react/MyAdsDashboard/containers/Dashboard',
-  'js/react/MyAdsDashboard/containers/SelectTemplate',
-  'js/react/MyAdsDashboard/containers/ArxivForm',
-  'js/react/MyAdsDashboard/containers/CitationsForm',
-  'js/react/MyAdsDashboard/containers/AuthorsForm',
-  'js/react/MyAdsDashboard/containers/KeywordForm',
-  'js/react/MyAdsDashboard/containers/GeneralForm',
-  'js/react/MyAdsDashboard/containers/ImportNotificationsForm',
-], function(
-  React,
-  { page: PAGE },
-  Dashboard,
-  SelectTemplate,
-  ArxivForm,
-  CitationsForm,
-  AuthorsForm,
-  KeywordForm,
-  GeneralForm,
-  ImportNotificationsForm
-) {
+import React from 'react';
+import { page: PAGE } from 'js/react/MyAdsDashboard/constants';
+import Dashboard from 'js/react/MyAdsDashboard/containers/Dashboard';
+import SelectTemplate from 'js/react/MyAdsDashboard/containers/SelectTemplate';
+import ArxivForm from 'js/react/MyAdsDashboard/containers/ArxivForm';
+import CitationsForm from 'js/react/MyAdsDashboard/containers/CitationsForm';
+import AuthorsForm from 'js/react/MyAdsDashboard/containers/AuthorsForm';
+import KeywordForm from 'js/react/MyAdsDashboard/containers/KeywordForm';
+import GeneralForm from 'js/react/MyAdsDashboard/containers/GeneralForm';
+import ImportNotificationsForm from 'js/react/MyAdsDashboard/containers/ImportNotificationsForm';
   const getComponent = (page) => {
     switch (page) {
       case PAGE.DASHBOARD:
@@ -117,5 +104,5 @@ define([
     }
   }
 
-  return App;
-});
+  export default App;
+

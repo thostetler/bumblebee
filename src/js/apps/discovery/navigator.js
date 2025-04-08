@@ -3,37 +3,20 @@
  * the application) - this is a companion to the 'router'
  */
 
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'js/components/navigator',
-  'js/components/api_feedback',
-  'js/components/api_query_updater',
-  'js/components/json_response',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'hbs!404',
-  'hbs!js/apps/discovery/templates/orcid-modal-template',
-  'js/mixins/api_access',
-  'react-redux',
-], function(
-  $,
-  Backbone,
-  _,
-  Navigator,
-  ApiFeedback,
-  ApiQueryUpdater,
-  JsonResponse,
-  ApiQuery,
-  ApiRequest,
-  ApiTargets,
-  ErrorTemplate,
-  OrcidModalTemplate,
-  ApiAccessMixin,
-  ReactRedux
-) {
+import $ from 'jquery';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import Navigator from 'js/components/navigator';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import JsonResponse from 'js/components/json_response';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import ErrorTemplate from 'hbs!404';
+import OrcidModalTemplate from 'hbs!js/apps/discovery/templates/orcid-modal-template';
+import ApiAccessMixin from 'js/mixins/api_access';
+import ReactRedux from 'react-redux';
   var NavigatorService = Navigator.extend({
     start: function(app) {
       /**
@@ -1625,5 +1608,5 @@ define([
   });
 
   _.extend(NavigatorService.prototype, ApiAccessMixin);
-  return NavigatorService;
-});
+  export default NavigatorService;
+

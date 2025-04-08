@@ -1,30 +1,15 @@
-define([
-  'underscore',
-  'backbone',
-  'analytics',
-  'react',
-  'react-redux',
-  'react-dom',
-  'js/widgets/sort/redux/configure-store',
-  'js/widgets/sort/redux/modules/sort-app',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'js/components/api_feedback',
-  'js/widgets/sort/containers/sort-container',
-], function(
-  _,
-  Backbone,
-  analytics,
-  React,
-  ReactRedux,
-  ReactDOM,
-  configureStore,
-  SortApp,
-  ApiQuery,
-  BaseWidget,
-  ApiFeedback,
-  SortContainer
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import analytics from 'analytics';
+import React from 'react';
+import ReactRedux from 'react-redux';
+import ReactDOM from 'react-dom';
+import configureStore from 'js/widgets/sort/redux/configure-store';
+import SortApp from 'js/widgets/sort/redux/modules/sort-app';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiFeedback from 'js/components/api_feedback';
+import SortContainer from 'js/widgets/sort/containers/sort-container';
   /**
    * Main App View
    *
@@ -178,5 +163,5 @@ define([
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

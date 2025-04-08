@@ -1,24 +1,12 @@
-define([
-  'backbone',
-  'js/components/generic_module',
-  'js/mixins/hardened',
-  'js/components/api_targets',
-  'js/components/api_request',
-  'js/components/api_feedback',
-  'js/components/api_query',
-  'js/mixins/dependon',
-  'utils',
-], function(
-  Backbone,
-  GenericModule,
-  Hardened,
-  ApiTargets,
-  ApiRequest,
-  ApiFeedback,
-  ApiQuery,
-  Dependon,
-  utils
-) {
+import Backbone from 'backbone';
+import GenericModule from 'js/components/generic_module';
+import Hardened from 'js/mixins/hardened';
+import ApiTargets from 'js/components/api_targets';
+import ApiRequest from 'js/components/api_request';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiQuery from 'js/components/api_query';
+import Dependon from 'js/mixins/dependon';
+import utils from 'utils';
   var LibraryModel = Backbone.Model.extend({
     defaults: function() {
       // this is the data we expect to get from the server
@@ -712,5 +700,5 @@ define([
 
   _.extend(LibraryController.prototype, Hardened, Dependon.BeeHive);
 
-  return LibraryController;
-});
+  export default LibraryController;
+

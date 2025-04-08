@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'js/components/api_targets',
-  'js/components/api_query',
-  'js/components/api_request',
-], function(_, ApiTargets, ApiQuery, ApiRequest) {
+import _ from 'underscore';
+import ApiTargets from 'js/components/api_targets';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
   const NAME = '__EXPORT_RESULTS_AS_BIBTEX__';
 
   const mixin = {
@@ -43,5 +41,5 @@ define([
     },
   };
 
-  return mixin;
-});
+  export default mixin;
+

@@ -40,14 +40,12 @@
  *
  */
 
-define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'module',
-  'js/components/beehive',
-  'js/mixins/api_access',
-], function(_, $, Backbone, module, BeeHive, ApiAccess) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import module from 'module';
+import BeeHive from 'js/components/beehive';
+import ApiAccess from 'js/mixins/api_access';
   const DEFAULT_MODULE_TIMEOUT = 60 * 1000; // 60 seconds
 
   const updateProgress =
@@ -1145,5 +1143,5 @@ define([
 
   // give it subclassing functionality
   Application.extend = Backbone.Model.extend;
-  return Application.extend(ApiAccess);
-});
+  export default Application.extend(ApiAccess);
+

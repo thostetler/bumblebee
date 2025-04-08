@@ -1,20 +1,10 @@
-define([
-  'marionette',
-  'hbs!js/widgets/libraries_all/templates/libraries-list-container',
-  'hbs!js/widgets/libraries_all/templates/library-item',
-  'hbs!js/widgets/libraries_all/templates/no-libraries',
-  'hbs!js/widgets/libraries_all/templates/loading-libraries',
-  'hbs!js/widgets/libraries_all/templates/error-libraries',
-  'hbs!js/widgets/libraries_all/templates/no-result',
-], function(
-  Marionette,
-  LibraryContainer,
-  LibraryItem,
-  NoLibrariesTemplate,
-  LoadingTemplate,
-  ErrorTemplate,
-  NoResultTemplate,
-) {
+import Marionette from 'marionette';
+import LibraryContainer from 'hbs!js/widgets/libraries_all/templates/libraries-list-container';
+import LibraryItem from 'hbs!js/widgets/libraries_all/templates/library-item';
+import NoLibrariesTemplate from 'hbs!js/widgets/libraries_all/templates/no-libraries';
+import LoadingTemplate from 'hbs!js/widgets/libraries_all/templates/loading-libraries';
+import ErrorTemplate from 'hbs!js/widgets/libraries_all/templates/error-libraries';
+import NoResultTemplate from 'hbs!js/widgets/libraries_all/templates/no-result';
   var LibraryItemView = Marionette.ItemView.extend({
     // time is returned from library endpoint as utc time, but without info that it is utc
     formatDate: function(d) {
@@ -145,5 +135,5 @@ define([
     },
   });
 
-  return LibraryCollectionView;
-});
+  export default LibraryCollectionView;
+

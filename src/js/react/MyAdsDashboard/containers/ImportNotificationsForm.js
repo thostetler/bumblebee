@@ -1,9 +1,7 @@
-define([
-  'js/react/MyAdsDashboard/components/ImportNotificationsForm.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index',
-  'js/react/MyAdsDashboard/constants',
-], function(ImportNotificationsForm, { connect }, actions, { page }) {
+import ImportNotificationsForm from 'js/react/MyAdsDashboard/components/ImportNotificationsForm.jsx';
+import { connect } from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
+import { page } from 'js/react/MyAdsDashboard/constants';
   const mapStateToProps = ({ requests }) => ({
     importClassicRequest: requests.IMPORT_CLASSIC,
   });
@@ -15,5 +13,5 @@ define([
     importClassic,
   };
 
-  return connect(mapStateToProps, actionCreators)(ImportNotificationsForm);
-});
+  export default connect(mapStateToProps, actionCreators)(ImportNotificationsForm);
+

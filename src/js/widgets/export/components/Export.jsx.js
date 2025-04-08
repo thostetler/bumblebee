@@ -1,8 +1,6 @@
-define(['react', 'prop-types', 'js/widgets/export/components/ClipboardBtn.jsx'], function(
-  React,
-  ReactPropTypes,
-  ClipboardBtn
-) {
+import React from 'react';
+import ReactPropTypes from 'prop-types';
+import ClipboardBtn from 'js/widgets/export/components/ClipboardBtn.jsx';
   const Export = ({ output, isFetching, progress, onDownloadFile, onCopy }) => (
     <div>
       <div className="row">
@@ -61,5 +59,5 @@ define(['react', 'prop-types', 'js/widgets/export/components/ClipboardBtn.jsx'],
     onCopy: ReactPropTypes.func.isRequired,
   };
 
-  return Export;
-});
+  export default Export;
+

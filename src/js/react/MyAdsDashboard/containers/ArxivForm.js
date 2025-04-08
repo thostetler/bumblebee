@@ -1,9 +1,7 @@
-define([
-  'js/react/MyAdsDashboard/components/ArxivForm.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index',
-  'js/react/MyAdsDashboard/constants',
-], function(ArxivForm, { connect }, actions, { page }) {
+import ArxivForm from 'js/react/MyAdsDashboard/components/ArxivForm.jsx';
+import { connect } from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
+import { page } from 'js/react/MyAdsDashboard/constants';
   const mapStateToProps = ({
     requests,
     notifications,
@@ -25,5 +23,5 @@ define([
     onCancel: () => goTo(page.DASHBOARD),
   };
 
-  return connect(mapStateToProps, actionCreators)(ArxivForm);
-});
+  export default connect(mapStateToProps, actionCreators)(ArxivForm);
+

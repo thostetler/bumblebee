@@ -2,13 +2,11 @@
  * Created by rchyla on 3/16/14.
  */
 
-define([
-  'backbone',
-  'underscore',
-  'js/mixins/hardened',
-  'pubsub_service_impl',
-  'js/components/pubsub_events',
-], function(Backbone, _, Hardened, PubSubImplementation, PubSubEvents) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import Hardened from 'js/mixins/hardened';
+import PubSubImplementation from 'pubsub_service_impl';
+import PubSubEvents from 'js/components/pubsub_events';
   var PubSub = PubSubImplementation.extend({
     /*
      * Wraps itself into a Facade that can be shared with other modules
@@ -68,5 +66,5 @@ define([
   });
   _.extend(PubSub.prototype, PubSubEvents);
 
-  return PubSub;
-});
+  export default PubSub;
+

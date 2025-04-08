@@ -1,30 +1,15 @@
-define([
-  'underscore',
-  'react',
-  'redux',
-  'react-redux',
-  'js/widgets/author_affiliation_tool/actions/index',
-  'js/widgets/author_affiliation_tool/constants/actionNames',
-  'js/widgets/author_affiliation_tool/components/ExportFormatControl.jsx',
-  'js/widgets/author_affiliation_tool/components/SelectionButtons.jsx',
-  'js/widgets/author_affiliation_tool/components/Row.jsx',
-  'js/widgets/author_affiliation_tool/components/Message.jsx',
-  'js/widgets/author_affiliation_tool/components/Loading.jsx',
-  'js/widgets/author_affiliation_tool/components/Closer.jsx',
-], function(
-  _,
-  React,
-  Redux,
-  ReactRedux,
-  actions,
-  ACTIONS,
-  ExportFormatControl,
-  SelectionButtons,
-  Row,
-  Message,
-  Loading,
-  Closer
-) {
+import _ from 'underscore';
+import React from 'react';
+import Redux from 'redux';
+import ReactRedux from 'react-redux';
+import actions from 'js/widgets/author_affiliation_tool/actions/index';
+import ACTIONS from 'js/widgets/author_affiliation_tool/constants/actionNames';
+import ExportFormatControl from 'js/widgets/author_affiliation_tool/components/ExportFormatControl.jsx';
+import SelectionButtons from 'js/widgets/author_affiliation_tool/components/SelectionButtons.jsx';
+import Row from 'js/widgets/author_affiliation_tool/components/Row.jsx';
+import Message from 'js/widgets/author_affiliation_tool/components/Message.jsx';
+import Loading from 'js/widgets/author_affiliation_tool/components/Loading.jsx';
+import Closer from 'js/widgets/author_affiliation_tool/components/Closer.jsx';
   const makeOptions = (arr, allVal) =>
     _.map(arr, (i) => {
       if (i === 'All') {
@@ -331,5 +316,5 @@ define([
     showReload: state.showReload,
   });
 
-  return ReactRedux.connect(mapStateToProps)(App);
-});
+  export default ReactRedux.connect(mapStateToProps)(App);
+

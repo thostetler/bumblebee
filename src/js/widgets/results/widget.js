@@ -4,31 +4,17 @@
  *
  */
 
-define([
-  'js/widgets/list_of_things/widget',
-  'js/widgets/abstract/widget',
-  'js/mixins/add_stable_index_to_collection',
-  'js/mixins/link_generator_mixin',
-  'js/mixins/formatter',
-  'hbs!js/widgets/results/templates/container-template',
-  'js/mixins/papers_utils',
-  'js/mixins/expose_metadata',
-  'js/modules/orcid/extension',
-  'js/mixins/dependon',
-  'js/components/api_feedback',
-], function(
-  ListOfThingsWidget,
-  AbstractWidget,
-  PaginationMixin,
-  LinkGenerator,
-  Formatter,
-  ContainerTemplate,
-  PapersUtilsMixin,
-  MetadataMixin,
-  OrcidExtension,
-  Dependon,
-  ApiFeedback
-) {
+import ListOfThingsWidget from 'js/widgets/list_of_things/widget';
+import AbstractWidget from 'js/widgets/abstract/widget';
+import PaginationMixin from 'js/mixins/add_stable_index_to_collection';
+import LinkGenerator from 'js/mixins/link_generator_mixin';
+import Formatter from 'js/mixins/formatter';
+import ContainerTemplate from 'hbs!js/widgets/results/templates/container-template';
+import PapersUtilsMixin from 'js/mixins/papers_utils';
+import MetadataMixin from 'js/mixins/expose_metadata';
+import OrcidExtension from 'js/modules/orcid/extension';
+import Dependon from 'js/mixins/dependon';
+import ApiFeedback from 'js/components/api_feedback';
   var ResultsWidget = ListOfThingsWidget.extend({
     initialize: function() {
       ListOfThingsWidget.prototype.initialize.apply(this, arguments);
@@ -460,5 +446,5 @@ define([
     MetadataMixin,
     Dependon.BeeHive
   );
-  return OrcidExtension(ResultsWidget);
-});
+  export default OrcidExtension(ResultsWidget);
+

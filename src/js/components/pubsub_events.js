@@ -18,7 +18,7 @@
  *
  */
 
-define([], function() {
+
   var PubSubEvents = {
     /**
      * Usually called by OC's as a first step in the query processing.
@@ -164,5 +164,5 @@ define([], function() {
     LIBRARY_CHANGE: '[PubSub]-Library-Change',
   };
 
-  return PubSubEvents;
-});
+  export default PubSubEvents;
+

@@ -1,14 +1,7 @@
 // @ts-nocheck
-define([
-  'underscore',
-  'react',
-  'react-bootstrap',
-  'js/react/MyAdsDashboard/containers/ClassicLoginForm',
-  'prop-types',
-], function(
-  { debounce },
-  React,
-  {
+import { debounce } from 'underscore';
+import React from 'react';
+import {
     Form,
     FormGroup,
     FormControl,
@@ -17,10 +10,9 @@ define([
     Button,
     Alert,
     Modal,
-  },
-  ClassicLoginForm,
-  PropTypes
-) {
+  } from 'react-bootstrap';
+import ClassicLoginForm from 'js/react/MyAdsDashboard/containers/ClassicLoginForm';
+import PropTypes from 'prop-types';
   const getStatusMessage = ({ status, error }) => {
     switch (status) {
       case 'pending':
@@ -153,5 +145,5 @@ define([
     importClassic: () => {},
   };
 
-  return ImportNotificationsForm;
-});
+  export default ImportNotificationsForm;
+

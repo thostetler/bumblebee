@@ -1,10 +1,8 @@
-define([
-  'underscore',
-  'marionette',
-  'js/page_managers/controller',
-  'js/page_managers/toc_widget',
-  'analytics',
-], function(_, Marionette, BasicPageManagerController, TOCWidget, analytics) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import BasicPageManagerController from 'js/page_managers/controller';
+import TOCWidget from 'js/page_managers/toc_widget';
+import analytics from 'analytics';
   /*
    * need to provide a toc template for the toc view when you inherit from this
    * */
@@ -176,5 +174,5 @@ define([
     },
   });
 
-  return PageManagerController;
-});
+  export default PageManagerController;
+

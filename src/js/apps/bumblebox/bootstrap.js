@@ -1,14 +1,12 @@
 /*
  * This module contains a set of utilities to bootstrap Discovery app
  */
-define([
-  'underscore',
-  'jquery',
-  'backbone',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/pubsub_events',
-], function (_, $, Backbone, ApiQuery, ApiRequest, PubSubEvents) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import PubSubEvents from 'js/components/pubsub_events';
   var Mixin = {
     /**
      * Happens first, when the application starts (but before it starts
@@ -221,5 +219,5 @@ define([
     },
   };
 
-  return Mixin;
-});
+  export default Mixin;
+

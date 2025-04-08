@@ -1,11 +1,9 @@
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/meta_tags/template/metatags',
-  'js/mixins/link_generator_mixin',
-], function($, Backbone, _, BaseWidget, metatagsTemplate, LinkGenerator) {
+import $ from 'jquery';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import BaseWidget from 'js/widgets/base/base_widget';
+import metatagsTemplate from 'hbs!js/widgets/meta_tags/template/metatags';
+import LinkGenerator from 'js/mixins/link_generator_mixin';
   var View = Backbone.View.extend({
     destroy: function() {
       this.remove();
@@ -147,5 +145,5 @@ define([
   });
 
   _.extend(Widget.prototype, LinkGenerator);
-  return Widget;
-});
+  export default Widget;
+

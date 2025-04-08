@@ -3,7 +3,8 @@
  * to the user)
  */
 
-define(['backbone', 'js/mixins/hardened'], function(Backbone, Hardened) {
+import Backbone from 'backbone';
+import Hardened from 'js/mixins/hardened';
   var Alerts = {
     TYPE: {
       ERROR: 'error',
@@ -19,5 +20,5 @@ define(['backbone', 'js/mixins/hardened'], function(Backbone, Hardened) {
     },
   };
 
-  return Alerts;
-});
+  export default Alerts;
+

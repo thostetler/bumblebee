@@ -1,9 +1,7 @@
-define([
-  'underscore',
-  'marionette',
-  'hbs!js/widgets/preferences/templates/export',
-  'js/widgets/config',
-], function(_, Marionette, ExportTemplate, config) {
+import _ from 'underscore';
+import Marionette from 'marionette';
+import ExportTemplate from 'hbs!js/widgets/preferences/templates/export';
+import config from 'js/widgets/config';
   var DEFAULTS = {
     exportFormat: {
       initialOptions: _.map(config.export.formats, 'label'),
@@ -462,5 +460,5 @@ define([
     },
   });
 
-  return ExportView;
-});
+  export default ExportView;
+

@@ -17,27 +17,15 @@
  * right now this is limited to orcidModeOn
  *
  */
-define([
-  'underscore',
-  'backbone',
-  'js/components/api_request',
-  'js/components/api_targets',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/hardened',
-  'js/components/api_feedback',
-  'js/mixins/api_access',
-], function(
-  _,
-  Backbone,
-  ApiRequest,
-  ApiTargets,
-  GenericModule,
-  Dependon,
-  Hardened,
-  ApiFeedback,
-  ApiAccess
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import Hardened from 'js/mixins/hardened';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiAccess from 'js/mixins/api_access';
   var LocalStorageModel;
   var UserModel;
   var User;
@@ -571,5 +559,5 @@ define([
     }
   );
 
-  return User;
-});
+  export default User;
+

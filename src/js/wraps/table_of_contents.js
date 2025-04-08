@@ -1,7 +1,5 @@
-define(['underscore', 'js/widgets/list_of_things/details_widget'], function(
-  _,
-  DetailsWidget
-) {
+import _ from 'underscore';
+import DetailsWidget from 'js/widgets/list_of_things/details_widget';
   var Widget = DetailsWidget.extend({
     initialize: function() {
       this.name = 'ShowToc';
@@ -47,5 +45,5 @@ define(['underscore', 'js/widgets/list_of_things/details_widget'], function(
     return new Widget(options);
   }
 
-  return TOC;
-});
+  export default TOC;
+

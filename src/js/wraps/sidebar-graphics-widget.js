@@ -1,7 +1,7 @@
-define(['js/widgets/graphics/widget'], function(GraphicsWidget) {
+import GraphicsWidget from 'js/widgets/graphics/widget';
   var options = { sidebar: true };
 
-  return function() {
+  export default function() {
     return new GraphicsWidget(options);
   };
-});
+

@@ -1,9 +1,7 @@
-define([
-  'js/widgets/facet/graph-facet/base_graph',
-  'hbs!js/widgets/facet/graph-facet/templates/year-graph-legend',
-  'marionette',
-  'jquery-ui',
-], function(BaseGraphView, legendTemplate, Marionette) {
+import BaseGraphView from 'js/widgets/facet/graph-facet/base_graph';
+import legendTemplate from 'hbs!js/widgets/facet/graph-facet/templates/year-graph-legend';
+import Marionette from 'marionette';
+import 'jquery-ui';
   var YearGraphView = BaseGraphView.extend({
     bins: 10,
 
@@ -499,5 +497,5 @@ define([
     },
   });
 
-  return YearGraphView;
-});
+  export default YearGraphView;
+

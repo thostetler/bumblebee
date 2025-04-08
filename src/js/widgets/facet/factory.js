@@ -1,7 +1,5 @@
-define([
-  'js/widgets/facet/widget',
-  'js/widgets/facet/graph-facet/widget',
-], function(FacetWidget, BaseGraphWidget) {
+import FacetWidget from 'js/widgets/facet/widget';
+import BaseGraphWidget from 'js/widgets/facet/graph-facet/widget';
   var FacetFactory = {
     makeBasicCheckboxFacet: function(options) {
       var defaultOptions = {
@@ -28,5 +26,5 @@ define([
       return new BaseGraphWidget(options);
     },
   };
-  return FacetFactory;
-});
+  export default FacetFactory;
+

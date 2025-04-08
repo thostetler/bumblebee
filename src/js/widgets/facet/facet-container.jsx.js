@@ -1,18 +1,9 @@
-define([
-  'react',
-  'react-redux',
-  'prop-types',
-  'js/widgets/facet/toggle_list.jsx',
-  'js/widgets/facet/facet-dropdown.jsx',
-  'js/widgets/facet/reducers',
-], function(
-  React,
-  { connect },
-  PropTypes,
-  ToggleList,
-  Dropdown,
-  { getActiveFacets }
-) {
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import ToggleList from 'js/widgets/facet/toggle_list.jsx';
+import Dropdown from 'js/widgets/facet/facet-dropdown.jsx';
+import { getActiveFacets } from 'js/widgets/facet/reducers';
   const ContainerComponent = ({
     activeFacets,
     reduxState: state,
@@ -108,5 +99,5 @@ define([
     };
   };
 
-  return connect(mapStateToProps, mapDispatchToProps)(ContainerComponent);
-});
+  export default connect(mapStateToProps, mapDispatchToProps)(ContainerComponent);
+

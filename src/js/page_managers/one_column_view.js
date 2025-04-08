@@ -1,4 +1,5 @@
-define(['marionette', 'js/widgets/base/base_widget'], function(Marionette) {
+import Marionette from 'marionette';
+import 'js/widgets/base/base_widget';
   var OneColumnView = Marionette.ItemView.extend({
     initialize: function(options) {
       var options = options || {};
@@ -12,5 +13,5 @@ define(['marionette', 'js/widgets/base/base_widget'], function(Marionette) {
       // _.extend(this.widgets, widgets);
     },
   });
-  return OneColumnView;
-});
+  export default OneColumnView;
+

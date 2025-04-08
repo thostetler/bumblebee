@@ -1,32 +1,16 @@
-define([
-  'underscore',
-  'backbone',
-  'react',
-  'react-dom',
-  'react-redux',
-  'analytics',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'js/mixins/link_generator_mixin',
-  'js/widgets/resources/redux/configure-store',
-  'js/widgets/resources/redux/modules/api',
-  'js/widgets/resources/redux/modules/ui',
-  'js/widgets/resources/containers/app',
-], function (
-  _,
-  Backbone,
-  React,
-  ReactDOM,
-  ReactRedux,
-  analytics,
-  ApiQuery,
-  BaseWidget,
-  LinkGenerator,
-  configureStore,
-  api,
-  ui,
-  App,
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactRedux from 'react-redux';
+import analytics from 'analytics';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import LinkGenerator from 'js/mixins/link_generator_mixin';
+import configureStore from 'js/widgets/resources/redux/configure-store';
+import api from 'js/widgets/resources/redux/modules/api';
+import ui from 'js/widgets/resources/redux/modules/ui';
+import App from 'js/widgets/resources/containers/app';
   const View = Backbone.View.extend({
     initialize: function (options) {
       // provide this with all the options passed in
@@ -129,5 +113,5 @@ define([
   });
 
   _.extend(Widget.prototype, LinkGenerator);
-  return Widget;
-});
+  export default Widget;
+

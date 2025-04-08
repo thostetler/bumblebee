@@ -1,0 +1,20 @@
+define({
+  clientVersion: '',
+  apiRoot: 'https://qa.adsabs.harvard.edu/v1/',
+  orcidProxy: '/oauth/',
+  bootstrapUrls: ['/accounts/bootstrap'],
+  routerConf: {
+    pushState: true,
+    root: '/',
+  },
+  debugExportBBB: true,
+  debug: false,
+  useCache: false,
+  googleTrackingCode: 'UA-XXXXXXXX-X',
+  googleTrackingOptions: 'auto',
+  orcidClientId: 'APP-P5ANJTQRRTMA6GXZ',
+  orcidLoginEndpoint: 'https://sandbox.orcid.org/oauth/authorize',
+  orcidApiEndpoint: 'https://qa.adsabs.harvard.edu/v1/orcid/',
+  recaptchaKey: '6LcpTuUnAAAAAD6YCBdr_2-0b1AH8N6nXkYEG5G5',
+  hourly: false,
+});

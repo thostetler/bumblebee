@@ -1,9 +1,7 @@
-define(['react', 'prop-types', 'react-redux', 'js/react/Recommender/actions'], function (
-  React,
-  PropTypes,
-  {useSelector, useDispatch},
-  {getRecommendations, emitAnalytics},
-) {
+import React from 'react';
+import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
+import {getRecommendations, emitAnalytics} from 'js/react/Recommender/actions';
   const Paper = ({title, bibcode, author, totalAuthors, onClick}) => {
     const el = React.useRef(null);
     React.useEffect(() => {
@@ -199,5 +197,5 @@ define(['react', 'prop-types', 'react-redux', 'js/react/Recommender/actions'], f
     );
   };
 
-  return RecommendedList;
-});
+  export default RecommendedList;
+

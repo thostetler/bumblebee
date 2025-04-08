@@ -1,26 +1,13 @@
-define([
-  'marionette',
-  'backbone',
-  'underscore',
-  'js/components/api_request',
-  'js/components/api_query',
-  'js/widgets/base/base_widget',
-  'hbs!js/widgets/query_info/query_info_template',
-  'js/mixins/formatter',
-  'bootstrap',
-  'js/components/api_feedback',
-], function(
-  Marionette,
-  Backbone,
-  _,
-  ApiRequest,
-  ApiQuery,
-  BaseWidget,
-  queryInfoTemplate,
-  FormatMixin,
-  Bootstrap,
-  ApiFeedback
-) {
+import Marionette from 'marionette';
+import Backbone from 'backbone';
+import _ from 'underscore';
+import ApiRequest from 'js/components/api_request';
+import ApiQuery from 'js/components/api_query';
+import BaseWidget from 'js/widgets/base/base_widget';
+import queryInfoTemplate from 'hbs!js/widgets/query_info/query_info_template';
+import FormatMixin from 'js/mixins/formatter';
+import Bootstrap from 'bootstrap';
+import ApiFeedback from 'js/components/api_feedback';
   var QueryModel = Backbone.Model.extend({
     defaults: {
       selected: 0,
@@ -372,5 +359,5 @@ define([
     },
   });
 
-  return Widget;
-});
+  export default Widget;
+

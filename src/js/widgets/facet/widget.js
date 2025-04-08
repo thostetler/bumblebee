@@ -1,34 +1,17 @@
-define([
-  'backbone',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/widgets/base/base_widget',
-  'js/components/api_query_updater',
-  'analytics',
-  'react',
-  'react-dom',
-  'react-redux',
-  'js/widgets/facet/facet-container.jsx',
-  'js/widgets/facet/actions',
-  'js/widgets/facet/reducers',
-  'js/widgets/facet/create_store',
-  'utils',
-], function(
-  Backbone,
-  ApiQuery,
-  ApiRequest,
-  BaseWidget,
-  ApiQueryUpdater,
-  analytics,
-  React,
-  ReactDOM,
-  ReactRedux,
-  ContainerComponent,
-  createActionObject,
-  Reducers,
-  createStore,
-  utils
-) {
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import analytics from 'analytics';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactRedux from 'react-redux';
+import ContainerComponent from 'js/widgets/facet/facet-container.jsx';
+import createActionObject from 'js/widgets/facet/actions';
+import Reducers from 'js/widgets/facet/reducers';
+import createStore from 'js/widgets/facet/create_store';
+import utils from 'utils';
   var FacetContainerView = Backbone.View.extend({
     render: function(store, actions) {
       ReactDOM.render(
@@ -277,5 +260,5 @@ define([
     },
   });
 
-  return BaseFacetWidget;
-});
+  export default BaseFacetWidget;
+

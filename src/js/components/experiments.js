@@ -1,11 +1,9 @@
-define([
-  'underscore',
-  'jquery',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'analytics',
-  'js/components/pubsub_events',
-], function(_, $, GenericModule, Dependon, analytics, PubsubEvents) {
+import _ from 'underscore';
+import $ from 'jquery';
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import analytics from 'analytics';
+import PubsubEvents from 'js/components/pubsub_events';
   var Experiments = GenericModule.extend({
     initialize: function() {
       // store all metadata entries here
@@ -79,5 +77,4 @@ define([
   });
   _.extend(Experiments.prototype, Dependon.BeeHive, Dependon.App);
 
-  return Experiments;
-})
+  export default Experiments;

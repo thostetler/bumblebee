@@ -8,29 +8,16 @@
  *
  */
 
-define([
-  'underscore',
-  'bootstrap',
-  'jquery',
-  'jquery-querybuilder',
-  'js/components/generic_module',
-  'js/components/query_builder/rules_translator',
-  'js/components/api_query',
-  'hbs!js/components/query_builder/templates/group_template',
-  'hbs!js/components/query_builder/templates/rule_template',
-  'js/mixins/dependon',
-], function(
-  _,
-  Bootstrap,
-  $,
-  jQueryQueryBuilderPlugin,
-  GenericModule,
-  RulesTranslator,
-  ApiQuery,
-  GroupTemplate,
-  RuleTemplate,
-  Dependon
-) {
+import _ from 'underscore';
+import Bootstrap from 'bootstrap';
+import $ from 'jquery';
+import jQueryQueryBuilderPlugin from 'jquery-querybuilder';
+import GenericModule from 'js/components/generic_module';
+import RulesTranslator from 'js/components/query_builder/rules_translator';
+import ApiQuery from 'js/components/api_query';
+import GroupTemplate from 'hbs!js/components/query_builder/templates/group_template';
+import RuleTemplate from 'hbs!js/components/query_builder/templates/rule_template';
+import Dependon from 'js/mixins/dependon';
   var QueryBuilder = GenericModule.extend({
     initialize: function(options) {
       this._rules = null;
@@ -1162,5 +1149,5 @@ define([
     return new getter(beehive);
   };
 
-  return QueryBuilder;
-});
+  export default QueryBuilder;
+

@@ -1,4 +1,4 @@
-define([], function() {
+
   var Utils = {};
 
   // Helper method to extend an already existing method
@@ -22,5 +22,5 @@ define([], function() {
     }
   };
 
-  return Utils;
-});
+  export default Utils;
+

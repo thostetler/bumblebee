@@ -1,4 +1,4 @@
-define([], function() {
+
   const getPermissionMap = (id) => {
     switch (id) {
       case 'read':
@@ -61,8 +61,8 @@ define([], function() {
     }),
   };
 
-  return {
+  export default {
     ...actions,
     ...actionCreators,
   };
-});
+

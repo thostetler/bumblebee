@@ -1,5 +1,5 @@
-define([], function() {
-  return {
+
+  export default {
     Permissions: Object.freeze({
       READ: {
         id: 'read',
@@ -19,4 +19,4 @@ define([], function() {
       },
     }),
   };
-});
+

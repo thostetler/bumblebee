@@ -6,11 +6,9 @@
  *
  */
 
-define([
-  'underscore',
-  'js/components/generic_module',
-  'js/components/api_query_updater',
-], function(_, GenericModule, ApiQueryUpdater) {
+import _ from 'underscore';
+import GenericModule from 'js/components/generic_module';
+import ApiQueryUpdater from 'js/components/api_query_updater';
   var TreeNode = function(operator, value) {
     this.operator = operator;
     this.value = value;
@@ -730,5 +728,5 @@ define([
     },
   });
 
-  return RulesTranslator;
-});
+  export default RulesTranslator;
+

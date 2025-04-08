@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+import _ from 'underscore';
   // Action Constants
   const SET_DIRECTION = 'SET_DIRECTION';
   const SET_SORT = 'SET_SORT';
@@ -144,7 +144,7 @@ define(['underscore'], function(_) {
     }
   };
 
-  return {
+  export default {
     setSort: setSort,
     setDirection: setDirection,
     setQuery: setQuery,
@@ -152,4 +152,4 @@ define(['underscore'], function(_) {
     initialState: initialState,
     reducer: reducer,
   };
-});
+

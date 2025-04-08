@@ -1,5 +1,5 @@
-define(['js/widgets/facet/factory'], function(FacetFactory) {
-  return function() {
+import FacetFactory from 'js/widgets/facet/factory';
+  export default function() {
     var widget = FacetFactory.makeBasicCheckboxFacet({
       facetField: 'data_facet',
       facetTitle: 'Data',
@@ -10,4 +10,4 @@ define(['js/widgets/facet/factory'], function(FacetFactory) {
     });
     return widget;
   };
-});
+

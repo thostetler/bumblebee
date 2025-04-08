@@ -1,22 +1,11 @@
-define([
-  'underscore',
-  'react',
-  'react-redux',
-  'prop-types',
-  'js/widgets/export/actions/index',
-  'js/widgets/export/components/Closer.jsx',
-  'js/widgets/export/components/Setup.jsx',
-  'js/widgets/export/components/Export.jsx',
-], function(
-  _,
-  React,
-  ReactRedux,
-  ReactPropTypes,
-  actions,
-  Closer,
-  Setup,
-  Export
-) {
+import _ from 'underscore';
+import React from 'react';
+import ReactRedux from 'react-redux';
+import ReactPropTypes from 'prop-types';
+import actions from 'js/widgets/export/actions/index';
+import Closer from 'js/widgets/export/components/Closer.jsx';
+import Setup from 'js/widgets/export/components/Setup.jsx';
+import Export from 'js/widgets/export/components/Export.jsx';
   const {
     closeComponent,
     setFormat,
@@ -331,5 +320,5 @@ define([
     customFormats: state.exports.customFormats,
   });
 
-  return ReactRedux.connect(mapStateToProps)(App);
-});
+  export default ReactRedux.connect(mapStateToProps)(App);
+

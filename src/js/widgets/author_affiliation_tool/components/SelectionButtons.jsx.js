@@ -1,4 +1,4 @@
-define(['react'], function(React) {
+import React from 'react';
   /**
    * Set of buttons
    */
@@ -13,5 +13,5 @@ define(['react'], function(React) {
     </div>
   );
 
-  return SelectionButtons;
-});
+  export default SelectionButtons;
+

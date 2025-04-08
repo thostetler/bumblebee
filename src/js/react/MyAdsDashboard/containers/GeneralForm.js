@@ -1,9 +1,7 @@
-define([
-  'js/react/MyAdsDashboard/components/GeneralForm.jsx',
-  'react-redux',
-  'js/react/MyAdsDashboard/actions/index',
-  'js/react/MyAdsDashboard/constants',
-], function(GeneralForm, { connect }, actions, { page }) {
+import GeneralForm from 'js/react/MyAdsDashboard/components/GeneralForm.jsx';
+import { connect } from 'react-redux';
+import actions from 'js/react/MyAdsDashboard/actions/index';
+import { page } from 'js/react/MyAdsDashboard/constants';
   const mapStateToProps = ({
     requests,
     notifications,
@@ -26,5 +24,5 @@ define([
     onCancel: () => goTo(page.DASHBOARD),
   };
 
-  return connect(mapStateToProps, actionCreators)(GeneralForm);
-});
+  export default connect(mapStateToProps, actionCreators)(GeneralForm);
+

@@ -29,29 +29,16 @@
  *
  */
 
-define([
-  'underscore',
-  'backbone',
-  'js/components/query_mediator',
-  'js/services/pubsub',
-  'js/components/beehive',
-  'js/components/pubsub_events',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/api_feedback',
-  'js/components/api_response',
-], function(
-  _,
-  BackBone,
-  QueryMediator,
-  PubSub,
-  BeeHive,
-  PubSubEvents,
-  ApiQuery,
-  ApiRequest,
-  ApiFeedback,
-  ApiResponse
-) {
+import _ from 'underscore';
+import BackBone from 'backbone';
+import QueryMediator from 'js/components/query_mediator';
+import PubSub from 'js/services/pubsub';
+import BeeHive from 'js/components/beehive';
+import PubSubEvents from 'js/components/pubsub_events';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiFeedback from 'js/components/api_feedback';
+import ApiResponse from 'js/components/api_response';
   var MinimalPubsub = function() {
     this.beehive = null;
     this.pubsub = null;
@@ -184,5 +171,5 @@ define([
   });
 
   MinimalPubsub.extend = Backbone.Model.extend;
-  return MinimalPubsub;
-});
+  export default MinimalPubsub;
+

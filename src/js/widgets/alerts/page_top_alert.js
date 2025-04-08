@@ -1,7 +1,5 @@
-define([
-  'marionette',
-  'hbs!js/widgets/alerts/templates/page_top_alert',
-], function(Marionette, BannerTemplate) {
+import Marionette from 'marionette';
+import BannerTemplate from 'hbs!js/widgets/alerts/templates/page_top_alert';
   var AlertView = Marionette.ItemView.extend({
     tagName: 'span',
     className: 'alert-banner',
@@ -37,5 +35,5 @@ define([
     },
   });
 
-  return AlertView;
-});
+  export default AlertView;
+

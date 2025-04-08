@@ -6,41 +6,22 @@
  * Mediator to coordinate UI-query exchange
  */
 
-define([
-  'underscore',
-  'jquery',
-  'cache',
-  'js/components/generic_module',
-  'js/mixins/dependon',
-  'js/mixins/add_secondary_sort',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_query_updater',
-  'js/components/api_feedback',
-  'js/components/json_response',
-  'js/components/api_targets',
-  'js/components/api_query',
-  'js/components/alerts',
-  'utils',
-  'analytics',
-], function(
-  _,
-  $,
-  Cache,
-  GenericModule,
-  Dependon,
-  SecondarySort,
-  ApiRequest,
-  ApiResponse,
-  ApiQueryUpdater,
-  ApiFeedback,
-  JsonResponse,
-  ApiTargets,
-  ApiQuery,
-  Alerts,
-  utils,
-  analytics
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Cache from 'cache';
+import GenericModule from 'js/components/generic_module';
+import Dependon from 'js/mixins/dependon';
+import SecondarySort from 'js/mixins/add_secondary_sort';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import ApiFeedback from 'js/components/api_feedback';
+import JsonResponse from 'js/components/json_response';
+import ApiTargets from 'js/components/api_targets';
+import ApiQuery from 'js/components/api_query';
+import Alerts from 'js/components/alerts';
+import utils from 'utils';
+import analytics from 'analytics';
   var QueryMediator = GenericModule.extend({
     initialize: function(options) {
       options = options || {};
@@ -1001,5 +982,5 @@ define([
   });
 
   _.extend(QueryMediator.prototype, Dependon.BeeHive, Dependon.App);
-  return QueryMediator;
-});
+  export default QueryMediator;
+

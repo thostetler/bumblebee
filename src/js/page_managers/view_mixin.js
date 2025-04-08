@@ -1,4 +1,5 @@
-define(['underscore', 'jquery'], function(_, $) {
+import _ from 'underscore';
+import $ from 'jquery';
   var PageManagerMixin = {
     getWidgetsFromTemplate: function(template, isDebug) {
       var widgets = {};
@@ -19,5 +20,5 @@ define(['underscore', 'jquery'], function(_, $) {
     },
   };
 
-  return PageManagerMixin;
-});
+  export default PageManagerMixin;
+

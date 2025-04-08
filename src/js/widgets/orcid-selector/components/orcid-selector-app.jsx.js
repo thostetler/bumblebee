@@ -1,4 +1,5 @@
-define(['react', 'prop-types'], function(React, PropTypes) {
+import React from 'react';
+import PropTypes from 'prop-types';
   const styles = {
     button: {
       width: '50%',
@@ -141,5 +142,5 @@ define(['react', 'prop-types'], function(React, PropTypes) {
     app: PropTypes.object.isRequired,
   };
 
-  return OrcidSelectorApp;
-});
+  export default OrcidSelectorApp;
+

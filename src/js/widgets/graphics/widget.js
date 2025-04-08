@@ -1,24 +1,12 @@
-define([
-  'marionette',
-  'js/widgets/base/base_widget',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_query',
-  'hbs!js/widgets/graphics/templates/grid',
-  'hbs!js/widgets/graphics/templates/sidebar',
-  'js/components/api_targets',
-  'analytics',
-], function(
-  Marionette,
-  BaseWidget,
-  ApiRequest,
-  ApiResponse,
-  ApiQuery,
-  gridTemplate,
-  sidebarTemplate,
-  ApiTargets,
-  analytics
-) {
+import Marionette from 'marionette';
+import BaseWidget from 'js/widgets/base/base_widget';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import ApiQuery from 'js/components/api_query';
+import gridTemplate from 'hbs!js/widgets/graphics/templates/grid';
+import sidebarTemplate from 'hbs!js/widgets/graphics/templates/sidebar';
+import ApiTargets from 'js/components/api_targets';
+import analytics from 'analytics';
   var GraphicsModel = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -221,5 +209,5 @@ define([
     },
   });
 
-  return GraphicsWidget;
-});
+  export default GraphicsWidget;
+

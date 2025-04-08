@@ -1,24 +1,12 @@
-define([
-  'marionette',
-  'js/widgets/network_vis/network_widget',
-  'js/components/api_query_updater',
-  'hbs!js/wraps/templates/paper-network-data',
-  'hbs!js/wraps/templates/paper-network-container',
-  'hbs!js/widgets/network_vis/templates/not-enough-data-template',
-  'hbs!js/wraps/templates/paper-network-link-data',
-  'js/components/api_targets',
-  'bootstrap',
-], function(
-  Marionette,
-  NetworkWidget,
-  ApiQueryUpdater,
-  GroupDataTemplate,
-  ContainerTemplate,
-  NotEnoughDataTemplate,
-  LinkDataTemplate,
-  ApiTargets,
-  bs
-) {
+import Marionette from 'marionette';
+import NetworkWidget from 'js/widgets/network_vis/network_widget';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import GroupDataTemplate from 'hbs!js/wraps/templates/paper-network-data';
+import ContainerTemplate from 'hbs!js/wraps/templates/paper-network-container';
+import NotEnoughDataTemplate from 'hbs!js/widgets/network_vis/templates/not-enough-data-template';
+import LinkDataTemplate from 'hbs!js/wraps/templates/paper-network-link-data';
+import ApiTargets from 'js/components/api_targets';
+import bs from 'bootstrap';
   var options = {};
 
   options.endpoint = ApiTargets.SERVICE_PAPER_NETWORK;
@@ -839,7 +827,7 @@ define([
 
   options.widgetName = 'PaperNetwork';
 
-  return function() {
+  export default function() {
     return new NetworkWidget(options);
   };
-});
+

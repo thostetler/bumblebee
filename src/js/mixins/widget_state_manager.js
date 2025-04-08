@@ -1,4 +1,5 @@
-define(['underscore', 'js/components/api_feedback'], function(_, ApiFeedback) {
+import _ from 'underscore';
+import ApiFeedback from 'js/components/api_feedback';
   /**
    * Abstract error pubsub-like manager.  Allows for hooks to be applied that
    * match API feedback codes
@@ -219,5 +220,5 @@ define(['underscore', 'js/components/api_feedback'], function(_, ApiFeedback) {
     },
   };
 
-  return WidgetStateManagerMixin;
-});
+  export default WidgetStateManagerMixin;
+

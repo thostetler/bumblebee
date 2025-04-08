@@ -1,4 +1,4 @@
-define(['js/widgets/list_of_things/details_widget'], function(DetailsWidget) {
+import DetailsWidget from 'js/widgets/list_of_things/details_widget';
   var Widget = DetailsWidget.extend({
     initialize: function() {
       this.name = 'ShowCitations';
@@ -24,5 +24,5 @@ define(['js/widgets/list_of_things/details_widget'], function(DetailsWidget) {
     return new Widget(options);
   };
 
-  return exports;
-});
+  export default exports;
+

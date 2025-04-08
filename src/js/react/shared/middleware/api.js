@@ -1,4 +1,4 @@
-define([], function() {
+
   // default fail object
   const defaultFail = { responseJSON: { error: 'Server-side issue occurred' } };
 
@@ -61,7 +61,7 @@ define([], function() {
     }
   };
 
-  return {
+  export default {
     request,
   };
-});
+

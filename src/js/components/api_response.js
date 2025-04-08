@@ -14,12 +14,10 @@
  * },
  */
 
-define([
-  'underscore',
-  'backbone',
-  'js/components/solr_response',
-  'js/components/facade',
-], function(_, Backbone, ApiResponseImplementation, Facade) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiResponseImplementation from 'js/components/solr_response';
+import Facade from 'js/components/facade';
   var hardenedInterface = {
     set: 'set (replace existing)',
     get: 'get values',
@@ -62,8 +60,8 @@ define([
     },
   });
 
-  return ApiResponse;
-});
+  export default ApiResponse;
+
 /**
  * Created by rchyla on 3/3/14.
  */

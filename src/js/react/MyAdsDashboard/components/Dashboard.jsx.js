@@ -1,10 +1,8 @@
-define([
-  'underscore',
-  'react',
-  'js/react/MyAdsDashboard/components/TemplatePill.jsx',
-  'js/react/MyAdsDashboard/components/ActionsDropdown.jsx',
-  'prop-types',
-], function(_, React, TemplatePill, ActionsDropdown, PropTypes) {
+import _ from 'underscore';
+import React from 'react';
+import TemplatePill from 'js/react/MyAdsDashboard/components/TemplatePill.jsx';
+import ActionsDropdown from 'js/react/MyAdsDashboard/components/ActionsDropdown.jsx';
+import PropTypes from 'prop-types';
 
   const getFriendlyDateString = (dateStr) => {
     const date = new Date(dateStr);
@@ -471,5 +469,5 @@ define([
     removeNotificationRequest: PropTypes.func,
   };
 
-  return MyAdsDashboard;
-});
+  export default MyAdsDashboard;
+

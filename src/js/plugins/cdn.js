@@ -1,4 +1,4 @@
-define([], function() {
+
 
   const CDN_URL = 'https://ads-assets.pages.dev';
 
@@ -47,5 +47,5 @@ define([], function() {
     },
   };
 
-  return cdn;
-});
+  export default cdn;
+

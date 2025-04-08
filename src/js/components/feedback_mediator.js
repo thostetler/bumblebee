@@ -7,29 +7,16 @@
  * and react on them
  */
 
-define([
-  'underscore',
-  'jquery',
-  'cache',
-  'js/components/generic_module',
-  'js/components/api_request',
-  'js/components/api_response',
-  'js/components/api_query_updater',
-  'js/components/api_feedback',
-  'js/components/pubsub_key',
-  'js/mixins/dependon',
-], function(
-  _,
-  $,
-  Cache,
-  GenericModule,
-  ApiRequest,
-  ApiResponse,
-  ApiQueryUpdater,
-  ApiFeedback,
-  PubSubKey,
-  Dependon
-) {
+import _ from 'underscore';
+import $ from 'jquery';
+import Cache from 'cache';
+import GenericModule from 'js/components/generic_module';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
+import ApiQueryUpdater from 'js/components/api_query_updater';
+import ApiFeedback from 'js/components/api_feedback';
+import PubSubKey from 'js/components/pubsub_key';
+import Dependon from 'js/mixins/dependon';
   var ErrorMediator = GenericModule.extend({
     initialize: function(options) {
       this._cache = this._getNewCache(options.cache);
@@ -204,5 +191,5 @@ define([
 
   _.extend(ErrorMediator.prototype, Dependon.BeeHive, Dependon.App);
 
-  return ErrorMediator;
-});
+  export default ErrorMediator;
+

@@ -1,23 +1,13 @@
 /*
  * This module contains a set of utilities to bootstrap Discovery app
  */
-define([
-  'underscore',
-  'backbone',
-  'js/components/api_query',
-  'js/components/api_request',
-  'js/components/pubsub_events',
-  'hbs',
-  'js/components/api_targets',
-], function(
-  _,
-  Backbone,
-  ApiQuery,
-  ApiRequest,
-  PubSubEvents,
-  HandleBars,
-  ApiTargets
-) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import PubSubEvents from 'js/components/pubsub_events';
+import HandleBars from 'hbs';
+import ApiTargets from 'js/components/api_targets';
   var startGlobalHandler = function() {
     var routes = [
       'classic-form',
@@ -331,5 +321,5 @@ define([
     },
   };
 
-  return Mixin;
-});
+  export default Mixin;
+

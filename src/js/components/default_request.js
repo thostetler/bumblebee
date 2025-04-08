@@ -2,12 +2,10 @@
  * Created by rchyla on 3/28/14.
  */
 
-define([
-  'underscore',
-  'backbone',
-  'js/components/api_query',
-  'js/components/multi_params',
-], function(_, Backbone, ApiQuery, MultiParams) {
+import _ from 'underscore';
+import Backbone from 'backbone';
+import ApiQuery from 'js/components/api_query';
+import MultiParams from 'js/components/multi_params';
   var basicCheck = function(s) {
     if (_.isString(s)) {
       return true;
@@ -159,5 +157,5 @@ define([
     },
   });
 
-  return Request;
-});
+  export default Request;
+

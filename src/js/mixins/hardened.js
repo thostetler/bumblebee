@@ -2,7 +2,8 @@
  * Created by rchyla on 3/18/14.
  */
 
-define(['underscore', 'js/components/facade'], function(_, Facade) {
+import _ from 'underscore';
+import Facade from 'js/components/facade';
   var Mixin = {
     /*
      * Creates a hardened instance of itself, it uses
@@ -25,5 +26,5 @@ define(['underscore', 'js/components/facade'], function(_, Facade) {
     },
   };
 
-  return Mixin;
-});
+  export default Mixin;
+

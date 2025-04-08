@@ -1,4 +1,4 @@
-define([], function() {
+
   // Action Constants
   const UPDATE_SELECTED = 'UPDATE_SELECTED';
   const UPDATE_MODE = 'UPDATE_MODE';
@@ -29,10 +29,10 @@ define([], function() {
     }
   };
 
-  return {
+  export default {
     updateSelected: updateSelected,
     updateMode: updateMode,
     sendEvent: sendEvent,
     reducer: reducer,
   };
-});
+

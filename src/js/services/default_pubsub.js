@@ -25,12 +25,10 @@
  * callbacks.
  * */
 
-define([
-  'backbone',
-  'underscore',
-  'js/components/generic_module',
-  'js/components/pubsub_key',
-], function(Backbone, _, GenericModule, PubSubKey) {
+import Backbone from 'backbone';
+import _ from 'underscore';
+import GenericModule from 'js/components/generic_module';
+import PubSubKey from 'js/components/pubsub_key';
   // unfortunately, these methods are not part of the BB.Events class
   // so we have to duplicate them iff we want to provide a queue which
   // handles failed callbacks
@@ -419,5 +417,5 @@ define([
     },
   });
 
-  return PubSub;
-});
+  export default PubSub;
+
