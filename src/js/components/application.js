@@ -128,100 +128,101 @@ define([
      * @param options
      */
     loadModules: function(config, options) {
-      var promises = [];
-      var self = this;
-      var promise;
 
-      var core = config.core;
-      if (core) {
-        _.each(['controllers', 'modules', 'services', 'objects'], function(
-          name
-        ) {
-          if (core[name]) {
-            promise = self._loadModules(name, core[name]);
-            if (promise) {
-              promises.push(promise);
-            }
-          }
-        });
-      }
-
-      // plugins and widgets will be lazy-loaded (default)
-
-      var plugins = config.plugins;
-      var widgets = config.widgets;
-
-      if (options && options.eagerLoad) {
-        if (plugins) {
-          promise = self._loadModules('plugins', plugins);
-          if (promise) promises.push(promise);
-        }
-
-        if (widgets) {
-          promise = self._loadModules('widgets', widgets);
-          if (promise) promises.push(promise);
-        }
-      } else {
-        if (plugins) {
-          _.each(plugins, function(value, key) {
-            var x = {};
-            x[key] = value;
-            self.__plugins.add(
-              key,
-              self._loadModules('plugins', x, false, true)
-            );
-          });
-        }
-        if (widgets) {
-          _.each(widgets, function(value, key) {
-            var x = {};
-            x[key] = value;
-            self.__widgets.add(
-              key,
-              self._loadModules('widgets', x, false, true)
-            );
-          });
-        }
-      }
-
-      // hack, so that $.when() always returns []
-      promises.length === 1 && promises.push(promise);
-
-      // add a handler for updating the app loading bar
-      let count = 0;
-      promises.map((p) =>
-        p.then(() => {
-          self.logModuleLoaded((count += 1), promises.length);
-        })
-      );
-
-      var bigPromise = $.Deferred();
-      $.when
-        .apply($, promises)
-        .then(function() {
-          _.each(arguments, function(promisedValues, idx) {
-            if (_.isArray(promisedValues)) {
-              if (self.debug) {
-                console.log('application: registering ' + promisedValues[0]);
-              }
-
-              self._registerLoadedModules.apply(self, promisedValues);
-            }
-          });
-        })
-        .done(function() {
-          bigPromise.resolve();
-        })
-        .fail(function() {
-          console.error(
-            'Generic error - we were not successul in loading all modules for config',
-            config
-          );
-          if (arguments.length) console.error(arguments);
-          bigPromise.reject.apply(bigPromise, arguments);
-        });
-
-      return bigPromise.promise();
+      // var promises = [];
+      // var self = this;
+      // var promise;
+      //
+      // var core = config.core;
+      // if (core) {
+      //   _.each(['controllers', 'modules', 'services', 'objects'], function(
+      //     name
+      //   ) {
+      //     if (core[name]) {
+      //       promise = self._loadModules(name, core[name]);
+      //       if (promise) {
+      //         promises.push(promise);
+      //       }
+      //     }
+      //   });
+      // }
+      //
+      // // plugins and widgets will be lazy-loaded (default)
+      //
+      // var plugins = config.plugins;
+      // var widgets = config.widgets;
+      //
+      // if (options && options.eagerLoad) {
+      //   if (plugins) {
+      //     promise = self._loadModules('plugins', plugins);
+      //     if (promise) promises.push(promise);
+      //   }
+      //
+      //   if (widgets) {
+      //     promise = self._loadModules('widgets', widgets);
+      //     if (promise) promises.push(promise);
+      //   }
+      // } else {
+      //   if (plugins) {
+      //     _.each(plugins, function(value, key) {
+      //       var x = {};
+      //       x[key] = value;
+      //       self.__plugins.add(
+      //         key,
+      //         self._loadModules('plugins', x, false, true)
+      //       );
+      //     });
+      //   }
+      //   if (widgets) {
+      //     _.each(widgets, function(value, key) {
+      //       var x = {};
+      //       x[key] = value;
+      //       self.__widgets.add(
+      //         key,
+      //         self._loadModules('widgets', x, false, true)
+      //       );
+      //     });
+      //   }
+      // }
+      //
+      // // hack, so that $.when() always returns []
+      // promises.length === 1 && promises.push(promise);
+      //
+      // // add a handler for updating the app loading bar
+      // let count = 0;
+      // promises.map((p) =>
+      //   p.then(() => {
+      //     self.logModuleLoaded((count += 1), promises.length);
+      //   })
+      // );
+      //
+      // var bigPromise = $.Deferred();
+      // $.when
+      //   .apply($, promises)
+      //   .then(function() {
+      //     _.each(arguments, function(promisedValues, idx) {
+      //       if (_.isArray(promisedValues)) {
+      //         if (self.debug) {
+      //           console.log('application: registering ' + promisedValues[0]);
+      //         }
+      //
+      //         self._registerLoadedModules.apply(self, promisedValues);
+      //       }
+      //     });
+      //   })
+      //   .done(function() {
+      //     bigPromise.resolve();
+      //   })
+      //   .fail(function() {
+      //     console.error(
+      //       'Generic error - we were not successul in loading all modules for config',
+      //       config
+      //     );
+      //     if (arguments.length) console.error(arguments);
+      //     bigPromise.reject.apply(bigPromise, arguments);
+      //   });
+      //
+      // return bigPromise.promise();
     },
 
     getBeeHive: function() {
@@ -357,71 +358,71 @@ define([
       ignoreErrors,
       lazyLoad
     ) {
-      var self = this;
-      this._checkPrescription(modulePrescription);
-
-      if (this.debug) {
-        console.log('application: loading ' + sectionName, modulePrescription);
-      }
-
-      var ret = {};
-
-      // create the promise object - load the modules asynchronously
-      var implNames = _.keys(modulePrescription);
-      var impls = _.values(modulePrescription);
-      var defer = $.Deferred();
-
-      var callback = function() {
-        if (self.debug) console.timeEnd('startLoading' + sectionName);
-        var modules = arguments;
-        _.each(implNames, function(name, idx, implList) {
-          ret[name] = modules[idx];
-        });
-        try {
-          defer.resolve(sectionName, ret);
-        } catch (e) {
-          /**
-           * CATCH ALL
-           *
-           * This will capture run-away errors from any loaded module.
-           * For now, just dump them into the 404 page (if its loaded)
-           */
-          const pubsub = self.getService('PubSub').getHardenedInstance();
-          pubsub.publish(pubsub.NAVIGATE, '404', {
-            message: `Page Not Found or Internal Error
-              <p>Error: <code>${e.message}</code></p>
-            `,
-          });
-        }
-        if (self.debug) {
-          console.log(
-            'Loaded: type=' + sectionName + ' state=' + defer.state(),
-            ret
-          );
-        }
-      };
-
-      var errback = function(err) {
-        var symbolicName = err.requireModules && err.requireModules[0];
-        if (self.debug)
-          console.warn('Error loading impl=' + symbolicName, err.requireMap);
-        if (ignoreErrors) {
-          if (self.debug) console.warn('Ignoring error');
-          return;
-        }
-        defer.reject(err);
-      };
-
-      var run = function() {
-        if (self.debug) console.time('startLoading' + sectionName);
-        // start loading the modules
-        // console.log('loading', implNames, impls)
-        require(impls, callback, errback);
-        return self._setTimeout(defer).promise();
-      };
-
-      run.lazyLoad = lazyLoad;
-      return lazyLoad ? run : run();
+      // var self = this;
+      // this._checkPrescription(modulePrescription);
+      //
+      // if (this.debug) {
+      //   console.log('application: loading ' + sectionName, modulePrescription);
+      // }
+      //
+      // var ret = {};
+      //
+      // // create the promise object - load the modules asynchronously
+      // var implNames = _.keys(modulePrescription);
+      // var impls = _.values(modulePrescription);
+      // var defer = $.Deferred();
+      //
+      // var callback = function() {
+      //   if (self.debug) console.timeEnd('startLoading' + sectionName);
+      //   var modules = arguments;
+      //   _.each(implNames, function(name, idx, implList) {
+      //     ret[name] = modules[idx];
+      //   });
+      //   try {
+      //     defer.resolve(sectionName, ret);
+      //   } catch (e) {
+      //     /**
+      //      * CATCH ALL
+      //      *
+      //      * This will capture run-away errors from any loaded module.
+      //      * For now, just dump them into the 404 page (if its loaded)
+      //      */
+      //     const pubsub = self.getService('PubSub').getHardenedInstance();
+      //     pubsub.publish(pubsub.NAVIGATE, '404', {
+      //       message: `Page Not Found or Internal Error
+      //         <p>Error: <code>${e.message}</code></p>
+      //       `,
+      //     });
+      //   }
+      //   if (self.debug) {
+      //     console.log(
+      //       'Loaded: type=' + sectionName + ' state=' + defer.state(),
+      //       ret
+      //     );
+      //   }
+      // };
+      //
+      // var errback = function(err) {
+      //   var symbolicName = err.requireModules && err.requireModules[0];
+      //   if (self.debug)
+      //     console.warn('Error loading impl=' + symbolicName, err.requireMap);
+      //   if (ignoreErrors) {
+      //     if (self.debug) console.warn('Ignoring error');
+      //     return;
+      //   }
+      //   defer.reject(err);
+      // };
+      //
+      // var run = function() {
+      //   if (self.debug) console.time('startLoading' + sectionName);
+      //   // start loading the modules
+      //   // console.log('loading', implNames, impls)
+      //   require(impls, callback, errback);
+      //   return self._setTimeout(defer).promise();
+      // };
+      //
+      // run.lazyLoad = lazyLoad;
+      // return lazyLoad ? run : run();
     },
 
     _setTimeout: function(deferred) {

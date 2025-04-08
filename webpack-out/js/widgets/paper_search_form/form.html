@@ -1,0 +1,130 @@
+<div class="row" style="margin-bottom: 15px">
+  <div class="col-sm-12 well well-default">
+    <form class="form-horizontal" data-form-type="journal">
+      <legend>Journal Search</legend>
+      <div class="col-sm-12">
+        <div class="form-group help-block">
+          A bibstem is an abbreviation that the ADS uses to identify a journal.
+          <a
+            href="http://adsabs.harvard.edu/abs_doc/journal_abbr.html"
+            target="_blank"
+            rel="noreferrer noopener"
+            >A full list is available here.</a
+          >
+          The input field below will autocomplete on the 1,000 most popular
+          journal names, allowing you to type "Astrophysical Journal", for
+          instance, to find the bibstem "ApJ".
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label for="bibstem">Publication</label>
+          <input
+            type="text"
+            name="bibstem"
+            id="bibstem"
+            class="form-control"
+            autofocus
+          />
+        </div>
+      </div>
+      <div class="col-sm-2 col-sm-offset-1">
+        <div class="form-group">
+          <label for="year">Year</label>
+          <input
+            type="text"
+            name="year"
+            id="year"
+            class="form-control"
+            maxlength="4"
+          />
+        </div>
+      </div>
+      <div class="col-sm-2 col-sm-offset-1">
+        <div class="form-group">
+          <label for="volume">Volume</label>
+          <input type="text" name="volume" id="volume" class="form-control" />
+        </div>
+      </div>
+      <div class="col-sm-2 col-sm-offset-1">
+        <div class="form-group">
+          <label for="page">Page/ID</label>
+          <input type="text" name="page" id="page" class="form-control" />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-search" aria-hidden="true"></i> Search
+      </button>
+      <button type="reset" class="btn btn-default">
+        <i class="fa fa-times" aria-hidden="true"></i> Clear
+      </button>
+    </form>
+  </div>
+  <div class="error-container" role="alert"></div>
+</div>
+
+<div class="row" style="margin-bottom: 15px">
+  <div class="well well-default col-sm-12">
+    <form class="form-horizontal" data-form-type="reference">
+      <legend>Reference Query</legend>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="reference">Reference</label>
+          <input
+            type="text"
+            name="reference"
+            id="reference"
+            class="form-control"
+            aria-describedby="reference_helper"
+            required
+          />
+          <span id="reference_helper" class="help-block"
+            >Enter a full reference string (eg Smith et al 2000, A&A 362, pp.
+            333-341)</span
+          >
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-search" aria-hidden="true"></i> Search
+      </button>
+      <button type="reset" class="btn btn-default">
+        <i class="fa fa-times" aria-hidden="true"></i> Clear
+      </button>
+    </form>
+  </div>
+  <div class="error-container" role="alert"></div>
+</div>
+
+<div class="row" style="margin-bottom: 15px">
+  <div class="well well-default col-sm-12">
+    <form class="form-horizontal" data-form-type="bibcodes">
+      <legend>Bibliographic Code Query</legend>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="bibcodes">List of Bibcodes</label>
+          <textarea
+            name="bibcodes"
+            id="bibcodes"
+            cols="30"
+            rows="5"
+            class="form-control"
+            aria-describedby="bibcodes_helper"
+            style="min-width: 100%; max-width: 100%"
+            required
+          ></textarea>
+          <span class="help-block" id="bibcodes_helper"
+            >Enter list of Bibcodes (e.g. 1989ApJ...342L..71R), one per
+            line.</span
+          >
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa fa-search" aria-hidden="true"></i> Search
+      </button>
+      <button type="reset" class="btn btn-default">
+        <i class="fa fa-times" aria-hidden="true"></i> Clear
+      </button>
+    </form>
+  </div>
+  <div class="error-container" role="alert"></div>
+</div>

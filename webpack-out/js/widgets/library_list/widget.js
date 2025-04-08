@@ -1,0 +1,439 @@
+define(['marionette', 'js/widgets/list_of_things/item_view', 'js/widgets/list_of_things/widget', 'js/widgets/list_of_things/paginated_view', 'js/widgets/list_of_things/model', 'hbs!js/widgets/library_list/templates/library-container', 'hbs!js/widgets/library_list/templates/library-item-edit', 'hbs!js/widgets/library_list/templates/empty-collection', 'js/mixins/link_generator_mixin', 'js/mixins/papers_utils', 'js/mixins/formatter', 'js/components/api_query', 'js/components/api_request', 'js/components/api_response', 'js/components/api_targets', 'js/mixins/add_stable_index_to_collection', 'js/mixins/add_secondary_sort', 'bootstrap', 'hbs!js/wraps/widget/loading/template', 'js/widgets/sort/widget.jsx', 'js/widgets/sort/redux/modules/sort-app'], function (Marionette, DefaultItemView, ListOfThingsWidget, ListOfThingsPaginatedContainerView, PaginatedCollection, LibraryContainer, LibraryItemEditTemplate, EmptyCollectionTemplate, LinkGeneratorMixin, PapersUtilsMixin, FormatMixin, ApiQuery, ApiRequest, ApiResponse, ApiTargets, PaginationMixin, SecondarySort, Bootstrap, loadingTemplate, SortWidget, SortActions) {
+  var LibraryItemView = DefaultItemView.extend({
+    template: LibraryItemEditTemplate,
+    triggers: {
+      'click .remove-record': 'removeRecord'
+    },
+    className: 'library-item s-library-item write-permission',
+    // there is some weirdness with the default render view emptying the element
+    render: Marionette.ItemView.prototype.render,
+    serializeData: function serializeData() {
+      var data = this.model.toJSON();
+      return _.extend(data, {
+        permission: Marionette.getOption(this, 'permission')
+      });
+    }
+  });
+  var LibraryEmptyView = Marionette.ItemView.extend({
+    template: function template(data) {
+      if (data.query || data.query === '') {
+        return EmptyCollectionTemplate(data);
+      }
+
+      return loadingTemplate(_.extend(data, {
+        widgetLoadingSize: 'big',
+        hideCloseButton: true
+      }));
+    }
+  });
+  var LibraryContainerView = ListOfThingsPaginatedContainerView.extend({
+    initialize: function initialize() {
+      this.sortWidget = new SortWidget();
+      ListOfThingsPaginatedContainerView.prototype.initialize.apply(this, arguments);
+      this.sortWidget.onSortChange = _.bind(this.onSortChange, this);
+    },
+    childView: LibraryItemView,
+    template: LibraryContainer,
+    className: 'library-detail-view',
+    childViewContainer: '.library-list-container',
+    emptyView: LibraryEmptyView,
+    events: {
+      'click a.page-control': 'changePageWithButton',
+      'keyup input.page-control': 'tabOrEnterChangePageWithInput',
+      'change #per-page-select': 'changePerPage',
+      'click #bulk-delete': 'bulkDelete',
+      'click #bulk-limit': 'bulkLimit',
+      'click #select-all-docs-cb': 'toggleAll',
+      'click #backToTopBtn': 'goToTop'
+    },
+    modelEvents: {
+      change: 'render'
+    },
+    onSortChange: function onSortChange() {
+      var _this$sortWidget$stor = this.sortWidget.store.getState(),
+          sort = _this$sortWidget$stor.sort,
+          dir = _this$sortWidget$stor.direction;
+
+      var newSort = sort.id + ' ' + dir;
+      this.model.set('sort', newSort);
+      this.trigger('changeSort');
+    },
+    goToTop: function goToTop() {
+      $(document.documentElement).animate({
+        scrollTop: 0
+      }, 'fast');
+    },
+    childViewOptions: function childViewOptions() {
+      if (this.model.get('editRecords')) {
+        return {
+          permission: true
+        };
+      }
+    },
+    emptyViewOptions: function emptyViewOptions() {
+      return {
+        model: this.model
+      };
+    },
+    childEvents: {
+      removeRecord: 'removeRecord'
+    },
+    removeRecord: function removeRecord(view) {
+      view.$('.remove-record').html('<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>');
+      var bibcode = view.model.get('bibcode');
+      this.trigger('removeRecord', bibcode);
+    },
+    bulkDelete: function bulkDelete() {
+      this.$('#bulk-delete').toggleClass('disabled').html('<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>');
+      this.trigger('bulkDelete');
+      this.model.set({
+        numSelected: false,
+        allSelected: false
+      });
+    },
+    bulkLimit: function bulkLimit() {
+      this.$('#bulk-limit').toggleClass('disabled').html('<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>');
+      this.trigger('bulkLimit');
+    },
+    toggleAll: function toggleAll(e) {
+      var flag = e.target.checked ? 'add' : 'remove';
+      this.model.set('allSelected', !this.model.get('allSelected'));
+      this.trigger('selectAllRecords', flag);
+    },
+    resetBulkDelete: function resetBulkDelete() {
+      this.trigger('selectAllRecords', 'remove');
+      this.model.set({
+        numSelected: false,
+        allSelected: false
+      });
+    },
+    render: function render() {
+      ListOfThingsPaginatedContainerView.prototype.render.apply(this, arguments);
+      this.$('#sort-container').html(this.sortWidget.render().el);
+      var numSelected = this.model.get('numSelected');
+      var $bulkDeleteBtn = this.$('#bulk-delete');
+      $bulkDeleteBtn.toggleClass('hidden', !(numSelected > 0)).html('Delete ' + numSelected + ' Record' + (numSelected > 1 ? 's' : ''));
+      var $bulkLimitBtn = this.$('#bulk-limit');
+      $bulkLimitBtn.toggleClass('hidden', !(numSelected > 0));
+      return this;
+    }
+  });
+  var LibraryCollectionView = ListOfThingsWidget.extend({
+    // called by the navigator
+    // this data comes from the router OR from library_individual widget
+    setData: function setData(data) {
+      // let library view (list of things widget) know about the new library id
+      this.model.set({
+        public: data.publicView,
+        libraryID: data.id,
+        editRecords: data.editRecords,
+        // do not show checkboxes on public libraries
+        showCheckboxes: !data.publicView
+      });
+      this.dispatchRequest();
+    },
+    initialize: function initialize(options) {
+      options = options || {};
+      options.collection = new PaginatedCollection();
+      options.view = new LibraryContainerView({
+        collection: options.collection,
+        model: this.model
+      });
+      ListOfThingsWidget.prototype.initialize.apply(this, [options]);
+      this.view.model = this.model; // clear the collection when the model is reset with a new bibcode
+      // and set the model to default values
+
+      this.listenTo(this.model, 'change:libraryID', function () {
+        this.reset();
+      });
+      this.listenTo(this.view, 'all', this.handleViewEvents);
+    },
+    changeSort: function changeSort() {
+      // cache sort before reset removes it
+      var cachedSort = this.model.get('sort');
+      this.reset();
+      this.dispatchRequest({
+        sort: cachedSort
+      });
+    },
+    defaultQueryArguments: {
+      fl: 'title,bibcode,author,keyword,pub,volume,year,links_data,[citations],property,esources,data,pubdate,abstract,publisher',
+      rows: 25,
+      start: 0,
+      sort: 'date desc'
+    },
+    activate: function activate(beehive) {
+      var pubsub = beehive.getService('PubSub');
+      pubsub.subscribe(pubsub.STORAGE_PAPER_UPDATE, _.bind(this.onStoragePaperUpdate, this));
+      ListOfThingsWidget.prototype.activate.apply(this, [].slice.apply(arguments));
+      this.view.sortWidget.activate(beehive);
+      this.updateSortWidget();
+    },
+    updateSortWidget: function updateSortWidget(query) {
+      var sortWidget = this.view.sortWidget;
+      var query = query || this.getCurrentQuery();
+      query = query.toJSON();
+      var sortStr = sortWidget.extractSort(query && query.sort && query.sort[0] || '');
+      sortWidget.store.dispatch(SortActions.setQuery(query));
+      sortWidget.store.dispatch(SortActions.setSort(sortStr.sort, true));
+      sortWidget.store.dispatch(SortActions.setDirection(sortStr.direction, true));
+      sortWidget.store.dispatch(SortActions.setLocked(false));
+    },
+    composeRequest: function composeRequest(apiQuery) {
+      var endpoint = ApiTargets.LIBRARIES + '/' + this.model.get('libraryID');
+      return new ApiRequest({
+        target: endpoint,
+        query: apiQuery,
+        options: {
+          context: this,
+          contentType: 'application/x-www-form-urlencoded',
+          done: this.createApiResponse.bind(this, apiQuery),
+          fail: this.handleError
+        }
+      });
+    },
+    handleError: function handleError(err) {
+      console.error('data for library list view not received', err);
+    },
+    updatePaginationOnDelete: function updatePaginationOnDelete() {
+      var deleted = this.model.get('itemDeleted');
+
+      if (deleted && _.isNumber(deleted.id)) {
+        var _this$model$get = this.model.get('pageData'),
+            _this$model$get$perPa = _this$model$get.perPage,
+            perPage = _this$model$get$perPa === void 0 ? 25 : _this$model$get$perPa;
+
+        var newPage = Math.floor(deleted.id / perPage);
+
+        if (deleted.id !== 0 && deleted.id % perPage === 0) {
+          // go back 1 page
+          this.updatePagination({
+            page: newPage - 1
+          });
+        } else if (deleted.id % perPage !== 0) {
+          // stay on the current page
+          this.updatePagination({
+            page: newPage
+          });
+        }
+      }
+
+      this.model.set('itemDeleted', false);
+    },
+    createApiResponse: function createApiResponse(apiQuery, resp) {
+      // might have been an error
+      if (_.isString(resp.solr)) {
+        throw new Error(resp.solr + ": list of things widget can't render");
+      }
+
+      if (resp.solr.response.docs.length > 1) {
+        // otherwise show a message urging users to add to collection
+        this.model.set('hasRecords', true);
+      } // number of records actually found
+
+
+      this.model.set({
+        numRecords: resp.metadata.num_documents,
+        numFound: resp.solr.response.numFound,
+        numMissing: resp.metadata.num_documents - resp.solr.response.numFound
+      }); // set sort
+
+      var sort = resp.solr.responseHeader.params.sort;
+      this.model.set({
+        sort: sort.split(',')[0]
+      });
+      resp = new ApiResponse(resp.solr);
+      resp.setApiQuery(apiQuery);
+      this.processResponse(resp);
+      this.updateSortWidget(apiQuery);
+      this.updatePaginationOnDelete();
+    },
+    // this is called by list_of_things show:missing handler
+    // it's overriding default behavior of going through pubsub
+    executeRequest: function executeRequest(req) {
+      this.getBeeHive().getService('Api').request(req);
+    },
+    dispatchRequest: function dispatchRequest(queryOptions) {
+      // uses defaultQueryArguments
+      var q = this.customizeQuery(new ApiQuery());
+
+      if (queryOptions) {
+        q.set(queryOptions);
+      } // add bibcode sort as secondary option
+
+
+      SecondarySort.addSecondarySort(q);
+      var req = this.composeRequest(q);
+      this.getBeeHive().getService('Api').request(req);
+    },
+    processDocs: function processDocs(apiResponse, docs, paginationInfo) {
+      this.view.resetBulkDelete();
+      if (!apiResponse.has('response')) return [];
+      var params = apiResponse.get('response');
+      var start = params.start || paginationInfo.start || 0;
+      docs = PaginationMixin.addPaginationToDocs(docs, start); // check for normalized citation count, this will change display of "cited:N"
+
+      var sortStr = this.view.sortWidget.store.getState().sort.id;
+      var normCiteSort = /citation_count_norm/gi.test(sortStr);
+
+      _.each(docs, function (d, i) {
+        d.identifier = d.bibcode ? d.bibcode : d.identifier;
+        d.normCiteSort = normCiteSort;
+        var maxAuthorNames = 3;
+
+        if (d.author && d.author.length > maxAuthorNames) {
+          d.extraAuthors = d.author.length - maxAuthorNames;
+          var shownAuthors = d.author.slice(0, maxAuthorNames);
+        } else if (d.author) {
+          shownAuthors = d.author;
+        }
+
+        if (d.author) {
+          var l = shownAuthors.length - 1;
+          d.authorFormatted = _.map(shownAuthors, function (d, i) {
+            if (i == l || l == 0) {
+              return d; // last one, or only one
+            }
+
+            return d + ';';
+          });
+        }
+
+        if (d['[citations]'] && d['[citations]'].num_citations > 0) {
+          d.num_citations = this.formatNum(d['[citations]'].num_citations);
+        } else {
+          // formatNum would return "0" for zero, which would then evaluate to true in the template
+          d.num_citations = 0;
+        }
+
+        d.formattedDate = d.pubdate ? this.formatDate(d.pubdate) : undefined;
+        d.shortAbstract = d.abstract ? this.shortenAbstract(d.abstract) : undefined;
+        return d;
+      }, this);
+
+      try {
+        docs = this.parseLinksData(docs);
+      } catch (e) {// do nothing
+      }
+
+      return docs;
+    },
+    onStoragePaperUpdate: function onStoragePaperUpdate() {
+      var appStorage;
+
+      if (this.hasBeeHive() && this.getBeeHive().hasObject('AppStorage')) {
+        appStorage = this.getBeeHive().getObject('AppStorage');
+      } else {
+        console.warn('AppStorage object disapperared!');
+        return;
+      }
+
+      this.collection.each(function (m) {
+        if (appStorage.isPaperSelected(m.get('identifier'))) {
+          m.set('chosen', true);
+        } else {
+          m.set('chosen', false);
+        }
+      });
+      this.hiddenCollection.each(function (m) {
+        if (appStorage.isPaperSelected(m.get('identifier'))) {
+          m.set('chosen', true);
+        } else {
+          m.set('chosen', false);
+        }
+      });
+      var numSelected = this.collection.where({
+        chosen: true
+      }).length;
+      this.view.model.set('numSelected', numSelected);
+    },
+    reset: function reset() {
+      this.model.set({
+        hasRecords: false
+      });
+      ListOfThingsWidget.prototype.reset.apply(this, arguments);
+    },
+    handleViewEvents: function handleViewEvents(event, arg1, arg2) {
+      var that = this;
+
+      switch (event) {
+        case 'changeSort':
+          this.changeSort(arg1);
+          break;
+
+        case 'selectAllRecords':
+          var bibs = this.collection.pluck('bibcode');
+          var pubsub = this.getPubSub();
+          pubsub.publish(pubsub.BULK_PAPER_SELECTION, bibs, arg1);
+          break;
+
+        case 'bulkDelete':
+          var chosen = _.map(this.collection.where({
+            chosen: true
+          }), function (m) {
+            return m.get('bibcode');
+          });
+
+          if (chosen.length > 0) {
+            var data = {
+              bibcode: chosen,
+              action: 'remove'
+            },
+                id = this.model.get('libraryID');
+            this.getBeeHive().getObject('LibraryController').updateLibraryContents(id, data).done(function () {
+              var deleted = that.collection.find(function (m) {
+                return m.get('bibcode') === chosen[0];
+              });
+              that.reset(); // flash a success message
+
+              that.model.set('itemDeleted', {
+                id: deleted.id
+              });
+              var data = that.model.get('sort') ? {
+                sort: that.model.get('sort')
+              } : {};
+              that.dispatchRequest(data);
+            });
+          }
+
+          break;
+
+        case 'bulkLimit':
+          var ps = this.getPubSub();
+          ps.publish(ps.CUSTOM_EVENT, 'second-order-search/limit');
+          break;
+
+        case 'removeRecord':
+          // from library list view
+          var data = {
+            bibcode: [arg1],
+            action: 'remove'
+          };
+          var id = this.model.get('libraryID');
+          this.getBeeHive().getObject('LibraryController').updateLibraryContents(id, data).done(function () {
+            var deleted = that.collection.find(function (m) {
+              return m.get('bibcode') === arg1;
+            });
+            that.reset(); // flash a success message
+
+            that.model.set('itemDeleted', {
+              id: deleted.id
+            });
+            var data = that.model.get('sort') ? {
+              sort: that.model.get('sort')
+            } : {};
+            that.dispatchRequest(data);
+          });
+          break;
+      }
+    }
+  });
+
+  _.extend(LibraryCollectionView.prototype, LinkGeneratorMixin);
+
+  _.extend(LibraryCollectionView.prototype, PapersUtilsMixin);
+
+  _.extend(LibraryCollectionView.prototype, FormatMixin);
+
+  return LibraryCollectionView;
+});

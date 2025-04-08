@@ -1,0 +1,280 @@
+/* keeps the top container for the search bar from collapsing when
+s-search-bar-motion is applied */
+.s-stable-search-bar-height {
+  min-height: 120px;
+  @extend .border-default-light;
+}
+
+@mixin container-fixed($gutter: $grid-gutter-width) {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: floor(($gutter / 2));
+  padding-right: ceil(($gutter / 2));
+  @include clearfix;
+}
+
+.loading-screen {
+  @include container-fixed(30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  color: $gray-light;
+  font-weight: 300;
+  width: 100%;
+  @media only screen and (min-width: 768px) {
+    font-size: 2rem;
+    min-height: 50vh;
+    width: auto;
+  }
+
+  #loading-screen-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.03em;
+    text-align: center;
+    .logo__astrophysics {
+      font-weight: 300;
+      color: $gray-light;
+    }
+    .logo__data-system {
+      color: lighten($gray-light, 12%);
+    }
+    @media only screen and (min-width: 768px) {
+      font-size: 5rem;
+    }
+  }
+
+  .progress {
+    margin-bottom: 0;
+  }
+
+  #basic-html-message {
+    font-size: 1rem;
+    margin-top: 20px;
+    text-align: center;
+    @media only screen and (min-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.loading-screen__loading {
+  position: relative;
+  top: -40px;
+  font-size: 0.5em;
+}
+
+.hidden-col {
+  width: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.btn-expand {
+  display: none;
+
+  .descriptor {
+    display: none;
+  }
+
+  //show in desktops
+  @media (min-width: $screen-sm-min) {
+    display: inline-block;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+    &:hover {
+      box-shadow: 1px 1px 5px darken($gray-light, 4%);
+    }
+  }
+}
+
+.left-expand {
+  margin-top: 15px;
+}
+
+.left-expand i {
+  color: $gray;
+  @extend .fa;
+  @extend .fa-lg;
+  &:before {
+    content: $fa-var-angle-double-left;
+  }
+}
+
+.right-expand {
+  margin-top: 15px;
+}
+
+.right-expand i {
+  color: $gray;
+  @extend .fa;
+  @extend .fa-lg;
+  &:before {
+    content: $fa-var-angle-double-right;
+  }
+}
+
+.btn-reversed i {
+  transform: rotate(-180deg);
+}
+
+/* Styles for results and abstract page */
+
+.s-main-content-container {
+  @extend .clearfix;
+  @extend .s-ads-card;
+  min-height: 600px;
+  padding-bottom: 20px;
+  position: relative;
+  margin: 0 auto 40px auto;
+}
+
+//this class is useful if you want to apply  a background to
+//div[data-widget] when the widget doesnt always need the background
+
+.s-inner-div-background {
+  margin: 30px 0;
+  > div {
+    @extend .s-main-content-container;
+    margin: 0;
+  }
+}
+
+.s-dynamic-page-body {
+  background-color: $darker-background;
+  min-height: 500px;
+  @media screen and (max-width: $screen-md-max) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.s-abstract-content {
+  #right-col-container {
+    padding-left: 0;
+
+    @media screen and (min-width: $screen-xs-max) {
+      float: right;
+    }
+  }
+}
+
+.s-left-column {
+  padding-right: 0;
+}
+
+.s-abstract-content {
+  padding-left: 0;
+}
+
+/* Styles just for results page */
+
+.s-results-page-layout {
+  .s-left-col-container {
+    @extend .s-ads-card;
+    padding: 5px;
+    padding-bottom: 15px;
+    min-height: 500px;
+    margin-bottom: 25px;
+    @extend .unselectable;
+  }
+  @extend .container-fluid;
+}
+
+.s-right-column {
+  padding-right: 0;
+}
+
+.btn-upside-down i {
+  transform: rotate(-180deg);
+}
+
+#body-template-container {
+  min-height: 550px;
+}
+
+#right-col-toggle {
+  position: absolute;
+  top: 1.25%;
+  right: 2%;
+  background-color: white;
+}
+
+.right-col-close {
+  @extend .fa;
+  @extend .fa-lg;
+  &:before {
+    content: $fa-var-chevron-circle-left;
+  }
+}
+
+.right-col-open {
+  @extend .fa;
+  @extend .fa-lg;
+  &:before {
+    content: $fa-var-chevron-circle-right;
+  }
+}
+
+.navbar h1 {
+  color: $gray-light;
+  margin: 0;
+  padding: 0;
+  font-size: 25px;
+}
+
+/*
+Styles for Abstract Page
+*/
+.s-right-col-widget-container {
+  @extend .s-ads-card;
+  padding: 5%;
+  margin-bottom: 10px;
+
+  @media only screen and (max-width: $screen-md-max) {
+    font-size: smaller;
+  }
+
+  @media only screen and (max-width: $screen-xs-max) {
+    font-size: large;
+  }
+
+  li {
+    margin: 0 0 1% 6%;
+  }
+}
+
+.s-right-col-widget-title {
+  margin-top: 2px;
+  @extend .secondary-header;
+}
+
+.s-right-col-widget-title.disabled {
+  color: $gray-lighter;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+.s-results-middle-column {
+  @media (min-width: $screen-sm-min) {
+    float: right;
+  }
+
+  @media (min-width: $screen-md-min) {
+    float: left;
+  }
+
+  @media screen and (max-width: $screen-xs-max) {
+    padding: 0;
+  }
+}
+
+.s-right-column {
+  @media (min-width: $screen-md-min) {
+    padding-left: 0;
+    padding-right: 15px;
+  }
+}
