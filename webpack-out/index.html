@@ -220,66 +220,66 @@
     </script>
 
     <!-- Add Sentry SDK -->
-    <script
-      src="https://js.sentry-cdn.com/46062cbe0aeb7a3b2bb4c3a9b8cd1ac7.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      // Set the environment variable
-      window.process = { env: { NODE_ENV: window.ENV ?? 'production' } };
+<!--    <script-->
+<!--      src="https://js.sentry-cdn.com/46062cbe0aeb7a3b2bb4c3a9b8cd1ac7.min.js"-->
+<!--      crossorigin="anonymous"-->
+<!--    ></script>-->
+<!--    <script>-->
+<!--      // Set the environment variable-->
+<!--      window.process = { env: { NODE_ENV: window.ENV ?? 'production' } };-->
 
-      window.getSentry = (cb, errCb) => {
-        if (typeof errCb === 'function') {
-          errCb.call(null, new Error('Failed to get Sentry'));
-        }
-      };
+<!--      window.getSentry = (cb, errCb) => {-->
+<!--        if (typeof errCb === 'function') {-->
+<!--          errCb.call(null, new Error('Failed to get Sentry'));-->
+<!--        }-->
+<!--      };-->
 
-      window.sentryOnLoad = function() {
-        try {
-          Sentry.init({
-            dsn:
-              'https://46062cbe0aeb7a3b2bb4c3a9b8cd1ac7@o1060269.ingest.us.sentry.io/4507341192036352',
+<!--      window.sentryOnLoad = function() {-->
+<!--        try {-->
+<!--          Sentry.init({-->
+<!--            dsn:-->
+<!--              'https://46062cbe0aeb7a3b2bb4c3a9b8cd1ac7@o1060269.ingest.us.sentry.io/4507341192036352',-->
 
-            // Performance Monitoring
-            tracesSampleRate: window.ENV === 'development' ? 1.0 : 0.75,
-            debug: false,
-            tracePropagationTargets: [
-              'localhost',
-              /^\//, // match on same-origin requests only
-            ],
+<!--            // Performance Monitoring-->
+<!--            tracesSampleRate: window.ENV === 'development' ? 1.0 : 0.75,-->
+<!--            debug: false,-->
+<!--            tracePropagationTargets: [-->
+<!--              'localhost',-->
+<!--              /^\//, // match on same-origin requests only-->
+<!--            ],-->
 
-            // Session Replay
-            replaysSessionSampleRate: window.ENV === 'development' ? 1.0 : 0.1,
-            replaysOnErrorSampleRate: 0.5,
-            environment: window.ENV ?? 'production',
-            integrations: [
-              Sentry.browserTracingIntegration(),
-              Sentry.replayIntegration({
-                maskAllText: false,
-                blockAllMedia: false,
-                unmask: ['[name=q]'],
-              }),
-            ],
-          });
-        } catch (e) {
-          console.error('Could not initialize Sentry', e);
-        }
-      };
+<!--            // Session Replay-->
+<!--            replaysSessionSampleRate: window.ENV === 'development' ? 1.0 : 0.1,-->
+<!--            replaysOnErrorSampleRate: 0.5,-->
+<!--            environment: window.ENV ?? 'production',-->
+<!--            integrations: [-->
+<!--              Sentry.browserTracingIntegration(),-->
+<!--              Sentry.replayIntegration({-->
+<!--                maskAllText: false,-->
+<!--                blockAllMedia: false,-->
+<!--                unmask: ['[name=q]'],-->
+<!--              }),-->
+<!--            ],-->
+<!--          });-->
+<!--        } catch (e) {-->
+<!--          console.error('Could not initialize Sentry', e);-->
+<!--        }-->
+<!--      };-->
 
-      window.getSentry = function(cb, errCb = () => {}) {
-        try {
-          if (!window.Sentry) {
-            throw new Error('Sentry not found');
-          }
-          return cb.call(window, Sentry);
-        } catch (e) {
-          console.warn('unable to run sentry callback', e);
-          if (typeof errCb === 'function') {
-            errCb.call(window, e);
-          }
-        }
-      };
-    </script>
+<!--      window.getSentry = function(cb, errCb = () => {}) {-->
+<!--        try {-->
+<!--          if (!window.Sentry) {-->
+<!--            throw new Error('Sentry not found');-->
+<!--          }-->
+<!--          return cb.call(window, Sentry);-->
+<!--        } catch (e) {-->
+<!--          console.warn('unable to run sentry callback', e);-->
+<!--          if (typeof errCb === 'function') {-->
+<!--            errCb.call(window, e);-->
+<!--          }-->
+<!--        }-->
+<!--      };-->
+<!--    </script>-->
     <!-- END Add Sentry SDK -->
 
     <!-- start the discovery application -->

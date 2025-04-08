@@ -502,67 +502,36 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
       }
     },
     getWidget: function getWidget(name) {
-      var defer = $.Deferred();
       var self = this;
 
       if (arguments.length > 1) {
         var w = {};
-        var promises = [];
-
         _.each(arguments, function (x) {
-          var wName = x;
-          promises.push(self._getWidget(x).fail(function () {
+          try {
+            w[x] = self._getWidgetSync(x);
+          } catch (er) {
             console.error('Error loading: ' + x);
-
             _.each(w, function (val, key) {
               self.returnWidget(key);
               delete w[key];
             });
-
             throw er;
-          }).done(function (widget) {
-            w[wName] = widget;
-          }));
-        });
-
-        $.when.apply($, promises).done(function () {
-          defer.resolve(w);
-        });
-      } else if (name) {
-        this._getWidget(name).done(function (widget) {
-          defer.resolve(widget);
-        });
-      } // this happens right after the callback
-
-
-      setTimeout(function () {
-        defer.done(function (widget) {
-          if (_.isArray(name)) {
-            _.each(name, function (x) {
-              self.returnWidget(x);
-            });
-          } else {
-            self.returnWidget(name);
           }
         });
-      }, 1);
-      return defer.promise();
+        return w;
+      } else if (name) {
+        var widget = this._getWidgetSync(name);
+        this.returnWidget(name);
+        return widget;
+      }
     },
-    _getWidget: function _getWidget(name) {
-      return this._getThing('widget', name); // returns a promise
+    _getWidgetSync: function _getWidgetSync(name) {
+      return this._getThingSync('widget', name);
     },
-    _getThing: function _getThing(cat, name) {
-      var defer = $.Deferred();
+    _getThingSync: function _getThingSync(cat, name) {
       var self = this;
-
-      this._lazyLoadIfNecessary(cat, name).done(function () {
-        var w = self._getOrCreateBarbarian(cat, name);
-
-        self.incrRefCount(cat, name);
-        defer.resolve(w);
-      });
-
-      return defer.promise();
+      this._lazyLoadIfNecessary(cat, name);
+      return this._getOrCreateBarbarian(cat, name);
     },
     returnWidget: function returnWidget(name) {
       var ds = this.__barbarianInstances['widget:' + name]; // very rarely, a widget will want to be kept in memory
@@ -591,52 +560,43 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
      * @return {*}
      */
     getPlugin: function getPlugin(name) {
-      var defer = $.Deferred();
       var self = this;
       var w = {};
 
       if (arguments.length > 1) {
-        w = {};
-
         _.each(arguments, function (x) {
           if (!x) return;
 
           try {
-            w[x] = self._getPlugin(x);
+            w[x] = self._getPluginSync(x);
           } catch (er) {
             console.error('Error loading: ' + x);
-
             _.each(w, function (val, key) {
               self.returnPlugin(key);
               delete w[key];
             });
-
             throw er;
           }
         });
       } else if (name) {
-        w = this._getPlugin(name);
+        w = this._getPluginSync(name);
       }
 
-      setTimeout(function () {
-        defer.done(function (widget) {
-          if (_.isArray(name)) {
-            _.each(name, function (x) {
-              self.returnPlugin(x);
-            });
-          } else {
-            self.returnPlugin(name);
-          }
+      if (_.isArray(name)) {
+        _.each(name, function (x) {
+          self.returnPlugin(x);
         });
-      }, 1);
-      defer.resolve(w);
-      return defer.promise();
+      } else {
+        self.returnPlugin(name);
+      }
+
+      return w;
     },
     getPluginRefCount: function getPluginRefCount(name) {
       return this.getWidgetRefCount(name, 'plugin:');
     },
-    _getPlugin: function _getPlugin(name) {
-      return this._getThing('plugin', name);
+    _getPluginSync: function _getPluginSync(name) {
+      return this._getThingSync('plugin', name);
     },
 
     /**
@@ -741,7 +701,6 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
       return instance;
     },
     _lazyLoadIfNecessary: function _lazyLoadIfNecessary(cat, name) {
-      var defer = $.Deferred();
       var self = this;
       var loader;
       var placeholder;
@@ -757,20 +716,13 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
       var thing = placeholder.get(name);
 
       if (typeof thing === 'undefined' || thing === null) {
-        defer.reject(name + ' does not exist');
+        throw new Error(name + ' does not exist');
       } else if (thing && thing.lazyLoad) {
-        // load it
-        thing().done(function (cat, loadedModule) {
-          self._registerLoadedModules(cat, loadedModule);
-
-          defer.resolve();
-        });
-      } else {
-        // has already been loaded
-        defer.resolve();
+        // load it synchronously
+        var loadedModule = thing();
+        self._registerLoadedModules(cat, loadedModule);
       }
-
-      return defer.promise();
+      // else has already been loaded
     },
     _isBarbarianAlive: function _isBarbarianAlive(symbolicName) {
       return !!this.__barbarianInstances[symbolicName];
@@ -918,7 +870,6 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
     },
     getAllPlugins: function getAllPlugins(key) {
       key = key || 'plugin:';
-      var defer = $.Deferred();
       var w = [];
 
       _.each(this.__barbarianInstances, function (val, k) {
@@ -926,18 +877,16 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
       });
 
       var getter = key.indexOf('plugin:') > -1 ? this.getPlugin : this.getWidget;
-      getter.apply(this, w).done(function (widget) {
-        var out = [];
+      var widget = getter.apply(this, w);
+      var out = [];
 
-        if (w.length > 1) {
-          out = _.pairs(widget);
-        } else if (w.length === 1) {
-          out = [[w[0], widget]];
-        }
+      if (w.length > 1) {
+        out = _.pairs(widget);
+      } else if (w.length === 1) {
+        out = [[w[0], widget]];
+      }
 
-        defer.resolve(out);
-      });
-      return defer.promise();
+      return out;
     },
     getAllWidgets: function getAllWidgets() {
       return this.getAllPlugins('widget:');
@@ -960,12 +909,10 @@ define(['underscore', 'jquery', 'backbone', 'module', 'js/components/beehive', '
       this.triggerMethod(this.getAllControllers(), 'controllers', funcName, options);
       this.triggerMethod(this.getAllModules(), 'modules', funcName, options);
       var self = this;
-      this.getAllPlugins().done(function (plugins) {
-        if (plugins.length) self.triggerMethod(plugins, 'plugins', funcName, options);
-      });
-      this.getAllWidgets().done(function (widgets) {
-        if (widgets.length) self.triggerMethod(widgets, 'widgets', funcName, options);
-      });
+      var plugins = this.getAllPlugins();
+      if (plugins.length) this.triggerMethod(plugins, 'plugins', funcName, options);
+      var widgets = this.getAllWidgets();
+      if (widgets.length) this.triggerMethod(widgets, 'widgets', funcName, options);
       this.triggerMethod(this.getBeeHive().getAllServices(), 'BeeHive:services', funcName, options);
       this.triggerMethod(this.getBeeHive().getAllObjects(), 'BeeHive:objects', funcName, options);
     },

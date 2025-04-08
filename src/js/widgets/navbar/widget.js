@@ -239,14 +239,7 @@ NavWidget = BaseWidget.extend({
     this.qUpdater = new ApiQueryUpdater('NavBar');
 
     // get the current browser information
-    utils
-      .getBrowserInfo()
-      .then((data) => {
-        this.model.set('browser', data);
-      })
-      .fail(() => {
-        this.model.set('browser', null);
-      });
+    this.model.set('browser', utils.getBrowserInfo());
   },
 
   activate: function(beehive) {

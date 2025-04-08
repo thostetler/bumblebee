@@ -5,7 +5,7 @@
 import Backbone from 'backbone';
 import ApiQuery from 'js/components/api_query';
 import MultiParams from 'js/components/multi_params';
-import _ from 'underscore';
+import _ from 'lodash';
 
 var basicCheck = function(s) {
   if (_.isString(s)) {

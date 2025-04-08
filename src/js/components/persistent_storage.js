@@ -1,57 +1,76 @@
 import GenericModule from 'js/components/generic_module';
 import Mixins from 'js/mixins/dependon';
-import PersistJS from 'persist-js';
 import _ from 'underscore';
 
 const LocalStorage = GenericModule.extend({
   constructor: function(opts) {
     opts = opts || {};
-    this._store = this.createStore(opts.name || '');
+    this._storeName = opts.name || 'bumblebee-storage';
+    this._store = this.createStore();
+    this._requestPersistentStorage();
   },
 
-  createStore: function(name) {
-    return this._createStore(name);
-  },
-
-  _createStore: function(name) {
-    var s = PersistJS.Store(name, {
-      about: 'This is bumblebee persistent storage',
-      defer: true,
-    });
-    var keys = s.get('#keys');
-    if (!keys) {
-      s.set('#keys', '{}');
-    } else {
-      try {
-        keys = JSON.parse(keys);
-        if (!_.isObject(keys)) {
-          s.set('#keys', '{}');
+  createStore: function() {
+    return {
+      get: (key) => {
+        try {
+          const value = localStorage.getItem(this._getNamespacedKey(key));
+          return value ? JSON.parse(value) : null;
+        } catch (e) {
+          console.error('Error getting from storage:', e);
+          return null;
         }
-      } catch (e) {
-        s.set('#keys', '{}');
+      },
+      set: (key, value) => {
+        try {
+          localStorage.setItem(this._getNamespacedKey(key), JSON.stringify(value));
+          return true;
+        } catch (e) {
+          console.error('Error setting storage:', e);
+          return false;
+        }
+      },
+      remove: (key) => {
+        try {
+          localStorage.removeItem(this._getNamespacedKey(key));
+          return true;
+        } catch (e) {
+          console.error('Error removing from storage:', e);
+          return false;
+        }
       }
+    };
+  },
+
+  _requestPersistentStorage: function() {
+    if (navigator.storage && navigator.storage.persist) {
+      navigator.storage.persist()
+        .then(granted => {
+          if (granted) {
+            console.log('Persistent storage permission granted');
+          } else {
+            console.log('Persistent storage permission denied');
+          }
+        })
+        .catch(err => {
+          console.error('Error requesting persistent storage:', err);
+        });
     }
-    return s;
+  },
+
+  _getNamespacedKey: function(key) {
+    return `${this._storeName}:${key}`;
   },
 
   set: function(key, value) {
     this._checkKey(key);
-    if (!_.isString(value)) {
-      value = JSON.stringify(value);
-    }
     this._store.set(key, value);
     this._setKey(key);
   },
 
   get: function(key) {
     this._checkKey(key);
-    var v = this._store.get(key);
-    if (!v) return v;
-    try {
-      return JSON.parse(v);
-    } catch (e) {
-      return v;
-    }
+    return this._store.get(key);
   },
 
   remove: function(key) {
@@ -61,25 +80,30 @@ const LocalStorage = GenericModule.extend({
   },
 
   clear: function() {
-    var keys = this.get('#keys');
-    for (var k in keys) {
+    const keys = this.keys();
+    for (const k in keys) {
       this._store.remove(k);
     }
     this._store.set('#keys', '{}');
   },
 
   keys: function() {
-    return JSON.parse(this._store.get('#keys'));
+    const keysStr = this._store.get('#keys');
+    try {
+      return keysStr ? JSON.parse(keysStr) : {};
+    } catch (e) {
+      return {};
+    }
   },
 
   _setKey: function(key) {
-    var keys = this.keys() || {};
+    const keys = this.keys();
     keys[key] = 1;
     this._store.set('#keys', JSON.stringify(keys));
   },
 
   _delKey: function(key) {
-    var keys = this.keys() || {};
+    const keys = this.keys();
     delete keys[key];
     this._store.set('#keys', JSON.stringify(keys));
   },

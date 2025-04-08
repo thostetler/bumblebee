@@ -142,12 +142,12 @@ var NavigatorService = Navigator.extend({
       return defer.promise();
     });
 
-    this.set('404', async function(_widget, errorProps = {}) {
+    this.set('404', function(_widget, errorProps = {}) {
       // display error page
-      void (await app.getObject('MasterPageManager')).show('ErrorPage');
+       app.getObject('MasterPageManager').show('ErrorPage');
 
       // send any error props to the page to get displayed
-      void (await app.getWidget('ErrorPage')).setMessage(errorProps);
+      app.getWidget('ErrorPage').setMessage(errorProps);
 
       /**
        * only replace if this 404 page was truly an internal re-route,
@@ -419,8 +419,6 @@ var NavigatorService = Navigator.extend({
           .getObject('LibraryController')
           .getLibraryBibcodes(id)
           .done(function(bibcodes) {
-            // XXX - this was async in the original version; likely wrong
-            // one block should be main...
             app.getWidget('LibraryListWidget').then(function(listWidget) {
               var sort = listWidget.model.get('sort');
               app.getWidget(widgetName).then(function(subWidget) {
@@ -1096,9 +1094,6 @@ var NavigatorService = Navigator.extend({
           });
         return;
       } else if (orcidApi.hasAccess()) {
-        // XXX:rca = this block is async; showing modals even if the page under may be
-        // changing; likely not intended to be doing that but not sure...
-
         if (persistentStorage.get('orcidAuthenticating')) {
           persistentStorage.remove('orcidAuthenticating');
           // check if we need to trigger modal alert to ask user to fill in necessary data
@@ -1582,18 +1577,18 @@ var NavigatorService = Navigator.extend({
 
     // ---- react components ----
 
-    const createReactPage = async (id) => {
+    const createReactPage = (id) => {
       // get the page manager and inject a rendered widget
-      const pm = await app._getWidget('ReactPageManager');
-      const widget = await app._getWidget(id);
+      const pm = app._getWidget('ReactPageManager');
+      const widget = app._getWidget(id);
       pm.widgets[id] = widget.render();
       pm.view = pm.createView({ widgets: { [id]: pm.widgets[id] } });
-      await app.getObject('MasterPageManager').show('ReactPageManager', [id]);
+      app.getObject('MasterPageManager').show('ReactPageManager', [id]);
       return widget;
     };
 
-    this.set('ShowFeedback', async function(id, { subview, bibcode }) {
-      const widget = await createReactPage('ShowFeedback');
+    this.set('ShowFeedback', function(id, { subview, bibcode }) {
+      const widget = createReactPage('ShowFeedback');
       ReactRedux.batch(() => {
         widget.dispatch({ type: 'SET_FORM', payload: subview });
         widget.dispatch({ type: 'SET_BIBCODE', payload: bibcode });

@@ -1,4 +1,5 @@
 import analytics from 'analytics';
+import bowser from 'bowser';
 import $ from 'jquery';
 import ApiQuery from 'js/components/api_query';
 import ApiRequest from 'js/components/api_request';
@@ -51,25 +52,7 @@ const difference = function(obj, base) {
 
 // get the current browser information
 const getBrowserInfo = function() {
-  // do this inline, so we only request when necessary
-  const $dd = $.Deferred();
-
-  // reject after 3 seconds
-  const timeoutId = setTimeout(() => {
-    $dd.reject();
-  }, 3000);
-  window.require(
-    ['bowser'],
-    (bowser) => {
-      window.clearTimeout(timeoutId);
-      $dd.resolve(bowser.parse(window.navigator.userAgent));
-    },
-    () => {
-      $dd.reject();
-    }
-  );
-
-  return $dd.promise();
+  return bowser.parse(window.navigator.userAgent);
 };
 
 class TimingEvent {
