@@ -3,27 +3,22 @@
  * the application) - this is a companion to the 'router'
  */
 
-import $ from 'jquery';
-import Backbone from 'backbone';
-import _ from 'underscore';
 import Navigator from 'js/components/navigator';
-  var NavigatorService = Navigator.extend({
-    start: function(app) {
-      this.set('index-page', function() {
-        app
-          .getObject('MasterPageManager')
-          .show('PageManager', ['TargetWidget']);
-        this.route = '';
-      });
-      this.set('404', function() {
-        app.getObject('MasterPageManager').show(['ErrorWidget']);
-        this.route = '#404';
-      });
-      this.set('505', function() {
-        app.getObject('MasterPageManager').show(['ErrorWidget']);
-        this.route = '#505';
-      });
-    },
-  });
-  export default NavigatorService;
 
+var NavigatorService = Navigator.extend({
+  start: function(app) {
+    this.set('index-page', function() {
+      app.getObject('MasterPageManager').show('PageManager', ['TargetWidget']);
+      this.route = '';
+    });
+    this.set('404', function() {
+      app.getObject('MasterPageManager').show(['ErrorWidget']);
+      this.route = '#404';
+    });
+    this.set('505', function() {
+      app.getObject('MasterPageManager').show(['ErrorWidget']);
+      this.route = '#505';
+    });
+  },
+});
+export default NavigatorService;

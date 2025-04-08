@@ -8,7 +8,7 @@ js/widgets/library_import/templates/authentication-form-partial}} {{else}}
 
 <div>
   <button class="btn btn-primary-faded import-all-libraries">
-    <i class="fa fa-arrow-circle-down" aria-hidden="true"></i> Import all
+    <i aria-hidden="true" class="fa fa-arrow-circle-down"></i> Import all
     Classic libraries
   </button>
 </div>
@@ -17,8 +17,8 @@ js/widgets/library_import/templates/authentication-form-partial}} {{else}}
 
 <button
   class="btn btn-default collapsed"
-  data-toggle="collapse"
   data-target="#classic-form-container"
+  data-toggle="collapse"
 >
   <i class="toggle-icon"></i>
   Sign into a new Classic account
@@ -32,14 +32,14 @@ js/widgets/library_import/templates/authentication-form-partial}} {{else}}
 <div class="status">
   {{#if errorMessage}}
   <div class="alert alert-danger alert-dismissable" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
       <span aria-hidden="true">&times;</span>
     </button>
     {{{errorMessage}}}
   </div>
   {{/if}} {{#if successMessage}}
   <div class="alert alert-success alert-dismissable" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
       <span aria-hidden="true">&times;</span>
     </button>
 

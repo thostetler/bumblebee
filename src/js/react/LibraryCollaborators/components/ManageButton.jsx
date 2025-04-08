@@ -1,52 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Permissions } from 'js/react/LibraryCollaborators/constants';
-  const ManageButton = ({
-    permission = Permissions.READ,
-    onChange,
-    ...otherProps
-  }) => {
-    const handleChange = (e) => {
-      onChange(Permissions[e.currentTarget.value.toUpperCase()]);
-    };
+import PropTypes from 'prop-types';
+import React from 'react';
 
-    return (
-      <div>
-        <span className="sr-only" id="permission-selected">
-          {permission.label} permission selected
-        </span>
-        <select
-          key={`select-${permission.id}`}
-          id={`manage-permission-${permission.id}`}
-          aria-labelledby="permission-selected"
-          value={permission.id}
-          onChange={handleChange}
-          {...otherProps}
-          className="form-control"
-        >
-          {Object.values(Permissions).map((item) => (
-            <option
-              key={`option-${item.id}`}
-              value={item.id}
-              title={item.description}
-            >
-              {item.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
+const ManageButton = ({ permission = Permissions.READ, onChange, ...otherProps }) => {
+  const handleChange = (e) => {
+    onChange(Permissions[e.currentTarget.value.toUpperCase()]);
   };
 
-  ManageButton.defaultProps = {
-    permission: Permissions.READ,
-    onChange: () => {},
-  };
+  return (
+    <div>
+      <span className="sr-only" id="permission-selected">
+        {permission.label} permission selected
+      </span>
+      <select
+        key={`select-${permission.id}`}
+        id={`manage-permission-${permission.id}`}
+        aria-labelledby="permission-selected"
+        value={permission.id}
+        onChange={handleChange}
+        {...otherProps}
+        className="form-control"
+      >
+        {Object.values(Permissions).map((item) => (
+          <option key={`option-${item.id}`} value={item.id} title={item.description}>
+            {item.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
-  ManageButton.propTypes = {
-    permission: PropTypes.object,
-    onChange: PropTypes.func,
-  };
+ManageButton.defaultProps = {
+  permission: Permissions.READ,
+  onChange: () => {},
+};
 
-  export default ManageButton;
+ManageButton.propTypes = {
+  permission: PropTypes.object,
+  onChange: PropTypes.func,
+};
 
+export default ManageButton;

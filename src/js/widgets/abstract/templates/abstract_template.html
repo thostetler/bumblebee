@@ -23,11 +23,11 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
   Show affiliations
 </button>
 <span id="pending-aff" style="display: none;"
-><i class="fa fa-spinner fa-spin" aria-hidden="true"></i
+><i aria-hidden="true" class="fa fa-spinner fa-spin"></i
 ><span class="sr-only">Loading affiliations</span></span
 >
-<span id="fail-aff" class="text-danger" style="display: none;"
-><i class="fa fa-times" aria-hidden="true"></i
+<span class="text-danger" id="fail-aff" style="display: none;"
+><i aria-hidden="true" class="fa fa-times"></i
 ><span class="sr-only">affiliations loading</span></span
 >
 {{#if authorAff.length}} {{#if hasMoreAuthors}}
@@ -39,7 +39,7 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
 </button>
 {{/if}}
 
-<div id="authors-and-aff" class="s-authors-and-aff">
+<div class="s-authors-and-aff" id="authors-and-aff">
   <ul class="list-inline">
     {{#each authorAff}}
     <li class="author">
@@ -53,14 +53,14 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
           href="search/q=orcid:{{this.[2]}}&sort=date%20desc,%20bibcode%20desc"
         >
           <img
+            alt="search by orcid"
             class="inactive"
             src="../../styles/img/orcid-inactive.svg"
-            alt="search by orcid"
           />
           <img
+            alt="search by orcid"
             class="active hidden"
             src="../../styles/img/orcid-active.svg"
-            alt="search by orcid"
           />
         </a>
         {{else}} {{#compare this.[3] '-' operator="!=="}}
@@ -69,14 +69,14 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
           href="search/q=orcid:{{this.[3]}}&sort=date%20desc,%20bibcode%20desc"
         >
           <img
+            alt="search by orcid"
             class="inactive"
             src="../../styles/img/orcid-inactive.svg"
-            alt="search by orcid"
           />
           <img
+            alt="search by orcid"
             class="active hidden"
             src="../../styles/img/orcid-active.svg"
-            alt="search by orcid"
           />
         </a>
         {{else}} {{#compare this.[4] '-' operator="!=="}}
@@ -85,14 +85,14 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
           href="search/q=orcid:{{this.[4]}}&sort=date%20desc,%20bibcode%20desc"
         >
           <img
+            alt="search by orcid"
             class="inactive"
             src="../../styles/img/orcid-inactive.svg"
-            alt="search by orcid"
           />
           <img
+            alt="search by orcid"
             class="active hidden"
             src="../../styles/img/orcid-active.svg"
-            alt="search by orcid"
           />
         </a>
         {{/compare}} {{/compare}} {{/compare}}
@@ -120,14 +120,14 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
           href="search/q=orcid:{{this.[2]}}&sort=date%20desc,%20bibcode%20desc"
         >
           <img
+            alt="search by orcid"
             class="inactive"
             src="../../styles/img/orcid-inactive.svg"
-            alt="search by orcid"
           />
           <img
+            alt="search by orcid"
             class="active hidden"
             src="../../styles/img/orcid-active.svg"
-            alt="search by orcid"
           />
         </a>
         {{else}} {{#compare this.[3] '-' operator="!=="}}
@@ -136,14 +136,14 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
           href="search/q=orcid:{{this.[3]}}&sort=date%20desc,%20bibcode%20desc"
         >
           <img
+            alt="search by orcid"
             class="inactive"
             src="../../styles/img/orcid-inactive.svg"
-            alt="search by orcid"
           />
           <img
+            alt="search by orcid"
             class="active hidden"
             src="../../styles/img/orcid-active.svg"
-            alt="search by orcid"
           />
         </a>
         {{else}} {{#compare this.[4] '-' operator="!=="}}
@@ -152,14 +152,14 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
           href="search/q=orcid:{{this.[4]}}&sort=date%20desc,%20bibcode%20desc"
         >
           <img
+            alt="search by orcid"
             class="inactive"
             src="../../styles/img/orcid-inactive.svg"
-            alt="search by orcid"
           />
           <img
+            alt="search by orcid"
             class="active hidden"
             src="../../styles/img/orcid-active.svg"
-            alt="search by orcid"
           />
         </a>
         {{/compare}} {{/compare}} {{/compare}}
@@ -181,7 +181,7 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
   </p>
 </div>
 
-<br/>
+<br />
 <dl class="s-abstract-dl-horizontal">
   {{#if pub_raw}}
   <dt>Publication:</dt>
@@ -207,11 +207,11 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
       <a
         data-target="DOI"
         href="{{href}}"
-        target="_blank"
         rel="noreferrer noopener"
+        target="_blank"
       >{{doi}}</a
       >
-      <i class="fa fa-external-link" aria-hidden="true"></i>
+      <i aria-hidden="true" class="fa fa-external-link"></i>
     </p>
     {{/each}}
   </dd>
@@ -222,11 +222,11 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
       <a
         data-target="arXiv"
         href="{{arxiv.href}}"
-        target="_blank"
         rel="noreferrer noopener"
+        target="_blank"
       >{{arxiv.id}}</a
       >
-      <i class="fa fa-external-link" aria-hidden="true"></i>
+      <i aria-hidden="true" class="fa fa-external-link"></i>
     </span>
   </dd>
   {{/if}}
@@ -234,22 +234,22 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
   <dt>Bibcode:</dt>
   <dd>
     <button
-      class="btn btn-link copy-btn"
-      style="padding: 0px"
-      id="abs-bibcode-copy"
-      data-clipboard-text="{{bibcode}}"
       aria-label="copy bibcode"
+      class="btn btn-link copy-btn"
+      data-clipboard-text="{{bibcode}}"
+      id="abs-bibcode-copy"
+      style="padding: 0px"
     >
       {{ bibcode }}
       <i
-        class="icon-help"
         aria-hidden="true"
-        data-toggle="popover"
+        class="icon-help"
         data-container="body"
         data-content="The bibcode is assigned by the ADS as a unique identifier for the paper."
+        data-toggle="popover"
       ></i>
     </button>
-    <span id="abs-bibcode-copy-msg" class="text-info" style="display: none;"
+    <span class="text-info" id="abs-bibcode-copy-msg" style="display: none;"
     >Copied!</span
     >
   </dd>
@@ -277,15 +277,15 @@ hideCloseButton=true widgetLoadingSize="big"}} {{else if error}}
   </dd>
   {{/if}}
 </dl>
-<br/>
+<br />
 <a
   class="small pull-right text-faded"
   href="/feedback/correctabstract?bibcode={{bibcode}}"
   title="Provide feedback or suggest corrections"
 >
   <span class="fa-stack">
-    <i class="fa fa-comment-o fa-stack-2x" aria-hidden="true"></i>
-    <i class="fa fa-exclamation fa-stack-1x" aria-hidden="true"></i>
+    <i aria-hidden="true" class="fa fa-comment-o fa-stack-2x"></i>
+    <i aria-hidden="true" class="fa fa-exclamation fa-stack-1x"></i>
   </span>
   Feedback/Corrections?
 </a>

@@ -1,155 +1,155 @@
 import _ from 'underscore';
-  // Action Constants
-  const SET_DIRECTION = 'SET_DIRECTION';
-  const SET_SORT = 'SET_SORT';
-  const SET_QUERY = 'SET_QUERY';
-  const SET_LOCKED = 'SET_LOCKED';
+// Action Constants
+const SET_DIRECTION = 'SET_DIRECTION';
+const SET_SORT = 'SET_SORT';
+const SET_QUERY = 'SET_QUERY';
+const SET_LOCKED = 'SET_LOCKED';
 
-  // Action Creators
+// Action Creators
 
-  /**
-   * Takes a new sort object and dispatches the update to the state.  If only a
-   * string is passed, then it will attempt to find the value in the current
-   * list of options.
-   *
-   * @param {string|object} value - The new selected sort
-   * @param {boolean} silent - if true, a change event will not be triggered
-   */
-  const setSort = (value, silent) => (dispatch, getState, widget) => {
-    // if passed a string, convert it to one of our pre-defined options
-    if (_.isString(value)) {
-      const { options } = getState();
+/**
+ * Takes a new sort object and dispatches the update to the state.  If only a
+ * string is passed, then it will attempt to find the value in the current
+ * list of options.
+ *
+ * @param {string|object} value - The new selected sort
+ * @param {boolean} silent - if true, a change event will not be triggered
+ */
+const setSort = (value, silent) => (dispatch, getState, widget) => {
+  // if passed a string, convert it to one of our pre-defined options
+  if (_.isString(value)) {
+    const { options } = getState();
 
-      // attempt to find something, if not just provide the first option
-      value = options.find(({ id }) => id === value) || options[0];
-    }
+    // attempt to find something, if not just provide the first option
+    value = options.find(({ id }) => id === value) || options[0];
+  }
 
-    dispatch({ type: SET_SORT, value });
+  dispatch({ type: SET_SORT, value });
 
-    // only fire if we aren't being silent
-    !silent && widget.onSortChange();
-  };
+  // only fire if we aren't being silent
+  if (!silent) {
+    widget.onSortChange();
+  }
+};
 
-  /**
-   * Takes in a direction and dispatches a request
-   * if no direction is passed, it will toggle the current direction between
-   * `asc` and `desc`
-   *
-   * @param {string} [value] - The new direction
-   * @param {boolean} silent - if true, a change event will not be triggered
-   */
-  const setDirection = (value, silent) => (dispatch, getState, widget) => {
-    // if a direction isn't passed, then just toggle
-    if (_.isUndefined(value)) {
-      const { direction } = getState();
-      value = direction === 'asc' ? 'desc' : 'asc';
-    }
-    dispatch({ type: SET_DIRECTION, value });
+/**
+ * Takes in a direction and dispatches a request
+ * if no direction is passed, it will toggle the current direction between
+ * `asc` and `desc`
+ *
+ * @param {string} [value] - The new direction
+ * @param {boolean} silent - if true, a change event will not be triggered
+ */
+const setDirection = (value, silent) => (dispatch, getState, widget) => {
+  // if a direction isn't passed, then just toggle
+  if (_.isUndefined(value)) {
+    const { direction } = getState();
+    value = direction === 'asc' ? 'desc' : 'asc';
+  }
+  dispatch({ type: SET_DIRECTION, value });
 
-    // only fire if we aren't being silent
-    !silent && widget.onSortChange();
-  };
+  // only fire if we aren't being silent
+  if (!silent) {
+    widget.onSortChange();
+  }
+};
 
-  /**
-   * Set the current query
-   *
-   * @param {object} value - the new query
-   */
-  const setQuery = (value) => ({ type: SET_QUERY, value });
+/**
+ * Set the current query
+ *
+ * @param {object} value - the new query
+ */
+const setQuery = (value) => ({ type: SET_QUERY, value });
 
-  /**
-   * Set the current locked value
-   *
-   * @param {boolean} value - the new locked value
-   */
-  const setLocked = (value) => (dispatch, getState) => {
-    // grab the current timer (if exists)
-    const { lockTimer } = getState();
-    if (lockTimer) {
-      clearTimeout(lockTimer);
-    }
+/**
+ * Set the current locked value
+ *
+ * @param {boolean} value - the new locked value
+ */
+const setLocked = (value) => (dispatch, getState) => {
+  // grab the current timer (if exists)
+  const { lockTimer } = getState();
+  if (lockTimer) {
+    clearTimeout(lockTimer);
+  }
 
-    // create a new timer, which resets the locked state after a period of time
-    const timer = setTimeout(
-      () => dispatch({ type: SET_LOCKED, value: false }),
-      30000
-    );
+  // create a new timer, which resets the locked state after a period of time
+  const timer = setTimeout(() => dispatch({ type: SET_LOCKED, value: false }), 30000);
 
-    // dispatch the new state
-    dispatch({ type: SET_LOCKED, value, timer: timer });
-  };
+  // dispatch the new state
+  dispatch({ type: SET_LOCKED, value, timer: timer });
+};
 
-  // initial state
-  const initialState = {
-    options: [
-      {
-        id: 'author_count',
-        text: 'Author Count',
-        desc: 'sort by number of authors',
-      },
-      { id: 'bibcode', text: 'Bibcode', desc: 'sort by bibcode' },
-      {
-        id: 'citation_count',
-        text: 'Citation Count',
-        desc: 'sort by number of citations',
-      },
-      {
-        id: 'citation_count_norm',
-        text: 'Normalized Citation Count',
-        desc: 'sort by number of normalized citations',
-      },
-      {
-        id: 'classic_factor',
-        text: 'Classic Factor',
-        desc: 'sort using classical score',
-      },
-      {
-        id: 'first_author',
-        text: 'First Author',
-        desc: 'sort by first author',
-      },
-      { id: 'date', text: 'Date', desc: 'sort by publication date' },
-      {
-        id: 'entry_date',
-        text: 'Entry Date',
-        desc: 'sort by date work entered the database',
-      },
-      { id: 'read_count', text: 'Read Count', desc: 'sort by number of reads' },
-      { id: 'score', text: 'Score', desc: 'sort by the relative score' },
-    ],
-    sort: { id: 'date', text: 'Date' },
-    direction: 'desc',
-    query: null,
-    locked: false,
-    lockTimer: null,
-  };
+// initial state
+const initialState = {
+  options: [
+    {
+      id: 'author_count',
+      text: 'Author Count',
+      desc: 'sort by number of authors',
+    },
+    { id: 'bibcode', text: 'Bibcode', desc: 'sort by bibcode' },
+    {
+      id: 'citation_count',
+      text: 'Citation Count',
+      desc: 'sort by number of citations',
+    },
+    {
+      id: 'citation_count_norm',
+      text: 'Normalized Citation Count',
+      desc: 'sort by number of normalized citations',
+    },
+    {
+      id: 'classic_factor',
+      text: 'Classic Factor',
+      desc: 'sort using classical score',
+    },
+    {
+      id: 'first_author',
+      text: 'First Author',
+      desc: 'sort by first author',
+    },
+    { id: 'date', text: 'Date', desc: 'sort by publication date' },
+    {
+      id: 'entry_date',
+      text: 'Entry Date',
+      desc: 'sort by date work entered the database',
+    },
+    { id: 'read_count', text: 'Read Count', desc: 'sort by number of reads' },
+    { id: 'score', text: 'Score', desc: 'sort by the relative score' },
+  ],
+  sort: { id: 'date', text: 'Date' },
+  direction: 'desc',
+  query: null,
+  locked: false,
+  lockTimer: null,
+};
 
-  // reducer
-  const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case SET_SORT:
-        return { ...state, sort: action.value };
-      case SET_DIRECTION:
-        return { ...state, direction: action.value };
-      case SET_QUERY:
-        return { ...state, query: action.value };
-      case SET_LOCKED:
-        return {
-          ...state,
-          locked: action.value,
-          lockTimer: action.timer,
-        };
-      default:
-        return initialState;
-    }
-  };
+// reducer
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_SORT:
+      return { ...state, sort: action.value };
+    case SET_DIRECTION:
+      return { ...state, direction: action.value };
+    case SET_QUERY:
+      return { ...state, query: action.value };
+    case SET_LOCKED:
+      return {
+        ...state,
+        locked: action.value,
+        lockTimer: action.timer,
+      };
+    default:
+      return initialState;
+  }
+};
 
-  export default {
-    setSort: setSort,
-    setDirection: setDirection,
-    setQuery: setQuery,
-    setLocked: setLocked,
-    initialState: initialState,
-    reducer: reducer,
-  };
-
+export default {
+  setSort: setSort,
+  setDirection: setDirection,
+  setQuery: setQuery,
+  setLocked: setLocked,
+  initialState: initialState,
+  reducer: reducer,
+};

@@ -1,37 +1,37 @@
-import Dashboard from 'js/react/MyAdsDashboard/components/Dashboard.jsx';
-import { connect } from 'react-redux';
 import actions from 'js/react/MyAdsDashboard/actions/index';
+import Dashboard from 'js/react/MyAdsDashboard/components/Dashboard.jsx';
 import { page } from 'js/react/MyAdsDashboard/constants';
-  const mapStateToProps = ({ notifications, requests }) => ({
-    notifications,
-    getNotificationsRequest: requests.GET_NOTIFICATIONS,
-    updateNotificationRequest: requests.UPDATE_NOTIFICATION,
-    removeNotificationRequest: requests.REMOVE_NOTIFICATION,
-    getNotificationRequest: requests.GET_NOTIFICATION,
-  });
+import { connect } from 'react-redux';
 
-  const {
-    updateNotification,
-    getNotifications,
-    getNotification,
-    removeNotification,
-    goTo,
-    toggleActive,
-    importNotifications,
-    runQuery,
-  } = actions;
+const mapStateToProps = ({ notifications, requests }) => ({
+  notifications,
+  getNotificationsRequest: requests.GET_NOTIFICATIONS,
+  updateNotificationRequest: requests.UPDATE_NOTIFICATION,
+  removeNotificationRequest: requests.REMOVE_NOTIFICATION,
+  getNotificationRequest: requests.GET_NOTIFICATION,
+});
 
-  const actionCreators = {
-    updateNotification,
-    getNotifications,
-    getNotification,
-    removeNotification,
-    toggleActive,
-    importNotifications,
-    runQuery,
-    editNotification: (id) => getNotification(id),
-    createNewNotification: () => goTo(page.SELECT_TEMPLATE),
-  };
+const {
+  updateNotification,
+  getNotifications,
+  getNotification,
+  removeNotification,
+  goTo,
+  toggleActive,
+  importNotifications,
+  runQuery,
+} = actions;
 
-  export default connect(mapStateToProps, actionCreators)(Dashboard);
+const actionCreators = {
+  updateNotification,
+  getNotifications,
+  getNotification,
+  removeNotification,
+  toggleActive,
+  importNotifications,
+  runQuery,
+  editNotification: (id) => getNotification(id),
+  createNewNotification: () => goTo(page.SELECT_TEMPLATE),
+};
 
+export default connect(mapStateToProps, actionCreators)(Dashboard);

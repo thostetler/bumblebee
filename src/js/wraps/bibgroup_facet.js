@@ -1,27 +1,27 @@
-import _ from 'underscore';
 import FacetFactory from 'js/widgets/facet/factory';
-  export default function() {
-    var widget = FacetFactory.makeBasicCheckboxFacet({
-      facetField: 'bibgroup_facet',
-      facetTitle: 'Bib Groups',
-      logicOptions: {
-        single: ['limit to', 'exclude'],
-        multiple: ['and', 'or', 'exclude'],
+import _ from 'underscore';
+
+export default function() {
+  var widget = FacetFactory.makeBasicCheckboxFacet({
+    facetField: 'bibgroup_facet',
+    facetTitle: 'Bib Groups',
+    logicOptions: {
+      single: ['limit to', 'exclude'],
+      multiple: ['and', 'or', 'exclude'],
+    },
+    preprocessors: [
+      function(data) {
+        // swap the value for the name
+        // this makes sure that any entries with `/` are correctly shown
+        return _.map(data, function(o) {
+          if (o.value.indexOf('/') > -1) {
+            return _.assign(o, { name: o.value });
+          }
+          return o;
+        });
       },
-      preprocessors: [
-        function(data) {
-          // swap the value for the name
-          // this makes sure that any entries with `/` are correctly shown
-          return _.map(data, function(o) {
-            if (o.value.indexOf('/') > -1) {
-              return _.assign(o, { name: o.value });
-            }
-            return o;
-          });
-        },
-      ],
-    });
+    ],
+  });
 
-    return widget;
-  };
-
+  return widget;
+}

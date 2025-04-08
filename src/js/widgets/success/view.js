@@ -1,18 +1,18 @@
-import Marionette from 'marionette';
 import SuccessTemplate from 'hbs!js/widgets/success/success_template';
-  var SuccessView = Marionette.ItemView.extend({
-    initialize: function(options) {
-      _.extend(this, options);
-    },
+import Marionette from 'marionette';
 
-    title: 'Success!',
-    message: 'Check your email for further instructions.',
-    template: SuccessTemplate,
+var SuccessView = Marionette.ItemView.extend({
+  initialize: function(options) {
+    _.extend(this, options);
+  },
 
-    serializeData: function() {
-      return { title: this.title, message: this.message };
-    },
-  });
+  title: 'Success!',
+  message: 'Check your email for further instructions.',
+  template: SuccessTemplate,
 
-  export default SuccessView;
+  serializeData: function() {
+    return { title: this.title, message: this.message };
+  },
+});
 
+export default SuccessView;

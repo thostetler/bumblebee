@@ -2,187 +2,183 @@
  * A generic class that holds the application storage
  */
 
-import Backbone from 'backbone';
-import _ from 'underscore';
-import ApiQuery from 'js/components/api_query';
-import Hardened from 'js/mixins/hardened';
-import Dependon from 'js/mixins/dependon';
-  var AppStorage = Backbone.Model.extend({
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      _.bindAll(this, 'onPaperSelection', 'onBulkPaperSelection');
-      var pubsub = this.getPubSub();
-      pubsub.subscribe(pubsub.PAPER_SELECTION, this.onPaperSelection);
-      pubsub.subscribe(pubsub.BULK_PAPER_SELECTION, this.onBulkPaperSelection);
-    },
+import Backbone from "backbone";
+import ApiQuery from "js/components/api_query";
+import Dependon from "js/mixins/dependon";
+import Hardened from "js/mixins/hardened";
+import _ from "underscore";
 
-    initialize: function() {
-      this.on('change:selectedPapers', function(model) {
-        this._updateNumSelected();
-        if (this.hasPubSub()) var pubsub = this.getPubSub();
-        pubsub.publish(
-          pubsub.STORAGE_PAPER_UPDATE,
-          this.getNumSelectedPapers()
-        );
+var AppStorage = Backbone.Model.extend({
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    _.bindAll(this, 'onPaperSelection', 'onBulkPaperSelection');
+    var pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.PAPER_SELECTION, this.onPaperSelection);
+    pubsub.subscribe(pubsub.BULK_PAPER_SELECTION, this.onBulkPaperSelection);
+  },
+
+  initialize: function() {
+    this.on('change:selectedPapers', function(model) {
+      this._updateNumSelected();
+      if (this.hasPubSub()) var pubsub = this.getPubSub();
+      pubsub.publish(pubsub.STORAGE_PAPER_UPDATE, this.getNumSelectedPapers());
+    });
+  },
+
+  /**
+   * functions related to remembering/removing the
+   * current query object
+   * @param apiQuery
+   */
+  setCurrentQuery: function(apiQuery) {
+    if (!apiQuery) apiQuery = new ApiQuery();
+
+    if (!(apiQuery instanceof ApiQuery)) {
+      throw new Error('You must save ApiQuery instance');
+    }
+    this.set('currentQuery', apiQuery);
+    // save to storage
+    if (this.getBeeHive().hasService('PersistentStorage')) {
+      this.getBeeHive()
+        .getService('PersistentStorage')
+        .set('currentQuery', apiQuery.toJSON());
+    }
+
+    // provide this query to sentry
+    window.getSentry((sentry) => {
+      const currentQuery = apiQuery.toJSON();
+      Object.keys(currentQuery).forEach((key) => {
+        if (!key.startsWith('__') || key === 'fq') {
+          sentry.setTag(`query.${key}`, currentQuery[key].join(' | '));
+        }
       });
-    },
+    });
+  },
 
-    /**
-     * functions related to remembering/removing the
-     * current query object
-     * @param apiQuery
-     */
-    setCurrentQuery: function(apiQuery) {
-      if (!apiQuery) apiQuery = new ApiQuery();
+  setCurrentNumFound: function(numFound) {
+    this.set('numFound', numFound);
+  },
 
-      if (!(apiQuery instanceof ApiQuery)) {
-        throw new Error('You must save ApiQuery instance');
-      }
-      this.set('currentQuery', apiQuery);
-      // save to storage
-      if (this.getBeeHive().hasService('PersistentStorage')) {
-        this.getBeeHive()
-          .getService('PersistentStorage')
-          .set('currentQuery', apiQuery.toJSON());
-      }
+  getCurrentQuery: function() {
+    return this.get('currentQuery');
+  },
 
-      // provide this query to sentry
-      window.getSentry((sentry) => {
-        const currentQuery = apiQuery.toJSON();
-        Object.keys(currentQuery).forEach((key) => {
-          if (!key.startsWith('__') || key === 'fq') {
-            sentry.setTag(`query.${key}`, currentQuery[key].join(' | '));
-          }
-        });
+  hasCurrentQuery: function() {
+    return this.has('currentQuery');
+  },
+
+  /**
+   * Functions to remember save bibcodes (that were
+   * selected by an user)
+   *
+   * @returns {*}
+   */
+  hasSelectedPapers: function() {
+    return !!_.keys(this.get('selectedPapers')).length;
+  },
+
+  getSelectedPapers: function() {
+    return _.keys(this.get('selectedPapers') || {});
+  },
+
+  clearSelectedPapers: function() {
+    this.set('selectedPapers', {});
+  },
+
+  addSelectedPapers: function(identifiers) {
+    var data = _.clone(this.get('selectedPapers') || {});
+    var updated = false;
+
+    if (_.isArray(identifiers)) {
+      _.each(identifiers, function(idx) {
+        if (!data[idx]) {
+          data[idx] = true;
+          updated = true;
+        }
       });
-    },
+    } else if (!data[identifiers]) {
+      data[identifiers] = true;
+      updated = true;
+    }
+    if (updated) this.set('selectedPapers', data);
+  },
 
-    setCurrentNumFound: function(numFound) {
-      this.set('numFound', numFound);
-    },
+  isPaperSelected: function(identifier) {
+    if (_.isArray(identifier)) throw new Error('Identifier must be a string or a number');
+    var data = this.get('selectedPapers') || {};
+    return !!data[identifier];
+  },
 
-    getCurrentQuery: function() {
-      return this.get('currentQuery');
-    },
+  removeSelectedPapers: function(identifiers) {
+    var data = _.clone(this.get('selectedPapers') || {});
+    if (_.isArray(identifiers)) {
+      _.each(identifiers, function(i) {
+        delete data[i];
+      });
+    } else if (identifiers) {
+      delete data[identifiers];
+    } else {
+      data = {};
+    }
+    this.set('selectedPapers', data);
+  },
 
-    hasCurrentQuery: function() {
-      return this.has('currentQuery');
-    },
+  getNumSelectedPapers: function() {
+    return this._numSelectedPapers || 0;
+  },
 
-    /**
-     * Functions to remember save bibcodes (that were
-     * selected by an user)
-     *
-     * @returns {*}
-     */
-    hasSelectedPapers: function() {
-      return !!_.keys(this.get('selectedPapers')).length;
-    },
+  _updateNumSelected: function() {
+    this._numSelectedPapers = _.keys(this.get('selectedPapers') || {}).length;
+  },
 
-    getSelectedPapers: function() {
-      return _.keys(this.get('selectedPapers') || {});
-    },
+  onPaperSelection: function(data) {
+    if (this.isPaperSelected(data)) {
+      this.removeSelectedPapers(data);
+    } else {
+      this.addSelectedPapers(data);
+    }
+  },
 
-    clearSelectedPapers: function() {
-      this.set('selectedPapers', {});
-    },
+  onBulkPaperSelection: function(bibs, flag) {
+    if (flag == 'remove') {
+      this.removeSelectedPapers(bibs);
+      return;
+    }
+    this.addSelectedPapers(bibs);
+  },
 
-    addSelectedPapers: function(identifiers) {
-      var data = _.clone(this.get('selectedPapers') || {});
-      var updated = false;
+  // this is used by the auth and user settings widgets
+  setConfig: function(conf) {
+    this.set('dynamicConfig', conf);
+  },
 
-      if (_.isArray(identifiers)) {
-        _.each(identifiers, function(idx) {
-          if (!data[idx]) {
-            data[idx] = true;
-            updated = true;
-          }
-        });
-      } else if (!data[identifiers]) {
-        data[identifiers] = true;
-        updated = true;
-      }
-      if (updated) this.set('selectedPapers', data);
-    },
+  getConfigCopy: function() {
+    return JSON.parse(JSON.stringify(this.get('dynamicConfig')));
+  },
 
-    isPaperSelected: function(identifier) {
-      if (_.isArray(identifier))
-        throw new Error('Identifier must be a string or a number');
-      var data = this.get('selectedPapers') || {};
-      return !!data[identifier];
-    },
+  setDocumentTitle: function(title) {
+    this.set('documentTitle', title);
+  },
 
-    removeSelectedPapers: function(identifiers) {
-      var data = _.clone(this.get('selectedPapers') || {});
-      if (_.isArray(identifiers)) {
-        _.each(identifiers, function(i) {
-          delete data[i];
-        });
-      } else if (identifiers) {
-        delete data[identifiers];
-      } else {
-        data = {};
-      }
-      this.set('selectedPapers', data);
-    },
+  getDocumentTitle: function() {
+    return this.get('documentTitle');
+  },
 
-    getNumSelectedPapers: function() {
-      return this._numSelectedPapers || 0;
-    },
+  hardenedInterface: {
+    getNumSelectedPapers: 'getNumSelectedPapers',
+    isPaperSelected: 'isPaperSelected',
+    hasSelectedPapers: 'hasSelectedPapers',
+    getSelectedPapers: 'getSelectedPapers',
+    clearSelectedPapers: 'clearSelectedPapers',
+    getCurrentQuery: 'getCurrentQuery',
+    hasCurrentQuery: 'hasCurrentQuery',
+    setDocumentTitle: 'setDocumentTitle',
+    getDocumentTitle: 'getDocumentTitle',
+    getConfigCopy: 'get read-only copy of dynamic config',
+    set: 'set a value into app storage',
+    get: 'get a val from app storage',
+  },
+});
 
-    _updateNumSelected: function() {
-      this._numSelectedPapers = _.keys(this.get('selectedPapers') || {}).length;
-    },
-
-    onPaperSelection: function(data) {
-      if (this.isPaperSelected(data)) {
-        this.removeSelectedPapers(data);
-      } else {
-        this.addSelectedPapers(data);
-      }
-    },
-
-    onBulkPaperSelection: function(bibs, flag) {
-      if (flag == 'remove') {
-        this.removeSelectedPapers(bibs);
-        return;
-      }
-      this.addSelectedPapers(bibs);
-    },
-
-    // this is used by the auth and user settings widgets
-    setConfig: function(conf) {
-      this.set('dynamicConfig', conf);
-    },
-
-    getConfigCopy: function() {
-      return JSON.parse(JSON.stringify(this.get('dynamicConfig')));
-    },
-
-    setDocumentTitle: function(title) {
-      this.set('documentTitle', title);
-    },
-
-    getDocumentTitle: function() {
-      return this.get('documentTitle');
-    },
-
-    hardenedInterface: {
-      getNumSelectedPapers: 'getNumSelectedPapers',
-      isPaperSelected: 'isPaperSelected',
-      hasSelectedPapers: 'hasSelectedPapers',
-      getSelectedPapers: 'getSelectedPapers',
-      clearSelectedPapers: 'clearSelectedPapers',
-      getCurrentQuery: 'getCurrentQuery',
-      hasCurrentQuery: 'hasCurrentQuery',
-      setDocumentTitle: 'setDocumentTitle',
-      getDocumentTitle: 'getDocumentTitle',
-      getConfigCopy: 'get read-only copy of dynamic config',
-      set: 'set a value into app storage',
-      get: 'get a val from app storage',
-    },
-  });
-
-  _.extend(AppStorage.prototype, Hardened, Dependon.BeeHive);
-  export default AppStorage;
-
+_.extend(AppStorage.prototype, Hardened, Dependon.BeeHive);
+export default AppStorage;

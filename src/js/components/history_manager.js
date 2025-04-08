@@ -1,37 +1,36 @@
 import GenericModule from 'js/components/generic_module';
 import Dependon from 'js/mixins/dependon';
 import Hardened from 'js/mixins/hardened';
-import PubSubKey from 'js/components/pubsub_key';
-  var History = GenericModule.extend({
-    initialize: function() {
-      this._history = [];
-    },
 
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      var pubsub = this.getPubSub();
-      pubsub.subscribe(pubsub.NAVIGATE, _.bind(this.recordNav, this));
-    },
+var History = GenericModule.extend({
+  initialize: function() {
+    this._history = [];
+  },
 
-    recordNav: function() {
-      this._history.push([].slice.apply(arguments));
-    },
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    var pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.NAVIGATE, _.bind(this.recordNav, this));
+  },
 
-    getCurrentNav: function() {
-      return this._history[this._history.length - 1];
-    },
+  recordNav: function() {
+    this._history.push([].slice.apply(arguments));
+  },
 
-    getPreviousNav: function() {
-      return this._history[this._history.length - 2];
-    },
+  getCurrentNav: function() {
+    return this._history[this._history.length - 1];
+  },
 
-    hardenedInterface: {
-      getPreviousNav: '',
-      getCurrentNav: '',
-    },
-  });
+  getPreviousNav: function() {
+    return this._history[this._history.length - 2];
+  },
 
-  _.extend(History.prototype, Dependon.BeeHive, Hardened);
+  hardenedInterface: {
+    getPreviousNav: '',
+    getCurrentNav: '',
+  },
+});
 
-  export default History;
+_.extend(History.prototype, Dependon.BeeHive, Hardened);
 
+export default History;

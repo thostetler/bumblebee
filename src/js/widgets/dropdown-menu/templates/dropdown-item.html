@@ -1,17 +1,17 @@
-
 {{#if section}}
-<li role="presentation" class="dropdown-header no-hover-style">
+<li class="dropdown-header no-hover-style" role="presentation">
   {{section}}
   {{#if icon}}
-    <a href="{{icon.href}}" class="pull-right dropdown-helper-icon" target="_blank" rel="noreferrer noopener" title="{{icon.description}}"><i class="{{icon.class}}"></i></a>
+  <a class="pull-right dropdown-helper-icon" href="{{icon.href}}" rel="noreferrer noopener" target="_blank"
+     title="{{icon.description}}"><i class="{{icon.class}}"></i></a>
   {{/if}}
 </li>
 {{else}}
-  {{#if divider}}
-  <li role="presentation" class="divider"></li>
-  {{else}}
-  <li role="presentation">
-    <a role="menuitem" tabindex="-1" href="{{this.href}}">{{this.description}}</a>
-  </li>
-  {{/if}}
+{{#if divider}}
+<li class="divider" role="presentation"></li>
+{{else}}
+<li role="presentation">
+  <a href="{{this.href}}" role="menuitem" tabindex="-1">{{this.description}}</a>
+</li>
+{{/if}}
 {{/if}}

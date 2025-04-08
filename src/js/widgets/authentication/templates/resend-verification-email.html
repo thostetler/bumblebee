@@ -2,14 +2,14 @@
   <div class="panel-heading">Resend Verification Email</div>
   <form class="panel-body">
     <div class="form-group has-feedback">
-      <label for="email" class="control-label">Email address</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+      <label class="control-label" for="email">Email address</label>
+      <input class="form-control" id="email" name="email" placeholder="Enter email" required type="email">
       <span class="help-block no-show s-help-block"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Resend Verification Email</button>
+    <button class="btn btn-primary" type="submit">Resend Verification Email</button>
   </form>
   <div style="margin-top: 1rem; text-align: center;">
-    <button type="button" class="btn btn-link show-login">Back to Login</button>
+    <button class="btn btn-link show-login" type="button">Back to Login</button>
   </div>
 
   {{#if hasError}}

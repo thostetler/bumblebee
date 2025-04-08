@@ -43,10 +43,8 @@
       var nodel = d3.select(node);
       var i = directions.length;
       var coords;
-      var scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      var scrollLeft =
-        document.documentElement.scrollLeft || document.body.scrollLeft;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 
       nodel.html(content).style({ opacity: 1, 'pointer-events': 'all' });
 
@@ -141,9 +139,11 @@
     function d3_tip_direction() {
       return 'n';
     }
+
     function d3_tip_offset() {
       return [0, 0];
     }
+
     function d3_tip_html() {
       return ' ';
     }

@@ -1,15 +1,16 @@
-<div id="api-query" class="well well-small">
-    <h5>Query Inspection</h5>
-    <form>
-        <input type="text" placeholder="Copy&Paste serialized query here" id="api-query-input" value="{{initialValue}}"/>
-        <button id="api-query-load">Load</button>
-        <button id="api-query-add">Add</button>
-        <button id="api-query-run">Run</button>
+<div class="well well-small" id="api-query">
+  <h5>Query Inspection</h5>
+  <form>
+    <input id="api-query-input" placeholder="Copy&Paste serialized query here" type="text" value="{{initialValue}}" />
+    <button id="api-query-load">Load</button>
+    <button id="api-query-add">Add</button>
+    <button id="api-query-run">Run</button>
 
     <table id="api-query-values">
 
     </table>
 
-    Result: <pre id="api-query-result"></pre>
-    </form>
+    Result:
+    <pre id="api-query-result"></pre>
+  </form>
 </div>

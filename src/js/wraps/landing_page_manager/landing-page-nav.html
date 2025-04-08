@@ -2,10 +2,10 @@
   <ul style="padding-inline-start: 0;">
     {{#each tabs}}
     <li
-      class="landing-tab {{#if this.isSelected}} active {{/if}}"
       aria-labelledby="{{this.id}}"
+      class="landing-tab {{#if this.isSelected}} active {{/if}}"
     >
-      <a href="{{this.path}}" data-widget-id="{{this.id}}" id="{{this.id}}">
+      <a data-widget-id="{{this.id}}" href="{{this.path}}" id="{{this.id}}">
         {{this.title}}
         <span class="hidden-xs">
           Form

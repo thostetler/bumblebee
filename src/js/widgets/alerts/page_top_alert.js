@@ -1,39 +1,35 @@
-import Marionette from 'marionette';
 import BannerTemplate from 'hbs!js/widgets/alerts/templates/page_top_alert';
-  var AlertView = Marionette.ItemView.extend({
-    tagName: 'span',
-    className: 'alert-banner',
-    template: BannerTemplate,
+import Marionette from 'marionette';
 
-    modelEvents: {
-      change: 'render',
-    },
+var AlertView = Marionette.ItemView.extend({
+  tagName: 'span',
+  className: 'alert-banner',
+  template: BannerTemplate,
 
-    events: {
-      'click #page-top-alert button.close': 'close',
-    },
+  modelEvents: {
+    change: 'render',
+  },
 
-    close: function() {
-      this.$('.alert').css('display', 'none');
-    },
+  events: {
+    'click #page-top-alert button.close': 'close',
+  },
 
-    render: function() {
-      if (this.model.get('modal')) return this;
-      if (!this.model.get('msg') && !this.model.get('title')) {
-        this.$el.html('');
-        return this;
-      }
-      return Marionette.ItemView.prototype.render.apply(this, arguments);
-      // log the error to console as well
-      if (this.model.get('type') === 'danger') {
-        console.error(
-          'error feedback: ',
-          this.model.get('title'),
-          this.model.get('msg')
-        );
-      }
-    },
-  });
+  close: function() {
+    this.$('.alert').css('display', 'none');
+  },
 
-  export default AlertView;
+  render: function() {
+    if (this.model.get('modal')) return this;
+    if (!this.model.get('msg') && !this.model.get('title')) {
+      this.$el.html('');
+      return this;
+    }
+    return Marionette.ItemView.prototype.render.apply(this, arguments);
+    // log the error to console as well
+    if (this.model.get('type') === 'danger') {
+      console.error('error feedback: ', this.model.get('title'), this.model.get('msg'));
+    }
+  },
+});
 
+export default AlertView;

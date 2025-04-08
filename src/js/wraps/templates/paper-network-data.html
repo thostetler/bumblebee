@@ -40,11 +40,11 @@
         {{#each topNodes}}
         <li title="{{this.node_name}}">
           <a
-            href="#abs/{{this.node_name}}"
             data-bypass
-            target="_blank"
+            href="#abs/{{this.node_name}}"
             rel="noreferrer noopener"
-            ><b>{{this.title}}</b></a
+            target="_blank"
+          ><b>{{this.title}}</b></a
           >; <i>{{this.first_author}}</i>
           ({{this.citation_count}} citations)
         </li>
@@ -56,7 +56,7 @@
     <div>
       <p>
         <b> Papers highly referenced by papers in this group:</b> <br />
-        (A <i class="fa fa-star-o" aria-hidden="true"></i> indicates that this
+        (A <i aria-hidden="true" class="fa fa-star-o"></i> indicates that this
         paper is also a member of Group {{groupIdToShow}})
       </p>
 
@@ -65,16 +65,16 @@
 
         <li>
           {{#if this.inGroup}}
-          <i class="fa fa-star-o" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-star-o"></i>
           {{else}}
-          <i class="fa fa-star-o no-show" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-star-o no-show"></i>
           {{/if}}
           <a
-            href="#abs/{{this.bibcode}}"
             data-bypass
-            target="_blank"
+            href="#abs/{{this.bibcode}}"
             rel="noreferrer noopener"
-            >{{this.bibcode}}</a
+            target="_blank"
+          >{{this.bibcode}}</a
           >
           (cited by {{this.percent}}% of papers in this group)
         </li>
@@ -82,7 +82,7 @@
         {{/each}}
       </ul>
       <small
-        >(Click on a link above to view the paper's abstract page in ADS in a
+      >(Click on a link above to view the paper's abstract page in ADS in a
         new tab)</small
       >
     </div>

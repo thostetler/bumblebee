@@ -1,65 +1,64 @@
-import Marionette from 'marionette';
 import orcidTemplate from 'hbs!js/widgets/preferences/templates/orcid';
 import orcidNameRowTemplate from 'hbs!js/widgets/preferences/templates/orcid-name-row-template';
-  var OrcidView = Marionette.ItemView.extend({
-    template: orcidTemplate,
+import Marionette from 'marionette';
 
-    className: 'panel panel-default s-form-container',
+var OrcidView = Marionette.ItemView.extend({
+  template: orcidTemplate,
 
-    events: {
-      'click  .submit': 'submitForm',
-      'change .authorized-ads-user': 'toggleWarning',
-      'click .add-another-orcid-name': 'addNameRow',
-      'click .remove-name': 'removeNameRow',
-    },
+  className: 'panel panel-default s-form-container',
 
-    toggleWarning: function(e) {
-      if (this.$('.authorized-ads-user').is(':checked')) {
-        this.$('.orcid-name-container .warning').addClass('hidden');
-      } else {
-        this.$('.orcid-name-container .warning').removeClass('hidden');
-      }
-    },
+  events: {
+    'click  .submit': 'submitForm',
+    'change .authorized-ads-user': 'toggleWarning',
+    'click .add-another-orcid-name': 'addNameRow',
+    'click .remove-name': 'removeNameRow',
+  },
 
-    addNameRow: function(e) {
-      this.$('.add-another-orcid-name').before(orcidNameRowTemplate());
-    },
+  toggleWarning: function(e) {
+    if (this.$('.authorized-ads-user').is(':checked')) {
+      this.$('.orcid-name-container .warning').addClass('hidden');
+    } else {
+      this.$('.orcid-name-container .warning').removeClass('hidden');
+    }
+  },
 
-    removeNameRow: function(e) {
-      $(arguments[0].currentTarget)
-        .parent()
-        .remove();
-    },
+  addNameRow: function(e) {
+    this.$('.add-another-orcid-name').before(orcidNameRowTemplate());
+  },
 
-    triggers: {
-      'click .orcid-authenticate': 'orcid-authenticate',
-    },
+  removeNameRow: function(e) {
+    $(arguments[0].currentTarget)
+      .parent()
+      .remove();
+  },
 
-    modelEvents: {
-      change: 'render',
-    },
+  triggers: {
+    'click .orcid-authenticate': 'orcid-authenticate',
+  },
 
-    submitForm: function(e) {
-      var data = {};
-      data.currentAffiliation = this.$('#aff-input').val();
-      data.authorizedUser = this.$('.authorized-ads-user').is(':checked');
-      data.nameVariations = this.$('.orcid-name-row')
-        .map(function(index) {
-          return $(this)
-            .find('input')
-            .val();
-        })
-        .get();
+  modelEvents: {
+    change: 'render',
+  },
 
-      var loadingString =
-        '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i> Loading';
-      this.$('.submit').html(loadingString);
-      // loading string will be removed when view is re-rendered
+  submitForm: function(e) {
+    var data = {};
+    data.currentAffiliation = this.$('#aff-input').val();
+    data.authorizedUser = this.$('.authorized-ads-user').is(':checked');
+    data.nameVariations = this.$('.orcid-name-row')
+      .map(function(index) {
+        return $(this)
+          .find('input')
+          .val();
+      })
+      .get();
 
-      this.trigger('orcid-form-submit', data);
-      return false;
-    },
-  });
+    var loadingString = '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i> Loading';
+    this.$('.submit').html(loadingString);
+    // loading string will be removed when view is re-rendered
 
-  export default OrcidView;
+    this.trigger('orcid-form-submit', data);
+    return false;
+  },
+});
 
+export default OrcidView;

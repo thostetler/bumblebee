@@ -5,133 +5,132 @@
  *
  */
 
-import Marionette from 'marionette';
-import Backbone from 'backbone';
 import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/expanding-item-template';
 import ResultsContainerTemplate from 'hbs!js/widgets/list_of_things/templates/expanding-results-container-template';
-  var ItemView = Marionette.ItemView.extend({
-    // should it be hidden initially?
-    className: function() {
-      if (Marionette.getOption(this, 'hide') === true) {
-        return 'hide row results-item';
-      }
-      return 'row results-item';
-    },
+import Marionette from 'marionette';
 
-    template: ItemTemplate,
+var ItemView = Marionette.ItemView.extend({
+  // should it be hidden initially?
+  className: function() {
+    if (Marionette.getOption(this, 'hide') === true) {
+      return 'hide row results-item';
+    }
+    return 'row results-item';
+  },
 
-    /**
-     * This method prepares data for consumption by the template
-     *
-     * @returns {*}
-     */
-    serializeData: function() {
-      var data = this.model.toJSON();
-      return data;
-    },
+  template: ItemTemplate,
 
-    events: {
-      'change input[name=identifier]': 'toggleSelect',
-    },
+  /**
+   * This method prepares data for consumption by the template
+   *
+   * @returns {*}
+   */
+  serializeData: function() {
+    var data = this.model.toJSON();
+    return data;
+  },
 
-    toggleSelect: function() {
-      this.$el.toggleClass('chosen');
-    },
-  });
+  events: {
+    'change input[name=identifier]': 'toggleSelect',
+  },
 
-  var ListView = Marionette.CompositeView.extend({
-    initialize: function(options) {
-      this.displayNum = options.displayNum;
-      this.paginator = options.paginator;
-    },
+  toggleSelect: function() {
+    this.$el.toggleClass('chosen');
+  },
+});
 
-    className: 'list-of-things',
-    childView: ItemView,
+var ListView = Marionette.CompositeView.extend({
+  initialize: function(options) {
+    this.displayNum = options.displayNum;
+    this.paginator = options.paginator;
+  },
 
-    childViewOptions: function(model, index) {
-      // if this is the initial round, hide fetchnum - displaynum
-      if (this.paginator.getCycle() <= 1 && index < this.displayNum) {
-        return {};
-      }
+  className: 'list-of-things',
+  childView: ItemView,
 
-      // otherwise, hide everything
-      return {
-        hide: true,
-      };
-    },
+  childViewOptions: function(model, index) {
+    // if this is the initial round, hide fetchnum - displaynum
+    if (this.paginator.getCycle() <= 1 && index < this.displayNum) {
+      return {};
+    }
 
-    childViewContainer: '.results-list',
-    events: {
-      'click .load-more-results': 'fetchMore',
-      'click .show-details': 'showDetails',
-    },
+    // otherwise, hide everything
+    return {
+      hide: true,
+    };
+  },
 
-    template: ResultsContainerTemplate,
+  childViewContainer: '.results-list',
+  events: {
+    'click .load-more-results': 'fetchMore',
+    'click .show-details': 'showDetails',
+  },
 
-    fetchMore: function(ev) {
-      if (ev) ev.stopPropagation && ev.stopPropagation();
-      this.trigger('fetchMore', this.$('.results-item').filter('.hide').length);
-    },
+  template: ResultsContainerTemplate,
 
-    /**
-     * Displays loaded, but hidden items
-     *
-     * @param howMany
-     */
-    displayMore: function(howMany) {
-      this.$('.results-item')
-        .filter('.hide')
-        .slice(0, howMany)
-        .removeClass('hide');
-    },
+  fetchMore: function(ev) {
+    if (ev) ev.stopPropagation && ev.stopPropagation();
+    this.trigger('fetchMore', this.$('.results-item').filter('.hide').length);
+  },
 
-    /**
-     * Hides the area where 'show more' button lives; this is needed for
-     * the pagination widged
-     *
-     * @param text
-     */
-    disableShowMore: function(text) {
-      this.$('.load-more:first').addClass('hide');
-    },
+  /**
+   * Displays loaded, but hidden items
+   *
+   * @param howMany
+   */
+  displayMore: function(howMany) {
+    this.$('.results-item')
+      .filter('.hide')
+      .slice(0, howMany)
+      .removeClass('hide');
+  },
 
-    /**
-     * Displays the area where 'show more' button lives; this is needed for
-     * the pagination widged
-     *
-     * @param text
-     */
-    enableShowMore: function(text) {
-      this.$('.load-more:first').removeClass('hide');
-    },
+  /**
+   * Hides the area where 'show more' button lives; this is needed for
+   * the pagination widged
+   *
+   * @param text
+   */
+  disableShowMore: function(text) {
+    this.$('.load-more:first').addClass('hide');
+  },
 
-    /**
-     * Un/Hides the area where details controls are
-     *
-     * @param text
-     */
-    toggleDetailsControls: function(visible) {
-      if (visible) {
-        this.$('.results-controls:first').removeClass('hide');
-      } else {
-        this.$('.results-controls:first').addClass('hide');
-      }
-    },
+  /**
+   * Displays the area where 'show more' button lives; this is needed for
+   * the pagination widged
+   *
+   * @param text
+   */
+  enableShowMore: function(text) {
+    this.$('.load-more:first').removeClass('hide');
+  },
 
-    /**
-     * Displays the are inside of every item-view
-     * with details (this place is normally hidden
-     * by default)
-     */
-    showDetails: function(ev) {
-      if (ev) ev.stopPropagation();
-      this.$('.more-info').toggleClass('hide');
-      if (this.$('.more-info').hasClass('hide')) {
-        this.$('.show-details').text('Show details');
-      } else {
-        this.$('.show-details').text('Hide details');
-      }
-    },
-  });
-  export default ListView;
+  /**
+   * Un/Hides the area where details controls are
+   *
+   * @param text
+   */
+  toggleDetailsControls: function(visible) {
+    if (visible) {
+      this.$('.results-controls:first').removeClass('hide');
+    } else {
+      this.$('.results-controls:first').addClass('hide');
+    }
+  },
 
+  /**
+   * Displays the are inside of every item-view
+   * with details (this place is normally hidden
+   * by default)
+   */
+  showDetails: function(ev) {
+    if (ev) ev.stopPropagation();
+    this.$('.more-info').toggleClass('hide');
+    if (this.$('.more-info').hasClass('hide')) {
+      this.$('.show-details').text('Show details');
+    } else {
+      this.$('.show-details').text('Hide details');
+    }
+  },
+});
+export default ListView;

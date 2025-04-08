@@ -1,46 +1,46 @@
-
 <div class="col-sm-12">
 
-    <div class="row s-top-row">
-        <div class="col-xs-1 col-sm-1 s-checkbox-col s-top-row-col">
-          <span class="hidden-xs">{{indexToShow}}</span>
-          {{#if showCheckbox}}
-            <label class="custom-checkbox">
-                <input type="checkbox" value={{identifier}} name="identifier" aria-label="select item {{indexToShow}}" {{#if chosen}} checked {{/if}}>
-            </label>
-          {{/if}}
-        </div>
-        <div class="col-xs-4 col-sm-4 s-top-row-col identifier s-identifier">
-            <a href="#abs/{{identifier}}/abstract" aria-label="bibcode">
-                {{identifier}}
-            </a>
-        </div>
-        <div class="hidden-xs col-xs-2 col-sm-1 s-top-row-col print-visible-inline-1" aria-label="date published">
-            {{formattedDate}}
-        </div>
-        <div class="hidden-xs col-sm-2 s-top-row-col print-visible-inline-1" title="citation count">
-            {{#if num_citations}}
-                {{#if normCiteSort}}
-                <a href="#abs/{{bibcode}}/citations">cited (n): {{num_citations}}.00</a>
-                {{else}}
-                <a href="#abs/{{bibcode}}/citations">cited: {{num_citations}}</a>
-                {{/if}}
-            {{/if}}
-        </div>
-        <div class="col-xs-7 col-sm-4">
+  <div class="row s-top-row">
+    <div class="col-xs-1 col-sm-1 s-checkbox-col s-top-row-col">
+      <span class="hidden-xs">{{indexToShow}}</span>
+      {{#if showCheckbox}}
+      <label class="custom-checkbox">
+        <input aria-label="select item {{indexToShow}}" checked chosen}} name="identifier" type="checkbox"
+               value={{identifier}} {{ {{#if/if}}>
+      </label>
+      {{/if}}
+    </div>
+    <div class="col-xs-4 col-sm-4 s-top-row-col identifier s-identifier">
+      <a aria-label="bibcode" href="#abs/{{identifier}}/abstract">
+        {{identifier}}
+      </a>
+    </div>
+    <div aria-label="date published" class="hidden-xs col-xs-2 col-sm-1 s-top-row-col print-visible-inline-1">
+      {{formattedDate}}
+    </div>
+    <div class="hidden-xs col-sm-2 s-top-row-col print-visible-inline-1" title="citation count">
+      {{#if num_citations}}
+      {{#if normCiteSort}}
+      <a href="#abs/{{bibcode}}/citations">cited (n): {{num_citations}}.00</a>
+      {{else}}
+      <a href="#abs/{{bibcode}}/citations">cited: {{num_citations}}</a>
+      {{/if}}
+      {{/if}}
+    </div>
+    <div class="col-xs-7 col-sm-4">
             <span class="s-results-links">
                 {{#if links}}
                 <div class="letter-icon s-letter-icon">
 
-                    <a class="btn-link {{#if links.text}} active-link s-active-link {{/if}}"
-                            style="padding: 0" aria-disabled="{{#if links.text}} false {{else}} true {{/if}}">
-                        <i class="s-text-icon" aria-label="quick access to full text links"></i>
+                    <a aria-disabled="{{#if links.text}} false {{else}} true {{/if}}"
+                       class="btn-link {{#if links.text}} active-link s-active-link {{/if}}" style="padding: 0">
+                        <i aria-label="quick access to full text links" class="s-text-icon"></i>
                     </a>
                     {{#if links.text}}
                     <ul class="hidden list-unstyled link-details s-link-details" role="menu">
 
                         {{#each links.text}}
-                        <li><a {{#if this.openAccess}} class="s-open-access" {{/if}} href="{{this.url}}"
+                        <li><a class="s-open-access" this.openAccess}} {{ {{#if/if}} href="{{this.url}}"
                                 target="_blank" rel="noreferrer noopener" aria-label="open access link">
                               {{this.name}}{{#if (and ../publisher (startsWith this.rawType "PUB_")) }}&nbsp;{{this.type}}{{/if}}</a>
                         </li>
@@ -50,9 +50,9 @@
                 </div>
                 <div class="letter-icon s-letter-icon">
 
-                    <a class="btn-link {{#if links.list}} active-link s-active-link {{/if}}"
-                            style="padding: 0" aria-disabled="{{#if links.list}} false {{else}} true{{/if}}">
-                        <i class="s-list-icon" aria-label="quick links to lists of references, citations and more"></i>
+                    <a aria-disabled="{{#if links.list}} false {{else}} true{{/if}}"
+                       class="btn-link {{#if links.list}} active-link s-active-link {{/if}}" style="padding: 0">
+                        <i aria-label="quick links to lists of references, citations and more" class="s-list-icon"></i>
                     </a>
 
                     {{#if links.list}}
@@ -66,16 +66,16 @@
                 </div>
                 <div class="letter-icon s-letter-icon">
 
-                    <a class="btn-link  {{#if links.data}} active-link s-active-link {{/if}}"
-                            style="padding: 0" aria-disabled="{{#if links.data}} false {{else}} true  {{/if}}">
-                        <i class="s-data-icon" aria-label="quick links to data associated with this article"></i>
+                    <a aria-disabled="{{#if links.data}} false {{else}} true  {{/if}}"
+                       class="btn-link  {{#if links.data}} active-link s-active-link {{/if}}" style="padding: 0">
+                        <i aria-label="quick links to data associated with this article" class="s-data-icon"></i>
                     </a>
 
                     {{#if links.data}}
                     <ul class="hidden list-unstyled link-details s-link-details" role="menu">
 
                         {{#each links.data}}
-                        <li><a {{#if this.openAccess}}class="s-open-access"{{/if}} href="{{this.url}}" target="_blank" rel="noreferrer noopener"
+                        <li><a this.openAccess}}class="s-open-access" {{ {{#if/if}} href="{{this.url}}" target="_blank" rel="noreferrer noopener"
                             >{{this.name}}</a></li>
                         {{/each}}
                     </ul>
@@ -84,39 +84,43 @@
                 {{/if}}
             </span>
 
-            {{#if permission}}
-            <button class="hidden-xs btn btn-sm btn-danger btn-inverse remove-record pull-right print-hidden" title="delete record permanently from this library"><i class="fa fa-times" aria-hidden="true"></i></button>
-            <button class="hidden-sm hidden-md hidden-lg btn btn-xs btn-danger btn-inverse remove-record pull-right print-hidden" title="delete record permanently from this library"><i class="fa fa-times" aria-hidden="true"></i></button>
-            {{/if}}
-        </div>
-
-    </div>
-    <div class="row">
-
-        <div class="col-xs-10 col-xs-offset-1">
-            {{#if identifier}}
-            <a href="#abs/{{identifier}}/abstract">
-                <h3 class="s-results-title">{{{title}}}</h3>
-            </a>
-            {{else}}
-            <h3 class="s-results-title">{{{title}}}</h3>
-            {{/if}}
-        </div>
+      {{#if permission}}
+      <button class="hidden-xs btn btn-sm btn-danger btn-inverse remove-record pull-right print-hidden"
+              title="delete record permanently from this library"><i aria-hidden="true" class="fa fa-times"></i>
+      </button>
+      <button
+        class="hidden-sm hidden-md hidden-lg btn btn-xs btn-danger btn-inverse remove-record pull-right print-hidden"
+        title="delete record permanently from this library"><i aria-hidden="true" class="fa fa-times"></i></button>
+      {{/if}}
     </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-xs-offset-1">
-            <ul class="list-inline just-authors s-results-authors" aria-label="authors">
-                {{#each authorFormatted}}
-                <li class="article-author">{{this}}</li>
-                {{/each}}
-                {{#if extraAuthors}}
-                <li><em>and {{extraAuthors}} more</em></li>
-                {{/if}}
-            </ul>
+  </div>
+  <div class="row">
 
-        </div>
+    <div class="col-xs-10 col-xs-offset-1">
+      {{#if identifier}}
+      <a href="#abs/{{identifier}}/abstract">
+        <h3 class="s-results-title">{{{title}}}</h3>
+      </a>
+      {{else}}
+      <h3 class="s-results-title">{{{title}}}</h3>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-xs-offset-1">
+      <ul aria-label="authors" class="list-inline just-authors s-results-authors">
+        {{#each authorFormatted}}
+        <li class="article-author">{{this}}</li>
+        {{/each}}
+        {{#if extraAuthors}}
+        <li><em>and {{extraAuthors}} more</em></li>
+        {{/if}}
+      </ul>
 
     </div>
+
+  </div>
 
 </div>

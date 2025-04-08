@@ -1,137 +1,134 @@
 /**
  * Created by alex on 5/12/14.
  */
-import _ from 'underscore';
-import Marionette from 'marionette';
-import Bootstrap from 'bootstrap';
 import innerTemplate from 'hbs!js/widgets/tabs/templates/tabs_inner';
 import outerTemplate from 'hbs!js/widgets/tabs/templates/tabs_outer';
 import titleTemplate from 'hbs!js/widgets/tabs/templates/tabs_title';
-  var TabsWidget = Marionette.ItemView.extend({
-    // expects in options a list of views like this:
-    // {tabs: [{title : (title for tab) , widget: (actual widget), id : (unique id)}, {default : true/false} (a tab widget has only one default tab)]}
+import Marionette from 'marionette';
+import _ from 'underscore';
 
-    /**
-     * Activates all widgets (our children)  - we return them so that application
-     * can correctly register them
-     *
-     * @param beehive (hardened version)
-     */
+var TabsWidget = Marionette.ItemView.extend({
+  // expects in options a list of views like this:
+  // {tabs: [{title : (title for tab) , widget: (actual widget), id : (unique id)}, {default : true/false} (a tab widget has only one default tab)]}
 
-    className: 's-tabs-widget',
+  /**
+   * Activates all widgets (our children)  - we return them so that application
+   * can correctly register them
+   *
+   * @param beehive (hardened version)
+   */
 
-    activate: function(beehive) {
-      var children = [];
-      var hardenedBee;
-      _.each(this.widgets, function(w) {
-        w.activate((hardenedBee = beehive.getHardenedInstance()));
-        children.push({ name: w.title, object: w, beehive: hardenedBee });
-      });
+  className: 's-tabs-widget',
 
-      return children;
-    },
+  activate: function(beehive) {
+    var children = [];
+    var hardenedBee;
+    _.each(this.widgets, function(w) {
+      w.activate((hardenedBee = beehive.getHardenedInstance()));
+      children.push({ name: w.title, object: w, beehive: hardenedBee });
+    });
 
-    initialize: function(options) {
-      this.tabs = options.tabs || [];
-      this.widgets = _.map(this.tabs, function(t, i) {
-        if (!t.widget) {
-          throw new Error('Missing "widget" for: ' + t.title + ' [' + i + ']');
+    return children;
+  },
+
+  initialize: function(options) {
+    this.tabs = options.tabs || [];
+    this.widgets = _.map(this.tabs, function(t, i) {
+      if (!t.widget) {
+        throw new Error('Missing "widget" for: ' + t.title + ' [' + i + ']');
+      }
+      t.widget.trigger(t.default ? 'active' : 'hidden');
+      return t.widget;
+    });
+    this.on('active', this.onActive);
+    this.on('hidden', this.onHidden);
+  },
+
+  // overriding marionette render method
+  render: function() {
+    if (this.beforeRender) {
+      this.beforeRender();
+    }
+    this.trigger('before:render', this);
+
+    var $tempEl = $(outerTemplate());
+    var $nav = $tempEl.find('ul.nav');
+    var $tab = $tempEl.find('div.tab-content');
+
+    _.each(
+      this.tabs,
+      function(t) {
+        $nav.append(titleTemplate({ id: t.id, title: t.title, default: t.default }));
+        $tab.append(innerTemplate({ id: t.id, default: t.default }));
+      },
+      this
+    );
+
+    this.$el.html($tempEl.html());
+    _.each(
+      this.tabs,
+      function(t) {
+        var self = this;
+        // attaching the html of child widgets
+        this.$('#' + t.id).append(t.widget.getEl());
+
+        this.$('a[href="#' + t.id + '"]')
+          .on('show.bs.tab', function() {
+            self.trigger('active', t);
+          })
+          .on('hide.bs.tab', function() {
+            self.trigger('hidden', t);
+          });
+      },
+      this
+    );
+
+    this.bindUIElements();
+
+    if (this.onRender) {
+      this.onRender();
+    }
+    this.trigger('render', this);
+    return this;
+  },
+
+  onDestroy: function() {
+    _.each(
+      this.tabs,
+      function(t) {
+        if (t.widget.destroy) {
+          t.widget.destroy();
+        } else if (t.widget.remove) {
+          t.widget.remove();
         }
-        t.widget.trigger(t.default ? 'active' : 'hidden');
-        return t.widget;
-      });
-      this.on('active', this.onActive);
-      this.on('hidden', this.onHidden);
-    },
+      },
+      this
+    );
+  },
 
-    // overriding marionette render method
-    render: function() {
-      if (this.beforeRender) {
-        this.beforeRender();
-      }
-      this.trigger('before:render', this);
+  getEl: function() {
+    if (this.el && this.$el.children().length) {
+      return this.el;
+    }
 
-      var $tempEl = $(outerTemplate());
-      var $nav = $tempEl.find('ul.nav');
-      var $tab = $tempEl.find('div.tab-content');
+    return this.render().el;
+  },
 
-      _.each(
-        this.tabs,
-        function(t) {
-          $nav.append(
-            titleTemplate({ id: t.id, title: t.title, default: t.default })
-          );
-          $tab.append(innerTemplate({ id: t.id, default: t.default }));
-        },
-        this
-      );
+  onActive: function(tab) {
+    tab.widget.trigger('active');
 
-      this.$el.html($tempEl.html());
-      _.each(
-        this.tabs,
-        function(t) {
-          var self = this;
-          // attaching the html of child widgets
-          this.$('#' + t.id).append(t.widget.getEl());
+    if (typeof tab.onActive === 'function') {
+      tab.onActive();
+    }
+  },
 
-          this.$('a[href="#' + t.id + '"]')
-            .on('show.bs.tab', function() {
-              self.trigger('active', t);
-            })
-            .on('hide.bs.tab', function() {
-              self.trigger('hidden', t);
-            });
-        },
-        this
-      );
+  onHidden: function(tab) {
+    tab.widget.trigger('hidden');
 
-      this.bindUIElements();
+    if (typeof tab.onHidden === 'function') {
+      tab.onHidden();
+    }
+  },
+});
 
-      if (this.onRender) {
-        this.onRender();
-      }
-      this.trigger('render', this);
-      return this;
-    },
-
-    onDestroy: function() {
-      _.each(
-        this.tabs,
-        function(t) {
-          if (t.widget.destroy) {
-            t.widget.destroy();
-          } else if (t.widget.remove) {
-            t.widget.remove();
-          }
-        },
-        this
-      );
-    },
-
-    getEl: function() {
-      if (this.el && this.$el.children().length) {
-        return this.el;
-      }
-
-      return this.render().el;
-    },
-
-    onActive: function(tab) {
-      tab.widget.trigger('active');
-
-      if (typeof tab.onActive === 'function') {
-        tab.onActive();
-      }
-    },
-
-    onHidden: function(tab) {
-      tab.widget.trigger('hidden');
-
-      if (typeof tab.onHidden === 'function') {
-        tab.onHidden();
-      }
-    },
-  });
-
-  export default TabsWidget;
-
+export default TabsWidget;

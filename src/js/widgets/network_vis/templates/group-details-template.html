@@ -1,5 +1,5 @@
 <div class="author-detail-header">
-  <div style="border-bottom:4px solid {{groupColor}}" class="print-hidden">
+  <div class="print-hidden" style="border-bottom:4px solid {{groupColor}}">
     <h4>Group {{name}}</h4>
     <span class="pull-right">
       {{#if inFilter}}
@@ -21,11 +21,11 @@
     {{#each papers}}
     <li>
       <a
-        href="#abs/{{bibcode}}"
         data-bypass=""
-        target="_blank"
+        href="#abs/{{bibcode}}"
         rel="noreferrer noopener"
-        ><b>{{title}}</b></a
+        target="_blank"
+      ><b>{{title}}</b></a
       >
       {{#if citation_count}}
       <small> {{citation_count}} citations</small> {{else}}

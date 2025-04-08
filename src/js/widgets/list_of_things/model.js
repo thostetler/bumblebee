@@ -1,267 +1,253 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
 import bowser from 'bowser';
 import WidgetPaginationMixin from 'js/mixins/add_stable_index_to_collection';
-  var ItemModel = Backbone.Model.extend({
-    defaults: function() {
-      return {
-        abstract: undefined,
-        title: undefined,
-        authorAff: undefined,
-        pub: undefined,
-        pubdate: undefined,
-        keywords: undefined,
-        bibcode: undefined,
-        pub_raw: undefined,
-        doi: undefined,
-        details: undefined,
-        links_data: undefined,
-        resultsIndex: undefined,
-        visible: false,
-        publisher: undefined,
-        actionsVisible: true,
-        showCheckbox: true,
-        isMobileOrTablet: false,
-      };
-    },
-    idAttribute: 'resultsIndex',
-  });
+import _ from 'underscore';
 
-  var ListOfThingsCollection = Backbone.Collection.extend({
-    initialize: function(models, options) {
-      this.numVisible = 0;
-      this.currentStartIndex = 0;
-      this.currentEndIndex = 0;
-      this.lastIndex = -1;
-      this.lastMissingTrigger = null;
+var ItemModel = Backbone.Model.extend({
+  defaults: function() {
+    return {
+      abstract: undefined,
+      title: undefined,
+      authorAff: undefined,
+      pub: undefined,
+      pubdate: undefined,
+      keywords: undefined,
+      bibcode: undefined,
+      pub_raw: undefined,
+      doi: undefined,
+      details: undefined,
+      links_data: undefined,
+      resultsIndex: undefined,
+      visible: false,
+      publisher: undefined,
+      actionsVisible: true,
+      showCheckbox: true,
+      isMobileOrTablet: false,
+    };
+  },
+  idAttribute: 'resultsIndex',
+});
 
-      if (options && options.paginationModel) {
-        this.paginationModel = options.paginationModel;
-        this.listenTo(
-          this.paginationModel,
-          'change:page',
-          this._onPaginationChange
-        );
-        this.listenTo(
-          this.paginationModel,
-          'change:perPage',
-          this._onPaginationChange
-        );
-      }
-    },
+var ListOfThingsCollection = Backbone.Collection.extend({
+  initialize: function(models, options) {
+    this.numVisible = 0;
+    this.currentStartIndex = 0;
+    this.currentEndIndex = 0;
+    this.lastIndex = -1;
+    this.lastMissingTrigger = null;
 
-    model: ItemModel,
+    if (options && options.paginationModel) {
+      this.paginationModel = options.paginationModel;
+      this.listenTo(this.paginationModel, 'change:page', this._onPaginationChange);
+      this.listenTo(this.paginationModel, 'change:perPage', this._onPaginationChange);
+    }
+  },
 
-    numFound: undefined,
+  model: ItemModel,
 
-    comparator: 'resultsIndex',
+  numFound: undefined,
 
-    _updateStartAndEndIndex: function() {
-      var pageNum = this.paginationModel.get('page');
-      var perPage = this.paginationModel.get('perPage');
-      var numFound = this.paginationModel.get('numFound');
-      // used as a metric to see if we need to fetch new data or if data at these indexes
-      // already exist
-      this.currentStartIndex = this.getPageStart(pageNum, perPage);
-      this.currentEndIndex = this.getPageEnd(pageNum, perPage, numFound);
-    },
+  comparator: 'resultsIndex',
 
-    _onPaginationChange: function() {
-      this._updateStartAndEndIndex();
-      // propagate the signal to the controller
-      this.trigger('pagination:change');
-    },
+  _updateStartAndEndIndex: function() {
+    var pageNum = this.paginationModel.get('page');
+    var perPage = this.paginationModel.get('perPage');
+    var numFound = this.paginationModel.get('numFound');
+    // used as a metric to see if we need to fetch new data or if data at these indexes
+    // already exist
+    this.currentStartIndex = this.getPageStart(pageNum, perPage);
+    this.currentEndIndex = this.getPageEnd(pageNum, perPage, numFound);
+  },
 
-    /*
-     * need to reset lastMissingTrigger
-     * or else subsequent pagination attempts
-     * will never fetch beyond 25 records
-     * */
+  _onPaginationChange: function() {
+    this._updateStartAndEndIndex();
+    // propagate the signal to the controller
+    this.trigger('pagination:change');
+  },
 
-    reset: function() {
-      this.lastMissingTrigger = null;
-      this.lastIndex = -1;
-      Backbone.Collection.prototype.reset.apply(this, arguments);
-    },
+  /*
+   * need to reset lastMissingTrigger
+   * or else subsequent pagination attempts
+   * will never fetch beyond 25 records
+   * */
 
-    getStartIndex: function() {
-      return this.currentStartIndex;
-    },
-    getEndIndex: function() {
-      return this.paginationModel.get('perPage');
-    },
+  reset: function() {
+    this.lastMissingTrigger = null;
+    this.lastIndex = -1;
+    Backbone.Collection.prototype.reset.apply(this, arguments);
+  },
 
-    _incrementLastIndex: function() {
-      this.lastIndex += 1;
-      return this.lastIndex;
-    },
+  getStartIndex: function() {
+    return this.currentStartIndex;
+  },
+  getEndIndex: function() {
+    return this.paginationModel.get('perPage');
+  },
 
-    _prepareModel: function(attrs, options) {
-      if (attrs.resultsIndex === undefined) {
-        attrs.resultsIndex = this._incrementLastIndex();
-      }
-      if (attrs.title || attrs.bibcode || attrs.identifier) {
-        attrs.emptyPlaceholder = false;
-      }
+  _incrementLastIndex: function() {
+    this.lastIndex += 1;
+    return this.lastIndex;
+  },
 
-      return Backbone.Collection.prototype._prepareModel.call(
-        this,
-        attrs,
-        options
-      );
-    },
+  _prepareModel: function(attrs, options) {
+    if (attrs.resultsIndex === undefined) {
+      attrs.resultsIndex = this._incrementLastIndex();
+    }
+    if (attrs.title || attrs.bibcode || attrs.identifier) {
+      attrs.emptyPlaceholder = false;
+    }
 
-    getVisibleModels: function() {
-      return _.filter(this.models, function(x) {
-        return x.attributes.visible;
-      });
-    },
+    return Backbone.Collection.prototype._prepareModel.call(this, attrs, options);
+  },
 
-    /**
-     * Zero-based method; goes through models in the collection; discovers those
-     * that are missing (in the given range) and marks the range as 'visible'
-     * It returns number of visible documents (and internally triggers 'show:missing'
-     * event)
-     *
-     * @param start
-     * @param end
-     * @param options
-     * @returns {number}
-     */
-    updateIndexes: function(start, end, options) {
-      options = options || {};
-      var start = _.isNumber(start) ? start : this.currentStartIndex;
-      var end = _.isNumber(end) ? end : this.currentEndIndex + 1;
-      var visible = 0;
-      var currStart = null;
-      var currEnd = 0;
-      var gaps = [];
+  getVisibleModels: function() {
+    return _.filter(this.models, function(x) {
+      return x.attributes.visible;
+    });
+  },
 
-      var lastIdx = null;
-      var rIdx;
+  /**
+   * Zero-based method; goes through models in the collection; discovers those
+   * that are missing (in the given range) and marks the range as 'visible'
+   * It returns number of visible documents (and internally triggers 'show:missing'
+   * event)
+   *
+   * @param start
+   * @param end
+   * @param options
+   * @returns {number}
+   */
+  updateIndexes: function(start, end, options) {
+    options = options || {};
+    var start = _.isNumber(start) ? start : this.currentStartIndex;
+    var end = _.isNumber(end) ? end : this.currentEndIndex + 1;
+    var visible = 0;
+    var currStart = null;
+    var currEnd = 0;
+    var gaps = [];
 
-      var platform = bowser.parse(window.navigator.userAgent).platform.type;
-      var isMobileOrTablet = platform === 'mobile' || platform === 'tablet';
+    var lastIdx = null;
+    var rIdx;
 
-      this.each(function(model) {
-        rIdx = model.attributes.resultsIndex;
+    var platform = bowser.parse(window.navigator.userAgent).platform.type;
+    var isMobileOrTablet = platform === 'mobile' || platform === 'tablet';
 
-        if (lastIdx !== null && rIdx != lastIdx + 1) {
-          _.each(_.range(lastIdx + 1, rIdx), function(c) {
-            gaps.push(c);
-          });
-        }
-        lastIdx = rIdx;
-        if (rIdx >= start && rIdx <= end) {
-          model.set('visible', true);
+    this.each(function(model) {
+      rIdx = model.attributes.resultsIndex;
 
-          if (currStart === null) currStart = rIdx;
-
-          visible += 1;
-          currEnd = rIdx;
-        } else {
-          model.set('visible', false);
-        }
-
-        model.set('isMobileOrTablet', isMobileOrTablet);
-      });
-
-      if (visible !== end - start + 1) {
-        _.each(
-          _.range((lastIdx || start + gaps.length) + 1, end + 1),
-          function(c) {
-            if (!this.get(c)) gaps.push(c);
-          },
-          this
-        );
-      }
-
-      if (gaps.length) {
-        // we have discoverd all gaps, but we want to report only those that span the start..end range
-        var startIdx = 0;
-        var endIdx = gaps.length;
-        for (var i = 0; i < gaps.length; i++) {
-          if (gaps[i] > end) {
-            endIdx = i;
-            break;
-          }
-          if (gaps[i] < start) {
-            startIdx = i + 1;
-          }
-        }
-        gaps = gaps.slice(startIdx, endIdx);
-        gaps = this._compressGaps(gaps);
-
-        // to prevent multiple recursive requests
-        if (JSON.stringify(gaps) != this.lastMissingTrigger) {
-          this.lastMissingTrigger = JSON.stringify(gaps);
-
-          if (!options.silent) {
-            this.trigger('show:missing', gaps);
-          }
-        }
-      }
-      this.numVisible = visible;
-      this.currentStartIndex = currStart || 0;
-      this.currentEndIndex = currEnd;
-      return visible;
-    },
-
-    _compressGaps: function(gaps) {
-      var leftBound = gaps[0];
-      var rightBound = leftBound;
-      var s = gaps.length;
-      var toSend = [];
-      for (var i = 0; i < s; i++) {
-        var j = i + 1;
-        while (j < s && gaps[j] == leftBound + (j - i)) {
-          rightBound = gaps[j];
-          j += 1;
-        }
-        toSend.push({
-          start: leftBound,
-          end: rightBound,
+      if (lastIdx !== null && rIdx != lastIdx + 1) {
+        _.each(_.range(lastIdx + 1, rIdx), function(c) {
+          gaps.push(c);
         });
-        i = j - 1;
-        if (j < s) leftBound = rightBound = gaps[j];
       }
-      return toSend;
-    },
+      lastIdx = rIdx;
+      if (rIdx >= start && rIdx <= end) {
+        model.set('visible', true);
 
-    /**
-     * zero-based method to mark range of documents in the colleaction 'visible'
-     *
-     * @param start
-     * @param end
-     * @returns {*}
-     */
-    showRange: function(start, end, options) {
-      options = options || {};
-      if (start < 0) throw new Error('Start cannot be negative');
-      if (end < start) throw new Error('End cannot be smaller than start');
-      return this.updateIndexes(start, end, options);
-    },
-    getNumVisible: function() {
-      return this.numVisible;
-    },
+        if (currStart === null) currStart = rIdx;
 
-    showMore: function(howMany) {
-      if (howMany === null) {
-        // set all of them visible
-        return this.updateIndexes(0, this.model.length);
+        visible += 1;
+        currEnd = rIdx;
+      } else {
+        model.set('visible', false);
       }
 
-      var visible = this.getNumVisible();
-      return (
-        this.updateIndexes(
-          this.currentStartIndex,
-          this.currentEndIndex == 0
-            ? howMany - 1
-            : this.currentEndIndex + howMany
-        ) - visible
+      model.set('isMobileOrTablet', isMobileOrTablet);
+    });
+
+    if (visible !== end - start + 1) {
+      _.each(
+        _.range((lastIdx || start + gaps.length) + 1, end + 1),
+        function(c) {
+          if (!this.get(c)) gaps.push(c);
+        },
+        this
       );
-    },
-  });
-  _.extend(ListOfThingsCollection.prototype, WidgetPaginationMixin);
-  export default ListOfThingsCollection;
+    }
 
+    if (gaps.length) {
+      // we have discoverd all gaps, but we want to report only those that span the start..end range
+      var startIdx = 0;
+      var endIdx = gaps.length;
+      for (var i = 0; i < gaps.length; i++) {
+        if (gaps[i] > end) {
+          endIdx = i;
+          break;
+        }
+        if (gaps[i] < start) {
+          startIdx = i + 1;
+        }
+      }
+      gaps = gaps.slice(startIdx, endIdx);
+      gaps = this._compressGaps(gaps);
+
+      // to prevent multiple recursive requests
+      if (JSON.stringify(gaps) != this.lastMissingTrigger) {
+        this.lastMissingTrigger = JSON.stringify(gaps);
+
+        if (!options.silent) {
+          this.trigger('show:missing', gaps);
+        }
+      }
+    }
+    this.numVisible = visible;
+    this.currentStartIndex = currStart || 0;
+    this.currentEndIndex = currEnd;
+    return visible;
+  },
+
+  _compressGaps: function(gaps) {
+    var leftBound = gaps[0];
+    var rightBound = leftBound;
+    var s = gaps.length;
+    var toSend = [];
+    for (var i = 0; i < s; i++) {
+      var j = i + 1;
+      while (j < s && gaps[j] == leftBound + (j - i)) {
+        rightBound = gaps[j];
+        j += 1;
+      }
+      toSend.push({
+        start: leftBound,
+        end: rightBound,
+      });
+      i = j - 1;
+      if (j < s) leftBound = rightBound = gaps[j];
+    }
+    return toSend;
+  },
+
+  /**
+   * zero-based method to mark range of documents in the colleaction 'visible'
+   *
+   * @param start
+   * @param end
+   * @returns {*}
+   */
+  showRange: function(start, end, options) {
+    options = options || {};
+    if (start < 0) throw new Error('Start cannot be negative');
+    if (end < start) throw new Error('End cannot be smaller than start');
+    return this.updateIndexes(start, end, options);
+  },
+  getNumVisible: function() {
+    return this.numVisible;
+  },
+
+  showMore: function(howMany) {
+    if (howMany === null) {
+      // set all of them visible
+      return this.updateIndexes(0, this.model.length);
+    }
+
+    var visible = this.getNumVisible();
+    return (
+      this.updateIndexes(
+        this.currentStartIndex,
+        this.currentEndIndex == 0 ? howMany - 1 : this.currentEndIndex + howMany
+      ) - visible
+    );
+  },
+});
+_.extend(ListOfThingsCollection.prototype, WidgetPaginationMixin);
+export default ListOfThingsCollection;

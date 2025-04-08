@@ -2,64 +2,64 @@
  * Created by alex on 7/24/14.
  */
 
-import Marionette from 'marionette';
 import Backbone from 'backbone';
-import BaseWidget from 'js/widgets/base/base_widget';
 import loadingTemplate from 'hbs!js/widgets/loading/loading-template';
+import BaseWidget from 'js/widgets/base/base_widget';
+import Marionette from 'marionette';
 import 'bootstrap';
-  var LoadingModel = Backbone.Model.extend({});
 
-  var LoadingView = Marionette.ItemView.extend({
-    initialize: function(options) {
-      options = options || {};
+var LoadingModel = Backbone.Model.extend({});
 
-      this.model = new LoadingModel();
-    },
+var LoadingView = Marionette.ItemView.extend({
+  initialize: function(options) {
+    options = options || {};
 
-    template: loadingTemplate,
+    this.model = new LoadingModel();
+  },
 
-    showLoad: function(options) {
-      var that = this;
-      var options = options || {};
+  template: loadingTemplate,
 
-      this.$('.modal').modal('show');
-      if (options.autoAnimate) {
-        that.changePercentLoaded(100);
+  showLoad: function(options) {
+    var that = this;
+    var options = options || {};
 
-        setTimeout(function() {
-          that.hideLoad();
-        }, 1000);
-      }
-    },
+    this.$('.modal').modal('show');
+    if (options.autoAnimate) {
+      that.changePercentLoaded(100);
 
-    changePercentLoaded: function(num) {
-      this.$('.progress-bar').animate({ width: num + '%' }, 200);
-    },
+      setTimeout(function() {
+        that.hideLoad();
+      }, 1000);
+    }
+  },
 
-    hideLoad: function() {
-      this.$('.modal').modal('hide');
-    },
+  changePercentLoaded: function(num) {
+    this.$('.progress-bar').animate({ width: num + '%' }, 200);
+  },
 
-    onRender: function() {},
-  });
+  hideLoad: function() {
+    this.$('.modal').modal('hide');
+  },
 
-  var LoadingWidget = BaseWidget.extend({
-    activate: function(beehive) {},
+  onRender: function() {},
+});
 
-    initialize: function(options) {
-      this.view = new LoadingView();
+var LoadingWidget = BaseWidget.extend({
+  activate: function(beehive) {},
 
-      this.on('all', this.onAll);
-    },
+  initialize: function(options) {
+    this.view = new LoadingView();
 
-    onAll: function(ev, arg1, arg2) {
-      if (ev === 'showLoading') {
-        this.view.showLoad({ autoAnimate: true });
-      } else if (ev === 'hideLoading') {
-        this.view.hideLoad();
-      }
-    },
-  });
+    this.on('all', this.onAll);
+  },
 
-  export default LoadingWidget;
+  onAll: function(ev, arg1, arg2) {
+    if (ev === 'showLoading') {
+      this.view.showLoad({ autoAnimate: true });
+    } else if (ev === 'hideLoading') {
+      this.view.hideLoad();
+    }
+  },
+});
 
+export default LoadingWidget;

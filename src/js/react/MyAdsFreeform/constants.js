@@ -1,10 +1,8 @@
+const Frequency = Object.freeze({
+  WEEKLY: 'weekly',
+  DAILY: 'daily',
+});
 
-  const Frequency = Object.freeze({
-    WEEKLY: 'weekly',
-    DAILY: 'daily',
-  });
-
-  export default {
-    Frequency,
-  };
-
+export default {
+  Frequency,
+};

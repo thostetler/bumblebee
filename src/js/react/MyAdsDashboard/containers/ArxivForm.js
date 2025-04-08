@@ -1,27 +1,22 @@
-import ArxivForm from 'js/react/MyAdsDashboard/components/ArxivForm.jsx';
-import { connect } from 'react-redux';
 import actions from 'js/react/MyAdsDashboard/actions/index';
+import ArxivForm from 'js/react/MyAdsDashboard/components/ArxivForm.jsx';
 import { page } from 'js/react/MyAdsDashboard/constants';
-  const mapStateToProps = ({
-    requests,
-    notifications,
-    editingNotification,
-  }) => ({
-    addNotificationRequest: requests.ADD_NOTIFICATION,
-    updateNotificationRequest: requests.UPDATE_NOTIFICATION,
-    editingNotification,
-    notifications,
-  });
+import { connect } from 'react-redux';
 
-  const { addNotification, goTo, updateNotification } = actions;
+const mapStateToProps = ({ requests, notifications, editingNotification }) => ({
+  addNotificationRequest: requests.ADD_NOTIFICATION,
+  updateNotificationRequest: requests.UPDATE_NOTIFICATION,
+  editingNotification,
+  notifications,
+});
 
-  const actionCreators = {
-    addNotification: (notification) =>
-      addNotification({ ...notification, template: 'arxiv', type: 'template' }),
-    updateNotification,
-    onSuccess: () => goTo(page.DASHBOARD),
-    onCancel: () => goTo(page.DASHBOARD),
-  };
+const { addNotification, goTo, updateNotification } = actions;
 
-  export default connect(mapStateToProps, actionCreators)(ArxivForm);
+const actionCreators = {
+  addNotification: (notification) => addNotification({ ...notification, template: 'arxiv', type: 'template' }),
+  updateNotification,
+  onSuccess: () => goTo(page.DASHBOARD),
+  onCancel: () => goTo(page.DASHBOARD),
+};
 
+export default connect(mapStateToProps, actionCreators)(ArxivForm);

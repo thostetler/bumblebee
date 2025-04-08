@@ -15,38 +15,38 @@
  * functionality
  */
 
-import _ from 'underscore';
-  var PubSubKey = function(options) {
-    _.extend(this, options);
-  };
+import _ from "underscore";
 
-  _.extend(PubSubKey, {
-    /*
-     * Creates a new Instances of the PubSubKey
-     * with a storage that cannot be changed.
-     * To double sign the key, you can pass
-     * an object that identifies creator of the
-     * key and test identity, eg.
-     *
-     * var creator = {};
-     * var k = PubSubKey(creator);
-     * k.getCreator() === k;
-     *
-     */
-    newInstance: function(options) {
-      var priv = {
-        id: _.has(options, 'id') ? options.id : _.uniqueId(':psk'),
-        creator: _.has(options, 'creator') ? options.creator : null,
-      };
-      return new PubSubKey({
-        getId: function() {
-          return priv.id;
-        },
-        getCreator: function() {
-          return priv.creator;
-        },
-      });
-    },
-  });
-  export default PubSubKey;
+var PubSubKey = function(options) {
+  _.extend(this, options);
+};
 
+_.extend(PubSubKey, {
+  /*
+   * Creates a new Instances of the PubSubKey
+   * with a storage that cannot be changed.
+   * To double sign the key, you can pass
+   * an object that identifies creator of the
+   * key and test identity, eg.
+   *
+   * var creator = {};
+   * var k = PubSubKey(creator);
+   * k.getCreator() === k;
+   *
+   */
+  newInstance: function(options) {
+    var priv = {
+      id: _.has(options, 'id') ? options.id : _.uniqueId(':psk'),
+      creator: _.has(options, 'creator') ? options.creator : null,
+    };
+    return new PubSubKey({
+      getId: function() {
+        return priv.id;
+      },
+      getCreator: function() {
+        return priv.creator;
+      },
+    });
+  },
+});
+export default PubSubKey;

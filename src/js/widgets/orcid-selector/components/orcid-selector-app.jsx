@@ -1,146 +1,138 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-  const styles = {
-    button: {
-      width: '50%',
-    },
-    img: {
-      marginBottom: 7,
-    },
-  };
+import React from 'react';
 
-  const initialState = {
-    action: '',
-    fire: () => {},
-    showConfirm: false,
-  };
+const styles = {
+  button: {
+    width: '50%',
+  },
+  img: {
+    marginBottom: 7,
+  },
+};
 
-  class OrcidSelectorApp extends React.Component {
-    constructor(props) {
-      super(props);
+const initialState = {
+  action: '',
+  fire: () => {},
+  showConfirm: false,
+};
 
-      this.state = initialState;
-    }
+class OrcidSelectorApp extends React.Component {
+  constructor(props) {
+    super(props);
 
-    onClaim() {
-      this.setState({
-        action: 'claim',
-        fire: this.props.onClaim,
-        showConfirm: true,
-      });
-    }
+    this.state = initialState;
+  }
 
-    onDelete() {
-      this.setState({
-        action: 'delete',
-        fire: this.props.onDelete,
-        showConfirm: true,
-      });
-    }
+  onClaim() {
+    this.setState({
+      action: 'claim',
+      fire: this.props.onClaim,
+      showConfirm: true,
+    });
+  }
 
-    onConfirm(confirm) {
-      const cb = this.state.fire;
-      this.setState(initialState, () => confirm && cb());
-    }
+  onDelete() {
+    this.setState({
+      action: 'delete',
+      fire: this.props.onDelete,
+      showConfirm: true,
+    });
+  }
 
-    componentWillReceiveProps(next) {
-      // if nothing incoming, just reset
-      if (next.app.selected.length === 0) {
-        this.setState(initialState);
-      }
-    }
+  onConfirm(confirm) {
+    const cb = this.state.fire;
+    this.setState(initialState, () => confirm && cb());
+  }
 
-    render() {
-      const { app } = this.props;
-      const len = app.selected.length;
-
-      if (app.mode) {
-        return (
-          <div className="s-right-col-widget-container container-fluid">
-            <div className="row">
-              <div className="sr-only">Orcid Bulk Actions</div>
-              <div className="text-center">
-                <img
-                  src="../../styles/img/orcid-active.svg"
-                  alt="orcid logo active"
-                  className="s-orcid-img"
-                  aria-hidden="true"
-                  style={styles.img}
-                />
-                <span>
-                  <strong>&nbsp;Bulk Actions</strong>
-                </span>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-xs-12">
-                <div
-                  className="btn-group btn-group-justified btn-group-sm"
-                  role="group"
-                >
-                  <button
-                    type="button"
-                    className={`btn btn-primary-faded ${
-                      len === 0 ? 'disabled' : ''
-                    }`}
-                    title="Claim all selected papers from Orcid"
-                    style={styles.button}
-                    onClick={() => this.onClaim()}
-                  >
-                    Claim
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn btn-danger ${len === 0 ? 'disabled' : ''}`}
-                    title="Delete all selected papers from Orcid"
-                    style={styles.button}
-                    onClick={() => this.onDelete()}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-            {this.state.showConfirm && (
-              <div className="row" style={{ marginTop: 5 }}>
-                <div className="col-xs-12 text-center">
-                  Attempt to {this.state.action} {len} paper
-                  {`${len > 1 ? 's' : ''}`}?
-                </div>
-                <div className="col-xs-12" style={{ marginTop: 5 }}>
-                  <div
-                    className="btn-group btn-group-sm pull-right"
-                    role="group"
-                  >
-                    <button
-                      className="btn btn-sm btn-success"
-                      title={`${this.state.action} selected papers`}
-                      onClick={() => this.onConfirm(true)}
-                    >
-                      Apply
-                    </button>
-                    <button
-                      title={`Cancel ${this.state.action} selected papers`}
-                      className="btn btn-sm btn-danger"
-                      onClick={() => this.onConfirm(false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      }
-
-      return null;
+  componentWillReceiveProps(next) {
+    // if nothing incoming, just reset
+    if (next.app.selected.length === 0) {
+      this.setState(initialState);
     }
   }
 
-  OrcidSelectorApp.propTypes = {
-    app: PropTypes.object.isRequired,
-  };
+  render() {
+    const { app } = this.props;
+    const len = app.selected.length;
 
-  export default OrcidSelectorApp;
+    if (app.mode) {
+      return (
+        <div className="s-right-col-widget-container container-fluid">
+          <div className="row">
+            <div className="sr-only">Orcid Bulk Actions</div>
+            <div className="text-center">
+              <img
+                src="../../styles/img/orcid-active.svg"
+                alt="orcid logo active"
+                className="s-orcid-img"
+                aria-hidden="true"
+                style={styles.img}
+              />
+              <span>
+                <strong>&nbsp;Bulk Actions</strong>
+              </span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-xs-12">
+              <div className="btn-group btn-group-justified btn-group-sm" role="group">
+                <button
+                  type="button"
+                  className={`btn btn-primary-faded ${len === 0 ? 'disabled' : ''}`}
+                  title="Claim all selected papers from Orcid"
+                  style={styles.button}
+                  onClick={() => this.onClaim()}
+                >
+                  Claim
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-danger ${len === 0 ? 'disabled' : ''}`}
+                  title="Delete all selected papers from Orcid"
+                  style={styles.button}
+                  onClick={() => this.onDelete()}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+          {this.state.showConfirm && (
+            <div className="row" style={{ marginTop: 5 }}>
+              <div className="col-xs-12 text-center">
+                Attempt to {this.state.action} {len} paper
+                {`${len > 1 ? 's' : ''}`}?
+              </div>
+              <div className="col-xs-12" style={{ marginTop: 5 }}>
+                <div className="btn-group btn-group-sm pull-right" role="group">
+                  <button
+                    className="btn btn-sm btn-success"
+                    title={`${this.state.action} selected papers`}
+                    onClick={() => this.onConfirm(true)}
+                  >
+                    Apply
+                  </button>
+                  <button
+                    title={`Cancel ${this.state.action} selected papers`}
+                    className="btn btn-sm btn-danger"
+                    onClick={() => this.onConfirm(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
 
+    return null;
+  }
+}
+
+OrcidSelectorApp.propTypes = {
+  app: PropTypes.object.isRequired,
+};
+
+export default OrcidSelectorApp;

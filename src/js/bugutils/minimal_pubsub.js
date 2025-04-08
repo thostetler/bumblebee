@@ -29,147 +29,142 @@
  *
  */
 
-import _ from 'underscore';
-import BackBone from 'backbone';
-import QueryMediator from 'js/components/query_mediator';
-import PubSub from 'js/services/pubsub';
-import BeeHive from 'js/components/beehive';
-import PubSubEvents from 'js/components/pubsub_events';
+import ApiFeedback from 'js/components/api_feedback';
 import ApiQuery from 'js/components/api_query';
 import ApiRequest from 'js/components/api_request';
-import ApiFeedback from 'js/components/api_feedback';
 import ApiResponse from 'js/components/api_response';
-  var MinimalPubsub = function() {
-    this.beehive = null;
-    this.pubsub = null;
-    this.initialize.apply(this, arguments);
-  };
+import BeeHive from 'js/components/beehive';
+import PubSubEvents from 'js/components/pubsub_events';
+import QueryMediator from 'js/components/query_mediator';
+import PubSub from 'js/services/pubsub';
+import _ from 'underscore';
 
-  _.extend(MinimalPubsub.prototype, Backbone.Events, PubSubEvents, {
-    initialize: function(options) {
-      options = options || {};
-      if (options.verbose) {
-        console.log('[MinSub]', 'starting');
+var MinimalPubsub = function() {
+  this.beehive = null;
+  this.pubsub = null;
+  this.initialize.apply(this, arguments);
+};
+
+_.extend(MinimalPubsub.prototype, Backbone.Events, PubSubEvents, {
+  initialize: function(options) {
+    options = options || {};
+    if (options.verbose) {
+      console.log('[MinSub]', 'starting');
+    }
+    this.requestCounter = 0;
+    this.fakeApp = { getPskOfPluginOrWidget: sinon.stub().returns(null) };
+    this.beehive = new BeeHive();
+    this.pubsub = new PubSub();
+    this.pubsub.debug = true;
+    this.beehive.addService('PubSub', this.pubsub);
+    var self = this;
+    this.beehive.addService(
+      'Api',
+      options.Api || {
+        request: function(req, context) {
+          self.requestCounter += 1;
+          if (!context) {
+            context = req.get('options');
+          }
+          var response = self.request.apply(self, arguments);
+          if (!response) return;
+          if (self.verbose) {
+            console.log('[MinSub]', 'request', self.requestCounter, response);
+          }
+          var defer = $.Deferred();
+          defer.done(function() {
+            context.done.call(context.context, response);
+          });
+          defer.resolve(response);
+          return defer.promise();
+        },
       }
-      this.requestCounter = 0;
-      this.fakeApp = { getPskOfPluginOrWidget: sinon.stub().returns(null) };
-      this.beehive = new BeeHive();
-      this.pubsub = new PubSub();
-      this.pubsub.debug = true;
-      this.beehive.addService('PubSub', this.pubsub);
-      var self = this;
-      this.beehive.addService(
-        'Api',
-        options.Api || {
-          request: function(req, context) {
-            self.requestCounter += 1;
-            if (!context) {
-              context = req.get('options');
-            }
-            var response = self.request.apply(self, arguments);
-            if (!response) return;
-            if (self.verbose) {
-              console.log('[MinSub]', 'request', self.requestCounter, response);
-            }
-            var defer = $.Deferred();
-            defer.done(function() {
-              context.done.call(context.context, response);
-            });
-            defer.resolve(response);
-            return defer.promise();
-          },
-        }
-      );
-      this.beehive.activate(this.beehive);
+    );
+    this.beehive.activate(this.beehive);
 
-      // add Query-mediator; it is using an app object, so we'll feed it
-      // a fake one
-      var qM = new QueryMediator({
-        recoveryDelayInMs: 0,
-        shortDelayInMs: 0,
-        longDelayInMs: 0,
-        monitoringDelayInMs: 5,
-      });
-      qM.activate(this.beehive, this.fakeApp); // fake application object
-      this.beehive.addObject('QueryMediator', qM);
+    // add Query-mediator; it is using an app object, so we'll feed it
+    // a fake one
+    var qM = new QueryMediator({
+      recoveryDelayInMs: 0,
+      shortDelayInMs: 0,
+      longDelayInMs: 0,
+      monitoringDelayInMs: 5,
+    });
+    qM.activate(this.beehive, this.fakeApp); // fake application object
+    this.beehive.addObject('QueryMediator', qM);
 
-      this.key = this.pubsub.getPubSubKey();
-      this.listen();
-      _.extend(this, options);
-    },
+    this.key = this.pubsub.getPubSubKey();
+    this.listen();
+    _.extend(this, options);
+  },
 
-    listen: function() {
-      this.pubsub.subscribe(
-        this.pubsub.getPubSubKey(),
-        'all',
-        _.bind(this.logAll, this)
-      );
-    },
+  listen: function() {
+    this.pubsub.subscribe(this.pubsub.getPubSubKey(), 'all', _.bind(this.logAll, this));
+  },
 
-    destroy: function() {
-      if (this.verbose) {
-        console.log('[MinSub]', 'closing');
-      }
-      this.beehive.destroy();
-    },
+  destroy: function() {
+    if (this.verbose) {
+      console.log('[MinSub]', 'closing');
+    }
+    this.beehive.destroy();
+  },
 
-    logAll: function(ev) {
-      if (this.verbose) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        console.log('[PubSub]', ev, args);
-      }
-    },
+  logAll: function(ev) {
+    if (this.verbose) {
+      var args = Array.prototype.slice.call(arguments, 1);
+      console.log('[PubSub]', ev, args);
+    }
+  },
 
-    publish: function() {
-      var args = _.toArray(arguments);
-      args.unshift(this.key);
-      this.pubsub.publish.apply(this.pubsub, args);
-    },
+  publish: function() {
+    var args = _.toArray(arguments);
+    args.unshift(this.key);
+    this.pubsub.publish.apply(this.pubsub, args);
+  },
 
-    subscribe: function(signal, callback) {
-      var args = _.toArray(arguments);
-      args.unshift(this.key);
-      this.pubsub.subscribe.apply(this.pubsub, args);
-    },
-    subscribeOnce: function(signal, callback) {
-      var args = _.toArray(arguments);
-      args.unshift(this.key);
-      this.pubsub.subscribeOnce.apply(this.pubsub, args);
-    },
-    on: function() {
-      this.pubsub.on.apply(this.pubsub, arguments);
-    },
-    off: function() {
-      this.pubsub.on.apply(this.pubsub, arguments);
-    },
+  subscribe: function(signal, callback) {
+    var args = _.toArray(arguments);
+    args.unshift(this.key);
+    this.pubsub.subscribe.apply(this.pubsub, args);
+  },
+  subscribeOnce: function(signal, callback) {
+    var args = _.toArray(arguments);
+    args.unshift(this.key);
+    this.pubsub.subscribeOnce.apply(this.pubsub, args);
+  },
+  on: function() {
+    this.pubsub.on.apply(this.pubsub, arguments);
+  },
+  off: function() {
+    this.pubsub.on.apply(this.pubsub, arguments);
+  },
 
-    request: function(apiRequest, params) {
-      if (this.verbose) {
-        console.log('[Api]', 'request', apiRequest, params);
-      }
-      return {};
-    },
+  request: function(apiRequest, params) {
+    if (this.verbose) {
+      console.log('[Api]', 'request', apiRequest, params);
+    }
+    return {};
+  },
 
-    createQuery: function(data) {
-      return new ApiQuery(data);
-    },
+  createQuery: function(data) {
+    return new ApiQuery(data);
+  },
 
-    createRequest: function(data) {
-      return new ApiRequest(data);
-    },
+  createRequest: function(data) {
+    return new ApiRequest(data);
+  },
 
-    createFeedback: function(data) {
-      return new ApiFeedback(data);
-    },
+  createFeedback: function(data) {
+    return new ApiFeedback(data);
+  },
 
-    T: {
-      RESPONSE: ApiResponse,
-      REQUEST: ApiRequest,
-      QUERY: ApiQuery,
-      FEEDBACK: ApiFeedback,
-    },
-  });
+  T: {
+    RESPONSE: ApiResponse,
+    REQUEST: ApiRequest,
+    QUERY: ApiQuery,
+    FEEDBACK: ApiFeedback,
+  },
+});
 
-  MinimalPubsub.extend = Backbone.Model.extend;
-  export default MinimalPubsub;
-
+MinimalPubsub.extend = Backbone.Model.extend;
+export default MinimalPubsub;

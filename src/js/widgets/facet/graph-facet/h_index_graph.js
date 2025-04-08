@@ -1,80 +1,318 @@
-import BaseGraphView from 'js/widgets/facet/graph-facet/base_graph';
 import legendTemplate from 'hbs!js/widgets/facet/graph-facet/templates/h-index-graph-legend';
 import sliderWindowTemplate from 'hbs!js/widgets/facet/graph-facet/templates/h-index-slider-window';
+import BaseGraphView from 'js/widgets/facet/graph-facet/base_graph';
 import Marionette from 'marionette';
-  var HIndexGraphView = BaseGraphView.extend({
-    legendTemplate: legendTemplate,
 
-    xAxisClassName: 'h-index-x-axis-title',
+var HIndexGraphView = BaseGraphView.extend({
+  legendTemplate: legendTemplate,
 
-    addToOnRender: function() {
-      // show the h index
-      if (this.hIndex) {
-        this.$('.h-index-container').text(this.hIndex.x);
-      }
-    },
+  xAxisClassName: 'h-index-x-axis-title',
 
-    events: {
-      'click .apply': 'submitFacet',
-      'blur input[type=text]': 'triggerGraphChange',
-      'click .download': 'download',
-      // only relevant for reads and citation
-      'change input[name*=scale]': 'toggleScale',
-    },
+  addToOnRender: function() {
+    // show the h index
+    if (this.hIndex) {
+      this.$('.h-index-container').text(this.hIndex.x);
+    }
+  },
 
-    buildGraph: function() {
-      var data;
-      var xLabels;
-      var x;
-      var y;
-      var xAxis;
-      var yAxis;
-      var chart;
-      var line;
+  events: {
+    'click .apply': 'submitFacet',
+    'blur input[type=text]': 'triggerGraphChange',
+    'click .download': 'download',
+    // only relevant for reads and citation
+    'change input[name*=scale]': 'toggleScale',
+  },
 
-      data = _.clone(this.model.get('graphData'));
+  buildGraph: function() {
+    var data;
+    var xLabels;
+    var x;
+    var y;
+    var xAxis;
+    var yAxis;
+    var chart;
+    var line;
 
-      this.hIndex =
-        data[
-          _.indexOf(
-            data,
-            _.findWhere(data, function(d) {
-              if (d.x > d.y) {
-                return true;
-              }
-            })
-          ) - 1
-        ];
+    data = _.clone(this.model.get('graphData'));
 
-      xLabels = _.pluck(data, 'x');
+    this.hIndex =
+      data[
+        _.indexOf(
+          data,
+          _.findWhere(data, function(d) {
+            if (d.x > d.y) {
+              return true;
+            }
+          })
+        ) - 1
+      ];
 
-      var yVals = _.pluck(data, 'y');
-      maxVal = d3.max(yVals);
-      minVal = d3.min(yVals);
+    xLabels = _.pluck(data, 'x');
 
-      var xDomain = [xLabels[0] - 1, xLabels[xLabels.length - 1] + 1];
+    var yVals = _.pluck(data, 'y');
+    maxVal = d3.max(yVals);
+    minVal = d3.min(yVals);
 
-      x = d3.scale
-        .linear()
-        .domain(xDomain)
-        .range([0, this.width]);
+    var xDomain = [xLabels[0] - 1, xLabels[xLabels.length - 1] + 1];
 
+    x = d3.scale
+      .linear()
+      .domain(xDomain)
+      .range([0, this.width]);
+
+    y = d3.scale
+      .linear()
+      .domain([minVal - 1, maxVal + 1])
+      .range([this.height, 0]);
+
+    xAxis = d3.svg
+      .axis()
+      .scale(x)
+      .orient('bottom');
+
+    standardFormatter = d3.format('s');
+
+    function isInt(n) {
+      return n % 1 === 0;
+    }
+
+    yAxis = d3.svg
+      .axis()
+      .scale(y)
+      .orient('left')
+      .tickFormat(function(d) {
+        if (d >= 1 && isInt(d)) {
+          return standardFormatter(d);
+        }
+
+        return '';
+      });
+
+    chart = d3
+      .select(this.el)
+      .select('.chart')
+      .attr('width', this.fullWidth)
+      .attr('height', this.fullHeight)
+      .attr('aria-label', this.yAxisTitle + ' graph');
+
+    this.innerChart = chart
+      .append('g')
+      .classed('inner-chart', true)
+      .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
+
+    this.innerChart
+      .append('g')
+      .classed({
+        axis: true,
+        'x-axis': true,
+      })
+      .attr('transform', 'translate(0,' + this.height + ')')
+      .call(xAxis)
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('dx', '-.8em')
+      .attr('dy', '.15em')
+      .attr('transform', function(d) {
+        return 'rotate(-65)';
+      });
+
+    this.innerChart
+      .append('g')
+      .classed({
+        axis: true,
+        'y-axis': true,
+      })
+      .call(yAxis);
+
+    if (data.length >= 40) {
+      line = d3.svg
+        .line()
+        .x(function(d) {
+          return x(d.x);
+        })
+        .y(function(d) {
+          return y(d.y);
+        });
+
+      this.innerChart
+        .append('path')
+        .datum(data)
+        .classed('line', true)
+        .attr('d', line);
+    } else {
+      //  show legend
+      this.$('.ref-nonref').removeClass('hidden');
+
+      var d = this.innerChart.selectAll('circle').data(data);
+
+      d.enter()
+        .append('circle')
+        .attr('class', 'dot')
+        .attr('r', 2)
+        .classed('refereed', function(d) {
+          if (d.refereed) {
+            return true;
+          }
+        })
+        .attr('cx', function(d) {
+          return x(d.x);
+        })
+        .attr('cy', function(d) {
+          return y(d.y);
+        });
+    }
+
+    if (this.hIndex) {
+      // first h index line
+      this.innerChart
+        .append('line')
+        .classed({ 'h-index': true, 'h-index-1': true })
+        .attr('x1', x(this.hIndex.x))
+        .attr('y1', y(minVal - 1))
+        .attr('x2', x(this.hIndex.x))
+        .attr('y2', y(this.hIndex.y));
+
+      // second h index line
+      this.innerChart
+        .append('line')
+        .classed({ 'h-index': true, 'h-index-2': true })
+        .attr('x1', x(xLabels[0] - 1))
+        .attr('y1', y(this.hIndex.y))
+        .attr('x2', x(this.hIndex.x))
+        .attr('y2', y(this.hIndex.y));
+    }
+
+    this.innerChart
+      .append('text')
+      .attr('class', 's-label')
+      .attr('x', this.width / 2 - 20)
+      .attr('y', 180)
+      .text(Marionette.getOption(this, 'xAxisTitle'));
+
+    this.innerChart
+      .append('text')
+      .attr('class', 's-label')
+      .attr('y', -40)
+      .attr('x', -this.height / 2)
+      .attr('transform', 'rotate(-90)')
+      .text(Marionette.getOption(this, 'yAxisTitle'));
+  },
+
+  /* takes scale val (linear or log) and calls graphChange */
+
+  toggleScale: function(e) {
+    var v = $(e.target).attr('value');
+
+    this.currentScale = v;
+
+    this.graphChange();
+  },
+
+  graphChange: function(val) {
+    var data;
+    var max;
+    var x;
+    var y;
+    var xAxis;
+    var yAxis;
+
+    data = _.clone(this.model.get('graphData'));
+
+    max = data[data.length - 1].x;
+
+    /* checking : do we need to signal
+       that facet is active/ show apply button?
+       */
+
+    if (val !== max) {
+      this.trigger('facet:active');
+    } else {
+      this.trigger('facet:inactive');
+    }
+
+    if (val) {
+      this.limitVal = val;
+    } else if (!this.limitVal) {
+      this.limitVal = d3.max(_.pluck(data, 'x'));
+    }
+    // else, limitval has already been set previously
+
+    // now getting rid of anything outside of the new bounds
+    // (if log, y cant be less than 0)
+    data = _.filter(
+      data,
+      function(d, i) {
+        if (this.currentScale === 'log') {
+          return d.x <= this.limitVal && d.y > 0;
+        }
+        return d.x <= this.limitVal;
+      },
+      this
+    );
+
+    var xLabels = _.pluck(data, 'x');
+    var yVals = _.pluck(data, 'y');
+    maxVal = d3.max(yVals);
+    minVal = d3.min(yVals);
+
+    var xDomain = [xLabels[0] - 1, xLabels[xLabels.length - 1] + 1];
+
+    x = d3.scale
+      .linear()
+      .domain(xDomain)
+      .range([0, this.width]);
+
+    xAxis = d3.svg
+      .axis()
+      .scale(x)
+      .orient('bottom')
+      .tickFormat(d3.format('d'));
+
+    if (this.currentScale === 'linear') {
       y = d3.scale
         .linear()
         .domain([minVal - 1, maxVal + 1])
         .range([this.height, 0]);
+    } else if (this.currentScale === 'log') {
+      y = d3.scale
+        .log()
+        .domain([_.max([1, minVal - 1]), maxVal + 1])
+        .range([this.height, 0])
+        .clamp(true);
+    }
 
-      xAxis = d3.svg
-        .axis()
-        .scale(x)
-        .orient('bottom');
+    d3.select(this.el)
+      .select('.x-axis')
+      .call(xAxis)
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('dx', '-.8em')
+      .attr('dy', '.15em')
+      .attr('transform', function(d) {
+        return 'rotate(-65)';
+      });
 
-      standardFormatter = d3.format('s');
+    standardFormatter = d3.format('s');
 
-      function isInt(n) {
-        return n % 1 === 0;
+    function isInt(n) {
+      return n % 1 === 0;
+    }
+
+    yAxis = d3.svg
+      .axis()
+      .scale(y)
+      .orient('left');
+
+    if (this.currentScale === 'log') {
+      var numberFormat = d3.format('s');
+
+      function logFormat(d) {
+        var x = Math.log(d) / Math.log(10) + 1e-6;
+        return Math.abs(x - Math.floor(x)) < 0.7 ? numberFormat(d) : '';
       }
 
+      yAxis.tickFormat(logFormat);
+    } else {
       yAxis = d3.svg
         .axis()
         .scale(y)
@@ -86,402 +324,156 @@ import Marionette from 'marionette';
 
           return '';
         });
+    }
 
-      chart = d3
-        .select(this.el)
-        .select('.chart')
-        .attr('width', this.fullWidth)
-        .attr('height', this.fullHeight)
-        .attr('aria-label', this.yAxisTitle + ' graph');
+    d3.select(this.el)
+      .select('.y-axis')
+      .transition()
+      .call(yAxis);
 
-      this.innerChart = chart
-        .append('g')
-        .classed('inner-chart', true)
-        .attr(
-          'transform',
-          'translate(' + this.margin.left + ',' + this.margin.top + ')'
-        );
-
-      this.innerChart
-        .append('g')
-        .classed({
-          axis: true,
-          'x-axis': true,
-        })
-        .attr('transform', 'translate(0,' + this.height + ')')
-        .call(xAxis)
-        .selectAll('text')
-        .style('text-anchor', 'end')
-        .attr('dx', '-.8em')
-        .attr('dy', '.15em')
-        .attr('transform', function(d) {
-          return 'rotate(-65)';
-        });
-
-      this.innerChart
-        .append('g')
-        .classed({
-          axis: true,
-          'y-axis': true,
-        })
-        .call(yAxis);
-
-      if (data.length >= 40) {
-        line = d3.svg
-          .line()
-          .x(function(d) {
-            return x(d.x);
-          })
-          .y(function(d) {
-            return y(d.y);
-          });
-
-        this.innerChart
-          .append('path')
-          .datum(data)
-          .classed('line', true)
-          .attr('d', line);
+    if (this.hIndex) {
+      if (_.contains(data, this.hIndex)) {
+        this.innerChart.selectAll('.h-index').classed('hidden', false);
       } else {
-        //  show legend
-        this.$('.ref-nonref').removeClass('hidden');
-
-        var d = this.innerChart.selectAll('circle').data(data);
-
-        d.enter()
-          .append('circle')
-          .attr('class', 'dot')
-          .attr('r', 2)
-          .classed('refereed', function(d) {
-            if (d.refereed) {
-              return true;
-            }
-          })
-          .attr('cx', function(d) {
-            return x(d.x);
-          })
-          .attr('cy', function(d) {
-            return y(d.y);
-          });
+        this.innerChart.selectAll('.h-index').classed('hidden', true);
       }
 
-      if (this.hIndex) {
-        // first h index line
-        this.innerChart
-          .append('line')
-          .classed({ 'h-index': true, 'h-index-1': true })
-          .attr('x1', x(this.hIndex.x))
-          .attr('y1', y(minVal - 1))
-          .attr('x2', x(this.hIndex.x))
-          .attr('y2', y(this.hIndex.y));
-
-        // second h index line
-        this.innerChart
-          .append('line')
-          .classed({ 'h-index': true, 'h-index-2': true })
-          .attr('x1', x(xLabels[0] - 1))
-          .attr('y1', y(this.hIndex.y))
-          .attr('x2', x(this.hIndex.x))
-          .attr('y2', y(this.hIndex.y));
-      }
-
+      // first h index line
       this.innerChart
-        .append('text')
-        .attr('class', 's-label')
-        .attr('x', this.width / 2 - 20)
-        .attr('y', 180)
-        .text(Marionette.getOption(this, 'xAxisTitle'));
-
-      this.innerChart
-        .append('text')
-        .attr('class', 's-label')
-        .attr('y', -40)
-        .attr('x', -this.height / 2)
-        .attr('transform', 'rotate(-90)')
-        .text(Marionette.getOption(this, 'yAxisTitle'));
-    },
-
-    /* takes scale val (linear or log) and calls graphChange */
-
-    toggleScale: function(e) {
-      var v = $(e.target).attr('value');
-
-      this.currentScale = v;
-
-      this.graphChange();
-    },
-
-    graphChange: function(val) {
-      var data;
-      var max;
-      var x;
-      var y;
-      var xAxis;
-      var yAxis;
-
-      data = _.clone(this.model.get('graphData'));
-
-      max = data[data.length - 1].x;
-
-      /* checking : do we need to signal
-         that facet is active/ show apply button?
-         */
-
-      if (val !== max) {
-        this.trigger('facet:active');
-      } else {
-        this.trigger('facet:inactive');
-      }
-
-      if (val) {
-        this.limitVal = val;
-      } else if (!this.limitVal) {
-        this.limitVal = d3.max(_.pluck(data, 'x'));
-      }
-      // else, limitval has already been set previously
-
-      // now getting rid of anything outside of the new bounds
-      // (if log, y cant be less than 0)
-      data = _.filter(
-        data,
-        function(d, i) {
-          if (this.currentScale === 'log') {
-            return d.x <= this.limitVal && d.y > 0;
-          }
-          return d.x <= this.limitVal;
-        },
-        this
-      );
-
-      var xLabels = _.pluck(data, 'x');
-      var yVals = _.pluck(data, 'y');
-      maxVal = d3.max(yVals);
-      minVal = d3.min(yVals);
-
-      var xDomain = [xLabels[0] - 1, xLabels[xLabels.length - 1] + 1];
-
-      x = d3.scale
-        .linear()
-        .domain(xDomain)
-        .range([0, this.width]);
-
-      xAxis = d3.svg
-        .axis()
-        .scale(x)
-        .orient('bottom')
-        .tickFormat(d3.format('d'));
-
-      if (this.currentScale === 'linear') {
-        y = d3.scale
-          .linear()
-          .domain([minVal - 1, maxVal + 1])
-          .range([this.height, 0]);
-      } else if (this.currentScale === 'log') {
-        y = d3.scale
-          .log()
-          .domain([_.max([1, minVal - 1]), maxVal + 1])
-          .range([this.height, 0])
-          .clamp(true);
-      }
-
-      d3.select(this.el)
-        .select('.x-axis')
-        .call(xAxis)
-        .selectAll('text')
-        .style('text-anchor', 'end')
-        .attr('dx', '-.8em')
-        .attr('dy', '.15em')
-        .attr('transform', function(d) {
-          return 'rotate(-65)';
-        });
-
-      standardFormatter = d3.format('s');
-
-      function isInt(n) {
-        return n % 1 === 0;
-      }
-
-      yAxis = d3.svg
-        .axis()
-        .scale(y)
-        .orient('left');
-
-      if (this.currentScale === 'log') {
-        var numberFormat = d3.format('s');
-        function logFormat(d) {
-          var x = Math.log(d) / Math.log(10) + 1e-6;
-          return Math.abs(x - Math.floor(x)) < 0.7 ? numberFormat(d) : '';
-        }
-
-        yAxis.tickFormat(logFormat);
-      } else {
-        yAxis = d3.svg
-          .axis()
-          .scale(y)
-          .orient('left')
-          .tickFormat(function(d) {
-            if (d >= 1 && isInt(d)) {
-              return standardFormatter(d);
-            }
-
-            return '';
-          });
-      }
-
-      d3.select(this.el)
-        .select('.y-axis')
+        .select('.h-index-1')
         .transition()
-        .call(yAxis);
+        .attr('x1', x(this.hIndex.x))
+        .attr('x2', x(this.hIndex.x))
+        .attr('y2', y(this.hIndex.y));
 
-      if (this.hIndex) {
-        if (_.contains(data, this.hIndex)) {
-          this.innerChart.selectAll('.h-index').classed('hidden', false);
-        } else {
-          this.innerChart.selectAll('.h-index').classed('hidden', true);
-        }
+      // second h index line
+      this.innerChart
+        .select('.h-index-2')
+        .transition()
+        .attr('y1', y(this.hIndex.y))
+        .attr('x2', x(this.hIndex.x))
+        .attr('y2', y(this.hIndex.y));
+    }
 
-        // first h index line
-        this.innerChart
-          .select('.h-index-1')
-          .transition()
-          .attr('x1', x(this.hIndex.x))
-          .attr('x2', x(this.hIndex.x))
-          .attr('y2', y(this.hIndex.y));
+    if (data.length >= 40) {
+      //  show legend
+      $('.ref-nonref').addClass('hidden');
 
-        // second h index line
-        this.innerChart
-          .select('.h-index-2')
-          .transition()
-          .attr('y1', y(this.hIndex.y))
-          .attr('x2', x(this.hIndex.x))
-          .attr('y2', y(this.hIndex.y));
-      }
-
-      if (data.length >= 40) {
-        //  show legend
-        $('.ref-nonref').addClass('hidden');
-
-        line = d3.svg
-          .line()
-          .x(function(d) {
-            return x(d.x);
-          })
-          .y(function(d) {
-            return y(d.y);
-          });
-
-        this.innerChart.selectAll('.dot').classed('hidden', true);
-
-        this.innerChart
-          .selectAll('.line')
-          .datum(data)
-          .attr('d', line)
-          .classed('hidden', false);
-      } else {
-        //  show legend
-        this.$('.ref-nonref').removeClass('hidden');
-
-        this.innerChart.selectAll('.line').classed('hidden', true);
-
-        this.innerChart.selectAll('.dot').classed('hidden', false);
-
-        var d = this.innerChart.selectAll('circle').data(data);
-
-        d.exit().remove();
-
-        d.enter()
-          .append('circle')
-          .attr('class', 'dot')
-          .attr('r', 2);
-
-        d.classed('refereed', function(d) {
-          if (d.refereed) {
-            return true;
-          }
+      line = d3.svg
+        .line()
+        .x(function(d) {
+          return x(d.x);
         })
-          .attr('cx', function(d) {
-            return x(d.x);
-          })
-          .attr('cy', function(d) {
-            return y(d.y);
-          });
-      }
-    },
+        .y(function(d) {
+          return y(d.y);
+        });
 
-    buildSlider: function() {
-      var that = this;
-      var data = _.clone(this.model.get('graphData'));
-      var max = data[data.length - 1].x;
-      var min = data[0].x;
+      this.innerChart.selectAll('.dot').classed('hidden', true);
 
-      this.$('.slider').slider({
-        max: max,
-        min: min,
-        value: max,
-        stop: function(event, ui) {
-          that.graphChange(ui.value);
-        },
-        slide: function(event, ui) {
-          that.$('.show-slider-data-first').val(ui.value);
-        },
-        create: function(event) {
-          const $handles = $('a', event.target);
-          $handles.attr('href', 'javascript:void(0)');
-          $handles.attr('title', 'slider handle');
-        },
-      });
+      this.innerChart
+        .selectAll('.line')
+        .datum(data)
+        .attr('d', line)
+        .classed('hidden', false);
+    } else {
+      //  show legend
+      this.$('.ref-nonref').removeClass('hidden');
 
-      this.$('.show-slider-data-first').val(max);
-    },
+      this.innerChart.selectAll('.line').classed('hidden', true);
 
-    addSliderWindows: function() {
-      this.$('.slider-data').html(
-        sliderWindowTemplate({ pastTenseTitle: this.pastTenseTitle })
-      );
-    },
+      this.innerChart.selectAll('.dot').classed('hidden', false);
 
-    convertGraphDataToCSV: function() {
-      let data = 'data:text/csv;charset=utf-8,';
-      data += `Total, ${Number(
-        this.model.get('statsCount').replace(/,/g, '')
-      )}\n`;
-      data += `Article No., ${this.name}, Refereed`;
-      this.model.get('graphData').forEach((obj) => {
-        data += `\n${obj.x},${obj.y},${obj.refereed}`;
-      });
-      return data;
-    },
+      var d = this.innerChart.selectAll('circle').data(data);
 
-    triggerGraphChange: function(update) {
-      var data = _.clone(this.model.get('graphData'));
-      if (_.isArray(data)) {
-        var min = data[0].x;
-        var max = data[data.length - 1].x;
-        var $first = this.$('.show-slider-data-first');
-        var a = $first.val();
+      d.exit().remove();
 
-        // a < min, set to min
-        a = a < min ? min : a;
+      d.enter()
+        .append('circle')
+        .attr('class', 'dot')
+        .attr('r', 2);
 
-        // a > max, set to b
-        a = a > max ? max : a;
-
-        if (update) {
-          $first.val(a);
+      d.classed('refereed', function(d) {
+        if (d.refereed) {
+          return true;
         }
+      })
+        .attr('cx', function(d) {
+          return x(d.x);
+        })
+        .attr('cy', function(d) {
+          return y(d.y);
+        });
+    }
+  },
 
-        this.$('.slider').slider('value', a);
-        this.graphChange(a);
+  buildSlider: function() {
+    var that = this;
+    var data = _.clone(this.model.get('graphData'));
+    var max = data[data.length - 1].x;
+    var min = data[0].x;
+
+    this.$('.slider').slider({
+      max: max,
+      min: min,
+      value: max,
+      stop: function(event, ui) {
+        that.graphChange(ui.value);
+      },
+      slide: function(event, ui) {
+        that.$('.show-slider-data-first').val(ui.value);
+      },
+      create: function(event) {
+        const $handles = $('a', event.target);
+        $handles.attr('href', 'javascript:void(0)');
+        $handles.attr('title', 'slider handle');
+      },
+    });
+
+    this.$('.show-slider-data-first').val(max);
+  },
+
+  addSliderWindows: function() {
+    this.$('.slider-data').html(sliderWindowTemplate({ pastTenseTitle: this.pastTenseTitle }));
+  },
+
+  convertGraphDataToCSV: function() {
+    let data = 'data:text/csv;charset=utf-8,';
+    data += `Total, ${Number(this.model.get('statsCount').replace(/,/g, ''))}\n`;
+    data += `Article No., ${this.name}, Refereed`;
+    this.model.get('graphData').forEach((obj) => {
+      data += `\n${obj.x},${obj.y},${obj.refereed}`;
+    });
+    return data;
+  },
+
+  triggerGraphChange: function(update) {
+    var data = _.clone(this.model.get('graphData'));
+    if (_.isArray(data)) {
+      var min = data[0].x;
+      var max = data[data.length - 1].x;
+      var $first = this.$('.show-slider-data-first');
+      var a = $first.val();
+
+      // a < min, set to min
+      a = a < min ? min : a;
+
+      // a > max, set to b
+      a = a > max ? max : a;
+
+      if (update) {
+        $first.val(a);
       }
-    },
 
-    submitFacet: function() {
-      // find citation limit
-      var limit = this.model.get('graphData')[
-        this.$('.slider').slider('value') - 1
-      ].y;
-      this.trigger('facet-applied', '[' + limit + ' TO 9999999]');
-    },
-  });
+      this.$('.slider').slider('value', a);
+      this.graphChange(a);
+    }
+  },
 
-  export default HIndexGraphView;
+  submitFacet: function() {
+    // find citation limit
+    var limit = this.model.get('graphData')[this.$('.slider').slider('value') - 1].y;
+    this.trigger('facet-applied', '[' + limit + ' TO 9999999]');
+  },
+});
 
+export default HIndexGraphView;

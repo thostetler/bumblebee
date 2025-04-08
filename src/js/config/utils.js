@@ -20,17 +20,13 @@ function waitForElement(selector, timeout = DEFAULT_TIMEOUT) {
     // Start observing the document for changes in the DOM
     observer.observe(document.body, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
 
     // Set a timeout to stop observing if the element doesn't appear in time
     setTimeout(() => {
       observer.disconnect();
-      reject(
-        new Error(
-          `Element with selector "${selector}" was not found within ${timeout}ms.`
-        )
-      );
+      reject(new Error(`Element with selector "${selector}" was not found within ${timeout}ms.`));
     }, timeout);
   });
 }

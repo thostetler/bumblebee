@@ -1,20 +1,26 @@
 <div role="search">
   <div class="row">
     <h2 class="sr-only">Search Bar to Enter New Query</h2>
-    <div class="col-sm-12 s-quick-add" aria-label="quick add fields">
-      <div id="expanded-search-form" class="unselectable">
+    <div aria-label="quick add fields" class="col-sm-12 s-quick-add">
+      <div class="unselectable" id="expanded-search-form">
         <div id="field-options">
           <span class="s-field-options">quick field:</span>
 
           <span class="visible-sm-inline visible-md-inline visible-lg-inline">
-            <button class="btn btn-link btn-sm" title='search for an author, e.g. author:"Kurtz,M"' data-toggle="tooltip" data-field="author" data-punc='"'>Author</button>
-            <button class="btn btn-link btn-sm" title='search for a first author, e.g. author:"^Kurtz,M"' data-toggle="tooltip" data-field="first-author" data-punc='"'>First Author</button>
-            <button class="btn btn-link btn-sm" title="limit search to abstract, title and keyword fields" data-toggle="tooltip" data-field="abs" data-punc='"'>Abstract</button>
+            <button class="btn btn-link btn-sm" data-field="author"
+                    data-punc='"' data-toggle="tooltip" title='search for an author, e.g. author:"Kurtz,M"'>Author</button>
+            <button class="btn btn-link btn-sm" data-field="first-author"
+                    data-punc='"' data-toggle="tooltip" title='search for a first author, e.g. author:"^Kurtz,M"'>First Author</button>
+            <button class="btn btn-link btn-sm" data-field="abs"
+                    data-punc='"' data-toggle="tooltip" title="limit search to abstract, title and keyword fields">Abstract</button>
           </span>
 
           <span class="visible-lg-inline">
-            <button class="btn btn-link btn-sm" title="e.g. year:1999 or year:1999-2016" data-toggle="tooltip" data-field="year">Year</button>
-            <button class="btn btn-link btn-sm" title="search titles, abstract, text, keywords and acknowledgements of the articles" data-toggle="tooltip" data-field="full" data-punc='"'>Fulltext</button>
+            <button class="btn btn-link btn-sm" data-field="year" data-toggle="tooltip"
+                    title="e.g. year:1999 or year:1999-2016">Year</button>
+            <button class="btn btn-link btn-sm"
+                    data-field="full"
+                    data-punc='"' data-toggle="tooltip" title="search titles, abstract, text, keywords and acknowledgements of the articles">Fulltext</button>
           </span>
 
           <!--container for additional fields/operators-->
@@ -26,30 +32,37 @@
   <div class="row"></div>
   <div class="row">
     <div class="col-sm-12 search-bar-input-row s-search-bar-input-row">
-      <form name="main-query" action="/search/q=%s">
+      <form action="/search/q=%s" name="main-query">
         <div class="form-group has-feedback">
           <div class="input-group">
             {{#if bigquery}} {{#if libraryName}}
             <div class="btn btn-xs btn-info bigquery-tag">
-              <i class="fa fa-book" aria-hidden="true"></i>&nbsp;<span>{{libraryName}}</span>&nbsp;<i class="fa fa-close fa-lg bigquery-close" aria-hidden="true" title="click to remove"></i></div>
+              <i aria-hidden="true" class="fa fa-book"></i>&nbsp;<span>{{libraryName}}</span>&nbsp;<i
+              aria-hidden="true" class="fa fa-close fa-lg bigquery-close" title="click to remove"></i></div>
             {{else}}
-            <div class="btn btn-xs btn-info bigquery-tag"><i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;&nbsp;Bulk query&nbsp;&nbsp;<i class="fa fa-close fa-lg bigquery-close" aria-hidden="true" title="click to remove" ></i></div>
+            <div class="btn btn-xs btn-info bigquery-tag"><i aria-hidden="true" class="fa fa-list-ul"></i>&nbsp;&nbsp;Bulk
+              query&nbsp;&nbsp;<i aria-hidden="true" class="fa fa-close fa-lg bigquery-close"
+                                  title="click to remove"></i></div>
             {{/if}}
-            <label for="query-search-input" clas="sr-only">ADS search</label>
-            <input type="text" class="form-control q hasbigquery" name="q" id="query-search-input" autofocus aria-label="Start typing a query here to begin an ADS Search" autocomplete="off" value={{currentQueryVal}}>
+            <label clas="sr-only" for="query-search-input">ADS search</label>
+            <input aria-label="Start typing a query here to begin an ADS Search" autocomplete="off" autofocus class="form-control q hasbigquery" id="query-search-input"
+                   name="q" type="text"
+                   value={{currentQueryVal}}>
 
 
-            <button type="button" class="icon-clear s-clear-control"></button>
+            <button class="icon-clear s-clear-control" type="button"></button>
 
             {{else}}
-            <input type="text" class="form-control q" name="q" autofocus id="query-search-input" aria-label="Start typing a query here to begin an ADS Search" autocomplete="off" value={{currentQueryVal}}>
+            <input aria-label="Start typing a query here to begin an ADS Search" autocomplete="off" autofocus class="form-control q" id="query-search-input"
+                   name="q" type="text"
+                   value={{currentQueryVal}}>
 
-            <button type="button" class="icon-clear s-clear-control"></button>
+            <button class="icon-clear s-clear-control" type="button"></button>
 
             {{/if}}
             <span class="input-group-btn">
-                      <button type="submit" class="btn btn-primary search-submit s-search-submit" aria-label="submit">
-                          <i class="fa fa-search" aria-hidden="true"></i></button>
+                      <button aria-label="submit" class="btn btn-primary search-submit s-search-submit" type="submit">
+                          <i aria-hidden="true" class="fa fa-search"></i></button>
                   </span>
 
           </div>
@@ -61,7 +74,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="s-num-found" role="status" aria-atomic="true" aria-labelledby="num-found-title">
+  <div aria-atomic="true" aria-labelledby="num-found-title" class="s-num-found" role="status">
     <div class="sr-only" id="num-found-title">
       Your search returned {{numFound}} results
       {{#if citationCount}}
@@ -69,10 +82,10 @@
       {{/if}}
     </div>
     <span class="s-light-font description">Your search returned</span>
-      <span class="num-found-container" style="font-weight: bold;">{{numFound}}</span>
-      <span class="s-light-font"> results </span>
+    <span class="num-found-container" style="font-weight: bold;">{{numFound}}</span>
+    <span class="s-light-font"> results </span>
     {{#if citationCount}}
-      <span class="search-bar__citation-count"> with <span class="citation-count-container" style="font-weight: bold;">{{citationCount}}</span>
+    <span class="search-bar__citation-count"> with <span class="citation-count-container" style="font-weight: bold;">{{citationCount}}</span>
         <span class="s-light-font description">total {{citationLabel}} </span>
       </span>
     {{/if}}

@@ -1,17 +1,16 @@
+import PageManagerTemplate from 'hbs!js/wraps/orcid-instructions-page-manager/orcid-instructions';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/one_column_view';
-import PageManagerTemplate from 'hbs!js/wraps/orcid-instructions-page-manager/orcid-instructions';
-import Bootstrap from 'bootstrap';
-  var PageManager = PageManagerController.extend({
-    createView: function(options) {
-      options = options || {};
-      options.template = PageManagerTemplate;
-      return new PageManagerView({
-        template: PageManagerTemplate,
-        className: 'orcid-info',
-      });
-    },
-  });
 
-  export default PageManager;
+var PageManager = PageManagerController.extend({
+  createView: function(options) {
+    options = options || {};
+    options.template = PageManagerTemplate;
+    return new PageManagerView({
+      template: PageManagerTemplate,
+      className: 'orcid-info',
+    });
+  },
+});
 
+export default PageManager;

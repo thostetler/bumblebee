@@ -5,119 +5,116 @@
  * is where setup happens; application will load beehive)
  */
 
-import Backbone from 'backbone';
-import _ from 'underscore';
 import GenericModule from 'js/components/generic_module';
-import Dependon from 'js/mixins/dependon';
-import Hardened from 'js/mixins/hardened';
 import ServicesContainer from 'js/components/services_container';
-  var hiveOptions = [];
-  var BeeHive = GenericModule.extend({
-    initialize: function(options) {
-      _.extend(this, _.pick(options, hiveOptions));
-      this.Services = new ServicesContainer();
-      this.Objects = new ServicesContainer();
-      this.debug = false;
-      this.active = true;
-    },
+import Hardened from 'js/mixins/hardened';
+import _ from 'underscore';
 
-    activate: function() {
-      this.Services.activate.apply(this.Services, arguments);
-      this.Objects.activate(this);
-      this.active = true;
-    },
+var hiveOptions = [];
+var BeeHive = GenericModule.extend({
+  initialize: function(options) {
+    _.extend(this, _.pick(options, hiveOptions));
+    this.Services = new ServicesContainer();
+    this.Objects = new ServicesContainer();
+    this.debug = false;
+    this.active = true;
+  },
 
-    destroy: function() {
-      this.Services.destroy(arguments);
-      this.Objects.destroy(arguments);
-      this.active = false;
-    },
+  activate: function() {
+    this.Services.activate.apply(this.Services, arguments);
+    this.Objects.activate(this);
+    this.active = true;
+  },
 
-    getService: function(name) {
-      return this.Services.get(name);
-    },
+  destroy: function() {
+    this.Services.destroy(arguments);
+    this.Objects.destroy(arguments);
+    this.active = false;
+  },
 
-    hasService: function(name) {
-      return this.Services.has(name);
-    },
+  getService: function(name) {
+    return this.Services.get(name);
+  },
 
-    addService: function(name, service) {
-      return this.Services.add(name, service);
-    },
+  hasService: function(name) {
+    return this.Services.has(name);
+  },
 
-    removeService: function(name) {
-      return this.Services.remove(name);
-    },
+  addService: function(name, service) {
+    return this.Services.add(name, service);
+  },
 
-    getObject: function(name) {
-      return this.Objects.get(name);
-    },
+  removeService: function(name) {
+    return this.Services.remove(name);
+  },
 
-    hasObject: function(name) {
-      return this.Objects.has(name);
-    },
+  getObject: function(name) {
+    return this.Objects.get(name);
+  },
 
-    addObject: function(name, service) {
-      return this.Objects.add(name, service);
-    },
+  hasObject: function(name) {
+    return this.Objects.has(name);
+  },
 
-    removeObject: function(name) {
-      return this.Objects.remove(name);
-    },
+  addObject: function(name, service) {
+    return this.Objects.add(name, service);
+  },
 
-    getDebug: function() {
-      return this.debug;
-    },
+  removeObject: function(name) {
+    return this.Objects.remove(name);
+  },
 
-    getAllServices: function() {
-      return this.Services.getAll();
-    },
+  getDebug: function() {
+    return this.debug;
+  },
 
-    getAllObjects: function() {
-      return this.Objects.getAll();
-    },
+  getAllServices: function() {
+    return this.Services.getAll();
+  },
 
-    /*
-     * Wraps itself into a Facade that can be shared with other modules
-     * (it is read-only); absolutely non-modifiable and provides the
-     * following callbacks and properties:
-     *  - Services
-     */
-    hardenedInterface: {
-      Services: 'services container',
-      Objects: 'objects container',
-      debug: 'state of the app',
-      active: 'active or not',
-      getHardenedInstance:
-        'allow to create clone of the already hardened instance',
-    },
-  });
+  getAllObjects: function() {
+    return this.Objects.getAll();
+  },
 
-  _.extend(BeeHive.prototype, Hardened, {
-    getHardenedInstance: function(iface) {
-      iface = _.clone(iface || this.hardenedInterface);
+  /*
+   * Wraps itself into a Facade that can be shared with other modules
+   * (it is read-only); absolutely non-modifiable and provides the
+   * following callbacks and properties:
+   *  - Services
+   */
+  hardenedInterface: {
+    Services: 'services container',
+    Objects: 'objects container',
+    debug: 'state of the app',
+    active: 'active or not',
+    getHardenedInstance: 'allow to create clone of the already hardened instance',
+  },
+});
 
-      // because 'facade' functions are normally bound to the
-      // original object, we have to do this to access 'facade'
-      iface.getService = function(name) {
-        // 'get service X (but only the hardened ones)',
-        return hardened.Services.get(name);
-      };
-      iface.hasService = function(name) {
-        return hardened.Services.has(name);
-      };
-      iface.getObject = function(name) {
-        // 'get object X (but only the hardened ones)',
-        return hardened.Objects.get(name);
-      };
-      iface.hasObject = function(name) {
-        return hardened.Objects.has(name);
-      };
+_.extend(BeeHive.prototype, Hardened, {
+  getHardenedInstance: function(iface) {
+    iface = _.clone(iface || this.hardenedInterface);
 
-      var hardened = this._getHardenedInstance(iface, this);
-      return hardened;
-    },
-  });
+    // because 'facade' functions are normally bound to the
+    // original object, we have to do this to access 'facade'
+    iface.getService = function(name) {
+      // 'get service X (but only the hardened ones)',
+      return hardened.Services.get(name);
+    };
+    iface.hasService = function(name) {
+      return hardened.Services.has(name);
+    };
+    iface.getObject = function(name) {
+      // 'get object X (but only the hardened ones)',
+      return hardened.Objects.get(name);
+    };
+    iface.hasObject = function(name) {
+      return hardened.Objects.has(name);
+    };
 
-  export default BeeHive;
+    var hardened = this._getHardenedInstance(iface, this);
+    return hardened;
+  },
+});
 
+export default BeeHive;

@@ -2,36 +2,35 @@
 <h3><span class="s-light-font">Author Network</span></h3>
 
 <p>This network visualization finds groups of authors within your search results.
-    You can click on the segments to view the papers connected with a group or a particular author.
+  You can click on the segments to view the papers connected with a group or a particular author.
 </p>
 
 <h5>Group Activity Over Time (measured in papers published)</h5>
- <div class="time-series-container">
- <svg viewBox="0 0 960 500" id="network-viz-time-series"></svg>
- </div>
+<div class="time-series-container">
+  <svg id="network-viz-time-series" viewBox="0 0 960 500"></svg>
+</div>
 
-<br/>
+<br />
 <div>
-    <a href="/help/actions/visualize#author-network" target="_blank" rel="noreferrer noopener">Learn more about the author network.</a>
+  <a href="/help/actions/visualize#author-network" rel="noreferrer noopener" target="_blank">Learn more about the author
+    network.</a>
 </div>
 
 
 {{#if cachedQuery}}
 <button class="btn btn-default load-author-network" data-query="{{cachedQuery}}">
-    <i class="fa fa-arrow-left" aria-hidden="true"></i>
-    Go back to previous author network ({{cachedQuery}})
+  <i aria-hidden="true" class="fa fa-arrow-left"></i>
+  Go back to previous author network ({{cachedQuery}})
 </button>
 {{else}}
 <!--only show this for first time view of network-->
 
 <p>If you are interested in seeing the author network for another author, you can do that directly
-    by clicking on the author in the ring visualization, then clicking the button at the top.</p>
+  by clicking on the author in the ring visualization, then clicking the button at the top.</p>
 
 <p>You can zoom and drag the visualization to reposition it.</p>
 
 {{/if}}
-
-
 
 
 </div>
@@ -42,15 +41,17 @@
 {{#compare networkType "paper"}}
 <h3><span class="s-light-font">Paper Network for Query</span> {{currentQuery}}</h3>
 
-<p>The segments of the visualization to the left represent groups of papers from your result set which cite similar papers. </p>
+<p>The segments of the visualization to the left represent groups of papers from your result set which cite similar
+  papers. </p>
 
 <h5>Group Activity Over Time (measured in papers published)</h5>
 <div class="time-series-container">
-    <svg id="network-chart-main-visualization" viewBox="0 0 960 500"></svg>
+  <svg id="network-chart-main-visualization" viewBox="0 0 960 500"></svg>
 </div>
 
-<br/>
+<br />
 <p>Click on a group to learn more about the papers within the group, as well as the papers cited by those papers.</p>
-<a href="/help/actions/visualize#paper-network" target="_blank" rel="noreferrer noopener">Learn more about the paper network.</a>
+<a href="/help/actions/visualize#paper-network" rel="noreferrer noopener" target="_blank">Learn more about the paper
+  network.</a>
 
 {{/compare}}

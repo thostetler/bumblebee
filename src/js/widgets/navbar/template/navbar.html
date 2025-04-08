@@ -1,193 +1,219 @@
-<nav class="navbar fluid navbar-inverse" aria-label="main navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar" aria-hidden="true"></span>
-                <span class="icon-bar" aria-hidden="true"></span>
-                <span class="icon-bar" aria-hidden="true"></span>
-            </button>
-            {{#unless hourly}}
-            <a class="navbar-brand s-navbar-brand" href="#">
-                <img class="s-ads-icon" src="/styles/img/transparent_logo.svg" alt="Astrophysics Data System Home Page"/>
-                <h1 style="font-weight: bold;">ads</h1>
-            </a>
-            {{else}}
-            <div class="s-hourly-warning">
-                <a class="navbar-brand s-navbar-brand" href="#"><i class="icon-danger fa-2x" aria-hidden="true"></i> ADS TEST</a>
-                <span> Nothing you do here will be saved!  <a href="/">I want the real ADS <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+<nav aria-label="main navigation" class="navbar fluid navbar-inverse">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse"
+            type="button">
+      <span class="sr-only">Toggle navigation</span>
+      <span aria-hidden="true" class="icon-bar"></span>
+      <span aria-hidden="true" class="icon-bar"></span>
+      <span aria-hidden="true" class="icon-bar"></span>
+    </button>
+    {{#unless hourly}}
+    <a class="navbar-brand s-navbar-brand" href="#">
+      <img alt="Astrophysics Data System Home Page" class="s-ads-icon" src="/styles/img/transparent_logo.svg" />
+      <h1 style="font-weight: bold;">ads</h1>
+    </a>
+    {{else}}
+    <div class="s-hourly-warning">
+      <a class="navbar-brand s-navbar-brand" href="#"><i aria-hidden="true" class="icon-danger fa-2x"></i> ADS TEST</a>
+      <span> Nothing you do here will be saved!  <a href="/">I want the real ADS <i aria-hidden="true"
+                                                                                    class="fa fa-arrow-right"></i></a>
                 </span>
-            </div>
-            {{/unless}}
-        </div>
+    </div>
+    {{/unless}}
+  </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-            <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right">
 
-                <li class="dropdown">
-                  <button type="button" class="btn btn-link dropdown-toggle feedback-button" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-comment feedback-icon" aria-hidden="true"></i> Feedback <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li>
-                      <a href="javascript:void(0);" data-target="#feedback-modal" data-toggle="modal" data-feedback-view="list">
-                        <i class="fa fa-pencil" aria-hidden="true"></i> Submit Updates
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" data-target="#feedback-modal" data-toggle="modal" data-feedback-view="general">
-                        <i class="fa fa-envelope" aria-hidden="true"></i> General Feedback
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+      <li class="dropdown">
+        <button aria-expanded="false" class="btn btn-link dropdown-toggle feedback-button" data-toggle="dropdown"
+                type="button">
+          <i aria-hidden="true" class="fa fa-comment feedback-icon"></i> Feedback <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a data-feedback-view="list" data-target="#feedback-modal" data-toggle="modal" href="javascript:void(0);">
+              <i aria-hidden="true" class="fa fa-pencil"></i> Submit Updates
+            </a>
+          </li>
+          <li>
+            <a data-feedback-view="general" data-target="#feedback-modal" data-toggle="modal"
+               href="javascript:void(0);">
+              <i aria-hidden="true" class="fa fa-envelope"></i> General Feedback
+            </a>
+          </li>
+        </ul>
+      </li>
 
-                {{#if orcidLoggedIn}}
+      {{#if orcidLoggedIn}}
 
-                    {{#if orcidModeOn}}
+      {{#if orcidModeOn}}
 
-                <li class="dropdown orcid-dropdown s-orcid-dropdown">
-                    <button class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <li class="dropdown orcid-dropdown s-orcid-dropdown">
+        <button aria-expanded="false" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                         <span class="s-orcid-title">
-                         <img src="../../styles/img/orcid-active.svg" alt="orcid symbol"/>
+                         <img alt="orcid symbol" src="../../styles/img/orcid-active.svg" />
                             ORCID
                             <span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="no-hover-style">
-                            {{#if orcidFirstName}} <h4> Signed in to ORCID as <br/> <strong>{{orcidFirstName}} {{#if orcidLastName}}{{orcidLastName}}{{/if}}</strong></h4> {{/if}}
-                            <div class="s-orcid-mode-label" style="font-weight: bold;">ORCID Mode</div>
-                            <div class="s-orcid-label-container">
-                                off
-                                <div class="switch">
-                                    <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round orcid-mode" type="checkbox" checked="checked">
-                                    <label for="cmn-toggle-1"></label>
-                                </div>
-                                on
-                            </div>
-                        </li>
+        <ul class="dropdown-menu" role="menu">
+          <li class="no-hover-style">
+            {{#if orcidFirstName}} <h4> Signed in to ORCID as <br /> <strong>{{orcidFirstName}} {{#if
+            orcidLastName}}{{orcidLastName}}{{/if}}</strong></h4> {{/if}}
+            <div class="s-orcid-mode-label" style="font-weight: bold;">ORCID Mode</div>
+            <div class="s-orcid-label-container">
+              off
+              <div class="switch">
+                <input checked="checked" class="cmn-toggle cmn-toggle-round orcid-mode" id="cmn-toggle-1"
+                       type="checkbox">
+                <label for="cmn-toggle-1"></label>
+              </div>
+              on
+            </div>
+          </li>
 
-                        <li class="divider"></li>
-                        <li>
-                            <a class="orcid-link" href="#user/orcid" >View my ORCID papers in ADS </a>
-                        </li>
-                        {{#if orcidURI}}
-                        <li>
-                            <a href="https://orcid.org/my-orcid" target="_blank" rel="noreferrer noopener" >View my ORCID profile on orcid.org </a>
-                        </li>
-                        {{/if}}
-                        <li>
-                            <a href="#orcid-instructions"> <i class="fa fa-info-circle" aria-hidden="true"></i> Learn how to make ORCID claims using ADS</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="javascript:void(0)" class="orcid-logout" >Log out from ORCID in ADS</a>
-                        <li>
+          <li class="divider"></li>
+          <li>
+            <a class="orcid-link" href="#user/orcid">View my ORCID papers in ADS </a>
+          </li>
+          {{#if orcidURI}}
+          <li>
+            <a href="https://orcid.org/my-orcid" rel="noreferrer noopener" target="_blank">View my ORCID profile on
+              orcid.org </a>
+          </li>
+          {{/if}}
+          <li>
+            <a href="#orcid-instructions"> <i aria-hidden="true" class="fa fa-info-circle"></i> Learn how to make ORCID
+              claims using ADS</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a class="orcid-logout" href="javascript:void(0)">Log out from ORCID in ADS</a>
+          <li>
 
-                    </ul>
-                </li>
+        </ul>
+      </li>
 
-                    {{else}}
+      {{else}}
 
-                <li class="dropdown orcid-dropdown s-orcid-dropdown">
-                    <button class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="s-orcid-title"> <img src="../../styles/img/orcid-inactive.svg"
-                                                          alt="orcid symbol"/> ORCID  <span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="no-hover-style">
-                            {{#if orcidFirstName}} <h4> Signed in to ORCID as <br/> <strong>{{orcidFirstName}} {{#if orcidLastName}}{{orcidLastName}}{{/if}}</strong></h4> {{/if}}
-                            <div class="s-orcid-mode-label" style="font-weight: bold;">ORCID Mode</div>
-                            <div class="s-orcid-label-container">
-                                off
-                                <div class="switch clearfix">
-                                    <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round orcid-mode" type="checkbox">
-                                    <label for="cmn-toggle-1"></label>
-                                </div>
-                                on
-                            </div>
-                        </li>
-                        <li style="clear:both" class="no-hover-style">You have turned off the ORCID view for the ADS search results page, but are still logged in.</li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="orcid-link" href="#user/orcid" > View my ORCID papers in ADS</a>
-                        </li>
-                        {{#if orcidURI}}
-                        <li>
-                            <a href="https://orcid.org/my-orcid" target="_blank" rel="noreferrer noopener" >View my ORCID profile on orcid.org </a>
-                        </li>
-                        {{/if}}
-                        <li>
-                            <a href="#orcid-instructions"> <i class="fa fa-info-circle" aria-hidden="true"></i> Learn how to claim ORCID papers</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="orcid-logout" >Log out from ORCID</a>
-                        </li>
-                    </ul>
-                </li>
+      <li class="dropdown orcid-dropdown s-orcid-dropdown">
+        <button aria-expanded="false" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                        <span class="s-orcid-title"> <img alt="orcid symbol"
+                                                          src="../../styles/img/orcid-inactive.svg" /> ORCID  <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li class="no-hover-style">
+            {{#if orcidFirstName}} <h4> Signed in to ORCID as <br /> <strong>{{orcidFirstName}} {{#if
+            orcidLastName}}{{orcidLastName}}{{/if}}</strong></h4> {{/if}}
+            <div class="s-orcid-mode-label" style="font-weight: bold;">ORCID Mode</div>
+            <div class="s-orcid-label-container">
+              off
+              <div class="switch clearfix">
+                <input class="cmn-toggle cmn-toggle-round orcid-mode" id="cmn-toggle-1" type="checkbox">
+                <label for="cmn-toggle-1"></label>
+              </div>
+              on
+            </div>
+          </li>
+          <li class="no-hover-style" style="clear:both">You have turned off the ORCID view for the ADS search results
+            page, but are still logged in.
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a class="orcid-link" href="#user/orcid"> View my ORCID papers in ADS</a>
+          </li>
+          {{#if orcidURI}}
+          <li>
+            <a href="https://orcid.org/my-orcid" rel="noreferrer noopener" target="_blank">View my ORCID profile on
+              orcid.org </a>
+          </li>
+          {{/if}}
+          <li>
+            <a href="#orcid-instructions"> <i aria-hidden="true" class="fa fa-info-circle"></i> Learn how to claim ORCID
+              papers</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a class="orcid-logout">Log out from ORCID</a>
+          </li>
+        </ul>
+      </li>
 
-                    {{/if}}
-                <!--end "if/else orcidModeOn"-->
+      {{/if}}
+      <!--end "if/else orcidModeOn"-->
 
-                {{else}}
+      {{else}}
 
-                <li class="dropdown orcid-dropdown s-orcid-dropdown">
-                    <button class="btn dropdown-toggle btn-link" data-toggle="dropdown" aria-expanded="false">
-                        <span class="s-orcid-title"> <img src="../../styles/img/orcid-inactive.svg"
-                                                          alt="orcid symbol"/>  ORCID  <span class="caret"></span></button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li class="no-hover-style">
-                        <a href="javascript:void(0);" class="orcid-sign-in">Sign in to ORCID to claim papers in the ADS.</a>
-                      </li>
-                    </ul>
-                </li>
+      <li class="dropdown orcid-dropdown s-orcid-dropdown">
+        <button aria-expanded="false" class="btn dropdown-toggle btn-link" data-toggle="dropdown">
+                        <span class="s-orcid-title"> <img alt="orcid symbol"
+                                                          src="../../styles/img/orcid-inactive.svg" />  ORCID  <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li class="no-hover-style">
+            <a class="orcid-sign-in" href="javascript:void(0);">Sign in to ORCID to claim papers in the ADS.</a>
+          </li>
+        </ul>
+      </li>
 
-                <!--end "if/else orcidLoggedIn"-->
+      <!--end "if/else orcidLoggedIn"-->
 
-                {{/if}}
+      {{/if}}
 
-                <li class="dropdown">
-                    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <i class="fa fa-question-circle about-page-icon" aria-hidden="true"></i> About <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li> <a href="/about/" target="_blank" rel="noreferrer noopener"> <i class="fa fa-question-circle" aria-hidden="true"></i> About ADS </a></li>
-                        <li> <a href="/help/whats_new/" target="_blank" rel="noreferrer noopener"> <i class="fa fa-bullhorn" aria-hidden="true"></i> What's New </a></li>
-                        <li> <a href="/blog/" target="_blank" rel="noreferrer noopener"> <i class="fa fa-newspaper-o" aria-hidden="true"></i> ADS Blog </a></li>
-                        <li> <a href="/help/" target="_blank" rel="noreferrer noopener"> <i class="fa fa-info-circle" aria-hidden="true"></i> ADS Help Pages </a></li>
-						            <li> <a href="/help/legacy/" target="_blank" rel="noreferrer noopener"> <i class="fa fa-archive" aria-hidden="true"></i> ADS Legacy Services </a></li>
-                        <li> <a href="/about/careers/" target="_blank" rel="noreferrer noopener"> <i class="fa fa-group" aria-hidden="true"></i> Careers@ADS </a></li>
-                    </ul>
-                </li>
+      <li class="dropdown">
+        <button aria-expanded="false" class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button">
+          <i aria-hidden="true" class="fa fa-question-circle about-page-icon"></i> About <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="/about/" rel="noreferrer noopener" target="_blank"> <i aria-hidden="true"
+                                                                              class="fa fa-question-circle"></i> About ADS </a>
+          </li>
+          <li><a href="/help/whats_new/" rel="noreferrer noopener" target="_blank"> <i aria-hidden="true"
+                                                                                       class="fa fa-bullhorn"></i> What's
+            New </a></li>
+          <li><a href="/blog/" rel="noreferrer noopener" target="_blank"> <i aria-hidden="true"
+                                                                             class="fa fa-newspaper-o"></i> ADS Blog </a></li>
+          <li><a href="/help/" rel="noreferrer noopener" target="_blank"> <i aria-hidden="true"
+                                                                             class="fa fa-info-circle"></i> ADS Help Pages </a>
+          </li>
+          <li><a href="/help/legacy/" rel="noreferrer noopener" target="_blank"> <i aria-hidden="true"
+                                                                                    class="fa fa-archive"></i> ADS Legacy
+            Services </a></li>
+          <li><a href="/about/careers/" rel="noreferrer noopener" target="_blank"> <i aria-hidden="true"
+                                                                                      class="fa fa-group"></i>
+            Careers@ADS </a></li>
+        </ul>
+      </li>
 
 
-                {{#if currentUser}}
+      {{#if currentUser}}
 
-                <!-- Single button -->
-                <li class="dropdown account-dropdown">
-                    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                     <i class="fa fa-user" aria-hidden="true"></i> Account <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="no-hover-style" style="padding:15px 10px;">You are signed in as <br/> <span class="s-text-bold">{{currentUser}}</span></li>
-                        <li><a href="#user/libraries"> <i class="fa fa-book" aria-hidden="true"></i> ADS Libraries</a></li>
-                        <li><a href="#user/settings"> <i class="fa fa-cog" aria-hidden="true"></i> Settings</a></li>
-                        <li class="divider"></li>
-                        <li><a href="javascript:void(0)" class="logout">Log Out</a></li>
-                    </ul>
-                </li>
+      <!-- Single button -->
+      <li class="dropdown account-dropdown">
+        <button aria-expanded="false" class="btn btn-link dropdown-toggle" data-toggle="dropdown" type="button">
+          <i aria-hidden="true" class="fa fa-user"></i> Account <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li class="no-hover-style" style="padding:15px 10px;">You are signed in as <br /> <span class="s-text-bold">{{currentUser}}</span>
+          </li>
+          <li><a href="#user/libraries"> <i aria-hidden="true" class="fa fa-book"></i> ADS Libraries</a></li>
+          <li><a href="#user/settings"> <i aria-hidden="true" class="fa fa-cog"></i> Settings</a></li>
+          <li class="divider"></li>
+          <li><a class="logout" href="javascript:void(0)">Log Out</a></li>
+        </ul>
+      </li>
 
-                {{else}}
-                <li class="register"><a href="#user/account/register">Sign Up</a></li>
-                <li class="login"><a href="#user/account/login">Log In</a></li>
-                {{/if}}
+      {{else}}
+      <li class="register"><a href="#user/account/register">Sign Up</a></li>
+      <li class="login"><a href="#user/account/login">Log In</a></li>
+      {{/if}}
 
-            </ul>
+    </ul>
 
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
+  </div>
+  <!-- /.navbar-collapse -->
+  </div>
 </nav>
 <!-- /.container-fluid -->

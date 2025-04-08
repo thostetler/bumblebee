@@ -1,56 +1,52 @@
-import Marionette from 'marionette';
 import ModalTemplate from 'hbs!js/widgets/alerts/templates/modal_template';
-  var ModalView = Marionette.ItemView.extend({
-    id: '#alert-modal-content',
-    template: ModalTemplate,
+import Marionette from 'marionette';
 
-    showModal: function() {
-      $('#alert-modal').modal('show');
-    },
+var ModalView = Marionette.ItemView.extend({
+  id: '#alert-modal-content',
+  template: ModalTemplate,
 
-    closeModal: function() {
-      $('#alert-modal').modal('hide');
-    },
+  showModal: function() {
+    $('#alert-modal').modal('show');
+  },
 
-    modelEvents: {
-      change: 'render',
-    },
+  closeModal: function() {
+    $('#alert-modal').modal('hide');
+  },
 
-    render: function() {
-      // append parent container at end of html, where it needs to be
-      // this will prevent creation of infinite modals at the end of the document as before
-      if (!$('#modal-alert-content').length) {
-        // append to end of document
-        $('body').append(() => {
-          let out = '';
-          if ($('#alert-modal-label').length === 0) {
-            out += '<div id="alert-modal-label" class="sr-only">Alert</div>';
-          }
+  modelEvents: {
+    change: 'render',
+  },
 
-          out +=
-            '<div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" aria-labelledby="alert-modal-label" aria-hidden="true"></div>';
-          return out;
-        });
-        this.setElement($('#alert-modal')[0]);
-      }
+  render: function() {
+    // append parent container at end of html, where it needs to be
+    // this will prevent creation of infinite modals at the end of the document as before
+    if (!$('#modal-alert-content').length) {
+      // append to end of document
+      $('body').append(() => {
+        let out = '';
+        if ($('#alert-modal-label').length === 0) {
+          out += '<div id="alert-modal-label" class="sr-only">Alert</div>';
+        }
 
-      if (!this.model.get('modal')) return;
+        out +=
+          '<div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" aria-labelledby="alert-modal-label" aria-hidden="true"></div>';
+        return out;
+      });
+      this.setElement($('#alert-modal')[0]);
+    }
 
-      // log the error to console as well
-      if (this.model.get('type') === 'danger') {
-        console.error(
-          'error feedback: ',
-          this.model.get('title'),
-          this.model.get('msg')
-        );
-      }
-      return Marionette.ItemView.prototype.render.apply(this, arguments);
-    },
+    if (!this.model.get('modal')) return;
 
-    onRender: function() {
-      this.showModal();
-    },
-  });
+    // log the error to console as well
+    if (this.model.get('type') === 'danger') {
+      console.error('error feedback: ', this.model.get('title'), this.model.get('msg'));
+    }
+    return Marionette.ItemView.prototype.render.apply(this, arguments);
+  },
 
-  export default ModalView;
+  onRender: function() {
+    this.showModal();
+  },
+});
 
+export default ModalView;

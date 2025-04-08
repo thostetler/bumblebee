@@ -1,17 +1,17 @@
-import ImportNotificationsForm from 'js/react/MyAdsDashboard/components/ImportNotificationsForm.jsx';
-import { connect } from 'react-redux';
 import actions from 'js/react/MyAdsDashboard/actions/index';
+import ImportNotificationsForm from 'js/react/MyAdsDashboard/components/ImportNotificationsForm.jsx';
 import { page } from 'js/react/MyAdsDashboard/constants';
-  const mapStateToProps = ({ requests }) => ({
-    importClassicRequest: requests.IMPORT_CLASSIC,
-  });
+import { connect } from 'react-redux';
 
-  const { goTo, importClassic } = actions;
+const mapStateToProps = ({ requests }) => ({
+  importClassicRequest: requests.IMPORT_CLASSIC,
+});
 
-  const actionCreators = {
-    onSuccess: () => goTo(page.DASHBOARD),
-    importClassic,
-  };
+const { goTo, importClassic } = actions;
 
-  export default connect(mapStateToProps, actionCreators)(ImportNotificationsForm);
+const actionCreators = {
+  onSuccess: () => goTo(page.DASHBOARD),
+  importClassic,
+};
 
+export default connect(mapStateToProps, actionCreators)(ImportNotificationsForm);

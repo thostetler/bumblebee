@@ -6,8 +6,8 @@
     <h3>Results Graph</h3>
     <button class="btn btn-link download s-download hidden">
       <i
-        class="fa fa-download fa-2x"
         aria-hidden="true"
+        class="fa fa-download fa-2x"
         title="download data in csv"
       ></i>
       <span class="sr-only">download data in csv</span>
@@ -16,13 +16,13 @@
 </div>
 <div class="s-bubble-label-container">
   <div class="graph-select reads-vs-time active">
-    <img src="../../../styles/img/reads_vs_time.png" alt="" />
+    <img alt="" src="../../../styles/img/reads_vs_time.png" />
   </div>
   <div class="graph-select citations-vs-time">
-    <img src="../../styles/img/citations_vs_time.png" alt="" />
+    <img alt="" src="../../styles/img/citations_vs_time.png" />
   </div>
   <div class="graph-select reads-vs-citations">
-    <img src="../../styles/img/reads_vs_citations.png" alt="" />
+    <img alt="" src="../../styles/img/reads_vs_citations.png" />
   </div>
 </div>
 
@@ -32,8 +32,8 @@
   widgetLoadingSize="medium" hideCloseButton=true}} {{else}}
   <svg
     class="s-bubble-chart-svg bubble-chart-svg"
-    viewBox="0 0 1160 550"
     preserveAspectRatio="xMinYMin meet"
+    viewBox="0 0 1160 550"
   ></svg>
   {{/if}}
 </div>
@@ -59,9 +59,9 @@
     Select papers by dragging from left to right around bubbles to form a box,
     then click submit
     <button class="btn btn-success submit disabled">
-      Submit <i class="icon-go" aria-hidden="true"></i>
+      Submit <i aria-hidden="true" class="icon-go"></i>
     </button>
   </div>
 
-  <a id="download-link" class="hidden"></a>
+  <a class="hidden" id="download-link"></a>
 </div>

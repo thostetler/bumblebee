@@ -1,67 +1,58 @@
+// default fail object
+const defaultFail = { responseJSON: { error: 'Server-side issue occurred' } };
 
-  // default fail object
-  const defaultFail = { responseJSON: { error: 'Server-side issue occurred' } };
+/**
+ * Scoped request
+ *
+ * This will trigger an api request
+ */
+const request = ({ trigger }, { dispatch }) => (next) => (action) => {
+  next(action);
 
-  /**
-   * Scoped request
-   *
-   * This will trigger an api request
-   */
-  const request = ({ trigger }, { dispatch }) => (next) => (action) => {
-    next(action);
+  if (action.type === 'API_REQUEST' && action.scope) {
+    const done = (result) => {
+      dispatch({ type: `${action.scope}_API_REQUEST_SUCCESS`, result });
+    };
 
-    if (action.type === 'API_REQUEST' && action.scope) {
-      const done = (result) => {
-        dispatch({ type: `${action.scope}_API_REQUEST_SUCCESS`, result });
-      };
-
-      const fail = (error = defaultFail) => {
-        const { responseJSON, statusText } = error;
-        let errorMsg = defaultFail.responseJSON.error;
-        if (responseJSON) {
-          errorMsg =
-            responseJSON.error || responseJSON.message || responseJSON.msg;
-        } else if (statusText) {
-          errorMsg = statusText;
-        }
-        dispatch({
-          type: `${action.scope}_API_REQUEST_FAILURE`,
-          error: errorMsg,
-          result: responseJSON,
-        });
-      };
-
-      const {
-        target,
-        query = {},
-        type = 'GET',
-        data,
-        headers,
-      } = action.options;
-
-      if (!target) {
-        return;
+    const fail = (error = defaultFail) => {
+      const { responseJSON, statusText } = error;
+      let errorMsg = defaultFail.responseJSON.error;
+      if (responseJSON) {
+        errorMsg = responseJSON.error || responseJSON.message || responseJSON.msg;
+      } else if (statusText) {
+        errorMsg = statusText;
       }
-      dispatch({ type: `${action.scope}_API_REQUEST_PENDING` });
-      trigger('sendRequest', {
-        target,
-        query,
-        options: {
-          type,
-          done,
-          fail,
-          data: JSON.stringify(data),
-          headers: {
-            Accept: 'application/json; charset=utf-8',
-            'Content-Type': 'application/json; charset=utf-8',
-            ...headers,
-          },
-        },
+      dispatch({
+        type: `${action.scope}_API_REQUEST_FAILURE`,
+        error: errorMsg,
+        result: responseJSON,
       });
+    };
+
+    const { target, query = {}, type = 'GET', data, headers } = action.options;
+
+    if (!target) {
+      return;
     }
-  };
+    dispatch({ type: `${action.scope}_API_REQUEST_PENDING` });
+    trigger('sendRequest', {
+      target,
+      query,
+      options: {
+        type,
+        done,
+        fail,
+        data: JSON.stringify(data),
+        headers: {
+          Accept: 'application/json; charset=utf-8',
+          'Content-Type': 'application/json; charset=utf-8',
+          ...headers,
+        },
+      },
+    });
+  }
+};
 
-  export default {
-    request,
-  };
-
+export default {
+  request,
+};

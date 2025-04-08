@@ -14,7 +14,7 @@
  *
  */
 // import Router from 'router';
-import Application from 'js/components/application';
+import Application from "js/components/application";
 // import DiscoveryBootstrap from 'js/mixins/discovery_bootstrap';
 // import ApiAccess from 'js/mixins/api_access';
 // import ApiFeedback from 'js/components/api_feedback';

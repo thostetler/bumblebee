@@ -9,239 +9,223 @@
  *
  * */
 
-import BaseWidget from 'js/widgets/base/base_widget';
-import GenericModule from 'js/components/generic_module';
-import PageManagerController from 'js/page_managers/controller';
-import AriaAnnouncementTemplate from 'hbs!js/page_managers/templates/aria-announcement';
-import MasterPageManagerTemplate from 'hbs!js/page_managers/templates/master-page-manager';
-import Marionette from 'marionette';
-import Dependon from 'js/mixins/dependon';
-  var WidgetData = Backbone.Model.extend({
-    defaults: function() {
-      return {
-        id: undefined, // widgetId
-        isSelected: false,
-        object: undefined,
-        options: undefined, // options used for the last show() call
-      };
-    },
-  });
+import AriaAnnouncementTemplate from "hbs!js/page_managers/templates/aria-announcement";
+import MasterPageManagerTemplate from "hbs!js/page_managers/templates/master-page-manager";
+import Dependon from "js/mixins/dependon";
+import PageManagerController from "js/page_managers/controller";
+import Marionette from "marionette";
 
-  var WidgetCollection = Backbone.Collection.extend({
-    model: WidgetData,
-    selectOne: function(widgetId) {
-      var s = null;
-      this.each(function(m) {
-        if (m.id == widgetId) {
-          s = m;
-        } else {
-          m.set('isSelected', false, { silent: true });
-        }
-      });
+var WidgetData = Backbone.Model.extend({
+  defaults: function() {
+    return {
+      id: undefined, // widgetId
+      isSelected: false,
+      object: undefined,
+      options: undefined, // options used for the last show() call
+    };
+  },
+});
 
-      s.set('isSelected', true);
-    },
-  });
+var WidgetCollection = Backbone.Collection.extend({
+  model: WidgetData,
+  selectOne: function(widgetId) {
+    var s = null;
+    this.each(function(m) {
+      if (m.id == widgetId) {
+        s = m;
+      } else {
+        m.set('isSelected', false, { silent: true });
+      }
+    });
 
-  var WidgetModel = Backbone.Model.extend({
-    defaults: function() {
-      return {
-        name: undefined,
-        numCalled: 0,
-        numAttached: 0,
-        ariaAnnouncement: undefined,
-      };
-    },
-  });
+    s.set('isSelected', true);
+  },
+});
 
-  var MasterView = Marionette.ItemView.extend({
-    className: 's-master-page-manager',
+var WidgetModel = Backbone.Model.extend({
+  defaults: function() {
+    return {
+      name: undefined,
+      numCalled: 0,
+      numAttached: 0,
+      ariaAnnouncement: undefined,
+    };
+  },
+});
 
-    constructor: function(options) {
-      options = options || {};
-      if (!options.collection) options.collection = new WidgetCollection();
+var MasterView = Marionette.ItemView.extend({
+  className: 's-master-page-manager',
 
-      if (!options.model) options.model = new WidgetModel();
-      options.template = MasterPageManagerTemplate;
-      Marionette.ItemView.prototype.constructor.call(this, options);
-    },
+  constructor: function(options) {
+    options = options || {};
+    if (!options.collection) options.collection = new WidgetCollection();
 
-    // transition between page managers
-    changeManager: function() {
-      var model = this.collection.findWhere({ isSelected: true });
-      // call the subordinate page-manager
-      var res = model.attributes.object.show.apply(
-        model.attributes.object,
-        model.attributes.options
-      );
+    if (!options.model) options.model = new WidgetModel();
+    options.template = MasterPageManagerTemplate;
+    Marionette.ItemView.prototype.constructor.call(this, options);
+  },
 
-      // detach previous controller
-      this.$('.dynamic-container')
-        .children()
-        .detach();
-      this.$('.dynamic-container').append(res.$el);
-      model.attributes.numAttach += 1;
+  // transition between page managers
+  changeManager: function() {
+    var model = this.collection.findWhere({ isSelected: true });
+    // call the subordinate page-manager
+    var res = model.attributes.object.show.apply(model.attributes.object, model.attributes.options);
 
-      // scroll to top
-      $(document.documentElement).scrollTop(0);
-      // and fix the search bar back in its default spot
-      $('.s-search-bar-full-width-container').removeClass(
-        's-search-bar-motion'
-      );
-      $('.s-quick-add').removeClass('hidden');
-    },
+    // detach previous controller
+    this.$('.dynamic-container')
+      .children()
+      .detach();
+    this.$('.dynamic-container').append(res.$el);
+    model.attributes.numAttach += 1;
 
-    // transition widgets within a manager
-    changeWithinManager: function() {
-      var model = this.collection.findWhere({ isSelected: true });
-      model.attributes.object.show.apply(
-        model.attributes.object,
-        model.attributes.options
-      );
-      model.attributes.numAttach += 1;
-    },
-  });
+    // scroll to top
+    $(document.documentElement).scrollTop(0);
+    // and fix the search bar back in its default spot
+    $('.s-search-bar-full-width-container').removeClass('s-search-bar-motion');
+    $('.s-quick-add').removeClass('hidden');
+  },
 
-  var MasterPageManager = PageManagerController.extend({
-    initialize: function(options) {
-      options = options || {};
-      this.view = new MasterView(options);
-      this.collection = this.view.collection;
-      this.model = this.view.model;
-      PageManagerController.prototype.initialize.apply(this, arguments);
-    },
+  // transition widgets within a manager
+  changeWithinManager: function() {
+    var model = this.collection.findWhere({ isSelected: true });
+    model.attributes.object.show.apply(model.attributes.object, model.attributes.options);
+    model.attributes.numAttach += 1;
+  },
+});
 
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      var pubsub = this.getPubSub();
-      pubsub.subscribe(pubsub.ARIA_ANNOUNCEMENT, this.handleAriaAnnouncement);
-    },
+var MasterPageManager = PageManagerController.extend({
+  initialize: function(options) {
+    options = options || {};
+    this.view = new MasterView(options);
+    this.collection = this.view.collection;
+    this.model = this.view.model;
+    PageManagerController.prototype.initialize.apply(this, arguments);
+  },
 
-    assemble: function(app) {
-      this.setApp(app);
-      return PageManagerController.prototype.assemble.call(this, app);
-    },
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    var pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.ARIA_ANNOUNCEMENT, this.handleAriaAnnouncement);
+  },
 
-    show: function(pageManagerName, options, context) {
-      var defer = $.Deferred();
-      var app = this.getApp();
+  assemble: function(app) {
+    this.setApp(app);
+    return PageManagerController.prototype.assemble.call(this, app);
+  },
 
-      if (!this.collection.find({ id: pageManagerName })) {
-        this.collection.add({ id: pageManagerName });
+  show: function(pageManagerName, options, context) {
+    var defer = $.Deferred();
+    var app = this.getApp();
+
+    if (!this.collection.find({ id: pageManagerName })) {
+      this.collection.add({ id: pageManagerName });
+    }
+
+    var pageManagerModel = this.collection.find({ id: pageManagerName });
+    var self = this;
+
+    var activatePage = function(pageManagerWidget) {
+      // it's a new page
+      if (!pageManagerModel.get('isSelected')) {
+        pageManagerModel.set({ options: options, object: pageManagerWidget });
+        self.collection.selectOne(pageManagerName);
+        self.view.changeManager();
+      } else {
+        // it's within a page
+        pageManagerModel.set({ options: options, object: pageManagerWidget });
+        // it's already selected, trigger a change within the manager
+        self.view.changeWithinManager();
       }
 
-      var pageManagerModel = this.collection.find({ id: pageManagerName });
-      var self = this;
-
-      var activatePage = function(pageManagerWidget) {
-        // it's a new page
-        if (!pageManagerModel.get('isSelected')) {
-          pageManagerModel.set({ options: options, object: pageManagerWidget });
-          self.collection.selectOne(pageManagerName);
-          self.view.changeManager();
-        } else {
-          // it's within a page
-          pageManagerModel.set({ options: options, object: pageManagerWidget });
-          // it's already selected, trigger a change within the manager
-          self.view.changeWithinManager();
-        }
-
-        if (context && pageManagerWidget.provideContext) {
-          pageManagerWidget.provideContext.call(pageManagerWidget, context);
-        }
-
-        var previousPMName = self.currentChild;
-        self.currentChild = pageManagerName;
-
-        // disassemble the old one (behind the scenes)
-        if (previousPMName && previousPMName != pageManagerName) {
-          var oldPM = self.collection.find({ id: previousPMName });
-
-          if (oldPM && oldPM.get('object')) {
-            oldPM.set('numDetach', oldPM.get('numDetach') + 1);
-            // XXX:rca - widgets are disappearing, probably must call incrCounter separately
-            // oldPM.get('object').disAssemble(app);
-          }
-        }
-
-        self
-          .getPubSub()
-          .publish(self.getPubSub().ARIA_ANNOUNCEMENT, pageManagerName);
-        defer.resolve();
-      };
-
-      // if the model does not already reference the actual manager widget, add it now
-      var promise;
-      if (pageManagerModel.get('object')) {
-        activatePage(pageManagerModel.get('object'));
-        return defer.promise();
+      if (context && pageManagerWidget.provideContext) {
+        pageManagerWidget.provideContext.call(pageManagerWidget, context);
       }
 
-      app._getWidget(pageManagerName).then(function(pageManagerWidget) {
-        // will throw error if not there
-        pageManagerModel.set('object', pageManagerWidget);
-        if (!pageManagerWidget) {
-          console.error('unable to find page manager: ' + pageManagerName);
-        }
+      var previousPMName = self.currentChild;
+      self.currentChild = pageManagerName;
 
-        if (pageManagerWidget.assemble) {
-          // assemble the new page manager (while the old one is still in place)
-          pageManagerWidget.assemble(app).then(function() {
-            activatePage(pageManagerWidget);
-          });
-        } else {
-          console.error(
-            'eeeek, ' + pageManagerName + ' has no assemble() method!'
-          );
-          defer.reject();
+      // disassemble the old one (behind the scenes)
+      if (previousPMName && previousPMName != pageManagerName) {
+        var oldPM = self.collection.find({ id: previousPMName });
+
+        if (oldPM && oldPM.get('object')) {
+          oldPM.set('numDetach', oldPM.get('numDetach') + 1);
+          // XXX:rca - widgets are disappearing, probably must call incrCounter separately
+          // oldPM.get('object').disAssemble(app);
         }
-      });
+      }
+
+      self.getPubSub().publish(self.getPubSub().ARIA_ANNOUNCEMENT, pageManagerName);
+      defer.resolve();
+    };
+
+    // if the model does not already reference the actual manager widget, add it now
+    var promise;
+    if (pageManagerModel.get('object')) {
+      activatePage(pageManagerModel.get('object'));
       return defer.promise();
-    },
+    }
 
-    // used by discovery mediator
-    getCurrentActiveChild: function() {
-      return this.collection.get(this.currentChild).get('object'); // brittle?
-    },
+    app._getWidget(pageManagerName).then(function(pageManagerWidget) {
+      // will throw error if not there
+      pageManagerModel.set('object', pageManagerWidget);
+      if (!pageManagerWidget) {
+        console.error('unable to find page manager: ' + pageManagerName);
+      }
 
-    /**
-     * Return the instances that are under our control and are
-     * not active any more
-     */
-    disAssemble: function() {
-      _.each(
-        this.collection.models,
-        function(model) {
-          if (model.attributes.isSelected) {
-            var pManager = model.get('object');
+      if (pageManagerWidget.assemble) {
+        // assemble the new page manager (while the old one is still in place)
+        pageManagerWidget.assemble(app).then(function() {
+          activatePage(pageManagerWidget);
+        });
+      } else {
+        console.error('eeeek, ' + pageManagerName + ' has no assemble() method!');
+        defer.reject();
+      }
+    });
+    return defer.promise();
+  },
 
-            if (pManager.disAssemble) {
-              pManager.disAssemble(this.getApp());
-            } else if (pManager.destroy) {
-              pManager.destroy();
-            } else {
-              throw new Error(
-                'Contract breach, no way to get ridd of the widget/page manager'
-              );
-            }
+  // used by discovery mediator
+  getCurrentActiveChild: function() {
+    return this.collection.get(this.currentChild).get('object'); // brittle?
+  },
+
+  /**
+   * Return the instances that are under our control and are
+   * not active any more
+   */
+  disAssemble: function() {
+    _.each(
+      this.collection.models,
+      function(model) {
+        if (model.attributes.isSelected) {
+          var pManager = model.get('object');
+
+          if (pManager.disAssemble) {
+            pManager.disAssemble(this.getApp());
+          } else if (pManager.destroy) {
+            pManager.destroy();
+          } else {
+            throw new Error('Contract breach, no way to get ridd of the widget/page manager');
           }
-          model.set({ isSelected: false, object: null });
-          this.assembled = false;
-        },
-        this
-      );
-    },
+        }
+        model.set({ isSelected: false, object: null });
+        this.assembled = false;
+      },
+      this
+    );
+  },
 
-    handleAriaAnnouncement: function(msg) {
-      // template will match the page name with the proper message
-      // this doesn't work using voiceover when it's inside a div container for some infuriating reason,
-      // the skip to link becomes unfocusable
-      $('a#skip-to-main-content').remove();
-      $('div#aria-announcement-container').remove();
-      $('#app-container').before(AriaAnnouncementTemplate({ page: msg }));
-    },
-  });
+  handleAriaAnnouncement: function(msg) {
+    // template will match the page name with the proper message
+    // this doesn't work using voiceover when it's inside a div container for some infuriating reason,
+    // the skip to link becomes unfocusable
+    $('a#skip-to-main-content').remove();
+    $('div#aria-announcement-container').remove();
+    $('#app-container').before(AriaAnnouncementTemplate({ page: msg }));
+  },
+});
 
-  _.extend(MasterPageManager.prototype, Dependon.App);
-  export default MasterPageManager;
-
+_.extend(MasterPageManager.prototype, Dependon.App);
+export default MasterPageManager;

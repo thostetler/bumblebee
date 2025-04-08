@@ -1,97 +1,90 @@
-import _ from 'underscore';
-import Backbone from 'backbone';
-import React from 'react';
-import ReactRedux from 'react-redux';
-import ReactDOM from 'react-dom';
-import configureStore from 'js/widgets/orcid-selector/redux/configure-store';
-import OrcidSelectorApp from 'js/widgets/orcid-selector/redux/modules/orcid-selector-app';
-import BaseWidget from 'js/widgets/base/base_widget';
-import OrcidSelectorContainer from 'js/widgets/orcid-selector/containers/orcid-selector-container';
+import Backbone from "backbone";
+import BaseWidget from "js/widgets/base/base_widget";
+import OrcidSelectorContainer from "js/widgets/orcid-selector/containers/orcid-selector-container";
+import configureStore from "js/widgets/orcid-selector/redux/configure-store";
+import OrcidSelectorApp from "js/widgets/orcid-selector/redux/modules/orcid-selector-app";
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactRedux from "react-redux";
+import _ from "underscore";
+
+/**
+ * Main App View
+ *
+ * This view is the entry point of the app, it will pass the
+ * store down using a <provider></provider> higher-order component.
+ *
+ * All sub-components will automatically have `store` available via context
+ */
+const View = Backbone.View.extend({
+  initialize: function(options) {
+    _.assign(this, options);
+  },
+  render: function() {
+    ReactDOM.render(
+      <ReactRedux.Provider store={this.store}>
+        <OrcidSelectorContainer />
+      </ReactRedux.Provider>,
+      this.el
+    );
+    return this;
+  },
+  destroy: function() {
+    ReactDOM.unmountComponentAtNode(this.el);
+  },
+});
+
+/**
+ * Backbone widget which does the wiring between the react view and
+ * the application
+ */
+const Widget = BaseWidget.extend({
   /**
-   * Main App View
-   *
-   * This view is the entry point of the app, it will pass the
-   * store down using a <provider></provider> higher-order component.
-   *
-   * All sub-components will automatically have `store` available via context
+   * Initialize the widget
    */
-  const View = Backbone.View.extend({
-    initialize: function(options) {
-      _.assign(this, options);
-    },
-    render: function() {
-      ReactDOM.render(
-        <ReactRedux.Provider store={this.store}>
-          <OrcidSelectorContainer />
-        </ReactRedux.Provider>,
-        this.el
-      );
-      return this;
-    },
-    destroy: function() {
-      ReactDOM.unmountComponentAtNode(this.el);
-    },
-  });
+  initialize: function() {
+    // create the store, using the configurator
+    this.store = configureStore(this);
+
+    // create the view, passing in store
+    this.view = new View({ store: this.store });
+  },
 
   /**
-   * Backbone widget which does the wiring between the react view and
-   * the application
+   * Activate the widget
+   *
+   * @param {object} beehive
    */
-  const Widget = BaseWidget.extend({
-    /**
-     * Initialize the widget
-     */
-    initialize: function() {
-      // create the store, using the configurator
-      this.store = configureStore(this);
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    this.activateWidget();
+    const pubsub = this.getPubSub();
 
-      // create the view, passing in store
-      this.view = new View({ store: this.store });
-    },
+    // grab the current mode while activating, in case we should render
+    const mode = beehive.hasObject('User') && beehive.getObject('User').isOrcidModeOn();
+    this.store.dispatch(OrcidSelectorApp.updateMode(mode));
 
-    /**
-     * Activate the widget
-     *
-     * @param {object} beehive
-     */
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      this.activateWidget();
-      const pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.STORAGE_PAPER_UPDATE, _.bind(this.onStoragePaperChange, this));
+    pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, _.bind(this.onUserAnnouncement, this));
+  },
 
-      // grab the current mode while activating, in case we should render
-      const mode =
-        beehive.hasObject('User') && beehive.getObject('User').isOrcidModeOn();
-      this.store.dispatch(OrcidSelectorApp.updateMode(mode));
+  onStoragePaperChange: function() {
+    const beehive = this.getBeeHive();
+    const selected = beehive.getObject('AppStorage').getSelectedPapers();
+    this.store.dispatch(OrcidSelectorApp.updateSelected(selected));
+  },
 
-      pubsub.subscribe(
-        pubsub.STORAGE_PAPER_UPDATE,
-        _.bind(this.onStoragePaperChange, this)
-      );
-      pubsub.subscribe(
-        pubsub.USER_ANNOUNCEMENT,
-        _.bind(this.onUserAnnouncement, this)
-      );
-    },
+  onUserAnnouncement: function(msg, data) {
+    // watch for orcid mode change
+    if (_.has(data, 'isOrcidModeOn')) {
+      this.store.dispatch(OrcidSelectorApp.updateMode(data.isOrcidModeOn));
+    }
+  },
 
-    onStoragePaperChange: function() {
-      const beehive = this.getBeeHive();
-      const selected = beehive.getObject('AppStorage').getSelectedPapers();
-      this.store.dispatch(OrcidSelectorApp.updateSelected(selected));
-    },
+  fireOrcidEvent: function(event, bibcodes) {
+    const pubsub = this.getPubSub();
+    pubsub.publish(pubsub.CUSTOM_EVENT, event, bibcodes);
+  },
+});
 
-    onUserAnnouncement: function(msg, data) {
-      // watch for orcid mode change
-      if (_.has(data, 'isOrcidModeOn')) {
-        this.store.dispatch(OrcidSelectorApp.updateMode(data.isOrcidModeOn));
-      }
-    },
-
-    fireOrcidEvent: function(event, bibcodes) {
-      const pubsub = this.getPubSub();
-      pubsub.publish(pubsub.CUSTOM_EVENT, event, bibcodes);
-    },
-  });
-
-  export default Widget;
-
+export default Widget;

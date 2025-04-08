@@ -1,9 +1,9 @@
 <li class="dropdown">
-    <a href="javascript:void(0)" id="{{id}}" class="dropdown-toggle" data-toggle="dropdown">{{title}}<b class="caret"></b></a>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-        {{#each}}
-        <li><a href="#dropdown1" tabindex="-1" data-toggle="tab">@fat</a></li>
-        {{/each}}
+  <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" id="{{id}}">{{title}}<b class="caret"></b></a>
+  <ul aria-labelledby="myTabDrop1" class="dropdown-menu" role="menu">
+    {{#each}}
+    <li><a data-toggle="tab" href="#dropdown1" tabindex="-1">@fat</a></li>
+    {{/each}}
 
-    </ul>
+  </ul>
 </li>

@@ -1,213 +1,203 @@
-import Marionette from 'marionette';
-import BaseWidget from 'js/widgets/base/base_widget';
-import ApiRequest from 'js/components/api_request';
-import ApiResponse from 'js/components/api_response';
-import ApiQuery from 'js/components/api_query';
+import analytics from 'analytics';
 import gridTemplate from 'hbs!js/widgets/graphics/templates/grid';
 import sidebarTemplate from 'hbs!js/widgets/graphics/templates/sidebar';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiResponse from 'js/components/api_response';
 import ApiTargets from 'js/components/api_targets';
-import analytics from 'analytics';
-  var GraphicsModel = Backbone.Model.extend({
-    defaults: function() {
-      return {
-        graphics: undefined,
-        title: undefined,
-        linkSentence: undefined,
-      };
-    },
-  });
+import BaseWidget from 'js/widgets/base/base_widget';
+import Marionette from 'marionette';
 
-  var GridView = Marionette.ItemView.extend({
-    template: gridTemplate,
+var GraphicsModel = Backbone.Model.extend({
+  defaults: function() {
+    return {
+      graphics: undefined,
+      title: undefined,
+      linkSentence: undefined,
+    };
+  },
+});
 
-    className: 's-graphics-grid',
+var GridView = Marionette.ItemView.extend({
+  template: gridTemplate,
 
-    events: {
-      'click .graphics-external-link': 'fireAnalyticsEvent',
-    },
+  className: 's-graphics-grid',
 
-    modelEvents: {
-      change: 'render',
-    },
+  events: {
+    'click .graphics-external-link': 'fireAnalyticsEvent',
+  },
 
-    fireAnalyticsEvent(ev) {
-      analytics(
-        'send',
-        'event',
-        'interaction',
-        'graphics-link-followed',
-        ev.currentTarget.href,
-        {
-          transport: 'beacon',
-        }
-      );
-    },
-  });
+  modelEvents: {
+    change: 'render',
+  },
 
-  var SidebarView = Marionette.ItemView.extend({
-    template: sidebarTemplate,
+  fireAnalyticsEvent(ev) {
+    analytics('send', 'event', 'interaction', 'graphics-link-followed', ev.currentTarget.href, {
+      transport: 'beacon',
+    });
+  },
+});
 
-    className: 's-graphics-sidebar graphics-sidebar',
+var SidebarView = Marionette.ItemView.extend({
+  template: sidebarTemplate,
 
-    modelEvents: {
-      'change:graphics': 'render',
-    },
+  className: 's-graphics-sidebar graphics-sidebar',
 
-    triggers: {
-      'click .graphics-container': 'showGraphicsGrid',
-    },
+  modelEvents: {
+    'change:graphics': 'render',
+  },
 
-    serializeData: function() {
-      var graphics = this.model.toJSON().graphics;
-      if (graphics) {
-        return { sampleGraphic: graphics[_.keys(graphics)[0]].thumbnail };
-      }
+  triggers: {
+    'click .graphics-container': 'showGraphicsGrid',
+  },
 
-      return { sampleGraphic: undefined };
-    },
-  });
+  serializeData: function() {
+    var graphics = this.model.toJSON().graphics;
+    if (graphics) {
+      return { sampleGraphic: graphics[_.keys(graphics)[0]].thumbnail };
+    }
 
-  var GraphicsWidget = BaseWidget.extend({
-    initialize: function(options) {
-      options = options || {};
-      this.model = new GraphicsModel();
-      this.view =
-        options.sidebar === true
-          ? new SidebarView({ model: this.model })
-          : new GridView({ model: this.model });
-      BaseWidget.prototype.initialize.apply(this, arguments);
-    },
+    return { sampleGraphic: undefined };
+  },
+});
 
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      var pubsub = this.getPubSub();
-      _.bindAll(this, ['processResponse', 'onDisplayDocuments']);
-      pubsub.subscribe(pubsub.DISPLAY_DOCUMENTS, this.onDisplayDocuments);
-      pubsub.subscribe(pubsub.DELIVERING_RESPONSE, this.processResponse);
-    },
+var GraphicsWidget = BaseWidget.extend({
+  initialize: function(options) {
+    options = options || {};
+    this.model = new GraphicsModel();
+    this.view = options.sidebar === true ? new SidebarView({ model: this.model }) : new GridView({ model: this.model });
+    BaseWidget.prototype.initialize.apply(this, arguments);
+  },
 
-    onDisplayDocuments: function(apiQuery) {
-      var self = this;
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    var pubsub = this.getPubSub();
+    _.bindAll(this, ['processResponse', 'onDisplayDocuments']);
+    pubsub.subscribe(pubsub.DISPLAY_DOCUMENTS, this.onDisplayDocuments);
+    pubsub.subscribe(pubsub.DELIVERING_RESPONSE, this.processResponse);
+  },
 
-      const bibcode = this.parseIdentifierFromQuery(apiQuery);
+  onDisplayDocuments: function(apiQuery) {
+    var self = this;
 
-      if (bibcode === 'null') {
-        return;
-      }
+    const bibcode = this.parseIdentifierFromQuery(apiQuery);
 
-      this.loadBibcodeData(bibcode).done(function() {
-        self.trigger('page-manager-event', 'widget-ready', {
-          isActive: true,
-          widget: self,
-        });
+    if (bibcode === 'null') {
+      return;
+    }
+
+    this.loadBibcodeData(bibcode).done(function() {
+      self.trigger('page-manager-event', 'widget-ready', {
+        isActive: true,
+        widget: self,
       });
-      this.getResponseDeferred().fail(function() {
-        self.trigger('page-manager-event', 'widget-ready', {
-          // this will set us to inActive and navigate to ShowAbstract
-          shouldReset: bibcode !== this._bibcode,
-          isActive: false,
-          widget: self,
-        });
-        this._bibcode = bibcode;
+    });
+    this.getResponseDeferred().fail(function() {
+      self.trigger('page-manager-event', 'widget-ready', {
+        // this will set us to inActive and navigate to ShowAbstract
+        shouldReset: bibcode !== this._bibcode,
+        isActive: false,
+        widget: self,
       });
-    },
-
-    // load data, return a promise
-    loadBibcodeData: function(bibcode) {
-      if (bibcode === this._bibcode) {
-        this.deferredObject = $.Deferred();
-        this.deferredObject.resolve(this.model);
-        return this.deferredObject.promise();
-      }
-
       this._bibcode = bibcode;
+    });
+  },
+
+  // load data, return a promise
+  loadBibcodeData: function(bibcode) {
+    if (bibcode === this._bibcode) {
       this.deferredObject = $.Deferred();
+      this.deferredObject.resolve(this.model);
+      return this.deferredObject.promise();
+    }
+
+    this._bibcode = bibcode;
+    this.deferredObject = $.Deferred();
+    var request = new ApiRequest({
+      target: ApiTargets.GRAPHICS + '/' + this._bibcode,
+      query: new ApiQuery(),
+    });
+    this.getPubSub().publish(this.getPubSub().DELIVERING_REQUEST, request);
+
+    // now ask for the title if it's the main widget
+    if (!Marionette.getOption(this, 'sidebar')) {
+      var query = this.getCurrentQuery().clone();
+      query.unlock();
+      query.set('q', 'bibcode:' + bibcode);
+      query.set('fl', 'title');
+
       var request = new ApiRequest({
-        target: ApiTargets.GRAPHICS + '/' + this._bibcode,
-        query: new ApiQuery(),
+        target: ApiTargets.SEARCH,
+        query: query,
       });
       this.getPubSub().publish(this.getPubSub().DELIVERING_REQUEST, request);
+    }
+    return this.deferredObject.promise();
+  },
 
-      // now ask for the title if it's the main widget
-      if (!Marionette.getOption(this, 'sidebar')) {
-        var query = this.getCurrentQuery().clone();
-        query.unlock();
-        query.set('q', 'bibcode:' + bibcode);
-        query.set('fl', 'title');
+  getResponseDeferred: function() {
+    if (!this._deferred || this._deferred.state() === 'resolved') {
+      this._deferred = $.Deferred();
+    }
+    return this._deferred;
+  },
 
-        var request = new ApiRequest({
-          target: ApiTargets.SEARCH,
-          query: query,
-        });
-        this.getPubSub().publish(this.getPubSub().DELIVERING_REQUEST, request);
-      }
-      return this.deferredObject.promise();
-    },
+  // if there is no data, there will be no response
+  processResponse: function(response) {
+    if (!(response instanceof ApiResponse)) {
+      var responseDef = this.getResponseDeferred();
+      // it's from the graphics service
 
-    getResponseDeferred: function() {
-      if (!this._deferred || this._deferred.state() === 'resolved') {
-        this._deferred = $.Deferred();
-      }
-      return this._deferred;
-    },
-
-    // if there is no data, there will be no response
-    processResponse: function(response) {
-      if (!(response instanceof ApiResponse)) {
-        var responseDef = this.getResponseDeferred();
-        // it's from the graphics service
-
-        // was there data for the bibcode? if not, reject the deferred
-        // response.get("Error") throws an uncaught error, not very convenient
-        if (response.toJSON().Error) {
-          // so we don't show old data if the new data hasn't returned
-          this.model.clear();
-          var error = response.get('Error');
-          return responseDef.reject(error);
-        }
-
-        var graphics = {};
-        _.each(
-          response.get('figures'),
-          function(dict) {
-            graphics[dict.figure_label] = dict.images[0];
-
-            // check for interactive graphics
-            if (dict.figure_type === 'interactive') {
-              graphics[dict.figure_label].interactive = true;
-            }
-          },
-          this
-        );
-
-        this.model.set({
-          graphics: graphics,
-          linkSentence: response.get('header'),
-        });
-      } else {
-        var title = response.get("response.docs[0]['title']", false, '');
-        title = title && title.length ? title[0] : '';
-        this.model.set('title', title);
+      // was there data for the bibcode? if not, reject the deferred
+      // response.get("Error") throws an uncaught error, not very convenient
+      if (response.toJSON().Error) {
+        // so we don't show old data if the new data hasn't returned
+        this.model.clear();
+        var error = response.get('Error');
+        return responseDef.reject(error);
       }
 
-      // resolving the promises generated by "loadBibcodeData"
-      if (this.model.get('title') && this.model.get('graphics')) {
-        this.deferredObject && this.deferredObject.resolve();
-        responseDef && responseDef.resolve();
-      }
-    },
+      var graphics = {};
+      _.each(
+        response.get('figures'),
+        function(dict) {
+          graphics[dict.figure_label] = dict.images[0];
 
-    viewEvents: {
-      showGraphicsGrid: 'triggerShowGrid',
-    },
+          // check for interactive graphics
+          if (dict.figure_type === 'interactive') {
+            graphics[dict.figure_label].interactive = true;
+          }
+        },
+        this
+      );
 
-    triggerShowGrid: function() {
-      this.getPubSub().publish(this.getPubSub().NAVIGATE, 'ShowGraphics', {
-        href: '#abs/' + encodeURIComponent(this._bibcode) + '/graphics',
-        bibcode: this._bibcode,
+      this.model.set({
+        graphics: graphics,
+        linkSentence: response.get('header'),
       });
-    },
-  });
+    } else {
+      var title = response.get("response.docs[0]['title']", false, '');
+      title = title && title.length ? title[0] : '';
+      this.model.set('title', title);
+    }
 
-  export default GraphicsWidget;
+    // resolving the promises generated by "loadBibcodeData"
+    if (this.model.get('title') && this.model.get('graphics')) {
+      this.deferredObject && this.deferredObject.resolve();
+      responseDef && responseDef.resolve();
+    }
+  },
 
+  viewEvents: {
+    showGraphicsGrid: 'triggerShowGrid',
+  },
+
+  triggerShowGrid: function() {
+    this.getPubSub().publish(this.getPubSub().NAVIGATE, 'ShowGraphics', {
+      href: '#abs/' + encodeURIComponent(this._bibcode) + '/graphics',
+      bibcode: this._bibcode,
+    });
+  },
+});
+
+export default GraphicsWidget;

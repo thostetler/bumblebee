@@ -4,28 +4,28 @@
 <td class="hide-xs">
   {{#if public}}
   <i
-    class="fa fa-lg fa-unlock"
     aria-hidden="true"
+    class="fa fa-lg fa-unlock"
     title="This library is public"
   ></i>
   {{else}}
   <i
-    class="fa fa-lg fa-lock text-light"
     aria-hidden="true"
+    class="fa fa-lg fa-lock text-light"
     title="This library is private"
   ></i>
   {{/if}}
 </td>
 
 <td class="hide-xs">
-  {{#compare permission 'owner'}} 
-    {{#compare num_users 1 operator=">"}} 
-      <i class="fa fa-users" aria-hidden="true" title="This library has collaborators"></i>
-    {{else}}
-      <i class="fa fa-user" aria-hidden="true" title="This library has no collaborators"></i>
-    {{/compare}}
+  {{#compare permission 'owner'}}
+  {{#compare num_users 1 operator=">"}}
+  <i aria-hidden="true" class="fa fa-users" title="This library has collaborators"></i>
   {{else}}
-    <i class="fa fa-users" aria-hidden="true" title="This library has collaborators"></i>
+  <i aria-hidden="true" class="fa fa-user" title="This library has no collaborators"></i>
+  {{/compare}}
+  {{else}}
+  <i aria-hidden="true" class="fa fa-users" title="This library has collaborators"></i>
   {{/compare}}
 </td>
 
@@ -34,28 +34,28 @@
     <span class="s-library-title">{{name}}</span>
   </div>
   <div class="hide-all-but-xs">
-    <span class="s-library-title">{{name}}</span><br/>
+    <span class="s-library-title">{{name}}</span><br />
     {{#if public}}
-      <i
-        class="fa fa-lg fa-unlock"
-        aria-hidden="true"
-        title="This library is public"
-      ></i>
-      {{else}}
-      <i
-        class="fa fa-lg fa-lock text-light"
-        aria-hidden="true"
-        title="This library is private"
-      ></i>
-    {{/if}} 
-    {{#compare permission 'owner'}} 
-      {{#compare num_users 1 operator=">"}} 
-        <i class="fa fa-users" aria-hidden="true" title="This library has collaborators"></i>
-      {{else}}
-        <i class="fa fa-user" aria-hidden="true" title="This library has no collaborators"></i>
-      {{/compare}} 
+    <i
+      aria-hidden="true"
+      class="fa fa-lg fa-unlock"
+      title="This library is public"
+    ></i>
     {{else}}
-      <i class="fa fa-users" aria-hidden="true" title="This library has collaborators"></i>
+    <i
+      aria-hidden="true"
+      class="fa fa-lg fa-lock text-light"
+      title="This library is private"
+    ></i>
+    {{/if}}
+    {{#compare permission 'owner'}}
+    {{#compare num_users 1 operator=">"}}
+    <i aria-hidden="true" class="fa fa-users" title="This library has collaborators"></i>
+    {{else}}
+    <i aria-hidden="true" class="fa fa-user" title="This library has no collaborators"></i>
+    {{/compare}}
+    {{else}}
+    <i aria-hidden="true" class="fa fa-users" title="This library has collaborators"></i>
     {{/compare}}
   </div>
   {{#if description}}

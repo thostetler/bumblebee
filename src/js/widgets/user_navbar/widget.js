@@ -1,65 +1,65 @@
-import Marionette from 'marionette';
 import NavTemplate from 'hbs!js/widgets/user_navbar/nav_template';
 import Dependon from 'js/mixins/dependon';
-  var NavModel = Backbone.Model.extend({
-    defaults: function() {
-      return {
-        page: undefined,
-        userName: undefined,
-      };
-    },
-  });
+import Marionette from 'marionette';
 
-  var NavView = Marionette.ItemView.extend({
-    template: NavTemplate,
+var NavModel = Backbone.Model.extend({
+  defaults: function() {
+    return {
+      page: undefined,
+      userName: undefined,
+    };
+  },
+});
 
-    modelEvents: {
-      change: 'render',
-    },
-  });
+var NavView = Marionette.ItemView.extend({
+  template: NavTemplate,
 
-  var NavWidget = Marionette.Controller.extend({
-    initialize: function(options) {
-      options = options || {};
-      this.model = new NavModel();
-      this.view = new NavView({ model: this.model });
-    },
+  modelEvents: {
+    change: 'render',
+  },
+});
 
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      var pubsub = beehive.getService('PubSub');
+var NavWidget = Marionette.Controller.extend({
+  initialize: function(options) {
+    options = options || {};
+    this.model = new NavModel();
+    this.view = new NavView({ model: this.model });
+  },
 
-      _.bindAll(this);
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    var pubsub = beehive.getService('PubSub');
 
-      // custom dispatchRequest function goes here
-      pubsub.subscribe(pubsub.PAGE_CHANGE, this.updateCurrentView);
-      pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, this.updateUser);
-    },
+    _.bindAll(this);
 
-    updateCurrentView: function(page) {
-      this.model.set('page', page);
-    },
+    // custom dispatchRequest function goes here
+    pubsub.subscribe(pubsub.PAGE_CHANGE, this.updateCurrentView);
+    pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, this.updateUser);
+  },
 
-    updateUser: function(event, arg) {
-      var user = this.getBeeHive().getObject('User');
-      if (event == user.USER_SIGNED_IN) {
-        var userName = arg;
-        if (userName && userName.indexOf('@') > -1) {
-          userName = userName.split('@')[0];
-        }
-        this.model.set('user', userName);
-      } else if (event == user.USER_SIGNED_OUT) {
-        this.model.set('user', undefined);
+  updateCurrentView: function(page) {
+    this.model.set('page', page);
+  },
+
+  updateUser: function(event, arg) {
+    var user = this.getBeeHive().getObject('User');
+    if (event == user.USER_SIGNED_IN) {
+      var userName = arg;
+      if (userName && userName.indexOf('@') > -1) {
+        userName = userName.split('@')[0];
       }
-    },
+      this.model.set('user', userName);
+    } else if (event == user.USER_SIGNED_OUT) {
+      this.model.set('user', undefined);
+    }
+  },
 
-    render: function() {
-      this.view.render();
-      return this.view.el;
-    },
-  });
+  render: function() {
+    this.view.render();
+    return this.view.el;
+  },
+});
 
-  _.extend(NavWidget.prototype, Dependon.BeeHive);
+_.extend(NavWidget.prototype, Dependon.BeeHive);
 
-  export default NavWidget;
-
+export default NavWidget;

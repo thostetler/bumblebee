@@ -1,112 +1,110 @@
-import _ from 'underscore';
 import {
-    SET_UPDATE_DATA,
-    GET_QID,
-    SAVE_NEW_NOTIFICATION,
-    ERROR_RESET,
-    ERROR,
-    CHECK_LOGIN_STATUS,
-    setLoginStatus,
-    addNotification,
-    makeError,
-    getQID,
-  } from 'js/react/MyAdsFreeform/actions';
+  addNotification,
+  CHECK_LOGIN_STATUS,
+  ERROR,
+  ERROR_RESET,
+  GET_QID,
+  getQID,
+  makeError,
+  SAVE_NEW_NOTIFICATION,
+  SET_UPDATE_DATA,
+  setLoginStatus,
+} from 'js/react/MyAdsFreeform/actions';
 import { middleware } from 'js/react/shared/helpers';
-  const apiSuccess = _.memoize((str) => `${str}_API_REQUEST_SUCCESS`);
+import _ from 'underscore';
 
-  const filterQueryParams = (queryParams) => {
-    return Object.keys(queryParams).reduce((acc, k) => {
-      if (!k.startsWith('filter_') && !k.startsWith('p_')) {
-        acc[k] = queryParams[k];
-      }
-      return acc;
-    }, {});
-  };
+const apiSuccess = _.memoize((str) => `${str}_API_REQUEST_SUCCESS`);
 
-  const saveNotification = middleware(
-    ({ trigger, next, dispatch, action, getState }) => {
-      next(action);
+const filterQueryParams = (queryParams) => {
+  return Object.keys(queryParams).reduce((acc, k) => {
+    if (!k.startsWith('filter_') && !k.startsWith('p_')) {
+      acc[k] = queryParams[k];
+    }
+    return acc;
+  }, {});
+};
 
-      if (action.type === SAVE_NEW_NOTIFICATION) {
-        trigger('getCurrentQuery', (currentQuery) => {
-          if (currentQuery && currentQuery.toJSON) {
-            const queryParams = currentQuery.toJSON();
+const saveNotification = middleware(({ trigger, next, dispatch, action, getState }) => {
+  next(action);
 
-            // if sort has 'score' then stateful is false
-            let stateful = true;
-            if (queryParams.sort && queryParams.sort[0].startsWith('score')) {
-              stateful = false;
-            }
-            dispatch({ type: SET_UPDATE_DATA, result: { stateful } });
-            dispatch(getQID(filterQueryParams(queryParams)));
-          } else {
-            dispatch(makeError('Current query not found'));
-          }
-        });
-        dispatch({ type: SET_UPDATE_DATA, result: action.result });
-      }
+  if (action.type === SAVE_NEW_NOTIFICATION) {
+    trigger('getCurrentQuery', (currentQuery) => {
+      if (currentQuery && currentQuery.toJSON) {
+        const queryParams = currentQuery.toJSON();
 
-      if (action.type === apiSuccess(GET_QID)) {
-        if (action.result && action.result.qid) {
-          const qid = action.result.qid;
-          const { updateData } = getState();
-
-          dispatch(addNotification({ ...updateData, qid }));
-        } else {
-          dispatch(makeError('No QID returned from the server'));
+        // if sort has 'score' then stateful is false
+        let stateful = true;
+        if (queryParams.sort && queryParams.sort[0].startsWith('score')) {
+          stateful = false;
         }
+        dispatch({ type: SET_UPDATE_DATA, result: { stateful } });
+        dispatch(getQID(filterQueryParams(queryParams)));
+      } else {
+        dispatch(makeError('Current query not found'));
       }
+    });
+    dispatch({ type: SET_UPDATE_DATA, result: action.result });
+  }
+
+  if (action.type === apiSuccess(GET_QID)) {
+    if (action.result && action.result.qid) {
+      const qid = action.result.qid;
+      const { updateData } = getState();
+
+      dispatch(addNotification({ ...updateData, qid }));
+    } else {
+      dispatch(makeError('No QID returned from the server'));
     }
-  );
+  }
+});
 
-  const parseScope = (requestType) => {
-    const [scope, status] = requestType.split('_API_REQUEST_');
-    return { scope, status };
-  };
+const parseScope = (requestType) => {
+  const [scope, status] = requestType.split('_API_REQUEST_');
+  return { scope, status };
+};
 
-  const delay = (cb) => {
-    if (cb.toKey) {
-      window.clearTimeout(cb.toKey);
-    }
-    cb.toKey = setTimeout(cb, 3000);
-  };
+const delay = (cb) => {
+  if (cb.toKey) {
+    window.clearTimeout(cb.toKey);
+  }
+  cb.toKey = setTimeout(cb, 3000);
+};
 
-  const requestReset = middleware(({ dispatch, next, action }) => {
-    next(action);
-    if (/_API_REQUEST_(SUCCESS|FAILURE)$/.test(action.type)) {
-      const { scope } = parseScope(action.type);
+const requestReset = middleware(({ dispatch, next, action }) => {
+  next(action);
+  if (/_API_REQUEST_(SUCCESS|FAILURE)$/.test(action.type)) {
+    const { scope } = parseScope(action.type);
 
-      delay(() => {
-        dispatch({ type: `${scope}_RESET` });
-      });
-    }
-  });
+    delay(() => {
+      dispatch({ type: `${scope}_RESET` });
+    });
+  }
+});
 
-  const errorReset = middleware(({ dispatch, next, action }) => {
-    next(action);
-    if (action.type === ERROR) {
-      delay(() => {
-        dispatch({ type: ERROR_RESET });
-      });
-    }
-  });
+const errorReset = middleware(({ dispatch, next, action }) => {
+  next(action);
+  if (action.type === ERROR) {
+    delay(() => {
+      dispatch({ type: ERROR_RESET });
+    });
+  }
+});
 
-  const loggedInStatus = middleware(({ trigger, dispatch, next, action }) => {
-    next(action);
+const loggedInStatus = middleware(({ trigger, dispatch, next, action }) => {
+  next(action);
 
-    if (
-      action.type === CHECK_LOGIN_STATUS ||
-      action.type === 'USER_ANNOUNCEMENT/user_signed_in' ||
-      action.type === 'USER_ANNOUNCEMENT/user_signed_out'
-    ) {
-      trigger('isLoggedIn', (status) => dispatch(setLoginStatus(status)));
-    }
-  });
+  if (
+    action.type === CHECK_LOGIN_STATUS ||
+    action.type === 'USER_ANNOUNCEMENT/user_signed_in' ||
+    action.type === 'USER_ANNOUNCEMENT/user_signed_out'
+  ) {
+    trigger('isLoggedIn', (status) => dispatch(setLoginStatus(status)));
+  }
+});
 
-  export default {
-    saveNotification,
-    requestReset,
-    errorReset,
-    loggedInStatus,
-  };
-
+export default {
+  saveNotification,
+  requestReset,
+  errorReset,
+  loggedInStatus,
+};

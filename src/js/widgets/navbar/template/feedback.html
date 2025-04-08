@@ -3,17 +3,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button
-          type="button"
+          aria-label="Close"
           class="close"
           data-dismiss="modal"
-          aria-label="Close"
+          type="button"
         >
           <span aria-hidden="true">&times;</span>
         </button>
         <p class="modal-title">
           <span class="btn-group" id="feedback-back-btn" style="display: none">
             <button class="btn btn-sm btn-default">
-              <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+              <i aria-hidden="true" class="fa fa-chevron-left"></i> Back
             </button>
           </span>
           <span id="feedback-modal-title">How may we help you?</span>
@@ -22,23 +22,23 @@
       <div class="modal-body">
         <div class="list-group" id="feedback-select-group">
           <a
+            class="list-group-item"
             href="/feedback/correctabstract"
             id="feedback_submit_abstract_link"
-            class="list-group-item"
           >
             <h4>Missing/Incorrect Record</h4>
             <p>Submit a missing record or correct an existing record.</p>
           </a>
           <a
-            href="/feedback/missingreferences"
             class="list-group-item"
+            href="/feedback/missingreferences"
           >
             <h4>Missing References</h4>
             <p>Submit missing references to an existing ADS record.</p>
           </a>
           <a
-            href="/feedback/associatedarticles"
             class="list-group-item"
+            href="/feedback/associatedarticles"
           >
             <h4>Associated Articles</h4>
             <p>
@@ -47,8 +47,8 @@
             </p>
           </a>
           <a
-            href="javascript:void(0);"
             class="list-group-item"
+            href="javascript:void(0);"
             id="open-general-feedback"
           >
             <h4>General Feedback</h4>
@@ -56,24 +56,24 @@
           </a>
         </div>
         <form
-          id="feedback-general-form"
           class="feedback-form"
+          id="feedback-general-form"
           style="display: none"
         >
-          <input type="hidden" name="_subject" value="Bumblebee Feedback"/>
-          <input type="hidden" name="feedback-type" value="feedback"/>
+          <input name="_subject" type="hidden" value="Bumblebee Feedback" />
+          <input name="feedback-type" type="hidden" value="feedback" />
 
-          <input type="text" name="_gotcha" style="display:none"/>
+          <input name="_gotcha" style="display:none" type="text" />
 
           <div class="form-group half-width">
             <label>
               Name
               <input
+                autofocus
                 class="form-control"
-                type="text"
                 name="name"
                 required
-                autofocus
+                type="text"
               />
             </label>
           </div>
@@ -82,21 +82,21 @@
               Email
               <input
                 class="form-control"
-                type="email"
                 name="_replyto"
                 required
+                type="email"
               />
             </label>
           </div>
 
           <div class="form-group">
             <label
-            >Feedback <br/>
+            >Feedback <br />
               <textarea
-                rows="8"
                 cols="50"
                 name="comments"
                 required
+                rows="8"
                 style="min-width: 500px; min-height: 180px"
               />
             </label>
@@ -113,18 +113,18 @@
               <span class="s-text-bold">adshelp [at] cfa.harvard.edu</span>
             </p>
           </div>
-          <input type="hidden" name="origin" value="bbb_feedback">
+          <input name="origin" type="hidden" value="bbb_feedback">
           <div class="form-group">
             <div class="g-recaptcha">
               <small class="recaptcha-msg">This site is protected by reCAPTCHA and the Google
-                <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and
-                <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.</small>
+                <a href="https://policies.google.com/privacy" rel="noreferrer" target="_blank">Privacy Policy</a> and
+                <a href="https://policies.google.com/terms" rel="noreferrer" target="_blank">Terms of Service</a> apply.</small>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
+        <button class="btn btn-default" data-dismiss="modal" type="button">
           Close without submitting
         </button>
       </div>

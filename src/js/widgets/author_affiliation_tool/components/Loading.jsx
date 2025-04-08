@@ -1,26 +1,26 @@
 import React from 'react';
-  const style = {
-    icon: {
-      fontSize: 120,
-    },
-    text: {
-      fontSize: 32,
-    },
-  };
 
-  /**
-   * Loading Message/Icon
-   */
-  const Loading = ({}) => (
-    <div className="row text-center" role="alert" aria-busy>
-      <div className="col-xs-12" style={style.icon}>
-        <i className="fa fa-spinner fa-spin" aria-hidden="true" />
-      </div>
-      <div className="col-xs-12" style={style.text}>
-        Loading...
-      </div>
+const style = {
+  icon: {
+    fontSize: 120,
+  },
+  text: {
+    fontSize: 32,
+  },
+};
+
+/**
+ * Loading Message/Icon
+ */
+const Loading = ({}) => (
+  <div className="row text-center" role="alert" aria-busy>
+    <div className="col-xs-12" style={style.icon}>
+      <i className="fa fa-spinner fa-spin" aria-hidden="true" />
     </div>
-  );
+    <div className="col-xs-12" style={style.text}>
+      Loading...
+    </div>
+  </div>
+);
 
-  export default Loading;
-
+export default Loading;

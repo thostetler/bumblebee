@@ -5,68 +5,66 @@
  * orcid/extension provides functionality for the widget controllers)
  *
  */
-import Backbone from 'backbone';
-import _ from 'underscore';
-  export default {
-    showOrcidActions: function(isWorkInCollection) {
-      var $icon = this.$('.mini-orcid-icon');
-      $icon.removeClass('green');
-      $icon.removeClass('gray');
 
-      var $orcidActions = this.$('.orcid-actions');
-      $orcidActions.removeClass('hidden');
-      $orcidActions.removeClass('orcid-wait');
-      var $update = $orcidActions.find('.orcid-action-update');
-      var $insert = $orcidActions.find('.orcid-action-insert');
-      var $delete = $orcidActions.find('.orcid-action-delete');
+export default {
+  showOrcidActions: function(isWorkInCollection) {
+    var $icon = this.$('.mini-orcid-icon');
+    $icon.removeClass('green');
+    $icon.removeClass('gray');
 
-      $update.addClass('hidden');
-      $insert.addClass('hidden');
-      $delete.addClass('hidden');
+    var $orcidActions = this.$('.orcid-actions');
+    $orcidActions.removeClass('hidden');
+    $orcidActions.removeClass('orcid-wait');
+    var $update = $orcidActions.find('.orcid-action-update');
+    var $insert = $orcidActions.find('.orcid-action-insert');
+    var $delete = $orcidActions.find('.orcid-action-delete');
 
-      if (isWorkInCollection(this.model.attributes)) {
-        if (!(this.model.attributes.isFromAds === true)) {
-          $update.removeClass('hidden');
-        }
-        $delete.removeClass('hidden');
-        $icon.addClass('green');
-      } else if (this.model.attributes.isFromAds === false) {
-        // the nonAds item from orcid
-        // nothing to do
-      } else {
-        $insert.removeClass('hidden');
-        $icon.addClass('gray');
+    $update.addClass('hidden');
+    $insert.addClass('hidden');
+    $delete.addClass('hidden');
+
+    if (isWorkInCollection(this.model.attributes)) {
+      if (!(this.model.attributes.isFromAds === true)) {
+        $update.removeClass('hidden');
       }
-    },
+      $delete.removeClass('hidden');
+      $icon.addClass('green');
+    } else if (this.model.attributes.isFromAds === false) {
+      // the nonAds item from orcid
+      // nothing to do
+    } else {
+      $insert.removeClass('hidden');
+      $icon.addClass('gray');
+    }
+  },
 
-    hideOrcidActions: function() {
-      var $orcidActions = this.$('.orcid-actions');
-      $orcidActions.addClass('hidden');
-    },
+  hideOrcidActions: function() {
+    var $orcidActions = this.$('.orcid-actions');
+    $orcidActions.addClass('hidden');
+  },
 
-    orcidAction: function(e) {
-      var $c = $(e.currentTarget);
-      var $orcidActions = this.$('.orcid-actions');
-      $orcidActions.addClass('orcid-wait');
+  orcidAction: function(e) {
+    var $c = $(e.currentTarget);
+    var $orcidActions = this.$('.orcid-actions');
+    $orcidActions.addClass('orcid-wait');
 
-      var actionType = '';
+    var actionType = '';
 
-      if ($c.hasClass('orcid-action-insert')) {
-        actionType = 'insert';
-      } else if ($c.hasClass('orcid-action-update')) {
-        actionType = 'update';
-      } else if ($c.hasClass('orcid-action-delete')) {
-        actionType = 'delete';
-      }
+    if ($c.hasClass('orcid-action-insert')) {
+      actionType = 'insert';
+    } else if ($c.hasClass('orcid-action-update')) {
+      actionType = 'update';
+    } else if ($c.hasClass('orcid-action-delete')) {
+      actionType = 'delete';
+    }
 
-      var msg = {
-        actionType: actionType,
-        model: this.model.attributes,
-        modelType: 'adsData',
-      };
+    var msg = {
+      actionType: actionType,
+      model: this.model.attributes,
+      modelType: 'adsData',
+    };
 
-      this.trigger('OrcidAction', msg);
-      return false;
-    },
-  };
-
+    this.trigger('OrcidAction', msg);
+    return false;
+  },
+};

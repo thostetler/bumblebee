@@ -1,55 +1,55 @@
-import _ from 'underscore';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-  const WithBackboneView = (component, getStore) => {
-    const view = Backbone.View.extend({
-      initialize() {
-        this.setElement = _.once(this.setElement);
-        this.props = {
-          trigger: (...args) => this.trigger(...args),
-        };
-        if (typeof getStore === 'function') {
-          this._store = getStore(this.props);
-        }
-      },
+import _ from 'underscore';
 
-      render(el) {
-        if (!this.el && el) {
-          this.setElement(el);
-        } else {
-          this.setElement(document.createElement('div'));
-        }
+const WithBackboneView = (component, getStore) => {
+  const view = Backbone.View.extend({
+    initialize() {
+      this.setElement = _.once(this.setElement);
+      this.props = {
+        trigger: (...args) => this.trigger(...args),
+      };
+      if (typeof getStore === 'function') {
+        this._store = getStore(this.props);
+      }
+    },
 
-        if (this._store) {
-          ReactDOM.render(
-            React.createElement(
-              Provider,
-              {
-                store: this._store,
-              },
-              React.createElement(component, this.props)
-            ),
-            this.el
-          );
-        } else {
-          ReactDOM.render(React.createElement(component, this.props), this.el);
-        }
-        return this;
-      },
+    render(el) {
+      if (!this.el && el) {
+        this.setElement(el);
+      } else {
+        this.setElement(document.createElement('div'));
+      }
 
-      destroy() {
-        ReactDOM.unmountComponentAtNode(this.el);
-        return this;
-      },
+      if (this._store) {
+        ReactDOM.render(
+          React.createElement(
+            Provider,
+            {
+              store: this._store,
+            },
+            React.createElement(component, this.props)
+          ),
+          this.el
+        );
+      } else {
+        ReactDOM.render(React.createElement(component, this.props), this.el);
+      }
+      return this;
+    },
 
-      triggerMethod() {
-        // noop
-      },
-    });
+    destroy() {
+      ReactDOM.unmountComponentAtNode(this.el);
+      return this;
+    },
 
-    return view;
-  };
+    triggerMethod() {
+      // noop
+    },
+  });
 
-  export default WithBackboneView;
+  return view;
+};
 
+export default WithBackboneView;

@@ -1,369 +1,348 @@
-import $ from 'jquery';
-import _ from 'underscore';
 import Backbone from 'backbone';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Redux from 'redux';
-import ReactRedux from 'react-redux';
-import ReduxThunk from 'redux-thunk';
+import $ from 'jquery';
 import BaseWidget from 'js/widgets/base/base_widget';
-import reducers from 'js/widgets/export/reducers/index';
+import config from 'js/widgets/config';
 import actions from 'js/widgets/export/actions/index';
 import App from 'js/widgets/export/containers/App.jsx';
-import config from 'js/widgets/config';
+import reducers from 'js/widgets/export/reducers/index';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactRedux from 'react-redux';
+import Redux from 'redux';
+import ReduxThunk from 'redux-thunk';
+import _ from 'underscore';
 
-  var View = Backbone.View.extend({
-    /**
-     * Initialize the view
-     *
-     * @param {object} options - view options
-     */
-    initialize: function(options) {
-      // provide this with all the options passed in
-      _.assign(this, options);
-    },
+var View = Backbone.View.extend({
+  /**
+   * Initialize the view
+   *
+   * @param {object} options - view options
+   */
+  initialize: function(options) {
+    // provide this with all the options passed in
+    _.assign(this, options);
+  },
 
-    /**
-     * Renders the React view
-     *
-     * @returns {View}
-     */
-    render: function() {
-      // create provider component, that passes the store to <App>
-      ReactDOM.render(
-        <ReactRedux.Provider store={this.store}>
-          <App />
-        </ReactRedux.Provider>,
-        this.el
-      );
-      return this;
-    },
-    destroy: function() {
-      // on destroy, make sure the React DOM is unmounted
-      ReactDOM.unmountComponentAtNode(this.el);
-    },
-  });
+  /**
+   * Renders the React view
+   *
+   * @returns {View}
+   */
+  render: function() {
+    // create provider component, that passes the store to <App>
+    ReactDOM.render(
+      <ReactRedux.Provider store={this.store}>
+        <App />
+      </ReactRedux.Provider>,
+      this.el
+    );
+    return this;
+  },
+  destroy: function() {
+    // on destroy, make sure the React DOM is unmounted
+    ReactDOM.unmountComponentAtNode(this.el);
+  },
+});
 
-  var Widget = BaseWidget.extend({
-    /**
-     * initialize the object
-     *
-     * @param {object} options - the widget options
-     */
-    initialize: function(options) {
-      this.options = options || {};
+var Widget = BaseWidget.extend({
+  /**
+   * initialize the object
+   *
+   * @param {object} options - the widget options
+   */
+  initialize: function(options) {
+    this.options = options || {};
 
-      // create thunk middleware, passing in `this` as extra argument
-      var middleware = Redux.applyMiddleware(
-        ReduxThunk.default.withExtraArgument(this)
-      );
+    // create thunk middleware, passing in `this` as extra argument
+    var middleware = Redux.applyMiddleware(ReduxThunk.default.withExtraArgument(this));
 
-      // create the redux store using reducers and applying middleware
-      const composeEnhancers =
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
-      this.store = Redux.createStore(reducers, composeEnhancers(middleware));
+    // create the redux store using reducers and applying middleware
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
+    this.store = Redux.createStore(reducers, composeEnhancers(middleware));
 
-      // create the view passing the store as the only property
-      this.view = new View({ store: this.store });
+    // create the view passing the store as the only property
+    this.view = new View({ store: this.store });
 
-      this.defaultFormat = 'BibTeX';
-      this.customFormats = [];
-      this.bibtexKeyFormat = null;
-      this.bibtexMaxAuthors = 0;
-      this.bibtexABSKeyFormat = null;
-      this.bibtexABSMaxAuthors = 0;
-      this.bibtexAuthorCutoff = 200;
-      this.bibtexABSAuthorCutoff = 200;
-      this.bibtexJournalFormat = 1;
-    },
+    this.defaultFormat = 'BibTeX';
+    this.customFormats = [];
+    this.bibtexKeyFormat = null;
+    this.bibtexMaxAuthors = 0;
+    this.bibtexABSKeyFormat = null;
+    this.bibtexABSMaxAuthors = 0;
+    this.bibtexAuthorCutoff = 200;
+    this.bibtexABSAuthorCutoff = 200;
+    this.bibtexJournalFormat = 1;
+  },
 
-    /**
-     * Activate the widget
-     *
-     * @param {Beehive} beehive - the application beehive object
-     */
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      const pubsub = this.getPubSub();
-      const { dispatch } = this.store;
-      const { setQuery } = actions;
-      this.activateWidget();
+  /**
+   * Activate the widget
+   *
+   * @param {Beehive} beehive - the application beehive object
+   */
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    const pubsub = this.getPubSub();
+    const { dispatch } = this.store;
+    const { setQuery } = actions;
+    this.activateWidget();
 
-      pubsub.subscribe(pubsub.INVITING_REQUEST, (query) =>
-        dispatch(setQuery(query.toJSON()))
-      );
-      this.attachGeneralHandler(this.onApiFeedback);
-      pubsub.subscribe(
-        pubsub.USER_ANNOUNCEMENT,
-        _.bind(this.getFieldsFromUserData, this)
-      );
-    },
+    pubsub.subscribe(pubsub.INVITING_REQUEST, (query) => dispatch(setQuery(query.toJSON())));
+    this.attachGeneralHandler(this.onApiFeedback);
+    pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, _.bind(this.getFieldsFromUserData, this));
+  },
 
-    /**
-     * Handle errors from api requests
-     *
-     * Show error messages, stop other operations, etc.
-     *
-     * @param {ApiFeedback} feedback - the feedback object
-     */
-    onApiFeedback: function(feedback) {
-      this.store.dispatch(actions.requestFailed(feedback));
-    },
+  /**
+   * Handle errors from api requests
+   *
+   * Show error messages, stop other operations, etc.
+   *
+   * @param {ApiFeedback} feedback - the feedback object
+   */
+  onApiFeedback: function(feedback) {
+    this.store.dispatch(actions.requestFailed(feedback));
+  },
 
-    getUserData: function() {
-      try {
-        var beehive = _.isFunction(this.getBeeHive) && this.getBeeHive();
-        var user = _.isFunction(beehive.getObject) && beehive.getObject('User');
-        if (_.isPlainObject(user)) {
-          return (
-            _.isFunction(user.getUserData) && user.getUserData('USER_DATA')
-          );
+  getUserData: function() {
+    try {
+      var beehive = _.isFunction(this.getBeeHive) && this.getBeeHive();
+      var user = _.isFunction(beehive.getObject) && beehive.getObject('User');
+      if (_.isPlainObject(user)) {
+        return _.isFunction(user.getUserData) && user.getUserData('USER_DATA');
+      }
+    } catch (e) {}
+    return {};
+  },
+
+  getFieldsFromUserData: function() {
+    const userData = this.getUserData();
+    return _.reduce(
+      [
+        'defaultExportFormat',
+        'customFormats',
+        'bibtexKeyFormat',
+        'bibtexMaxAuthors',
+        'bibtexABSKeyFormat',
+        'bibtexABSMaxAuthors',
+        'bibtexAuthorCutoff',
+        'bibtexABSAuthorCutoff',
+        'bibtexJournalFormat',
+      ],
+      (acc, prop) => {
+        const value = _.has(userData, prop) ? userData[prop] : this[prop];
+        if (prop === 'defaultExportFormat') {
+          const v = _.find(config.export.formats, { label: value });
+          acc[prop] = v ? v.value : config.export.formats[0];
+        } else {
+          acc[prop] = value;
         }
-      } catch (e) {}
-      return {};
-    },
+        this[prop] = value;
+        return acc;
+      },
+      {}
+    );
+  },
 
-    getFieldsFromUserData: function() {
-      const userData = this.getUserData();
-      return _.reduce(
-        [
-          'defaultExportFormat',
-          'customFormats',
-          'bibtexKeyFormat',
-          'bibtexMaxAuthors',
-          'bibtexABSKeyFormat',
-          'bibtexABSMaxAuthors',
-          'bibtexAuthorCutoff',
-          'bibtexABSAuthorCutoff',
-          'bibtexJournalFormat',
-        ],
-        (acc, prop) => {
-          const value = _.has(userData, prop) ? userData[prop] : this[prop];
-          if (prop === 'defaultExportFormat') {
-            const v = _.find(config.export.formats, { label: value });
-            acc[prop] = v ? v.value : config.export.formats[0];
-          } else {
-            acc[prop] = value;
-          }
-          this[prop] = value;
-          return acc;
-        },
-        {}
-      );
-    },
+  getJournalFormatValue(format) {
+    switch (format) {
+      case 'Use AASTeX macros':
+        return 1;
+      case 'Use Journal Abbreviations':
+        return 2;
+      case 'Use Full Journal Name':
+        return 3;
+      default:
+        return 1;
+    }
+  },
 
-    getJournalFormatValue(format) {
-      switch (format) {
-        case 'Use AASTeX macros':
-          return 1;
-        case 'Use Journal Abbreviations':
-          return 2;
-        case 'Use Full Journal Name':
-          return 3;
-        default:
-          return 1;
-      }
-    },
+  /**
+   * Called from navigator when the widget is needed to get the bibcodes to
+   * use for the export.  This will be used as an interaction point to the
+   * redux store only.
+   *
+   * @param {ApiQuery} currentQuery - the current query
+   * @param {number} numFound - the amount of records found
+   * @param {string} format - the export format
+   */
+  renderWidgetForCurrentQuery: function({ currentQuery, numFound, format }) {
+    const { dispatch } = this.store;
+    const {
+      fetchUsingQuery,
+      fetchUsingIds,
+      findAndSetFormat,
+      hardReset,
+      setCount,
+      setQuery,
+      setTotalRecs,
+      takeSnapshot,
+      setOrigin,
+      setCustomFormats,
+      setBibtexKeyFormat,
+      setBibtexMaxAuthors,
+      setBibtexABSKeyFormat,
+      setBibtexABSMaxAuthors,
+      setBibtexAuthorCutoff,
+      setBibtexABSAuthorCutoff,
+      setBibtexJournalFormat,
+    } = actions;
 
-    /**
-     * Called from navigator when the widget is needed to get the bibcodes to
-     * use for the export.  This will be used as an interaction point to the
-     * redux store only.
-     *
-     * @param {ApiQuery} currentQuery - the current query
-     * @param {number} numFound - the amount of records found
-     * @param {string} format - the export format
-     */
-    renderWidgetForCurrentQuery: function({ currentQuery, numFound, format }) {
-      const { dispatch } = this.store;
-      const {
-        fetchUsingQuery,
-        fetchUsingIds,
-        findAndSetFormat,
-        hardReset,
-        setCount,
-        setQuery,
-        setTotalRecs,
-        takeSnapshot,
-        setOrigin,
-        setCustomFormats,
-        setBibtexKeyFormat,
-        setBibtexMaxAuthors,
-        setBibtexABSKeyFormat,
-        setBibtexABSMaxAuthors,
-        setBibtexAuthorCutoff,
-        setBibtexABSAuthorCutoff,
-        setBibtexJournalFormat,
-      } = actions;
+    const {
+      customFormats,
+      defaultFormat,
+      bibtexMaxAuthors,
+      bibtexKeyFormat,
+      bibtexABSMaxAuthors,
+      bibtexABSKeyFormat,
+      bibtexAuthorCutoff,
+      bibtexABSAuthorCutoff,
+      bibtexJournalFormat,
+    } = this.getFieldsFromUserData();
 
-      const {
-        customFormats,
-        defaultFormat,
-        bibtexMaxAuthors,
-        bibtexKeyFormat,
-        bibtexABSMaxAuthors,
-        bibtexABSKeyFormat,
-        bibtexAuthorCutoff,
-        bibtexABSAuthorCutoff,
-        bibtexJournalFormat,
-      } = this.getFieldsFromUserData();
+    const fmt = format === 'default' || format === 'other' ? defaultFormat : format;
 
-      const fmt =
-        format === 'default' || format === 'other' ? defaultFormat : format;
+    // perform a full reset of the store
+    dispatch(hardReset());
 
-      // perform a full reset of the store
-      dispatch(hardReset());
+    dispatch(setCustomFormats(customFormats));
+    dispatch(setBibtexMaxAuthors(bibtexMaxAuthors));
+    dispatch(setBibtexABSMaxAuthors(bibtexABSMaxAuthors));
+    dispatch(setBibtexKeyFormat(bibtexKeyFormat));
+    dispatch(setBibtexABSKeyFormat(bibtexABSKeyFormat));
+    dispatch(setBibtexAuthorCutoff(bibtexAuthorCutoff));
+    dispatch(setBibtexABSAuthorCutoff(bibtexABSAuthorCutoff));
+    dispatch(setBibtexJournalFormat(this.getJournalFormatValue(bibtexJournalFormat)));
 
-      dispatch(setCustomFormats(customFormats));
-      dispatch(setBibtexMaxAuthors(bibtexMaxAuthors));
-      dispatch(setBibtexABSMaxAuthors(bibtexABSMaxAuthors));
-      dispatch(setBibtexKeyFormat(bibtexKeyFormat));
-      dispatch(setBibtexABSKeyFormat(bibtexABSKeyFormat));
-      dispatch(setBibtexAuthorCutoff(bibtexAuthorCutoff));
-      dispatch(setBibtexABSAuthorCutoff(bibtexABSAuthorCutoff));
-      dispatch(
-        setBibtexJournalFormat(this.getJournalFormatValue(bibtexJournalFormat))
-      );
+    // set the origin of the request (abstract/results/etc.)
+    dispatch(setOrigin(this.componentParams && this.componentParams.origin));
 
-      // set the origin of the request (abstract/results/etc.)
-      dispatch(setOrigin(this.componentParams && this.componentParams.origin));
+    // set the current query
+    dispatch(setQuery(currentQuery.toJSON()));
 
-      // set the current query
-      dispatch(setQuery(currentQuery.toJSON()));
+    // set the current format
+    dispatch(findAndSetFormat(format));
 
-      // set the current format
-      dispatch(findAndSetFormat(format));
+    // set the current count
+    dispatch(setCount(numFound));
 
-      // set the current count
-      dispatch(setCount(numFound));
+    // set the total number of records we are exporting
+    dispatch(setTotalRecs(numFound));
 
-      // set the total number of records we are exporting
-      dispatch(setTotalRecs(numFound));
+    // if a format is selected, then we can start an actual export
+    if (fmt !== 'other') {
+      // take a snapshot of the state
+      dispatch(takeSnapshot());
 
-      // if a format is selected, then we can start an actual export
-      if (fmt !== 'other') {
-        // take a snapshot of the state
-        dispatch(takeSnapshot());
+      // fetch identifiers using our query
+      dispatch(fetchUsingQuery())
+        // then use the ids to fetch the export string
+        .then(() =>
+          dispatch(fetchUsingIds())
+            // take another snapshot
+            .always(() => dispatch(takeSnapshot()))
+        );
+    } else {
+      // take a snapshot if no export is selected
+      dispatch(takeSnapshot());
+    }
+  },
 
-        // fetch identifiers using our query
-        dispatch(fetchUsingQuery())
-          // then use the ids to fetch the export string
-          .then(() =>
-            dispatch(fetchUsingIds())
-              // take another snapshot
-              .always(() => dispatch(takeSnapshot()))
-          );
-      } else {
-        // take a snapshot if no export is selected
-        dispatch(takeSnapshot());
-      }
-    },
+  /**
+   * Close the widget
+   */
+  closeWidget: function() {
+    const pubsub = this.getPubSub();
+    pubsub.publish(pubsub.NAVIGATE, 'results-page');
+  },
 
-    /**
-     * Close the widget
-     */
-    closeWidget: function() {
-      const pubsub = this.getPubSub();
-      pubsub.publish(pubsub.NAVIGATE, 'results-page');
-    },
+  /**
+   * Execute an api request, this will open up a new request and subscribe to
+   * the response.
+   *
+   * @param {ApiRequest} req - request object
+   * @returns {$.Promise} promise
+   * @private
+   */
+  _executeApiRequest: function(req) {
+    const $dd = $.Deferred();
 
-    /**
-     * Execute an api request, this will open up a new request and subscribe to
-     * the response.
-     *
-     * @param {ApiRequest} req - request object
-     * @returns {$.Promise} promise
-     * @private
-     */
-    _executeApiRequest: function(req) {
-      const $dd = $.Deferred();
+    const pubsub = this.getPubSub();
+    pubsub.subscribeOnce(pubsub.DELIVERING_RESPONSE, (res) => $dd.resolve(res));
+    pubsub.publish(pubsub.EXECUTE_REQUEST, req);
+    return $dd.promise();
+  },
 
-      const pubsub = this.getPubSub();
-      pubsub.subscribeOnce(pubsub.DELIVERING_RESPONSE, (res) =>
-        $dd.resolve(res)
-      );
-      pubsub.publish(pubsub.EXECUTE_REQUEST, req);
-      return $dd.promise();
-    },
+  /**
+   * Handle case where export widget is opened and passed a set of identifiers
+   * This is the same as the currentQuery method, however it can skip the query
+   * request part since we already have the identifiers.
+   *
+   * @param {Array} recs - current array of records (identifiers)
+   * @param {object} data - object containing the format
+   */
+  renderWidgetForListOfBibcodes: function(recs, data) {
+    const { dispatch } = this.store;
+    const {
+      receiveIds,
+      findAndSetFormat,
+      fetchUsingIds,
+      hardReset,
+      setSort,
+      setCount,
+      setTotalRecs,
+      takeSnapshot,
+      setOrigin,
+      setCustomFormats,
+      setBibtexKeyFormat,
+      setBibtexMaxAuthors,
+      setBibtexABSKeyFormat,
+      setBibtexABSMaxAuthors,
+      setBibtexAuthorCutoff,
+      setBibtexABSAuthorCutoff,
+      setBibtexJournalFormat,
+    } = actions;
 
-    /**
-     * Handle case where export widget is opened and passed a set of identifiers
-     * This is the same as the currentQuery method, however it can skip the query
-     * request part since we already have the identifiers.
-     *
-     * @param {Array} recs - current array of records (identifiers)
-     * @param {object} data - object containing the format
-     */
-    renderWidgetForListOfBibcodes: function(recs, data) {
-      const { dispatch } = this.store;
-      const {
-        receiveIds,
-        findAndSetFormat,
-        fetchUsingIds,
-        hardReset,
-        setSort,
-        setCount,
-        setTotalRecs,
-        takeSnapshot,
-        setOrigin,
-        setCustomFormats,
-        setBibtexKeyFormat,
-        setBibtexMaxAuthors,
-        setBibtexABSKeyFormat,
-        setBibtexABSMaxAuthors,
-        setBibtexAuthorCutoff,
-        setBibtexABSAuthorCutoff,
-        setBibtexJournalFormat,
-      } = actions;
+    const {
+      customFormats,
+      defaultExportFormat,
+      bibtexMaxAuthors,
+      bibtexKeyFormat,
+      bibtexABSMaxAuthors,
+      bibtexABSKeyFormat,
+      bibtexAuthorCutoff,
+      bibtexABSAuthorCutoff,
+      bibtexJournalFormat,
+    } = this.getFieldsFromUserData();
 
-      const {
-        customFormats,
-        defaultExportFormat,
-        bibtexMaxAuthors,
-        bibtexKeyFormat,
-        bibtexABSMaxAuthors,
-        bibtexABSKeyFormat,
-        bibtexAuthorCutoff,
-        bibtexABSAuthorCutoff,
-        bibtexJournalFormat,
-      } = this.getFieldsFromUserData();
+    const format = data.format === 'default' || data.format === 'other' ? defaultExportFormat : data.format;
 
-      const format =
-        data.format === 'default' || data.format === 'other'
-          ? defaultExportFormat
-          : data.format;
+    const sort = data.sort || 'date desc, bibcode desc';
 
-      const sort = data.sort || 'date desc, bibcode desc';
+    dispatch(hardReset());
+    dispatch(setCustomFormats(customFormats));
+    dispatch(setBibtexMaxAuthors(bibtexMaxAuthors));
+    dispatch(setBibtexABSMaxAuthors(bibtexABSMaxAuthors));
+    dispatch(setBibtexKeyFormat(bibtexKeyFormat));
+    dispatch(setBibtexABSKeyFormat(bibtexABSKeyFormat));
+    dispatch(setBibtexAuthorCutoff(bibtexAuthorCutoff));
+    dispatch(setBibtexABSAuthorCutoff(bibtexABSAuthorCutoff));
+    dispatch(setBibtexJournalFormat(this.getJournalFormatValue(bibtexJournalFormat)));
+    dispatch(setSort(sort));
+    dispatch(setOrigin(this.componentParams && this.componentParams.origin));
+    dispatch(receiveIds(recs));
+    dispatch(findAndSetFormat(format.toLowerCase()));
+    dispatch(setCount(recs.length));
+    dispatch(setTotalRecs(recs.length));
 
-      dispatch(hardReset());
-      dispatch(setCustomFormats(customFormats));
-      dispatch(setBibtexMaxAuthors(bibtexMaxAuthors));
-      dispatch(setBibtexABSMaxAuthors(bibtexABSMaxAuthors));
-      dispatch(setBibtexKeyFormat(bibtexKeyFormat));
-      dispatch(setBibtexABSKeyFormat(bibtexABSKeyFormat));
-      dispatch(setBibtexAuthorCutoff(bibtexAuthorCutoff));
-      dispatch(setBibtexABSAuthorCutoff(bibtexABSAuthorCutoff));
-      dispatch(
-        setBibtexJournalFormat(this.getJournalFormatValue(bibtexJournalFormat))
-      );
-      dispatch(setSort(sort));
-      dispatch(setOrigin(this.componentParams && this.componentParams.origin));
-      dispatch(receiveIds(recs));
-      dispatch(findAndSetFormat(format.toLowerCase()));
-      dispatch(setCount(recs.length));
-      dispatch(setTotalRecs(recs.length));
+    // only fetch using ids if user selected a format
+    if (data.format !== 'other') {
+      dispatch(fetchUsingIds()).done(() => dispatch(takeSnapshot()));
+    } else {
+      // otherwise only snapshot, so we can get back to this state later
+      dispatch(takeSnapshot());
+    }
+  },
 
-      // only fetch using ids if user selected a format
-      if (data.format !== 'other') {
-        dispatch(fetchUsingIds()).done(() => dispatch(takeSnapshot()));
-      } else {
-        // otherwise only snapshot, so we can get back to this state later
-        dispatch(takeSnapshot());
-      }
-    },
+  processResponse: _.noop,
+});
 
-    processResponse: _.noop,
-  });
-
-  export default Widget;
-
+export default Widget;

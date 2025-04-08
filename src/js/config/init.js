@@ -3,7 +3,7 @@
 (function() {
   // ############ DON'T EDIT THIS LINE
   // prettier-ignore
-  const APP_VERSION="";
+  const APP_VERSION = "";
   // #################################
 
   const PATHS = {

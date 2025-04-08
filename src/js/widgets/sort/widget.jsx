@@ -1,167 +1,167 @@
-import _ from 'underscore';
-import Backbone from 'backbone';
-import analytics from 'analytics';
-import React from 'react';
-import ReactRedux from 'react-redux';
-import ReactDOM from 'react-dom';
-import configureStore from 'js/widgets/sort/redux/configure-store';
-import SortApp from 'js/widgets/sort/redux/modules/sort-app';
-import ApiQuery from 'js/components/api_query';
-import BaseWidget from 'js/widgets/base/base_widget';
-import ApiFeedback from 'js/components/api_feedback';
-import SortContainer from 'js/widgets/sort/containers/sort-container';
+import analytics from "analytics";
+import Backbone from "backbone";
+import ApiFeedback from "js/components/api_feedback";
+import ApiQuery from "js/components/api_query";
+import BaseWidget from "js/widgets/base/base_widget";
+import SortContainer from "js/widgets/sort/containers/sort-container";
+import configureStore from "js/widgets/sort/redux/configure-store";
+import SortApp from "js/widgets/sort/redux/modules/sort-app";
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactRedux from "react-redux";
+import _ from "underscore";
+
+/**
+ * Main App View
+ *
+ * This view is the entry point of the app, it will pass the
+ * store down using a <provider></provider> higher-order component.
+ *
+ * All sub-components will automatically have `store` available via context
+ */
+const View = Backbone.View.extend({
+  initialize: function(options) {
+    _.assign(this, options);
+  },
+  render: function() {
+    ReactDOM.render(
+      <ReactRedux.Provider store={this.store}>
+        <SortContainer />
+      </ReactRedux.Provider>,
+      this.el
+    );
+    return this;
+  },
+  destroy: function() {
+    ReactDOM.unmountComponentAtNode(this.el);
+  },
+});
+
+/**
+ * Backbone widget which does the wiring between the react view and
+ * the application
+ */
+const Widget = BaseWidget.extend({
   /**
-   * Main App View
-   *
-   * This view is the entry point of the app, it will pass the
-   * store down using a <provider></provider> higher-order component.
-   *
-   * All sub-components will automatically have `store` available via context
+   * Initialize the widget
    */
-  const View = Backbone.View.extend({
-    initialize: function(options) {
-      _.assign(this, options);
-    },
-    render: function() {
-      ReactDOM.render(
-        <ReactRedux.Provider store={this.store}>
-          <SortContainer />
-        </ReactRedux.Provider>,
-        this.el
-      );
-      return this;
-    },
-    destroy: function() {
-      ReactDOM.unmountComponentAtNode(this.el);
-    },
-  });
+  initialize: function() {
+    // create the store, using the configurator
+    this.store = configureStore(this);
+
+    // create the view, passing in store
+    this.view = new View({ store: this.store });
+
+    this.onSortChange = _.debounce(this.onSortChange, 500);
+    this.handleFeedback = _.bind(this.handleFeedback, this);
+  },
 
   /**
-   * Backbone widget which does the wiring between the react view and
-   * the application
+   * Activate the widget
+   *
+   * @param {object} beehive
    */
-  const Widget = BaseWidget.extend({
-    /**
-     * Initialize the widget
-     */
-    initialize: function() {
-      // create the store, using the configurator
-      this.store = configureStore(this);
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    this.activateWidget();
+    const pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.FEEDBACK, this.handleFeedback);
+  },
 
-      // create the view, passing in store
-      this.view = new View({ store: this.store });
+  /**
+   * Handler that is called internally which will take the current state and
+   * update the current query's sort parameter.
+   *
+   * It will only replace the first entry in the sort (up to the first `,`)
+   *
+   * Finally it will start a new search using the updated sort param and the
+   * stored query.
+   */
+  onSortChange: function() {
+    const pubsub = this.getPubSub();
+    const app = this.store.getState();
+    const sort = app.sort.id;
+    const dir = app.direction;
+    let query = app.query;
+    let newSort = sort + ' ' + dir;
 
-      this.onSortChange = _.debounce(this.onSortChange, 500);
-      this.handleFeedback = _.bind(this.handleFeedback, this);
-    },
+    // try local app storage if we don't have one stored
+    if (_.isNull(query)) {
+      query = this.getBeeHive()
+        .getObject('AppStorage')
+        .getCurrentQuery();
+    }
 
-    /**
-     * Activate the widget
-     *
-     * @param {object} beehive
-     */
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      this.activateWidget();
-      const pubsub = this.getPubSub();
-      pubsub.subscribe(pubsub.FEEDBACK, this.handleFeedback);
-    },
+    // play nice with the sort, don't destroy what's there
+    // only replace the first entry (primary sort)
+    if (!_.isUndefined(query.sort) && !_.isEmpty(query.sort)) {
+      const arr = query.sort[0].split(/,\s?/).slice(1);
 
-    /**
-     * Handler that is called internally which will take the current state and
-     * update the current query's sort parameter.
-     *
-     * It will only replace the first entry in the sort (up to the first `,`)
-     *
-     * Finally it will start a new search using the updated sort param and the
-     * stored query.
-     */
-    onSortChange: function() {
-      const pubsub = this.getPubSub();
-      const app = this.store.getState();
-      const sort = app.sort.id;
-      const dir = app.direction;
-      let query = app.query;
-      let newSort = sort + ' ' + dir;
+      arr.unshift(newSort);
+      newSort = arr.join(', ');
+    }
 
-      // try local app storage if we don't have one stored
-      if (_.isNull(query)) {
-        query = this.getBeeHive()
-          .getObject('AppStorage')
-          .getCurrentQuery();
-      }
+    // don't do anything if we weren't able to find a query
+    if (query) {
+      query.sort = [newSort];
+      pubsub.publish(pubsub.NAVIGATE, 'search-page', {
+        q: new ApiQuery(query),
+      });
+      analytics('send', 'event', 'interaction', 'sort-applied', newSort);
+    }
+  },
 
-      // play nice with the sort, don't destroy what's there
-      // only replace the first entry (primary sort)
-      if (!_.isUndefined(query.sort) && !_.isEmpty(query.sort)) {
-        const arr = query.sort[0].split(/,\s?/).slice(1);
+  /**
+   * Called when the pubsub issues a feedback event.
+   * Watch for search cycle events, and if a new one starts, grab the query
+   * from it and disable the dropdown (prevents further updates, mid-cycle)
+   *
+   * Once the cycle is finished, for whatever reason, unlock the component.
+   *
+   * @param {ApiFeedback} feedback - the feedback object
+   */
+  handleFeedback: function(feedback) {
+    const { dispatch } = this.store;
+    const { setQuery, setSort, setDirection, setLocked } = SortApp;
 
-        arr.unshift(newSort);
-        newSort = arr.join(', ');
-      }
-
-      // don't do anything if we weren't able to find a query
-      if (query) {
-        query.sort = [newSort];
-        pubsub.publish(pubsub.NAVIGATE, 'search-page', {
-          q: new ApiQuery(query),
-        });
-        analytics('send', 'event', 'interaction', 'sort-applied', newSort);
-      }
-    },
-
-    /**
-     * Called when the pubsub issues a feedback event.
-     * Watch for search cycle events, and if a new one starts, grab the query
-     * from it and disable the dropdown (prevents further updates, mid-cycle)
-     *
-     * Once the cycle is finished, for whatever reason, unlock the component.
-     *
-     * @param {ApiFeedback} feedback - the feedback object
-     */
-    handleFeedback: function(feedback) {
-      const { dispatch } = this.store;
-      const { setQuery, setSort, setDirection, setLocked } = SortApp;
-
-      switch (feedback.code) {
-        case ApiFeedback.CODES.SEARCH_CYCLE_STARTED:
-          {
-            const query = feedback && feedback.query && feedback.query.toJSON();
-            if (query) {
-              const sortStr = this.extractSort(query.sort[0]);
-              dispatch(setQuery(query));
-              dispatch(setSort(sortStr.sort, true));
-              dispatch(setDirection(sortStr.direction, true));
-              dispatch(setLocked(true));
-            }
-          }
-          break;
-        case ApiFeedback.CODES.SEARCH_CYCLE_PROGRESS:
-          {
+    switch (feedback.code) {
+      case ApiFeedback.CODES.SEARCH_CYCLE_STARTED:
+        {
+          const query = feedback && feedback.query && feedback.query.toJSON();
+          if (query) {
+            const sortStr = this.extractSort(query.sort[0]);
+            dispatch(setQuery(query));
+            dispatch(setSort(sortStr.sort, true));
+            dispatch(setDirection(sortStr.direction, true));
             dispatch(setLocked(true));
           }
-          break;
-        case ApiFeedback.CODES.SEARCH_CYCLE_FAILED_TO_START:
-        case ApiFeedback.CODES.SEARCH_CYCLE_FINISHED: {
-          dispatch(setLocked(false));
         }
+        break;
+      case ApiFeedback.CODES.SEARCH_CYCLE_PROGRESS:
+        {
+          dispatch(setLocked(true));
+        }
+        break;
+      case ApiFeedback.CODES.SEARCH_CYCLE_FAILED_TO_START:
+      case ApiFeedback.CODES.SEARCH_CYCLE_FINISHED: {
+        dispatch(setLocked(false));
       }
-    },
+    }
+  },
 
-    /**
-     * Splits a sort string into parts and then returns the first entry
-     * mapped to an object
-     *
-     * @param {string} sort - the string to break apart
-     * @returns {{sort: string, direction: string}}
-     */
-    extractSort: function(sort) {
-      // grab only the first sort and break it apart
-      let sortStr = sort.split(/,\s?/)[0] || 'date desc';
-      sortStr = sortStr.split(' ');
-      return { sort: sortStr[0], direction: sortStr[1] };
-    },
-  });
+  /**
+   * Splits a sort string into parts and then returns the first entry
+   * mapped to an object
+   *
+   * @param {string} sort - the string to break apart
+   * @returns {{sort: string, direction: string}}
+   */
+  extractSort: function(sort) {
+    // grab only the first sort and break it apart
+    let sortStr = sort.split(/,\s?/)[0] || 'date desc';
+    sortStr = sortStr.split(' ');
+    return { sort: sortStr[0], direction: sortStr[1] };
+  },
+});
 
-  export default Widget;
-
+export default Widget;

@@ -7,150 +7,149 @@
  * It also listens to DELIVERING_RESPONSE event
  */
 
-import _ from 'underscore';
-import $ from 'jquery';
 import Backbone from 'backbone';
-import Marionette from 'marionette';
-import ApiResponse from 'js/components/api_response';
 import WidgetTemplate from 'hbs!js/widgets/api_response/templates/widget-view';
+import $ from 'jquery';
+import ApiResponse from 'js/components/api_response';
 import PubSubEvents from 'js/components/pubsub_events';
 import Dependon from 'js/mixins/dependon';
-  var Model = Backbone.Model.extend({});
+import Marionette from 'marionette';
+import _ from 'underscore';
 
-  var WidgetView = Marionette.ItemView.extend({
-    template: WidgetTemplate,
-    events: {
-      'click button#api-response-load': '_load',
-      'click button#api-response-run': '_run',
-      'submit form': '_load',
-      'blur textarea#api-response-input': '_onChange',
-    },
+var Model = Backbone.Model.extend({});
 
-    // this is alternative way to trigger re-rendering
-    // upon model change
-    // modelEvents: {
-    //  'change': 'fieldsChanged'
-    // },
-    // fieldsChanged: function() {
-    //  this.render();
-    // },
+var WidgetView = Marionette.ItemView.extend({
+  template: WidgetTemplate,
+  events: {
+    'click button#api-response-load': '_load',
+    'click button#api-response-run': '_run',
+    'submit form': '_load',
+    'blur textarea#api-response-input': '_onChange',
+  },
 
-    _onChange: function() {
-      this._changed =
-        this.model.input != $('textarea#api-response-input').val();
-    },
-    _load: function(ev) {
-      var data = this.$el.find('textarea#api-response-input').val();
-      this.options.controller.triggerMethod('load', data);
-      return false;
-    },
-    _run: function(ev) {
-      if (this._changed) {
-        this._load(ev);
-      }
-      this.options.controller.triggerMethod('run', this.model.attributes);
-      return false;
-    },
-    _error: function(msg) {
-      this.$el.find('#api-response-error').empty();
-      this.$el.find('#api-response-error').append(msg);
-    },
-  });
+  // this is alternative way to trigger re-rendering
+  // upon model change
+  // modelEvents: {
+  //  'change': 'fieldsChanged'
+  // },
+  // fieldsChanged: function() {
+  //  this.render();
+  // },
 
-  var WidgetController = Marionette.Controller.extend({
-    _getModel: function(data) {
-      var model = null;
-      if (_.isString(data)) {
-        var r = new ApiResponse(JSON.parse(data));
-        model = new Model({
-          key: r.url(),
-          input: data,
-          result: 'new ApiResponse(' + JSON.stringify(r.toJSON()) + ')',
-          R: r,
-        });
-      } else if (data && _.isObject(data) && 'url' in data) {
-        model = new Model({
-          key: data.url(),
-          input: JSON.stringify(data.toJSON()),
-          result: 'new ApiResponse(' + JSON.stringify(data.toJSON()) + ')',
-          R: data,
-        });
-      } else {
-        model = new Model({
-          key: '',
-          input: '',
-          result: '{}',
-          R: {},
-        });
-      }
+  _onChange: function() {
+    this._changed = this.model.input != $('textarea#api-response-input').val();
+  },
+  _load: function(ev) {
+    var data = this.$el.find('textarea#api-response-input').val();
+    this.options.controller.triggerMethod('load', data);
+    return false;
+  },
+  _run: function(ev) {
+    if (this._changed) {
+      this._load(ev);
+    }
+    this.options.controller.triggerMethod('run', this.model.attributes);
+    return false;
+  },
+  _error: function(msg) {
+    this.$el.find('#api-response-error').empty();
+    this.$el.find('#api-response-error').append(msg);
+  },
+});
 
-      return model;
-    },
+var WidgetController = Marionette.Controller.extend({
+  _getModel: function(data) {
+    var model = null;
+    if (_.isString(data)) {
+      var r = new ApiResponse(JSON.parse(data));
+      model = new Model({
+        key: r.url(),
+        input: data,
+        result: 'new ApiResponse(' + JSON.stringify(r.toJSON()) + ')',
+        R: r,
+      });
+    } else if (data && _.isObject(data) && 'url' in data) {
+      model = new Model({
+        key: data.url(),
+        input: JSON.stringify(data.toJSON()),
+        result: 'new ApiResponse(' + JSON.stringify(data.toJSON()) + ')',
+        R: data,
+      });
+    } else {
+      model = new Model({
+        key: '',
+        input: '',
+        result: '{}',
+        R: {},
+      });
+    }
 
-    initialize: function(data) {
-      this.model = this._getModel(data);
-      this.view = new WidgetView({ model: this.model, controller: this });
-      return this;
-    },
+    return model;
+  },
 
-    render: function() {
+  initialize: function(data) {
+    this.model = this._getModel(data);
+    this.view = new WidgetView({ model: this.model, controller: this });
+    return this;
+  },
+
+  render: function() {
+    this.view.render();
+    return this.view.el;
+  },
+
+  onLoad: function(data) {
+    try {
+      var m = this._getModel(data);
+      this.model.set(m.attributes);
       this.view.render();
-      return this.view.el;
-    },
-
-    onLoad: function(data) {
-      try {
-        var m = this._getModel(data);
-        this.model.set(m.attributes);
-        this.view.render();
-        this.view._error('');
-      } catch (e) {
-        if (this.view) {
-          console.error(e.message, data);
-          this.view._error(e.message);
-        }
-        throw e;
+      this.view._error('');
+    } catch (e) {
+      if (this.view) {
+        console.error(e.message, data);
+        this.view._error(e.message);
       }
-    },
+      throw e;
+    }
+  },
 
-    /**
-     * The methods below are only working if you activate the widget and
-     * pass it BeeHive
-     *
-     * @param beehive
-     */
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      var pubsub = this.getPubSub();
-      pubsub.subscribe('all', _.bind(this.onAllPubSub, this));
-    },
+  /**
+   * The methods below are only working if you activate the widget and
+   * pass it BeeHive
+   *
+   * @param beehive
+   */
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    var pubsub = this.getPubSub();
+    pubsub.subscribe('all', _.bind(this.onAllPubSub, this));
+  },
 
-    /**
-     * Catches and displays ApiResponse that has travelled through the
-     * PubSub queue
-     */
-    onAllPubSub: function() {
-      var event = arguments[0];
-      if (event.indexOf(PubSubEvents.DELIVERING_RESPONSE) > -1) {
-        console.log('[debug:ApiResponseWidget]', arguments[0]);
-        this.onLoad(arguments[1]);
-      }
-    },
+  /**
+   * Catches and displays ApiResponse that has travelled through the
+   * PubSub queue
+   */
+  onAllPubSub: function() {
+    var event = arguments[0];
+    if (event.indexOf(PubSubEvents.DELIVERING_RESPONSE) > -1) {
+      console.log('[debug:ApiResponseWidget]', arguments[0]);
+      this.onLoad(arguments[1]);
+    }
+  },
 
-    /**
-     * Called by the UI View when 'Run' is clicked; you can override
-     * the method to provide your own impl
-     *
-     * @param model
-     */
-    onRun: function(model) {
-      if (this.hasPubSub()) {
-        this.getPubSub().publish(this.getPubSub().DELIVERING_RESPONSE, model.R);
-      }
-    },
-  });
+  /**
+   * Called by the UI View when 'Run' is clicked; you can override
+   * the method to provide your own impl
+   *
+   * @param model
+   */
+  onRun: function(model) {
+    if (this.hasPubSub()) {
+      this.getPubSub().publish(this.getPubSub().DELIVERING_RESPONSE, model.R);
+    }
+  },
+});
 
-  _.extend(WidgetController.prototype, Dependon.BeeHive);
+_.extend(WidgetController.prototype, Dependon.BeeHive);
 
-  export default WidgetController;
-
+export default WidgetController;

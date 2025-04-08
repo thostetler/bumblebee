@@ -1,16 +1,16 @@
-<div id="results-page-layout" class="s-results-page-layout">
+<div class="s-results-page-layout" id="results-page-layout">
   <div class="row s-stable-search-bar-height">
     <div class="s-search-bar-full-width-container" role="search">
       <div class="col-xs-0 col-sm-12 col-md-2 s-back-button-container">
-        <a href="/" class="back-button btn btn-sm btn-default">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Start New
+        <a class="back-button btn btn-sm btn-default" href="/">
+          <i aria-hidden="true" class="fa fa-arrow-left"></i> Start New
           Search</a
         >
       </div>
       <div
         class="col-xs-12 col-sm-9 col-md-7 s-search-bar-row"
-        id="search-bar-row"
         data-widget="SearchWidget"
+        id="search-bar-row"
       ></div>
     </div>
   </div>
@@ -48,26 +48,26 @@
             id="results-middle-column"
           >
             <div
+              aria-label="container for search results and other main content"
               class="main-content-container s-main-content-container"
               id="main-content"
-              tabindex="-1"
               role="main"
-              aria-label="container for search results and other main content"
+              tabindex="-1"
             >
               <div data-widget="Results" />
               <div data-widget="AuthorAffiliationTool" />
-              <div data-widget="ExportWidget" data-origin="results-page" />
+              <div data-origin="results-page" data-widget="ExportWidget" />
               <div data-widget="AuthorNetwork" />
               <div data-widget="PaperNetwork" />
-              <div data-widget="Metrics" data-allow-redirect="true" />
+              <div data-allow-redirect="true" data-widget="Metrics" />
               <div data-widget="BubbleChart" />
               <div data-widget="ConceptCloud" />
               <div data-widget="CitationHelper" />
             </div>
           </div>
-          
+
           <div id="results-right-column">
-            <div data-widget="QueryInfo" class="s-right-column col-sm-3" id="query-info-container"/>
+            <div class="s-right-column col-sm-3" data-widget="QueryInfo" id="query-info-container" />
             <div
               class="hidden-xs col-sm-3 col-md-3 results-right-column s-right-column s-results-column"
             >
@@ -79,7 +79,7 @@
               <div data-widget="MyAdsFreeform" />
               <div data-widget="OrcidSelector" />
               <div data-widget="GraphTabs" />
-              <div data-widget="QueryDebugInfo" data-debug="true" />
+              <div data-debug="true" data-widget="QueryDebugInfo" />
             </div>
           </div>
         </div>

@@ -6,12 +6,12 @@
         <div class="select-all-docs">
           <label class="custom-checkbox">
             <input
+              id="select-all-docs-cb"
               title="select all on this page"
               type="checkbox"
-              id="select-all-docs-cb"
             />
           </label>
-          <label for="select-all-docs-cb" class="sr-only">
+          <label class="sr-only" for="select-all-docs-cb">
             select all on this page
           </label>
         </div>
@@ -65,8 +65,8 @@
     </div>
     {{/if}}
     <ul
-      class="col-sm-12 results-list  s-results-list list-unstyled s-display-block"
       aria-label="list of results"
+      class="col-sm-12 results-list  s-results-list list-unstyled s-display-block"
     ></ul>
   </div>
   {{#if pagination}} {{>

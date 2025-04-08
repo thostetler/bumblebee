@@ -1,11 +1,9 @@
+const FORMS = {
+  missingreferences: 'missingreferences',
+  associatedarticles: 'associatedarticles',
+  correctabstract: 'correctabstract',
+};
 
-  const FORMS = {
-    missingreferences: 'missingreferences',
-    associatedarticles: 'associatedarticles',
-    correctabstract: 'correctabstract',
-  };
-
-  export default {
-    FORMS,
-  };
-
+export default {
+  FORMS,
+};

@@ -1,80 +1,72 @@
-import _ from 'underscore';
-import $ from 'jquery';
 import GenericModule from 'js/components/generic_module';
-import Dependon from 'js/mixins/dependon';
-import analytics from 'analytics';
 import PubsubEvents from 'js/components/pubsub_events';
-  var Experiments = GenericModule.extend({
-    initialize: function() {
-      // store all metadata entries here
-      this.isRunning = false;
-    },
+import Dependon from 'js/mixins/dependon';
+import _ from 'underscore';
 
-    activate: function(beehive, app) {
-      this.setApp(app);
-      this.setBeeHive(beehive);
-      var pubsub = this.getPubSub();
+var Experiments = GenericModule.extend({
+  initialize: function() {
+    // store all metadata entries here
+    this.isRunning = false;
+  },
 
-      if (!window.gtag) {
-        window.gtag = function() {
-          if (_.isArray(window.dataLayer)) {
-            window.dataLayer.push(arguments);
-          }
-        };
-        window.gtag('event', 'optimize.callback', {
-          callback: (value, name) => {
-            console.log(
-              'Experiment with ID: ' + name + ' is on variant: ' + value
-            );
-          },
-        });
-      }
+  activate: function(beehive, app) {
+    this.setApp(app);
+    this.setBeeHive(beehive);
+    var pubsub = this.getPubSub();
 
-      pubsub.subscribe(
-        pubsub.APP_BOOTSTRAPPED,
-        _.bind(this.onAppStarted, this)
-      );
-    },
+    if (!window.gtag) {
+      window.gtag = function() {
+        if (_.isArray(window.dataLayer)) {
+          window.dataLayer.push(arguments);
+        }
+      };
+      window.gtag('event', 'optimize.callback', {
+        callback: (value, name) => {
+          console.log('Experiment with ID: ' + name + ' is on variant: ' + value);
+        },
+      });
+    }
 
-    /**
-     *
-     * callback that can be used by external components; they can listen to BBB and then run their experiment
-     *
-     * */
-    subscribe: function(event, callback) {
-      var pubsub = this.getPubSub();
-      if (PubsubEvents[event]) {
-        pubsub.subscribe(PubsubEvents[event], callback);
-      }
-    },
+    pubsub.subscribe(pubsub.APP_BOOTSTRAPPED, _.bind(this.onAppStarted, this));
+  },
 
-    subscribeOnce: function(event, callback) {
-      var pubsub = this.getPubSub();
-      if (PubsubEvents[event]) {
-        pubsub.subscribeOnce(PubsubEvents[event], callback);
-      }
-    },
+  /**
+   *
+   * callback that can be used by external components; they can listen to BBB and then run their experiment
+   *
+   * */
+  subscribe: function(event, callback) {
+    var pubsub = this.getPubSub();
+    if (PubsubEvents[event]) {
+      pubsub.subscribe(PubsubEvents[event], callback);
+    }
+  },
 
-    onAppStarted: function() {
-      this.toggleOptimize();
-    },
+  subscribeOnce: function(event, callback) {
+    var pubsub = this.getPubSub();
+    if (PubsubEvents[event]) {
+      pubsub.subscribeOnce(PubsubEvents[event], callback);
+    }
+  },
 
-    toggleOptimize: function() {
-      if (!window.dataLayer) {
-        console.warn(
-          'Optimize is not available, we are not running any experiment'
-        );
-        return;
-      }
+  onAppStarted: function() {
+    this.toggleOptimize();
+  },
 
-      if (this.isRunning) {
-        window.dataLayer.push({ event: 'optimize.deactivate' });
-      } else {
-        window.dataLayer.push({ event: 'optimize.activate' });
-      }
-      this.isRunning = !this.isRunning;
-    },
-  });
-  _.extend(Experiments.prototype, Dependon.BeeHive, Dependon.App);
+  toggleOptimize: function() {
+    if (!window.dataLayer) {
+      console.warn('Optimize is not available, we are not running any experiment');
+      return;
+    }
 
-  export default Experiments;
+    if (this.isRunning) {
+      window.dataLayer.push({ event: 'optimize.deactivate' });
+    } else {
+      window.dataLayer.push({ event: 'optimize.activate' });
+    }
+    this.isRunning = !this.isRunning;
+  },
+});
+_.extend(Experiments.prototype, Dependon.BeeHive, Dependon.App);
+
+export default Experiments;

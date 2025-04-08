@@ -1,30 +1,30 @@
-import FacetWidget from 'js/widgets/facet/widget';
 import BaseGraphWidget from 'js/widgets/facet/graph-facet/widget';
-  var FacetFactory = {
-    makeBasicCheckboxFacet: function(options) {
-      var defaultOptions = {
-        facetTitle: options.facetTitle,
-        displayNum: 5,
-        maxDisplayNum: 100,
-        facetField: options.facetField,
-        openByDefault: false,
-        showOptions: true,
-        hierMaxLevels: 1,
-      };
-      return new FacetWidget(_.extend(defaultOptions, options));
-    },
+import FacetWidget from 'js/widgets/facet/widget';
 
-    makeHierarchicalCheckboxFacet: function(options) {
-      options.hierMaxLevels = 2;
-      options.defaultQueryArguments = options.defaultQueryArguments || {};
-      options.defaultQueryArguments['facet.prefix'] = '0/';
-      return this.makeBasicCheckboxFacet.apply(this, arguments);
-    },
+var FacetFactory = {
+  makeBasicCheckboxFacet: function(options) {
+    var defaultOptions = {
+      facetTitle: options.facetTitle,
+      displayNum: 5,
+      maxDisplayNum: 100,
+      facetField: options.facetField,
+      openByDefault: false,
+      showOptions: true,
+      hierMaxLevels: 1,
+    };
+    return new FacetWidget(_.extend(defaultOptions, options));
+  },
 
-    makeGraphFacet: function(options) {
-      options = _.extend({ openByDefault: true }, options);
-      return new BaseGraphWidget(options);
-    },
-  };
-  export default FacetFactory;
+  makeHierarchicalCheckboxFacet: function(options) {
+    options.hierMaxLevels = 2;
+    options.defaultQueryArguments = options.defaultQueryArguments || {};
+    options.defaultQueryArguments['facet.prefix'] = '0/';
+    return this.makeBasicCheckboxFacet.apply(this, arguments);
+  },
 
+  makeGraphFacet: function(options) {
+    options = _.extend({ openByDefault: true }, options);
+    return new BaseGraphWidget(options);
+  },
+};
+export default FacetFactory;

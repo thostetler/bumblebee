@@ -7,9 +7,9 @@
           A bibstem is an abbreviation that the ADS uses to identify a journal.
           <a
             href="http://adsabs.harvard.edu/abs_doc/journal_abbr.html"
-            target="_blank"
             rel="noreferrer noopener"
-            >A full list is available here.</a
+            target="_blank"
+          >A full list is available here.</a
           >
           The input field below will autocomplete on the 1,000 most popular
           journal names, allowing you to type "Astrophysical Journal", for
@@ -20,11 +20,11 @@
         <div class="form-group">
           <label for="bibstem">Publication</label>
           <input
-            type="text"
-            name="bibstem"
-            id="bibstem"
-            class="form-control"
             autofocus
+            class="form-control"
+            id="bibstem"
+            name="bibstem"
+            type="text"
           />
         </div>
       </div>
@@ -32,31 +32,31 @@
         <div class="form-group">
           <label for="year">Year</label>
           <input
-            type="text"
-            name="year"
-            id="year"
             class="form-control"
+            id="year"
             maxlength="4"
+            name="year"
+            type="text"
           />
         </div>
       </div>
       <div class="col-sm-2 col-sm-offset-1">
         <div class="form-group">
           <label for="volume">Volume</label>
-          <input type="text" name="volume" id="volume" class="form-control" />
+          <input class="form-control" id="volume" name="volume" type="text" />
         </div>
       </div>
       <div class="col-sm-2 col-sm-offset-1">
         <div class="form-group">
           <label for="page">Page/ID</label>
-          <input type="text" name="page" id="page" class="form-control" />
+          <input class="form-control" id="page" name="page" type="text" />
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">
-        <i class="fa fa-search" aria-hidden="true"></i> Search
+      <button class="btn btn-primary" type="submit">
+        <i aria-hidden="true" class="fa fa-search"></i> Search
       </button>
-      <button type="reset" class="btn btn-default">
-        <i class="fa fa-times" aria-hidden="true"></i> Clear
+      <button class="btn btn-default" type="reset">
+        <i aria-hidden="true" class="fa fa-times"></i> Clear
       </button>
     </form>
   </div>
@@ -71,24 +71,24 @@
         <div class="form-group">
           <label for="reference">Reference</label>
           <input
-            type="text"
-            name="reference"
-            id="reference"
-            class="form-control"
             aria-describedby="reference_helper"
+            class="form-control"
+            id="reference"
+            name="reference"
             required
+            type="text"
           />
-          <span id="reference_helper" class="help-block"
-            >Enter a full reference string (eg Smith et al 2000, A&A 362, pp.
+          <span class="help-block" id="reference_helper"
+          >Enter a full reference string (eg Smith et al 2000, A&A 362, pp.
             333-341)</span
           >
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">
-        <i class="fa fa-search" aria-hidden="true"></i> Search
+      <button class="btn btn-primary" type="submit">
+        <i aria-hidden="true" class="fa fa-search"></i> Search
       </button>
-      <button type="reset" class="btn btn-default">
-        <i class="fa fa-times" aria-hidden="true"></i> Clear
+      <button class="btn btn-default" type="reset">
+        <i aria-hidden="true" class="fa fa-times"></i> Clear
       </button>
     </form>
   </div>
@@ -103,26 +103,26 @@
         <div class="form-group">
           <label for="bibcodes">List of Bibcodes</label>
           <textarea
-            name="bibcodes"
-            id="bibcodes"
-            cols="30"
-            rows="5"
-            class="form-control"
             aria-describedby="bibcodes_helper"
-            style="min-width: 100%; max-width: 100%"
+            class="form-control"
+            cols="30"
+            id="bibcodes"
+            name="bibcodes"
             required
+            rows="5"
+            style="min-width: 100%; max-width: 100%"
           ></textarea>
           <span class="help-block" id="bibcodes_helper"
-            >Enter list of Bibcodes (e.g. 1989ApJ...342L..71R), one per
+          >Enter list of Bibcodes (e.g. 1989ApJ...342L..71R), one per
             line.</span
           >
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">
-        <i class="fa fa-search" aria-hidden="true"></i> Search
+      <button class="btn btn-primary" type="submit">
+        <i aria-hidden="true" class="fa fa-search"></i> Search
       </button>
-      <button type="reset" class="btn btn-default">
-        <i class="fa fa-times" aria-hidden="true"></i> Clear
+      <button class="btn btn-default" type="reset">
+        <i aria-hidden="true" class="fa fa-times"></i> Clear
       </button>
     </form>
   </div>

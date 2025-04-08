@@ -1,49 +1,42 @@
-import $ from 'jquery';
-import _ from 'underscore';
 import Backbone from 'backbone';
-import ApiQuery from 'js/components/api_query';
-import Dependon from 'js/mixins/dependon';
-import ApiFeedback from 'js/components/api_feedback';
-import ApiRequest from 'js/components/api_request';
-import ApiTargets from 'js/components/api_targets';
 import ApiQueryUpdater from 'js/components/api_query_updater';
-  var Router = Backbone.Router.extend({
-    initialize: function(options) {
-      options = options || {};
-      this.queryUpdater = new ApiQueryUpdater('Router');
-    },
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      if (!this.hasPubSub()) {
-        throw new Error(
-          'Ooops! Who configured this #@$%! There is no PubSub service!'
-        );
-      }
-    },
-    /*
-     * if you don't want the navigator to duplicate the route in history,
-     * use this function instead of pubsub.publish(pubsub.NAVIGATE ...)
-     * */
-    routerNavigate: function(route, options) {
-      options = options || {};
-      _.extend(options, { replace: true });
-      this.getPubSub().publish(this.getPubSub().NAVIGATE, route, options);
-    },
+import Dependon from 'js/mixins/dependon';
+import _ from 'underscore';
 
-    routes: {
-      '': 'index',
-      '*invalidRoute': 'noPageFound',
-    },
+var Router = Backbone.Router.extend({
+  initialize: function(options) {
+    options = options || {};
+    this.queryUpdater = new ApiQueryUpdater('Router');
+  },
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    if (!this.hasPubSub()) {
+      throw new Error('Ooops! Who configured this #@$%! There is no PubSub service!');
+    }
+  },
+  /*
+   * if you don't want the navigator to duplicate the route in history,
+   * use this function instead of pubsub.publish(pubsub.NAVIGATE ...)
+   * */
+  routerNavigate: function(route, options) {
+    options = options || {};
+    _.extend(options, { replace: true });
+    this.getPubSub().publish(this.getPubSub().NAVIGATE, route, options);
+  },
 
-    index: function(query) {
-      this.routerNavigate('index-page', query);
-    },
+  routes: {
+    '': 'index',
+    '*invalidRoute': 'noPageFound',
+  },
 
-    noPageFound: function() {
-      this.getPubSub().publish(this.getPubSub().NAVIGATE, '404');
-    },
-  });
+  index: function(query) {
+    this.routerNavigate('index-page', query);
+  },
 
-  _.extend(Router.prototype, Dependon.BeeHive);
-  export default Router;
+  noPageFound: function() {
+    this.getPubSub().publish(this.getPubSub().NAVIGATE, '404');
+  },
+});
 
+_.extend(Router.prototype, Dependon.BeeHive);
+export default Router;

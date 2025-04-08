@@ -1,106 +1,112 @@
-import actions from 'js/react/MyAdsDashboard/actions';
-import { combineReducers } from 'redux';
-import { page: PAGE } from 'js/react/MyAdsDashboard/constants';
-  const {
-    SET_NOTIFICATIONS,
-    SET_EDITING_NOTIFICATION,
-    RESET_EDITING_NOTIFICATION,
-    GOTO,
-    SET_NOTIFICATION_QUERY_KEY,
-  } = actions;
+import actions from "js/react/MyAdsDashboard/actions";
+import { combineReducers } from "redux";
+import { page
 
-  /**
-   * @typedef {Object.<string, import('js/react/MyAdsDashboard/typedefs').Notification>} NotificationState
-   */
+:
+PAGE;
+}
+from;
+"js/react/MyAdsDashboard/constants";
+const {
+  SET_NOTIFICATIONS,
+  SET_EDITING_NOTIFICATION,
+  RESET_EDITING_NOTIFICATION,
+  GOTO,
+  SET_NOTIFICATION_QUERY_KEY
+} = actions;
 
-  /** @type {NotificationState} */
-  const notificationsState = {};
-  const notifications = (state = notificationsState, action) => {
-    if (action.type === SET_NOTIFICATIONS && action.result) {
-      return action.result.reduce(
-        (acc, entry) => ({ ...acc, [entry.id]: entry }),
-        {}
-      );
-    }
-    return state;
-  };
+/**
+ * @typedef {Object.<string, import("js/react/MyAdsDashboard/typedefs").Notification>} NotificationState
+ */
 
-  const editingNotificationState = null;
-  const editingNotification = (state = editingNotificationState, action) => {
-    if (action.type === SET_EDITING_NOTIFICATION && action.result) {
-      return action.result;
-    }
+/** @type {NotificationState} */
+const notificationsState = {};
+const notifications = (state = notificationsState, action) => {
+  if (action.type === SET_NOTIFICATIONS && action.result) {
+    return action.result.reduce(
+      (acc, entry) => ({ ...acc, [entry.id]: entry }),
+      {}
+    );
+  }
+  return state;
+};
 
-    if (action.type === RESET_EDITING_NOTIFICATION) {
-      return editingNotificationState;
-    }
+const editingNotificationState = null;
+const editingNotification = (state = editingNotificationState, action) => {
+  if (action.type === SET_EDITING_NOTIFICATION && action.result) {
+    return action.result;
+  }
 
-    return state;
-  };
+  if (action.type === RESET_EDITING_NOTIFICATION) {
+    return editingNotificationState;
+  }
 
-  /** @type {string} */
-  const pageState = PAGE.DASHBOARD;
-  const page = (state = pageState, action) => {
-    if (action.type === GOTO && action.payload) {
-      return action.payload;
-    }
-    return state;
-  };
+  return state;
+};
 
-  /**
-   * @typedef {Object.<string, import('js/react/MyAdsDashboard/typedefs').Request>} RequestState
-   */
+/** @type {string} */
+const pageState = PAGE.DASHBOARD;
+const page = (state = pageState, action) => {
+  if (action.type === GOTO && action.payload) {
+    return action.payload;
+  }
+  return state;
+};
 
-  /** @type {RequestState} */
-  const requestState = {
-    ADD_NOTIFICATION: { status: null, result: null, error: null },
-    GET_NOTIFICATIONS: { status: null, result: null, error: null },
-    GET_NOTIFICATION: { status: null, result: null, error: null },
-    UPDATE_NOTIFICATION: { status: null, result: null, error: null },
-    REMOVE_NOTIFICATION: { status: null, result: null, error: null },
-    FETCH_CLASSIC_MIRRORS: { status: null, result: null, error: null },
-    LOGIN_CLASSIC: { status: null, result: null, error: null },
-    LOGIN_CLASSIC_CHECK: { status: null, result: null, error: null },
-    IMPORT_CLASSIC: { status: null, result: null, error: null },
-    GET_QUERY: { status: null, result: null, error: null },
-  };
-  const requests = (state = requestState, action) => {
-    if (/_API_REQUEST_/.test(action.type)) {
-      const [scope, status] = action.type.split('_API_REQUEST_');
-      const { result = null, error = null } = action;
-      return {
-        ...state,
-        [scope]: {
-          status: status.toLowerCase(),
-          result,
-          error,
-        },
-      };
-    }
+/**
+ * @typedef {Object.<string, import("js/react/MyAdsDashboard/typedefs").Request>} RequestState
+ */
 
-    if (/_RESET$/.test(action.type)) {
-      const scope = action.type.replace('_RESET', '');
-      return {
-        ...state,
-        [scope]: requestState[scope],
-      };
-    }
-    return state;
-  };
+/** @type {RequestState} */
+const requestState = {
+  ADD_NOTIFICATION: { status: null, result: null, error: null },
+  GET_NOTIFICATIONS: { status: null, result: null, error: null },
+  GET_NOTIFICATION: { status: null, result: null, error: null },
+  UPDATE_NOTIFICATION: { status: null, result: null, error: null },
+  REMOVE_NOTIFICATION: { status: null, result: null, error: null },
+  FETCH_CLASSIC_MIRRORS: { status: null, result: null, error: null },
+  LOGIN_CLASSIC: { status: null, result: null, error: null },
+  LOGIN_CLASSIC_CHECK: { status: null, result: null, error: null },
+  IMPORT_CLASSIC: { status: null, result: null, error: null },
+  GET_QUERY: { status: null, result: null, error: null }
+};
+const requests = (state = requestState, action) => {
+  if (/_API_REQUEST_/.test(action.type)) {
+    const [scope, status] = action.type.split("_API_REQUEST_");
+    const { result = null, error = null } = action;
+    return {
+      ...state,
+      [scope]: {
+        status: status.toLowerCase(),
+        result,
+        error
+      }
+    };
+  }
 
-  const queryKeyState = null;
-  const queryKey = (state = queryKeyState, action) => {
-    if (action.type === SET_NOTIFICATION_QUERY_KEY) {
-      return action.payload;
-    }
-    return state;
-  };
+  if (/_RESET$/.test(action.type)) {
+    const scope = action.type.replace("_RESET", "");
+    return {
+      ...state,
+      [scope]: requestState[scope]
+    };
+  }
+  return state;
+};
 
-  export default combineReducers({
-    notifications,
-    page,
-    requests,
-    editingNotification,
-    queryKey,
-  });
+const queryKeyState = null;
+const queryKey = (state = queryKeyState, action) => {
+  if (action.type === SET_NOTIFICATION_QUERY_KEY) {
+    return action.payload;
+  }
+  return state;
+};
+
+export default combineReducers({
+  notifications,
+  page,
+  requests,
+  editingNotification,
+  queryKey
+});
 

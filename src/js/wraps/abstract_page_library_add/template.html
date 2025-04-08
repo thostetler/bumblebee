@@ -4,14 +4,15 @@
   <div class="panel panel-default">
     <div class="panel-heading" style="padding:0px;">
       <div class="panel-title">
-        <button class="library-add-title btn btn-link btn-block" data-toggle="collapse" data-target="#library-console" aria-expanded="false}">
+        <button aria-expanded="false}" class="library-add-title btn btn-link btn-block" data-target="#library-console"
+                data-toggle="collapse">
           <div class="s-library-add-title__title">
-            <span><i class="fa fa-book" aria-hidden="true"></i> Add paper to library</span>
+            <span><i aria-hidden="true" class="fa fa-book"></i> Add paper to library</span>
             <span>
               {{#if libraryDrawerOpen}}
-                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                <i aria-hidden="true" class="fa fa-caret-down"></i>
               {{else}}
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                <i aria-hidden="true" class="fa fa-caret-right"></i>
               {{/if}}
             </span>
           </div>
@@ -24,51 +25,59 @@
 
         <div class="libraries-container">
           {{#if libraries}}
-          <div style="margin-top: 8px" class="">
-              <label for="#library-select">add to an existing library:</label>
-              <select id="library-select" name="library-select" class="form-control input-sm s-library-select" aria-label="select existing library">
-                <option value="0" selected="true">Select a library...</option>  
-                {{#each libraries}}
-                  <option value="{{this.id}}">{{this.name}}{{#compare permission "owner" operator="!=="}} ({{this.owner}}){{/compare}}</option>
-                {{/each}}
-              </select>
+          <div class="" style="margin-top: 8px">
+            <label for="#library-select">add to an existing library:</label>
+            <select aria-label="select existing library" class="form-control input-sm s-library-select" id="library-select"
+                    name="library-select">
+              <option selected="true" value="0">Select a library...</option>
+              {{#each libraries}}
+              <option value="{{this.id}}">{{this.name}}{{#compare permission "owner" operator="!=="}}
+                ({{this.owner}}){{/compare}}
+              </option>
+              {{/each}}
+            </select>
           </div>
           <div style="margin:10px 0 4px 0">
-              OR
+            OR
           </div>
           {{/if}}
           <div>
             <label for="#create-new">create a new library </label>
-            <input id="#create-new" class="form-control input-sm new-library-name s-display-inline" type="text" name="new-library-name" placeholder="New Library Name" value="{{newLibraryName}}" style="margin-bottom:10px;" aria-label="create new library"/>
+            <input aria-label="create new library" class="form-control input-sm new-library-name s-display-inline" id="#create-new"
+                   name="new-library-name" placeholder="New Library Name" style="margin-bottom:10px;"
+                   type="text" value="{{newLibraryName}}" />
           </div>
-          
+
           <button class="btn btn-sm btn-primary-faded submit-add-to-library">Add</button>
 
         </div>
 
-      <div style="margin-top:6px" class="feedback s-feedback">
+        <div class="feedback s-feedback" style="margin-top:6px">
 
-      </div>
-      {{#if feedback}}
+        </div>
+        {{#if feedback}}
 
-      {{#if feedback.success}}
+        {{#if feedback.success}}
 
-      <div class="alert alert-success alert-dismissable" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="alert alert-success alert-dismissable" role="alert">
+          <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span>
+          </button>
           {{#if feedback.create}}
-          <a href="#user/libraries/{{feedback.id}}"> Library <b>{{feedback.name}}</b></a> was successfully created and {{feedback.numRecords}} new record was added.
+          <a href="#user/libraries/{{feedback.id}}"> Library <b>{{feedback.name}}</b></a> was successfully created and
+          {{feedback.numRecords}} new record was added.
           {{else}}
-          {{feedback.numRecords}} new record was added to  <a href="#user/libraries/{{feedback.id}}"> library <b>{{feedback.name}}</b></a>.
+          {{feedback.numRecords}} new record was added to <a href="#user/libraries/{{feedback.id}}"> library <b>{{feedback.name}}</b></a>.
           {{#if feedback.numAlreadyInLib}}
           ({{feedback.numAlreadyInLib}} was already in the library).
           {{/if}}
           {{/if}}
-      </div>
+        </div>
 
-      {{else}}
+        {{else}}
 
-      <div class="alert alert-danger alert-dismissable" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <div class="alert alert-danger alert-dismissable" role="alert">
+          <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span>
+          </button>
           {{#if feedback.create}}
           <b>{{feedback.name}}</b> was not created, error occured.
           <em>{{feedback.error}}</em>
@@ -76,17 +85,16 @@
           Record was not added to <b>{{feedback.name}}</b>, error occurred.
           <em>{{feedback.error}}</em>
           {{/if}}
-      </div>
+        </div>
 
-      {{/if}}
+        {{/if}}
 
-      {{/if}}
+        {{/if}}
       </div>
     </div>
   </div>
 
 
-
-    <!--end 'library area' if user is signed in-->
+  <!--end 'library area' if user is signed in-->
 </div>
 {{/if}}

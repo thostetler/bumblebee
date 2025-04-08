@@ -8,6 +8,7 @@
  * callback 'success' once all of the requests were finished
  */
 
+import ApiRequest from "js/components/api_request";
 /**
  * class R.ApiRequestQueue
  *
@@ -17,82 +18,81 @@
  *   be called for every queued request, instead of just the final one.
  *   Default: false
  * */
-import _ from 'underscore';
-import ApiRequest from 'js/components/api_request';
-  var ApiRequestQueue = ApiRequest.extend({
-    _queue: [],
-    _lock: false,
-    _options: {},
-    successAllCallback: null,
-    initialize: function(attrs, options) {
-      _.extend(this, _.pick(attrs, ['successAllCallback']));
-    },
+import _ from "underscore";
 
-    push: function(request) {
-      if (!(request instanceof ApiRequest)) {
-        throw Error('ApiRequestQueue works only with ApiRequest instances');
-      }
-      this._queue.push(request);
-      if (!this.isLocked()) {
-        this.lock();
-        this._processQueue();
-      }
-    },
+var ApiRequestQueue = ApiRequest.extend({
+  _queue: [],
+  _lock: false,
+  _options: {},
+  successAllCallback: null,
+  initialize: function(attrs, options) {
+    _.extend(this, _.pick(attrs, ['successAllCallback']));
+  },
 
-    _processQueue: function() {
-      if (!this.isEmpty()) {
-        var doNothing = function() {};
-        var args = this._queue.shift();
-        var _success = args.success ? args.success : doNothing;
-        var _error = args.error ? args.error : doNothing;
-        var self = this;
-        args.success = function(response) {
-          // Wrap the success callback
-          if (self._callAllSuccessCallbacks || self.isEmpty()) {
-            _success(response);
-          }
+  push: function(request) {
+    if (!(request instanceof ApiRequest)) {
+      throw Error('ApiRequestQueue works only with ApiRequest instances');
+    }
+    this._queue.push(request);
+    if (!this.isLocked()) {
+      this.lock();
+      this._processQueue();
+    }
+  },
 
-          if (self.isEmpty()) {
-            self.unlock();
-          }
+  _processQueue: function() {
+    if (!this.isEmpty()) {
+      var doNothing = function() {};
+      var args = this._queue.shift();
+      var _success = args.success ? args.success : doNothing;
+      var _error = args.error ? args.error : doNothing;
+      var self = this;
+      args.success = function(response) {
+        // Wrap the success callback
+        if (self._callAllSuccessCallbacks || self.isEmpty()) {
+          _success(response);
+        }
 
-          self._processQueue();
-        };
-        args.error = function(response) {
-          // Wrap the error callback
-          _error(response);
-          // Cancel the queued commands on error.
-          // Aborting requests on error is the appropriate behavior because
-          // queued requests depend on the outcome of the previous requests.
-          // If the outcome is unsuccessful, the subsequent requests are probably invalid.
-          if (!self.isEmpty()) {
-            console.error(
-              'Error encountered while processing queued commands. Remaining commands will not be processed.'
-            );
-            self._queue = [];
-          }
+        if (self.isEmpty()) {
           self.unlock();
-        };
-        R.Api.request(args);
-      }
-    },
+        }
 
-    lock: function() {
-      this._lock = true;
-    },
+        self._processQueue();
+      };
+      args.error = function(response) {
+        // Wrap the error callback
+        _error(response);
+        // Cancel the queued commands on error.
+        // Aborting requests on error is the appropriate behavior because
+        // queued requests depend on the outcome of the previous requests.
+        // If the outcome is unsuccessful, the subsequent requests are probably invalid.
+        if (!self.isEmpty()) {
+          console.error(
+            'Error encountered while processing queued commands. Remaining commands will not be processed.'
+          );
+          self._queue = [];
+        }
+        self.unlock();
+      };
+      R.Api.request(args);
+    }
+  },
 
-    unlock: function() {
-      this._lock = false;
-    },
+  lock: function() {
+    this._lock = true;
+  },
 
-    isLocked: function() {
-      return this._lock;
-    },
+  unlock: function() {
+    this._lock = false;
+  },
 
-    isEmpty: function() {
-      return this._queue.length === 0;
-    },
-  });
+  isLocked: function() {
+    return this._lock;
+  },
 
-  export default ApiRequestQueue;
+  isEmpty: function() {
+    return this._queue.length === 0;
+  },
+});
 
+export default ApiRequestQueue;

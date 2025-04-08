@@ -12,64 +12,60 @@
 
  */
 
-import Backbone from 'backbone';
-import _ from 'underscore';
-import ApiQueryImplementation from 'js/components/solr_params';
-import Facade from 'js/components/facade';
-  var hardenedInterface = {
-    add: 'add values',
-    set: 'set (replace existing)',
-    get: 'get values',
-    has: 'has a key',
-    hasVal: 'more specific `has` using _.isEmpty',
-    url: 'url string of the params',
-    load: 'loads query as a string',
-    clear: 'clears all values',
-    unset: 'removes a key',
-    toJSON: 'values back as JSON object',
-    clone: 'make a copy',
-    isLocked: true,
-    lock: true,
-    unlock: true,
-    pairs: 'get all values as pairs',
-    keys: 'as keys',
-    values: 'only values',
-    hasChanged: 'whether this object has modification (since its creation)',
-    previousAttributes: 'get all changed attributes',
-    previous: 'previous values for a given attribute',
+import Facade from "js/components/facade";
+import ApiQueryImplementation from "js/components/solr_params";
+import _ from "underscore";
+
+var hardenedInterface = {
+  add: 'add values',
+  set: 'set (replace existing)',
+  get: 'get values',
+  has: 'has a key',
+  hasVal: 'more specific `has` using _.isEmpty',
+  url: 'url string of the params',
+  load: 'loads query as a string',
+  clear: 'clears all values',
+  unset: 'removes a key',
+  toJSON: 'values back as JSON object',
+  clone: 'make a copy',
+  isLocked: true,
+  lock: true,
+  unlock: true,
+  pairs: 'get all values as pairs',
+  keys: 'as keys',
+  values: 'only values',
+  hasChanged: 'whether this object has modification (since its creation)',
+  previousAttributes: 'get all changed attributes',
+  previous: 'previous values for a given attribute',
+};
+
+var ApiQuery = function(data, options) {
+  // Facade pattern, we want to expose only limited API
+  // despite the fact that the underlying instance has
+  // all power of the Backbone.Model
+
+  if (data instanceof ApiQueryImplementation) {
+    this.innerQuery = new Facade(hardenedInterface, data);
+  } else {
+    this.innerQuery = new Facade(hardenedInterface, new ApiQueryImplementation(data, options));
+  }
+};
+
+var toInsert = {};
+_.each(_.keys(hardenedInterface), function(element, index, list) {
+  toInsert[element] = function() {
+    return this.innerQuery[element].apply(this.innerQuery, arguments);
   };
+});
+_.extend(ApiQuery.prototype, toInsert, {
+  clone: function() {
+    var clone = this.innerQuery.clone.apply(this.innerQuery, arguments);
+    return new ApiQuery(clone);
+  },
+  load: function() {
+    var clone = this.innerQuery.load.apply(this.innerQuery, arguments);
+    return new ApiQuery(clone);
+  },
+});
 
-  var ApiQuery = function(data, options) {
-    // Facade pattern, we want to expose only limited API
-    // despite the fact that the underlying instance has
-    // all power of the Backbone.Model
-
-    if (data instanceof ApiQueryImplementation) {
-      this.innerQuery = new Facade(hardenedInterface, data);
-    } else {
-      this.innerQuery = new Facade(
-        hardenedInterface,
-        new ApiQueryImplementation(data, options)
-      );
-    }
-  };
-
-  var toInsert = {};
-  _.each(_.keys(hardenedInterface), function(element, index, list) {
-    toInsert[element] = function() {
-      return this.innerQuery[element].apply(this.innerQuery, arguments);
-    };
-  });
-  _.extend(ApiQuery.prototype, toInsert, {
-    clone: function() {
-      var clone = this.innerQuery.clone.apply(this.innerQuery, arguments);
-      return new ApiQuery(clone);
-    },
-    load: function() {
-      var clone = this.innerQuery.load.apply(this.innerQuery, arguments);
-      return new ApiQuery(clone);
-    },
-  });
-
-  export default ApiQuery;
-
+export default ApiQuery;

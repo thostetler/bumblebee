@@ -1,87 +1,81 @@
-import _ from 'underscore';
 import config from 'js/widgets/config';
 import DropdownWidget from 'js/widgets/dropdown-menu/widget';
-  var links = [
-    {
-      description: 'in BibTeX',
-      navEvent: 'export',
-      params: { format: 'bibtex' },
-    },
-    {
-      description: 'in AASTeX',
-      navEvent: 'export',
-      params: { format: 'aastex' },
-    },
-    {
-      description: 'in EndNote',
-      navEvent: 'export',
-      params: { format: 'endnote' },
-    },
-    { description: 'in RIS', navEvent: 'export', params: { format: 'ris' } },
-    {
-      description: 'Author Affiliation',
-      navEvent: 'show-author-affiliation-tool',
-    },
-    {
-      description: 'Other Formats',
-      navEvent: 'export',
-      params: { format: 'other' },
-    },
+import _ from 'underscore';
 
-    // deactivated, needs the myads microservice
-    // {href : '/export/query' , description : 'Export Query' , navEvent: 'export-query'}
-  ];
+var links = [
+  {
+    description: 'in BibTeX',
+    navEvent: 'export',
+    params: { format: 'bibtex' },
+  },
+  {
+    description: 'in AASTeX',
+    navEvent: 'export',
+    params: { format: 'aastex' },
+  },
+  {
+    description: 'in EndNote',
+    navEvent: 'export',
+    params: { format: 'endnote' },
+  },
+  { description: 'in RIS', navEvent: 'export', params: { format: 'ris' } },
+  {
+    description: 'Author Affiliation',
+    navEvent: 'show-author-affiliation-tool',
+  },
+  {
+    description: 'Other Formats',
+    navEvent: 'export',
+    params: { format: 'other' },
+  },
 
-  var btnType = 'btn-primary-faded';
-  var dropdownTitle = 'Export';
-  var iconClass = 'icon-export';
-  var rightAlign = false;
-  var selectedOption = true;
+  // deactivated, needs the myads microservice
+  // {href : '/export/query' , description : 'Export Query' , navEvent: 'export-query'}
+];
 
-  export default function() {
-    var Dropdown = new DropdownWidget({
-      links: links,
-      btnType: btnType,
-      dropdownTitle: dropdownTitle,
-      iconClass: iconClass,
-      rightAlign: rightAlign,
-      selectedOption: selectedOption,
-      updateLinks: function(userData) {
-        var format = userData.defaultExportFormat;
-        var formatVal = _.find(config.export.formats, { label: format }).value;
+var btnType = 'btn-primary-faded';
+var dropdownTitle = 'Export';
+var iconClass = 'icon-export';
+var rightAlign = false;
+var selectedOption = true;
 
-        if (format) {
-          var match;
-          _.forEach(links, function(link, idx) {
-            if (
-              link.params &&
-              link.params.format &&
-              link.params.format === formatVal
-            ) {
-              match = idx;
-              return false;
-            }
-          });
+export default function() {
+  var Dropdown = new DropdownWidget({
+    links: links,
+    btnType: btnType,
+    dropdownTitle: dropdownTitle,
+    iconClass: iconClass,
+    rightAlign: rightAlign,
+    selectedOption: selectedOption,
+    updateLinks: function(userData) {
+      var format = userData.defaultExportFormat;
+      var formatVal = _.find(config.export.formats, { label: format }).value;
 
-          if (match === 0) {
-            return links;
+      if (format) {
+        var match;
+        _.forEach(links, function(link, idx) {
+          if (link.params && link.params.format && link.params.format === formatVal) {
+            match = idx;
+            return false;
           }
+        });
 
-          var newVal = _.assign({}, links[0], {
-            description: 'in ' + format,
-            params: _.assign({}, links[0].params, { format: formatVal }),
-          });
-
-          return match
-            ? [newVal]
-                .concat(links.slice(0, match))
-                .concat(links.slice(match + 1))
-            : [newVal].concat(links.slice(0));
+        if (match === 0) {
+          return links;
         }
-        return links;
-      },
-    });
 
-    return Dropdown;
-  };
+        var newVal = _.assign({}, links[0], {
+          description: 'in ' + format,
+          params: _.assign({}, links[0].params, { format: formatVal }),
+        });
 
+        return match
+          ? [newVal].concat(links.slice(0, match)).concat(links.slice(match + 1))
+          : [newVal].concat(links.slice(0));
+      }
+      return links;
+    },
+  });
+
+  return Dropdown;
+}

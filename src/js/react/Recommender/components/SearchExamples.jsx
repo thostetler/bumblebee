@@ -1,104 +1,94 @@
-import React from 'react';
+import { emitAnalytics, updateSearchBar } from 'js/react/Recommender/actions';
+import { searchExamples } from 'js/react/Recommender/models/index';
 import PropTypes from 'prop-types';
-import {useDispatch} from 'react-redux';
-import {searchExamples} from 'js/react/Recommender/models/index';
-import {updateSearchBar, emitAnalytics} from 'js/react/Recommender/actions';
-  const Dl = ({children}) => {
-    return <dl className="dl-horizontal">{children}</dl>;
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
+const Dl = ({ children }) => {
+  return <dl className="dl-horizontal">{children}</dl>;
+};
+
+Dl.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
+const Entry = ({ label, text, onClick, tooltip }) => {
+  return (
+    // eslint-disable-next-line react/jsx-fragments
+    <React.Fragment>
+      <dt>{label}</dt>
+      <dd style={{ display: 'flex' }}>
+        <button type="button" onClick={onClick} className="text-link">
+          {text}
+        </button>
+        {tooltip && <i className="icon-help" aria-hidden="true" data-toggle="tooltip" title={tooltip} />}
+      </dd>
+    </React.Fragment>
+  );
+};
+Entry.defaultProps = {
+  label: '',
+  text: '',
+  tooltip: '',
+  onClick: () => {},
+};
+
+Entry.propTypes = {
+  label: PropTypes.string,
+  onClick: PropTypes.func,
+  text: PropTypes.string,
+  tooltip: PropTypes.string,
+};
+
+const SearchExamples = React.memo(() => {
+  const dispatch = useDispatch();
+  const onClick = (text) => {
+    dispatch(updateSearchBar(text));
+    dispatch(emitAnalytics(['send', 'event', 'interaction', 'suggestion-used']));
   };
 
-  Dl.propTypes = {
-    children: PropTypes.element.isRequired,
+  const generateRandom = (max) => {
+    return Math.floor(Math.random() * max);
   };
 
-  const Entry = ({label, text, onClick, tooltip}) => {
-    return (
-      // eslint-disable-next-line react/jsx-fragments
-      <React.Fragment>
-        <dt>{label}</dt>
-        <dd style={{display: 'flex'}}>
-          <button type="button" onClick={onClick} className="text-link">
-            {text}
-          </button>
-          {tooltip && (
-            <i
-              className="icon-help"
-              aria-hidden="true"
-              data-toggle="tooltip"
-              title={tooltip}
-            />
-          )}
-        </dd>
-      </React.Fragment>
-    );
-  };
-  Entry.defaultProps = {
-    label: '',
-    text: '',
-    tooltip: '',
-    onClick: () => {
-    },
-  };
-
-  Entry.propTypes = {
-    label: PropTypes.string,
-    onClick: PropTypes.func,
-    text: PropTypes.string,
-    tooltip: PropTypes.string,
-  };
-
-  const SearchExamples = React.memo(() => {
-    const dispatch = useDispatch();
-    const onClick = (text) => {
-      dispatch(updateSearchBar(text));
-      dispatch(
-        emitAnalytics(['send', 'event', 'interaction', 'suggestion-used']),
-      );
-    };
-
-    const generateRandom = (max) => {
-      return Math.floor(Math.random() * max);
-    };
-
-    return (
-      <div className="search-examples">
-        <div className="quick-reference">
-          <Dl>
-            {searchExamples.slice(0, 8).map((entry) => {
-              const index = generateRandom(entry.examples.length);
-              const example = entry.syntax.replace('%', entry.examples[index]);
-              return (
-                <Entry
-                  label={entry.label}
-                  text={example}
-                  tooltip={entry.tooltip}
-                  onClick={() => onClick(example)}
-                  key={entry.label}
-                />
-              );
-            })}
-          </Dl>
-        </div>
-        <div className="quick-reference">
-          <Dl>
-            {searchExamples.slice(8).map((entry) => {
-              const index = generateRandom(entry.examples.length);
-              const example = entry.syntax.replace('%', entry.examples[index]);
-              return (
-                <Entry
-                  label={entry.label}
-                  text={example}
-                  tooltip={entry.tooltip}
-                  onClick={() => onClick(example)}
-                  key={entry.label}
-                />
-              );
-            })}
-          </Dl>
-        </div>
+  return (
+    <div className="search-examples">
+      <div className="quick-reference">
+        <Dl>
+          {searchExamples.slice(0, 8).map((entry) => {
+            const index = generateRandom(entry.examples.length);
+            const example = entry.syntax.replace('%', entry.examples[index]);
+            return (
+              <Entry
+                label={entry.label}
+                text={example}
+                tooltip={entry.tooltip}
+                onClick={() => onClick(example)}
+                key={entry.label}
+              />
+            );
+          })}
+        </Dl>
       </div>
-    );
-  });
+      <div className="quick-reference">
+        <Dl>
+          {searchExamples.slice(8).map((entry) => {
+            const index = generateRandom(entry.examples.length);
+            const example = entry.syntax.replace('%', entry.examples[index]);
+            return (
+              <Entry
+                label={entry.label}
+                text={example}
+                tooltip={entry.tooltip}
+                onClick={() => onClick(example)}
+                key={entry.label}
+              />
+            );
+          })}
+        </Dl>
+      </div>
+    </div>
+  );
+});
 
-  export default SearchExamples;
-
+export default SearchExamples;

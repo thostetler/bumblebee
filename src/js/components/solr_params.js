@@ -20,57 +20,48 @@ Instead, import 'api_query' and configure it properly
  * @class ParameterStore
  */
 
-import MultiParams from 'js/components/multi_params';
-import Backbone from 'backbone';
-import _ from 'underscore';
-import $ from 'jquery';
-  var SolrParams = MultiParams.extend({
-    fieldsToConcatenate: [],
-    defaultOperator: ' ',
-    fieldProcessors: {
-      '*': function(vals, self) {
-        return [vals.join(self.defaultOperator)];
-      },
+import MultiParams from "js/components/multi_params";
+import _ from "underscore";
+
+var SolrParams = MultiParams.extend({
+  fieldsToConcatenate: [],
+  defaultOperator: ' ',
+  fieldProcessors: {
+    '*': function(vals, self) {
+      return [vals.join(self.defaultOperator)];
     },
+  },
 
-    initialize: function(attributes, options) {
-      if (options) {
-        _.extend(
-          this,
-          _.pick(options, [
-            'fieldsToConcatenate',
-            'defaultOperator',
-            'fieldProcessors',
-          ])
-        );
-      }
-    },
+  initialize: function(attributes, options) {
+    if (options) {
+      _.extend(this, _.pick(options, ['fieldsToConcatenate', 'defaultOperator', 'fieldProcessors']));
+    }
+  },
 
-    url: function(resp, options) {
-      // first massage the fields, but do not touch the original values
-      // lodash has a parameter isDeep that can be set to true, but
-      // for compatibility reasons with underscore, lets' not use it
-      // the values should always be only one level deep
-      var values = _.clone(this.attributes);
+  url: function(resp, options) {
+    // first massage the fields, but do not touch the original values
+    // lodash has a parameter isDeep that can be set to true, but
+    // for compatibility reasons with underscore, lets' not use it
+    // the values should always be only one level deep
+    var values = _.clone(this.attributes);
 
-      var l = this.fieldsToConcatenate.length;
-      var k = '';
+    var l = this.fieldsToConcatenate.length;
+    var k = '';
 
-      for (var i = 0; i < l; i++) {
-        k = this.fieldsToConcatenate[i];
+    for (var i = 0; i < l; i++) {
+      k = this.fieldsToConcatenate[i];
 
-        if (this.has(k)) {
-          if (this.fieldProcessors[k]) {
-            values[k] = this.fieldProcessors[k](this.get(k), this);
-          } else {
-            values[k] = this.fieldProcessors['*'](this.get(k), this);
-          }
+      if (this.has(k)) {
+        if (this.fieldProcessors[k]) {
+          values[k] = this.fieldProcessors[k](this.get(k), this);
+        } else {
+          values[k] = this.fieldProcessors['*'](this.get(k), this);
         }
       }
-      // then call the default implementation of the url handling
-      return MultiParams.prototype.url.call(this, values);
-    },
-  });
+    }
+    // then call the default implementation of the url handling
+    return MultiParams.prototype.url.call(this, values);
+  },
+});
 
-  export default SolrParams;
-
+export default SolrParams;

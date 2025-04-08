@@ -1,49 +1,49 @@
-import _ from 'underscore';
 import DetailsWidget from 'js/widgets/list_of_things/details_widget';
-  var Widget = DetailsWidget.extend({
-    initialize: function() {
-      this.name = 'ShowToc';
-      return DetailsWidget.prototype.initialize.apply(this, arguments);
-    },
-    ingestBroadcastedPayload: function(data) {
-      var hasTOC = data.property && data.property.indexOf('TOC') > -1;
-      this.trigger('page-manager-event', 'widget-ready', {
-        numFound: +hasTOC,
-        isActive: hasTOC,
-      });
-      DetailsWidget.prototype.ingestBroadcastedPayload.apply(this, arguments);
-    },
-    customizeQuery: function(apiQuery) {
-      var bibcode = this.parseIdentifierFromQuery(apiQuery);
-      if (!bibcode) {
-        return; // ignore
-      }
-      var q = DetailsWidget.prototype.customizeQuery.apply(this, arguments);
+import _ from 'underscore';
 
-      if (bibcode[13] == 'E') {
-        // take first fourteen
-        q.set('q', 'bibcode:' + _.first(bibcode, 14).join('') + '*');
-      } else {
-        // take first thirteen
-        q.set('q', 'bibcode:' + _.first(bibcode, 13).join('') + '*');
-      }
+var Widget = DetailsWidget.extend({
+  initialize: function() {
+    this.name = 'ShowToc';
+    return DetailsWidget.prototype.initialize.apply(this, arguments);
+  },
+  ingestBroadcastedPayload: function(data) {
+    var hasTOC = data.property && data.property.indexOf('TOC') > -1;
+    this.trigger('page-manager-event', 'widget-ready', {
+      numFound: +hasTOC,
+      isActive: hasTOC,
+    });
+    DetailsWidget.prototype.ingestBroadcastedPayload.apply(this, arguments);
+  },
+  customizeQuery: function(apiQuery) {
+    var bibcode = this.parseIdentifierFromQuery(apiQuery);
+    if (!bibcode) {
+      return; // ignore
+    }
+    var q = DetailsWidget.prototype.customizeQuery.apply(this, arguments);
 
-      if (this.sortOrder) {
-        q.set('sort', this.sortOrder);
-      }
-      if (this.queryOperator) {
-        q.set('q', this.queryOperator + '(' + q.get('q').join(' ') + ')');
-      }
-      return q;
-    },
-  });
+    if (bibcode[13] == 'E') {
+      // take first fourteen
+      q.set('q', 'bibcode:' + _.first(bibcode, 14).join('') + '*');
+    } else {
+      // take first thirteen
+      q.set('q', 'bibcode:' + _.first(bibcode, 13).join('') + '*');
+    }
 
-  function TOC() {
-    var options = {
-      description: 'Papers in the same volume as',
-    };
-    return new Widget(options);
-  }
+    if (this.sortOrder) {
+      q.set('sort', this.sortOrder);
+    }
+    if (this.queryOperator) {
+      q.set('q', this.queryOperator + '(' + q.get('q').join(' ') + ')');
+    }
+    return q;
+  },
+});
 
-  export default TOC;
+function TOC() {
+  var options = {
+    description: 'Papers in the same volume as',
+  };
+  return new Widget(options);
+}
 
+export default TOC;

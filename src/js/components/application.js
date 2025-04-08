@@ -40,1108 +40,1023 @@
  *
  */
 
-import _ from 'underscore';
-import $ from 'jquery';
 import Backbone from 'backbone';
-import module from 'module';
+import $ from 'jquery';
 import BeeHive from 'js/components/beehive';
 import ApiAccess from 'js/mixins/api_access';
-  const DEFAULT_MODULE_TIMEOUT = 60 * 1000; // 60 seconds
+import _ from 'underscore';
 
-  const updateProgress =
-    typeof window.__setAppLoadingProgress === 'function'
-      ? window.__setAppLoadingProgress
-      : function() {};
+const DEFAULT_MODULE_TIMEOUT = 60 * 1000; // 60 seconds
 
-  var Application = function(options) {
-    options || (options = {});
-    this.aid = _.uniqueId('application');
-    this.debug = true;
-    _.extend(this, _.pick(options, ['timeout', 'debug']));
-    this.initialize.apply(this, arguments);
-  };
+const updateProgress =
+  typeof window.__setAppLoadingProgress === 'function' ? window.__setAppLoadingProgress : function() {};
 
-  var Container = function() {
-    this.container = {};
-  };
-  _.extend(Container.prototype, {
-    has: function(name) {
-      return this.container.hasOwnProperty(name);
-    },
-    get: function(name) {
-      return this.container[name];
-    },
-    remove: function(name) {
-      delete this.container[name];
-    },
-    add: function(name, obj) {
-      this.container[name] = obj;
-    },
-  });
+var Application = function(options) {
+  options || (options = {});
+  this.aid = _.uniqueId('application');
+  this.debug = true;
+  _.extend(this, _.pick(options, ['timeout', 'debug']));
+  this.initialize.apply(this, arguments);
+};
 
-  _.extend(Application.prototype, {
-    initialize: function(config, options) {
-      // these are core (elevated access)
-      this.__beehive = new BeeHive();
-      this.__modules = new Container();
-      this.__controllers = new Container();
+var Container = function() {
+  this.container = {};
+};
+_.extend(Container.prototype, {
+  has: function(name) {
+    return this.container.hasOwnProperty(name);
+  },
+  get: function(name) {
+    return this.container[name];
+  },
+  remove: function(name) {
+    delete this.container[name];
+  },
+  add: function(name, obj) {
+    this.container[name] = obj;
+  },
+});
 
-      // these are barbarians behind the gates
-      this.__widgets = new Container();
-      this.__plugins = new Container();
-      this.__barbarianRegistry = {};
-      this.__barbarianInstances = {};
-    },
+_.extend(Application.prototype, {
+  initialize: function(config, options) {
+    // these are core (elevated access)
+    this.__beehive = new BeeHive();
+    this.__modules = new Container();
+    this.__controllers = new Container();
 
-    /*
-     * code that accounts for browser deficiencies
-     */
+    // these are barbarians behind the gates
+    this.__widgets = new Container();
+    this.__plugins = new Container();
+    this.__barbarianRegistry = {};
+    this.__barbarianInstances = {};
+  },
 
-    shim: function() {
-      if (!window.location.origin) {
-        window.location.origin =
-          window.location.protocol +
-          '//' +
-          window.location.hostname +
-          (window.location.port ? ':' + window.location.port : '');
+  /*
+   * code that accounts for browser deficiencies
+   */
+
+  shim: function() {
+    if (!window.location.origin) {
+      window.location.origin =
+        window.location.protocol +
+        '//' +
+        window.location.hostname +
+        (window.location.port ? ':' + window.location.port : '');
+    }
+  },
+
+  /**
+   * Purpose of this call is to load dynamically all modules
+   * that you pass in a configuration. We'll load them using
+   * requirejs and set them into BeeHive
+   *
+   * This method returns 'Deferred' object, which tells you
+   * whether initialization has finished. You *have to* use it
+   * in the following way;
+   *
+   * app = new Application();
+   * defer = app.loadModules(config, options);
+   * defer.done(function() {
+   *    // .... do something with the application
+   * })
+   *
+   * @param config
+   * @param options
+   */
+  loadModules: function(config, options) {
+    // var promises = [];
+    // var self = this;
+    // var promise;
+    //
+    // var core = config.core;
+    // if (core) {
+    //   _.each(['controllers', 'modules', 'services', 'objects'], function(
+    //     name
+    //   ) {
+    //     if (core[name]) {
+    //       promise = self._loadModules(name, core[name]);
+    //       if (promise) {
+    //         promises.push(promise);
+    //       }
+    //     }
+    //   });
+    // }
+    //
+    // // plugins and widgets will be lazy-loaded (default)
+    //
+    // var plugins = config.plugins;
+    // var widgets = config.widgets;
+    //
+    // if (options && options.eagerLoad) {
+    //   if (plugins) {
+    //     promise = self._loadModules('plugins', plugins);
+    //     if (promise) promises.push(promise);
+    //   }
+    //
+    //   if (widgets) {
+    //     promise = self._loadModules('widgets', widgets);
+    //     if (promise) promises.push(promise);
+    //   }
+    // } else {
+    //   if (plugins) {
+    //     _.each(plugins, function(value, key) {
+    //       var x = {};
+    //       x[key] = value;
+    //       self.__plugins.add(
+    //         key,
+    //         self._loadModules('plugins', x, false, true)
+    //       );
+    //     });
+    //   }
+    //   if (widgets) {
+    //     _.each(widgets, function(value, key) {
+    //       var x = {};
+    //       x[key] = value;
+    //       self.__widgets.add(
+    //         key,
+    //         self._loadModules('widgets', x, false, true)
+    //       );
+    //     });
+    //   }
+    // }
+    //
+    // // hack, so that $.when() always returns []
+    // promises.length === 1 && promises.push(promise);
+    //
+    // // add a handler for updating the app loading bar
+    // let count = 0;
+    // promises.map((p) =>
+    //   p.then(() => {
+    //     self.logModuleLoaded((count += 1), promises.length);
+    //   })
+    // );
+    //
+    // var bigPromise = $.Deferred();
+    // $.when
+    //   .apply($, promises)
+    //   .then(function() {
+    //     _.each(arguments, function(promisedValues, idx) {
+    //       if (_.isArray(promisedValues)) {
+    //         if (self.debug) {
+    //           console.log('application: registering ' + promisedValues[0]);
+    //         }
+    //
+    //         self._registerLoadedModules.apply(self, promisedValues);
+    //       }
+    //     });
+    //   })
+    //   .done(function() {
+    //     bigPromise.resolve();
+    //   })
+    //   .fail(function() {
+    //     console.error(
+    //       'Generic error - we were not successul in loading all modules for config',
+    //       config
+    //     );
+    //     if (arguments.length) console.error(arguments);
+    //     bigPromise.reject.apply(bigPromise, arguments);
+    //   });
+    //
+    // return bigPromise.promise();
+  },
+
+  getBeeHive: function() {
+    return this.__beehive;
+  },
+
+  _registerLoadedModules: function(section, modules) {
+    var beehive = this.getBeeHive();
+    var key;
+    var module;
+    var hasKey;
+    var addKey;
+    var removeKey;
+    var createInstance;
+    var self = this;
+
+    createInstance = function(key, module) {
+      if (!module) {
+        console.warn('Object ' + key + ' is empty, cannot instantiate it!');
+        return;
       }
-    },
+      if (self.debug) {
+        console.log('Creating instance of: ' + key);
+      }
+      if (module.prototype) {
+        return new module();
+      }
+      if (module && module.hasOwnProperty(key)) {
+        return module[key];
+      }
+      return module;
+    };
 
-    /**
-     * Purpose of this call is to load dynamically all modules
-     * that you pass in a configuration. We'll load them using
-     * requirejs and set them into BeeHive
-     *
-     * This method returns 'Deferred' object, which tells you
-     * whether initialization has finished. You *have to* use it
-     * in the following way;
-     *
-     * app = new Application();
-     * defer = app.loadModules(config, options);
-     * defer.done(function() {
-     *    // .... do something with the application
-     * })
-     *
-     * @param config
-     * @param options
-     */
-    loadModules: function(config, options) {
+    // console.log('registering', section, modules);
 
-      // var promises = [];
-      // var self = this;
-      // var promise;
-      //
-      // var core = config.core;
-      // if (core) {
-      //   _.each(['controllers', 'modules', 'services', 'objects'], function(
-      //     name
-      //   ) {
-      //     if (core[name]) {
-      //       promise = self._loadModules(name, core[name]);
-      //       if (promise) {
-      //         promises.push(promise);
-      //       }
-      //     }
-      //   });
-      // }
-      //
-      // // plugins and widgets will be lazy-loaded (default)
-      //
-      // var plugins = config.plugins;
-      // var widgets = config.widgets;
-      //
-      // if (options && options.eagerLoad) {
-      //   if (plugins) {
-      //     promise = self._loadModules('plugins', plugins);
-      //     if (promise) promises.push(promise);
-      //   }
-      //
-      //   if (widgets) {
-      //     promise = self._loadModules('widgets', widgets);
-      //     if (promise) promises.push(promise);
-      //   }
-      // } else {
-      //   if (plugins) {
-      //     _.each(plugins, function(value, key) {
-      //       var x = {};
-      //       x[key] = value;
-      //       self.__plugins.add(
-      //         key,
-      //         self._loadModules('plugins', x, false, true)
-      //       );
-      //     });
-      //   }
-      //   if (widgets) {
-      //     _.each(widgets, function(value, key) {
-      //       var x = {};
-      //       x[key] = value;
-      //       self.__widgets.add(
-      //         key,
-      //         self._loadModules('widgets', x, false, true)
-      //       );
-      //     });
-      //   }
-      // }
-      //
-      // // hack, so that $.when() always returns []
-      // promises.length === 1 && promises.push(promise);
-      //
-      // // add a handler for updating the app loading bar
-      // let count = 0;
-      // promises.map((p) =>
-      //   p.then(() => {
-      //     self.logModuleLoaded((count += 1), promises.length);
-      //   })
-      // );
-      //
-      // var bigPromise = $.Deferred();
-      // $.when
-      //   .apply($, promises)
-      //   .then(function() {
-      //     _.each(arguments, function(promisedValues, idx) {
-      //       if (_.isArray(promisedValues)) {
-      //         if (self.debug) {
-      //           console.log('application: registering ' + promisedValues[0]);
-      //         }
-      //
-      //         self._registerLoadedModules.apply(self, promisedValues);
-      //       }
-      //     });
-      //   })
-      //   .done(function() {
-      //     bigPromise.resolve();
-      //   })
-      //   .fail(function() {
-      //     console.error(
-      //       'Generic error - we were not successul in loading all modules for config',
-      //       config
-      //     );
-      //     if (arguments.length) console.error(arguments);
-      //     bigPromise.reject.apply(bigPromise, arguments);
-      //   });
-      //
-      // return bigPromise.promise();
-    },
-
-    getBeeHive: function() {
-      return this.__beehive;
-    },
-
-    _registerLoadedModules: function(section, modules) {
-      var beehive = this.getBeeHive();
-      var key;
-      var module;
-      var hasKey;
-      var addKey;
-      var removeKey;
-      var createInstance;
-      var self = this;
-
+    if (section === 'controllers') {
+      hasKey = _.bind(this.hasController, this);
+      removeKey = _.bind(function(key) {
+        this.__controllers.remove(key);
+      }, this);
+      addKey = _.bind(function(key, module) {
+        this.__controllers.add(key, module);
+      }, this);
+    } else if (section === 'services') {
+      hasKey = _.bind(beehive.hasService, beehive);
+      removeKey = _.bind(beehive.removeService, beehive);
+      addKey = _.bind(beehive.addService, beehive);
+    } else if (section === 'objects') {
+      hasKey = _.bind(beehive.hasObject, beehive);
+      removeKey = _.bind(beehive.removeObject, beehive);
+      addKey = _.bind(beehive.addObject, beehive);
+    } else if (section === 'modules') {
       createInstance = function(key, module) {
-        if (!module) {
-          console.warn('Object ' + key + ' is empty, cannot instantiate it!');
-          return;
-        }
-        if (self.debug) {
-          console.log('Creating instance of: ' + key);
-        }
-        if (module.prototype) {
-          return new module();
-        }
-        if (module && module.hasOwnProperty(key)) {
-          return module[key];
-        }
         return module;
       };
+      hasKey = _.bind(this.hasModule, this);
+      removeKey = _.bind(function(key) {
+        this.__modules.remove(key);
+      }, this);
+      addKey = _.bind(function(key, module) {
+        this.__modules.add(key, module);
+      }, this);
+    } else if (section === 'widgets') {
+      hasKey = _.bind(this.hasWidget, this);
+      removeKey = _.bind(function(key) {
+        this.__widgets.remove(key);
+      }, this);
+      addKey = _.bind(function(key, module) {
+        this.__widgets.add(key, module);
+      }, this);
+      createInstance = function(key, module) {
+        return module;
+      };
+    } else if (section === 'plugins') {
+      hasKey = _.bind(this.hasPlugin, this);
+      removeKey = _.bind(function(key) {
+        this.__plugins.remove(key);
+      }, this);
+      addKey = _.bind(function(key, module) {
+        this.__plugins.add(key, module);
+      }, this);
+      createInstance = function(key, module) {
+        return module;
+      };
+    } else {
+      throw new Error('Unknown section: ' + section);
+    }
 
-      // console.log('registering', section, modules);
-
-      if (section === 'controllers') {
-        hasKey = _.bind(this.hasController, this);
-        removeKey = _.bind(function(key) {
-          this.__controllers.remove(key);
-        }, this);
-        addKey = _.bind(function(key, module) {
-          this.__controllers.add(key, module);
-        }, this);
-      } else if (section === 'services') {
-        hasKey = _.bind(beehive.hasService, beehive);
-        removeKey = _.bind(beehive.removeService, beehive);
-        addKey = _.bind(beehive.addService, beehive);
-      } else if (section === 'objects') {
-        hasKey = _.bind(beehive.hasObject, beehive);
-        removeKey = _.bind(beehive.removeObject, beehive);
-        addKey = _.bind(beehive.addObject, beehive);
-      } else if (section === 'modules') {
-        createInstance = function(key, module) {
-          return module;
-        };
-        hasKey = _.bind(this.hasModule, this);
-        removeKey = _.bind(function(key) {
-          this.__modules.remove(key);
-        }, this);
-        addKey = _.bind(function(key, module) {
-          this.__modules.add(key, module);
-        }, this);
-      } else if (section === 'widgets') {
-        hasKey = _.bind(this.hasWidget, this);
-        removeKey = _.bind(function(key) {
-          this.__widgets.remove(key);
-        }, this);
-        addKey = _.bind(function(key, module) {
-          this.__widgets.add(key, module);
-        }, this);
-        createInstance = function(key, module) {
-          return module;
-        };
-      } else if (section === 'plugins') {
-        hasKey = _.bind(this.hasPlugin, this);
-        removeKey = _.bind(function(key) {
-          this.__plugins.remove(key);
-        }, this);
-        addKey = _.bind(function(key, module) {
-          this.__plugins.add(key, module);
-        }, this);
-        createInstance = function(key, module) {
-          return module;
-        };
-      } else {
-        throw new Error('Unknown section: ' + section);
+    _.each(_.pairs(modules), function(m) {
+      (key = m[0]), (module = m[1]);
+      if (hasKey(key)) {
+        removeKey(key);
       }
+      var inst = createInstance(key, module);
+      if (!inst) {
+        console.warn('Removing ' + key + '(because it is null!)');
+        return;
+      }
+      addKey(key, inst);
+    });
+  },
 
-      _.each(_.pairs(modules), function(m) {
-        (key = m[0]), (module = m[1]);
-        if (hasKey(key)) {
-          removeKey(key);
-        }
-        var inst = createInstance(key, module);
-        if (!inst) {
-          console.warn('Removing ' + key + '(because it is null!)');
-          return;
-        }
-        addKey(key, inst);
-      });
-    },
+  _checkPrescription: function(modulePrescription) {
+    // basic checking
+    _.each(_.pairs(modulePrescription), function(module, idx, list) {
+      var symbolicName = module[0];
+      var impl = module[1];
 
-    _checkPrescription: function(modulePrescription) {
-      // basic checking
-      _.each(_.pairs(modulePrescription), function(module, idx, list) {
-        var symbolicName = module[0];
-        var impl = module[1];
+      if (!_.isString(symbolicName) || !_.isString(impl))
+        throw new Error('You are kidding me, the key/implementation must be string values');
+    });
+  },
 
-        if (!_.isString(symbolicName) || !_.isString(impl))
-          throw new Error(
-            'You are kidding me, the key/implementation must be string values'
-          );
-      });
-    },
+  /**
+   * Loads modules *asynchronously* from the following structure
+   *
+   * {
+   *  'Api': 'js/services/api',
+   *  'PubSub': 'js/services/pubsub'
+   * },
+   *
+   * Returns Deferred - once that deferred object is resolved
+   * all modules have been loaded.
+   *
+   * @param modulePrescription
+   * @private
+   */
+  _loadModules: function(sectionName, modulePrescription, ignoreErrors, lazyLoad) {
+    // var self = this;
+    // this._checkPrescription(modulePrescription);
+    //
+    // if (this.debug) {
+    //   console.log('application: loading ' + sectionName, modulePrescription);
+    // }
+    //
+    // var ret = {};
+    //
+    // // create the promise object - load the modules asynchronously
+    // var implNames = _.keys(modulePrescription);
+    // var impls = _.values(modulePrescription);
+    // var defer = $.Deferred();
+    //
+    // var callback = function() {
+    //   if (self.debug) console.timeEnd('startLoading' + sectionName);
+    //   var modules = arguments;
+    //   _.each(implNames, function(name, idx, implList) {
+    //     ret[name] = modules[idx];
+    //   });
+    //   try {
+    //     defer.resolve(sectionName, ret);
+    //   } catch (e) {
+    //     /**
+    //      * CATCH ALL
+    //      *
+    //      * This will capture run-away errors from any loaded module.
+    //      * For now, just dump them into the 404 page (if its loaded)
+    //      */
+    //     const pubsub = self.getService('PubSub').getHardenedInstance();
+    //     pubsub.publish(pubsub.NAVIGATE, '404', {
+    //       message: `Page Not Found or Internal Error
+    //         <p>Error: <code>${e.message}</code></p>
+    //       `,
+    //     });
+    //   }
+    //   if (self.debug) {
+    //     console.log(
+    //       'Loaded: type=' + sectionName + ' state=' + defer.state(),
+    //       ret
+    //     );
+    //   }
+    // };
+    //
+    // var errback = function(err) {
+    //   var symbolicName = err.requireModules && err.requireModules[0];
+    //   if (self.debug)
+    //     console.warn('Error loading impl=' + symbolicName, err.requireMap);
+    //   if (ignoreErrors) {
+    //     if (self.debug) console.warn('Ignoring error');
+    //     return;
+    //   }
+    //   defer.reject(err);
+    // };
+    //
+    // var run = function() {
+    //   if (self.debug) console.time('startLoading' + sectionName);
+    //   // start loading the modules
+    //   // console.log('loading', implNames, impls)
+    //   require(impls, callback, errback);
+    //   return self._setTimeout(defer).promise();
+    // };
+    //
+    // run.lazyLoad = lazyLoad;
+    // return lazyLoad ? run : run();
+  },
 
-    /**
-     * Loads modules *asynchronously* from the following structure
-     *
-     * {
-     *  'Api': 'js/services/api',
-     *  'PubSub': 'js/services/pubsub'
-     * },
-     *
-     * Returns Deferred - once that deferred object is resolved
-     * all modules have been loaded.
-     *
-     * @param modulePrescription
-     * @private
-     */
-    _loadModules: function(
-      sectionName,
-      modulePrescription,
-      ignoreErrors,
-      lazyLoad
-    ) {
-      // var self = this;
-      // this._checkPrescription(modulePrescription);
-      //
-      // if (this.debug) {
-      //   console.log('application: loading ' + sectionName, modulePrescription);
-      // }
-      //
-      // var ret = {};
-      //
-      // // create the promise object - load the modules asynchronously
-      // var implNames = _.keys(modulePrescription);
-      // var impls = _.values(modulePrescription);
-      // var defer = $.Deferred();
-      //
-      // var callback = function() {
-      //   if (self.debug) console.timeEnd('startLoading' + sectionName);
-      //   var modules = arguments;
-      //   _.each(implNames, function(name, idx, implList) {
-      //     ret[name] = modules[idx];
-      //   });
-      //   try {
-      //     defer.resolve(sectionName, ret);
-      //   } catch (e) {
-      //     /**
-      //      * CATCH ALL
-      //      *
-      //      * This will capture run-away errors from any loaded module.
-      //      * For now, just dump them into the 404 page (if its loaded)
-      //      */
-      //     const pubsub = self.getService('PubSub').getHardenedInstance();
-      //     pubsub.publish(pubsub.NAVIGATE, '404', {
-      //       message: `Page Not Found or Internal Error
-      //         <p>Error: <code>${e.message}</code></p>
-      //       `,
-      //     });
-      //   }
-      //   if (self.debug) {
-      //     console.log(
-      //       'Loaded: type=' + sectionName + ' state=' + defer.state(),
-      //       ret
-      //     );
-      //   }
-      // };
-      //
-      // var errback = function(err) {
-      //   var symbolicName = err.requireModules && err.requireModules[0];
-      //   if (self.debug)
-      //     console.warn('Error loading impl=' + symbolicName, err.requireMap);
-      //   if (ignoreErrors) {
-      //     if (self.debug) console.warn('Ignoring error');
-      //     return;
-      //   }
-      //   defer.reject(err);
-      // };
-      //
-      // var run = function() {
-      //   if (self.debug) console.time('startLoading' + sectionName);
-      //   // start loading the modules
-      //   // console.log('loading', implNames, impls)
-      //   require(impls, callback, errback);
-      //   return self._setTimeout(defer).promise();
-      // };
-      //
-      // run.lazyLoad = lazyLoad;
-      // return lazyLoad ? run : run();
-    },
+  _setTimeout: function(deferred) {
+    setTimeout(function() {
+      if (deferred.state() !== 'resolved') {
+        deferred.reject('Timeout, application is loading too long');
+      }
+    }, this.timeout || DEFAULT_MODULE_TIMEOUT);
+    return deferred;
+  },
 
-    _setTimeout: function(deferred) {
-      setTimeout(function() {
-        if (deferred.state() !== 'resolved') {
-          deferred.reject('Timeout, application is loading too long');
-        }
-      }, this.timeout || DEFAULT_MODULE_TIMEOUT);
-      return deferred;
-    },
+  logModuleLoaded: function(idx, total) {
+    updateProgress((val) => val + 50 / total, `Loading Modules ${idx} of ${total}`);
+  },
 
-    logModuleLoaded: function(idx, total) {
-      updateProgress(
-        (val) => val + 50 / total,
-        `Loading Modules ${idx} of ${total}`
-      );
-    },
+  destroy: function() {
+    this.getBeeHive().destroy();
+  },
 
-    destroy: function() {
-      this.getBeeHive().destroy();
-    },
+  activate: function(options) {
+    var beehive = this.getBeeHive();
+    var self = this;
 
-    activate: function(options) {
-      var beehive = this.getBeeHive();
-      var self = this;
+    // services are activated by beehive itself
+    if (self.debug) {
+      console.log('application: beehive.activate()');
+    }
+    beehive.activate(beehive);
 
-      // services are activated by beehive itself
+    // controllers receive application itself and elevated beehive object
+    // all of them must succeed; we don't catch errors
+    _.each(this.getAllControllers(), function(el) {
       if (self.debug) {
-        console.log('application: beehive.activate()');
+        console.log('application: controllers: ' + el[0] + '.activate(beehive, app)');
       }
-      beehive.activate(beehive);
+      var plugin = el[1];
+      if ('activate' in plugin) {
+        plugin.activate(beehive, self);
+      }
+    });
 
-      // controllers receive application itself and elevated beehive object
-      // all of them must succeed; we don't catch errors
-      _.each(this.getAllControllers(), function(el) {
+    // modules receive elevated beehive object
+    _.each(this.getAllModules(), function(el) {
+      try {
         if (self.debug) {
-          console.log(
-            'application: controllers: ' + el[0] + '.activate(beehive, app)'
-          );
+          console.log('application: modules: ' + el[0] + '.activate(beehive)');
         }
         var plugin = el[1];
         if ('activate' in plugin) {
-          plugin.activate(beehive, self);
+          plugin.activate(beehive);
         }
+      } catch (e) {
+        console.error('Error activating:' + el[0]);
+        console.error(e);
+      }
+    });
+
+    this.__activated = true;
+  },
+
+  isActivated: function() {
+    return this.__activated || false;
+  },
+
+  hasService: function(name) {
+    return this.getBeeHive().hasService(name);
+  },
+  getService: function(name) {
+    return this.getBeeHive().getService(name);
+  },
+
+  hasObject: function(name) {
+    return this.getBeeHive().hasObject(name);
+  },
+  getObject: function(name) {
+    return this.getBeeHive().getObject(name);
+  },
+
+  hasController: function(name) {
+    return this.__controllers.has(name);
+  },
+
+  getController: function(name) {
+    return this.__controllers.get(name);
+  },
+
+  hasModule: function(name) {
+    return this.__modules.has(name);
+  },
+
+  getModule: function(name) {
+    return this.__modules.get(name);
+  },
+
+  hasWidget: function(name) {
+    return this.__widgets.has(name);
+  },
+
+  getWidgetRefCount: function(name, prefix) {
+    var ds = this.__barbarianInstances[(prefix || 'widget:') + name];
+    if (ds) {
+      return ds.counter;
+    }
+    return -1;
+  },
+
+  incrRefCount: function(cat, name) {
+    var symbolicName = cat + ':' + name;
+    if (this.__barbarianInstances[symbolicName]) {
+      this.__barbarianInstances[symbolicName].counter++;
+    } else {
+      throw Error('Invalid operation' + symbolicName + ' is not initialized');
+    }
+  },
+
+  getWidget: function(name) {
+    var defer = $.Deferred();
+    var self = this;
+
+    if (arguments.length > 1) {
+      var w = {};
+      var promises = [];
+      _.each(arguments, function(x) {
+        var wName = x;
+        promises.push(
+          self
+            ._getWidget(x)
+            .fail(function() {
+              console.error('Error loading: ' + x);
+              _.each(w, function(val, key) {
+                self.returnWidget(key);
+                delete w[key];
+              });
+              throw er;
+            })
+            .done(function(widget) {
+              w[wName] = widget;
+            })
+        );
       });
-
-      // modules receive elevated beehive object
-      _.each(this.getAllModules(), function(el) {
-        try {
-          if (self.debug) {
-            console.log(
-              'application: modules: ' + el[0] + '.activate(beehive)'
-            );
-          }
-          var plugin = el[1];
-          if ('activate' in plugin) {
-            plugin.activate(beehive);
-          }
-        } catch (e) {
-          console.error('Error activating:' + el[0]);
-          console.error(e);
-        }
-      });
-
-      this.__activated = true;
-    },
-
-    isActivated: function() {
-      return this.__activated || false;
-    },
-
-    hasService: function(name) {
-      return this.getBeeHive().hasService(name);
-    },
-    getService: function(name) {
-      return this.getBeeHive().getService(name);
-    },
-
-    hasObject: function(name) {
-      return this.getBeeHive().hasObject(name);
-    },
-    getObject: function(name) {
-      return this.getBeeHive().getObject(name);
-    },
-
-    hasController: function(name) {
-      return this.__controllers.has(name);
-    },
-
-    getController: function(name) {
-      return this.__controllers.get(name);
-    },
-
-    hasModule: function(name) {
-      return this.__modules.has(name);
-    },
-
-    getModule: function(name) {
-      return this.__modules.get(name);
-    },
-
-    hasWidget: function(name) {
-      return this.__widgets.has(name);
-    },
-
-    getWidgetRefCount: function(name, prefix) {
-      var ds = this.__barbarianInstances[(prefix || 'widget:') + name];
-      if (ds) {
-        return ds.counter;
-      }
-      return -1;
-    },
-
-    incrRefCount: function(cat, name) {
-      var symbolicName = cat + ':' + name;
-      if (this.__barbarianInstances[symbolicName]) {
-        this.__barbarianInstances[symbolicName].counter++;
-      } else {
-        throw Error('Invalid operation' + symbolicName + ' is not initialized');
-      }
-    },
-
-    getWidget: function(name) {
-      var defer = $.Deferred();
-      var self = this;
-
-      if (arguments.length > 1) {
-        var w = {};
-        var promises = [];
-        _.each(arguments, function(x) {
-          var wName = x;
-          promises.push(
-            self
-              ._getWidget(x)
-              .fail(function() {
-                console.error('Error loading: ' + x);
-                _.each(w, function(val, key) {
-                  self.returnWidget(key);
-                  delete w[key];
-                });
-                throw er;
-              })
-              .done(function(widget) {
-                w[wName] = widget;
-              })
-          );
-        });
-        $.when.apply($, promises).done(function() {
-          defer.resolve(w);
-        });
-      } else if (name) {
-        this._getWidget(name).done(function(widget) {
-          defer.resolve(widget);
-        });
-      }
-
-      // this happens right after the callback
-      setTimeout(function() {
-        defer.done(function(widget) {
-          if (_.isArray(name)) {
-            _.each(name, function(x) {
-              self.returnWidget(x);
-            });
-          } else {
-            self.returnWidget(name);
-          }
-        });
-      }, 1);
-
-      return defer.promise();
-    },
-
-    _getWidget: function(name) {
-      return this._getThing('widget', name); // returns a promise
-    },
-
-    _getThing: function(cat, name) {
-      var defer = $.Deferred();
-      var self = this;
-      this._lazyLoadIfNecessary(cat, name).done(function() {
-        var w = self._getOrCreateBarbarian(cat, name);
-        self.incrRefCount(cat, name);
+      $.when.apply($, promises).done(function() {
         defer.resolve(w);
       });
+    } else if (name) {
+      this._getWidget(name).done(function(widget) {
+        defer.resolve(widget);
+      });
+    }
 
-      return defer.promise();
-    },
-
-    returnWidget: function(name) {
-      var ds = this.__barbarianInstances['widget:' + name];
-      // very rarely, a widget will want to be kept in memory
-      if (ds && ds.parent.dontKillMe) return;
-      if (ds) {
-        ds.counter--;
-        this._killBarbarian('widget:' + name);
-        return ds.counter;
-      }
-      return -1;
-    },
-
-    hasPlugin: function(name) {
-      return this.__plugins.has(name);
-    },
-
-    /**
-     * Increase the plugin counter and return the instance
-     * (already activated, with proper beehive in place)
-     *
-     * @param name
-     * @return {*}
-     */
-    getPlugin: function(name) {
-      var defer = $.Deferred();
-      var self = this;
-
-      var w = {};
-      if (arguments.length > 1) {
-        w = {};
-        _.each(arguments, function(x) {
-          if (!x) return;
-          try {
-            w[x] = self._getPlugin(x);
-          } catch (er) {
-            console.error('Error loading: ' + x);
-            _.each(w, function(val, key) {
-              self.returnPlugin(key);
-              delete w[key];
-            });
-            throw er;
-          }
-        });
-      } else if (name) {
-        w = this._getPlugin(name);
-      }
-
-      setTimeout(function() {
-        defer.done(function(widget) {
-          if (_.isArray(name)) {
-            _.each(name, function(x) {
-              self.returnPlugin(x);
-            });
-          } else {
-            self.returnPlugin(name);
-          }
-        });
-      }, 1);
-
-      defer.resolve(w);
-      return defer.promise();
-    },
-
-    getPluginRefCount: function(name) {
-      return this.getWidgetRefCount(name, 'plugin:');
-    },
-
-    _getPlugin: function(name) {
-      return this._getThing('plugin', name);
-    },
-
-    /**
-     * Decrease the instance counter; when we reach zero
-     * the plugin will be destroyed automatically
-     *
-     * @param name
-     */
-    returnPlugin: function(name) {
-      var ds = this.__barbarianInstances['plugin:' + name];
-      if (ds) {
-        ds.counter--;
-        this._killBarbarian('plugin:' + name);
-        return ds.counter;
-      }
-      return -1;
-    },
-
-    /**
-     * Given the pubsub key, it finds the name of the widget
-     * (provided the widget is registered with the application)
-     * Returns undefined for other components, such as controllers
-     * objects etc (it searches only plugins and widgets)
-     *
-     * @param psk
-     * @returns {*}
-     */
-    getPluginOrWidgetName: function(psk) {
-      if (!_.isString(psk)) throw Error('The psk argument must be a string');
-      var k;
-      if (this.__barbarianRegistry[psk]) {
-        k = this.__barbarianRegistry[psk];
-      } else {
-        return undefined;
-      }
-      return k;
-    },
-
-    getPluginOrWidgetByPubSubKey: function(psk) {
-      var k = this.getPluginOrWidgetName(psk);
-      if (k === undefined) return undefined;
-
-      if (this._isBarbarianAlive(k)) return this._getBarbarian(k);
-
-      throw new Error(
-        'Eeeek, thisis unexpectEED bEhAvjor! Cant find barbarian with ID: ' +
-          psk
-      );
-    },
-
-    getPskOfPluginOrWidget: function(symbolicName) {
-      var parts = symbolicName.split(':');
-      var psk;
-      if (this._isBarbarianAlive(symbolicName)) {
-        var b = this._getBarbarian(symbolicName);
-        if (b.getPubSub && b.getPubSub().getCurrentPubSubKey)
-          return b
-            .getPubSub()
-            .getCurrentPubSubKey()
-            .getId();
-      }
-      return psk;
-    },
-
-    /**
-     * I think the analogy is getting over-stretched; it is true that the author of this application
-     * loves history, and you could find many analogies...but let me hope that I would never treat
-     * humans in the same way I name variable names and methods :_)
-     *
-     * @param category
-     * @param name
-     * @private
-     */
-    _getOrCreateBarbarian: function(cat, name) {
-      var symbolicName = cat + ':' + name;
-
-      if (
-        (cat === 'plugin' && !this.hasPlugin(name)) ||
-        (cat === 'widget' && !this.hasWidget(name))
-      ) {
-        throw new Error(
-          'We cannot give you ' +
-            symbolicName +
-            ' (cause there is no constructor for it)'
-        );
-      }
-
-      if (this._isBarbarianAlive(symbolicName))
-        return this._getBarbarian(symbolicName);
-
-      var constructor =
-        cat === 'plugin' ? this.__plugins.get(name) : this.__widgets.get(name);
-      var instance = new constructor();
-      var hardenedBee = this.getBeeHive().getHardenedInstance();
-      var children;
-
-      // we'll monitor all new pubsub instances (created by the widget) - we don't want to rely
-      // on widgets to do the right thing (and tells us what children they made)
-
-      var pubsub = this.getService('PubSub');
-      var existingSubscribers = _.keys(pubsub._issuedKeys);
-
-      if ('activate' in instance) {
-        if (this.debug) {
-          console.log('application: ' + symbolicName + '.activate(beehive)');
+    // this happens right after the callback
+    setTimeout(function() {
+      defer.done(function(widget) {
+        if (_.isArray(name)) {
+          _.each(name, function(x) {
+            self.returnWidget(x);
+          });
+        } else {
+          self.returnWidget(name);
         }
-        children = instance.activate(hardenedBee);
+      });
+    }, 1);
+
+    return defer.promise();
+  },
+
+  _getWidget: function(name) {
+    return this._getThing('widget', name); // returns a promise
+  },
+
+  _getThing: function(cat, name) {
+    var defer = $.Deferred();
+    var self = this;
+    this._lazyLoadIfNecessary(cat, name).done(function() {
+      var w = self._getOrCreateBarbarian(cat, name);
+      self.incrRefCount(cat, name);
+      defer.resolve(w);
+    });
+
+    return defer.promise();
+  },
+
+  returnWidget: function(name) {
+    var ds = this.__barbarianInstances['widget:' + name];
+    // very rarely, a widget will want to be kept in memory
+    if (ds && ds.parent.dontKillMe) return;
+    if (ds) {
+      ds.counter--;
+      this._killBarbarian('widget:' + name);
+      return ds.counter;
+    }
+    return -1;
+  },
+
+  hasPlugin: function(name) {
+    return this.__plugins.has(name);
+  },
+
+  /**
+   * Increase the plugin counter and return the instance
+   * (already activated, with proper beehive in place)
+   *
+   * @param name
+   * @return {*}
+   */
+  getPlugin: function(name) {
+    var defer = $.Deferred();
+    var self = this;
+
+    var w = {};
+    if (arguments.length > 1) {
+      w = {};
+      _.each(arguments, function(x) {
+        if (!x) return;
+        try {
+          w[x] = self._getPlugin(x);
+        } catch (er) {
+          console.error('Error loading: ' + x);
+          _.each(w, function(val, key) {
+            self.returnPlugin(key);
+            delete w[key];
+          });
+          throw er;
+        }
+      });
+    } else if (name) {
+      w = this._getPlugin(name);
+    }
+
+    setTimeout(function() {
+      defer.done(function(widget) {
+        if (_.isArray(name)) {
+          _.each(name, function(x) {
+            self.returnPlugin(x);
+          });
+        } else {
+          self.returnPlugin(name);
+        }
+      });
+    }, 1);
+
+    defer.resolve(w);
+    return defer.promise();
+  },
+
+  getPluginRefCount: function(name) {
+    return this.getWidgetRefCount(name, 'plugin:');
+  },
+
+  _getPlugin: function(name) {
+    return this._getThing('plugin', name);
+  },
+
+  /**
+   * Decrease the instance counter; when we reach zero
+   * the plugin will be destroyed automatically
+   *
+   * @param name
+   */
+  returnPlugin: function(name) {
+    var ds = this.__barbarianInstances['plugin:' + name];
+    if (ds) {
+      ds.counter--;
+      this._killBarbarian('plugin:' + name);
+      return ds.counter;
+    }
+    return -1;
+  },
+
+  /**
+   * Given the pubsub key, it finds the name of the widget
+   * (provided the widget is registered with the application)
+   * Returns undefined for other components, such as controllers
+   * objects etc (it searches only plugins and widgets)
+   *
+   * @param psk
+   * @returns {*}
+   */
+  getPluginOrWidgetName: function(psk) {
+    if (!_.isString(psk)) throw Error('The psk argument must be a string');
+    var k;
+    if (this.__barbarianRegistry[psk]) {
+      k = this.__barbarianRegistry[psk];
+    } else {
+      return undefined;
+    }
+    return k;
+  },
+
+  getPluginOrWidgetByPubSubKey: function(psk) {
+    var k = this.getPluginOrWidgetName(psk);
+    if (k === undefined) return undefined;
+
+    if (this._isBarbarianAlive(k)) return this._getBarbarian(k);
+
+    throw new Error('Eeeek, thisis unexpectEED bEhAvjor! Cant find barbarian with ID: ' + psk);
+  },
+
+  getPskOfPluginOrWidget: function(symbolicName) {
+    var parts = symbolicName.split(':');
+    var psk;
+    if (this._isBarbarianAlive(symbolicName)) {
+      var b = this._getBarbarian(symbolicName);
+      if (b.getPubSub && b.getPubSub().getCurrentPubSubKey)
+        return b
+          .getPubSub()
+          .getCurrentPubSubKey()
+          .getId();
+    }
+    return psk;
+  },
+
+  /**
+   * I think the analogy is getting over-stretched; it is true that the author of this application
+   * loves history, and you could find many analogies...but let me hope that I would never treat
+   * humans in the same way I name variable names and methods :_)
+   *
+   * @param category
+   * @param name
+   * @private
+   */
+  _getOrCreateBarbarian: function(cat, name) {
+    var symbolicName = cat + ':' + name;
+
+    if ((cat === 'plugin' && !this.hasPlugin(name)) || (cat === 'widget' && !this.hasWidget(name))) {
+      throw new Error('We cannot give you ' + symbolicName + ' (cause there is no constructor for it)');
+    }
+
+    if (this._isBarbarianAlive(symbolicName)) return this._getBarbarian(symbolicName);
+
+    var constructor = cat === 'plugin' ? this.__plugins.get(name) : this.__widgets.get(name);
+    var instance = new constructor();
+    var hardenedBee = this.getBeeHive().getHardenedInstance();
+    var children;
+
+    // we'll monitor all new pubsub instances (created by the widget) - we don't want to rely
+    // on widgets to do the right thing (and tells us what children they made)
+
+    var pubsub = this.getService('PubSub');
+    var existingSubscribers = _.keys(pubsub._issuedKeys);
+
+    if ('activate' in instance) {
+      if (this.debug) {
+        console.log('application: ' + symbolicName + '.activate(beehive)');
       }
+      children = instance.activate(hardenedBee);
+    }
 
-      var newSubscribers = _.without(
-        _.keys(pubsub._issuedKeys),
-        _.keys(pubsub._issuedKeys)
-      );
-      this._registerBarbarian(
-        symbolicName,
-        instance,
-        children,
-        hardenedBee,
-        newSubscribers
-      );
-      return instance;
-    },
+    var newSubscribers = _.without(_.keys(pubsub._issuedKeys), _.keys(pubsub._issuedKeys));
+    this._registerBarbarian(symbolicName, instance, children, hardenedBee, newSubscribers);
+    return instance;
+  },
 
-    _lazyLoadIfNecessary: function(cat, name) {
-      var defer = $.Deferred();
-      var self = this;
-      var loader;
-      var placeholder;
-      if (cat === 'plugin') {
-        placeholder = self.__plugins;
-      } else if (cat === 'widget') {
-        placeholder = self.__widgets;
-      } else {
-        throw new Error(cat + ' cannot be lazy loaded, sorry');
-      }
-      var thing = placeholder.get(name);
+  _lazyLoadIfNecessary: function(cat, name) {
+    var defer = $.Deferred();
+    var self = this;
+    var loader;
+    var placeholder;
+    if (cat === 'plugin') {
+      placeholder = self.__plugins;
+    } else if (cat === 'widget') {
+      placeholder = self.__widgets;
+    } else {
+      throw new Error(cat + ' cannot be lazy loaded, sorry');
+    }
+    var thing = placeholder.get(name);
 
-      if (typeof thing === 'undefined' || thing === null) {
-        defer.reject(name + ' does not exist');
-      } else if (thing && thing.lazyLoad) {
-        // load it
-        thing().done(function(cat, loadedModule) {
-          self._registerLoadedModules(cat, loadedModule);
-          defer.resolve();
-        });
-      } else {
-        // has already been loaded
+    if (typeof thing === 'undefined' || thing === null) {
+      defer.reject(name + ' does not exist');
+    } else if (thing && thing.lazyLoad) {
+      // load it
+      thing().done(function(cat, loadedModule) {
+        self._registerLoadedModules(cat, loadedModule);
         defer.resolve();
-      }
-      return defer.promise();
-    },
+      });
+    } else {
+      // has already been loaded
+      defer.resolve();
+    }
+    return defer.promise();
+  },
 
-    _isBarbarianAlive: function(symbolicName) {
-      return !!this.__barbarianInstances[symbolicName];
-    },
+  _isBarbarianAlive: function(symbolicName) {
+    return !!this.__barbarianInstances[symbolicName];
+  },
 
-    _getBarbarian: function(symbolicName) {
-      return this.__barbarianInstances[symbolicName].parent;
-    },
+  _getBarbarian: function(symbolicName) {
+    return this.__barbarianInstances[symbolicName].parent;
+  },
 
-    _registerBarbarian: function(
-      symbolicName,
-      instance,
+  _registerBarbarian: function(symbolicName, instance, children, hardenedBee, illegitimateChildren) {
+    this._killBarbarian(symbolicName);
+
+    if ('getBeeHive' in instance) {
+      this.__barbarianRegistry[
+        instance
+          .getBeeHive()
+          .getService('PubSub')
+          .getCurrentPubSubKey()
+          .getId()
+      ] = symbolicName;
+    } else {
+      this.__barbarianRegistry[
+        hardenedBee
+          .getService('PubSub')
+          .getCurrentPubSubKey()
+          .getId()
+      ] = symbolicName;
+    }
+
+    var childNames = [];
+    if (children) {
+      childNames = this._registerBarbarianChildren(symbolicName, children);
+    }
+
+    if (illegitimateChildren) {
+      _.each(
+        illegitimateChildren,
+        function(childKey) {
+          if (this.__barbarianRegistry[childKey]) {
+            // already declared
+            delete illegitimateChildren[childKey];
+          }
+        },
+        this
+      );
+    }
+
+    this.__barbarianInstances[symbolicName] = {
+      parent: instance,
+      children: childNames,
+      beehive: hardenedBee,
+      counter: 0,
+      psk: hardenedBee.getService('PubSub').getCurrentPubSubKey(),
+      bastards: illegitimateChildren, // no, i'm not mean, i'm French
+    };
+  },
+
+  /**
+   *
+   * @param prefix
+   *  (String) the name of the father
+   * @param children
+   *  (Object) where keys are the 'strings' (names) and values are
+   *  instances (of the widgets)
+   * @return {Array}
+   * @private
+   */
+  _registerBarbarianChildren: function(prefix, children) {
+    var childrenNames = [];
+    _.each(
       children,
-      hardenedBee,
-      illegitimateChildren
-    ) {
-      this._killBarbarian(symbolicName);
+      function(child, key) {
+        var name = prefix + '-' + (child.name || key);
+        if (this.debug) console.log('adding child object to registry: ' + name);
 
-      if ('getBeeHive' in instance) {
-        this.__barbarianRegistry[
-          instance
+        if (this._isBarbarianAlive(name)) {
+          throw new Error('Contract breach, there already exists instance with a name: ' + name);
+        }
+
+        if ('getBeeHive' in child) {
+          var childPubKey = child
             .getBeeHive()
             .getService('PubSub')
             .getCurrentPubSubKey()
-            .getId()
-        ] = symbolicName;
-      } else {
-        this.__barbarianRegistry[
-          hardenedBee
-            .getService('PubSub')
-            .getCurrentPubSubKey()
-            .getId()
-        ] = symbolicName;
-      }
+            .getId();
 
-      var childNames = [];
-      if (children) {
-        childNames = this._registerBarbarianChildren(symbolicName, children);
-      }
+          if (this.__barbarianRegistry[childPubKey])
+            throw new Error('Contract breach, the child of ' + prefix + 'is using the same pub-sub-key');
 
-      if (illegitimateChildren) {
-        _.each(
-          illegitimateChildren,
-          function(childKey) {
-            if (this.__barbarianRegistry[childKey]) {
-              // already declared
-              delete illegitimateChildren[childKey];
-            }
-          },
-          this
-        );
-      }
+          this.__barbarianRegistry[childPubKey] = name;
+        }
 
-      this.__barbarianInstances[symbolicName] = {
-        parent: instance,
-        children: childNames,
-        beehive: hardenedBee,
-        counter: 0,
-        psk: hardenedBee.getService('PubSub').getCurrentPubSubKey(),
-        bastards: illegitimateChildren, // no, i'm not mean, i'm French
-      };
-    },
+        childrenNames.unshift(name);
+      },
+      this
+    );
+    return childrenNames;
+  },
 
-    /**
-     *
-     * @param prefix
-     *  (String) the name of the father
-     * @param children
-     *  (Object) where keys are the 'strings' (names) and values are
-     *  instances (of the widgets)
-     * @return {Array}
-     * @private
-     */
-    _registerBarbarianChildren: function(prefix, children) {
-      var childrenNames = [];
+  /**
+   * Remove/destroy the instance - but only if the counter reaches zero (or if the
+   * force parameter is true) - that means that the children are exterminated together
+   * with their parents. this is to avoid polluting the memory, because every child
+   * has a name of the parent. So if the parent is not used by anyone, then the
+   * counter is zero
+   *
+   * @param symbolicName
+   * @param force
+   * @private
+   */
+  _killBarbarian: function(symbolicName, force) {
+    var b = this.__barbarianInstances[symbolicName];
+
+    if (!b) return;
+
+    if (b.counter > 0 && force !== true) {
+      // keep it alive, it is referenced somewhere else
+      return;
+    }
+
+    if (b.children) {
       _.each(
-        children,
-        function(child, key) {
-          var name = prefix + '-' + (child.name || key);
-          if (this.debug)
-            console.log('adding child object to registry: ' + name);
-
-          if (this._isBarbarianAlive(name)) {
-            throw new Error(
-              'Contract breach, there already exists instance with a name: ' +
-                name
-            );
-          }
-
-          if ('getBeeHive' in child) {
-            var childPubKey = child
-              .getBeeHive()
-              .getService('PubSub')
-              .getCurrentPubSubKey()
-              .getId();
-
-            if (this.__barbarianRegistry[childPubKey])
-              throw new Error(
-                'Contract breach, the child of ' +
-                  prefix +
-                  'is using the same pub-sub-key'
-              );
-
-            this.__barbarianRegistry[childPubKey] = name;
-          }
-
-          childrenNames.unshift(name);
+        b.children,
+        function(childName) {
+          this._killBarbarian(childName, true);
         },
         this
       );
-      return childrenNames;
-    },
+    }
 
-    /**
-     * Remove/destroy the instance - but only if the counter reaches zero (or if the
-     * force parameter is true) - that means that the children are exterminated together
-     * with their parents. this is to avoid polluting the memory, because every child
-     * has a name of the parent. So if the parent is not used by anyone, then the
-     * counter is zero
-     *
-     * @param symbolicName
-     * @param force
-     * @private
-     */
-    _killBarbarian: function(symbolicName, force) {
-      var b = this.__barbarianInstances[symbolicName];
+    _.each(
+      this.__barbarianRegistry,
+      function(value, key) {
+        if (value === symbolicName) delete this.__barbarianRegistry[key];
+      },
+      this
+    );
 
-      if (!b) return;
+    // unsubscribe this widget from pubsub (don't rely on the widget
+    // doing the right thing)
+    var pubsub = this.getService('PubSub');
+    if (b.psk) {
+      pubsub.unsubscribe(b.psk);
+    }
 
-      if (b.counter > 0 && force !== true) {
-        // keep it alive, it is referenced somewhere else
-        return;
-      }
-
-      if (b.children) {
-        _.each(
-          b.children,
-          function(childName) {
-            this._killBarbarian(childName, true);
-          },
-          this
-        );
-      }
-
+    // painstaikingly discover undeclared children and unsubscribe them
+    if (b.bastards && false) {
+      // deactivate, it causes problems
+      var kmap = {};
       _.each(
-        this.__barbarianRegistry,
-        function(value, key) {
-          if (value === symbolicName) delete this.__barbarianRegistry[key];
+        b.bastards,
+        function(psk) {
+          kmap[psk] = 1;
         },
         this
       );
 
-      // unsubscribe this widget from pubsub (don't rely on the widget
-      // doing the right thing)
-      var pubsub = this.getService('PubSub');
-      if (b.psk) {
-        pubsub.unsubscribe(b.psk);
+      _.each(
+        pubsub._events,
+        function(val, evName) {
+          _.each(
+            val,
+            function(v) {
+              if (v.ctx.getId && kmap[v.ctx.getId()]) {
+                pubsub.unsubscribe(v.ctx);
+              }
+            },
+            this
+          );
+        },
+        this
+      );
+    }
+
+    b.parent.destroy();
+
+    delete this.__barbarianInstances[symbolicName];
+    if ('setBeeHive' in b.parent) b.parent.setBeeHive({ fake: 'one' });
+
+    b = null;
+
+    if (this.debug) console.log('Destroyed: ' + symbolicName);
+  },
+
+  getAllControllers: function() {
+    return _.pairs(this.__controllers.container);
+  },
+
+  getAllModules: function() {
+    return _.pairs(this.__modules.container);
+  },
+
+  getAllPlugins: function(key) {
+    key = key || 'plugin:';
+    var defer = $.Deferred();
+    var w = [];
+    _.each(this.__barbarianInstances, function(val, k) {
+      if (k.indexOf(key) > -1) w.unshift(k.replace(key, ''));
+    });
+
+    var getter = key.indexOf('plugin:') > -1 ? this.getPlugin : this.getWidget;
+    getter.apply(this, w).done(function(widget) {
+      var out = [];
+      if (w.length > 1) {
+        out = _.pairs(widget);
+      } else if (w.length === 1) {
+        out = [[w[0], widget]];
       }
+      defer.resolve(out);
+    });
+    return defer.promise();
+  },
 
-      // painstaikingly discover undeclared children and unsubscribe them
-      if (b.bastards && false) {
-        // deactivate, it causes problems
-        var kmap = {};
-        _.each(
-          b.bastards,
-          function(psk) {
-            kmap[psk] = 1;
-          },
-          this
-        );
+  getAllWidgets: function() {
+    return this.getAllPlugins('widget:');
+  },
 
-        _.each(
-          pubsub._events,
-          function(val, evName) {
-            _.each(
-              val,
-              function(v) {
-                if (v.ctx.getId && kmap[v.ctx.getId()]) {
-                  pubsub.unsubscribe(v.ctx);
-                }
-              },
-              this
-            );
-          },
-          this
-        );
+  getAllServices: function() {
+    return this.getBeeHive().getAllServices();
+  },
+
+  getAllObjects: function() {
+    return this.getBeeHive().getAllObjects();
+  },
+
+  /**
+   * Helper method to invoke a 'function' on all objects
+   * that are inside the application
+   *
+   * @param funcName
+   * @param options
+   */
+  triggerMethodOnAll: function(funcName, options) {
+    this.triggerMethod(this.getAllControllers(), 'controllers', funcName, options);
+    this.triggerMethod(this.getAllModules(), 'modules', funcName, options);
+    var self = this;
+    this.getAllPlugins().done(function(plugins) {
+      if (plugins.length) self.triggerMethod(plugins, 'plugins', funcName, options);
+    });
+    this.getAllWidgets().done(function(widgets) {
+      if (widgets.length) self.triggerMethod(widgets, 'widgets', funcName, options);
+    });
+    this.triggerMethod(this.getBeeHive().getAllServices(), 'BeeHive:services', funcName, options);
+    this.triggerMethod(this.getBeeHive().getAllObjects(), 'BeeHive:objects', funcName, options);
+  },
+
+  triggerMethod: function(objects, msg, funcName, options) {
+    var self = this;
+    var rets = _.map(objects, function(el) {
+      var obj = el[1];
+      if (funcName in obj) {
+        if (self.debug) {
+          console.log('application.triggerMethod: ' + msg + ': ' + el[0] + '.' + funcName + '()');
+        }
+        obj[funcName].call(obj, options);
+      } else if (_.isFunction(funcName)) {
+        if (self.debug) {
+          console.log('application.triggerMethod: ' + msg + ': ' + el[0] + ' customCallback()');
+        }
+        funcName.call(obj, msg + ':' + el[0], options);
       }
+    });
+    return rets;
+  },
+});
 
-      b.parent.destroy();
-
-      delete this.__barbarianInstances[symbolicName];
-      if ('setBeeHive' in b.parent) b.parent.setBeeHive({ fake: 'one' });
-
-      b = null;
-
-      if (this.debug) console.log('Destroyed: ' + symbolicName);
-    },
-
-    getAllControllers: function() {
-      return _.pairs(this.__controllers.container);
-    },
-
-    getAllModules: function() {
-      return _.pairs(this.__modules.container);
-    },
-
-    getAllPlugins: function(key) {
-      key = key || 'plugin:';
-      var defer = $.Deferred();
-      var w = [];
-      _.each(this.__barbarianInstances, function(val, k) {
-        if (k.indexOf(key) > -1) w.unshift(k.replace(key, ''));
-      });
-
-      var getter =
-        key.indexOf('plugin:') > -1 ? this.getPlugin : this.getWidget;
-      getter.apply(this, w).done(function(widget) {
-        var out = [];
-        if (w.length > 1) {
-          out = _.pairs(widget);
-        } else if (w.length === 1) {
-          out = [[w[0], widget]];
-        }
-        defer.resolve(out);
-      });
-      return defer.promise();
-    },
-
-    getAllWidgets: function() {
-      return this.getAllPlugins('widget:');
-    },
-
-    getAllServices: function() {
-      return this.getBeeHive().getAllServices();
-    },
-
-    getAllObjects: function() {
-      return this.getBeeHive().getAllObjects();
-    },
-
-    /**
-     * Helper method to invoke a 'function' on all objects
-     * that are inside the application
-     *
-     * @param funcName
-     * @param options
-     */
-    triggerMethodOnAll: function(funcName, options) {
-      this.triggerMethod(
-        this.getAllControllers(),
-        'controllers',
-        funcName,
-        options
-      );
-      this.triggerMethod(this.getAllModules(), 'modules', funcName, options);
-      var self = this;
-      this.getAllPlugins().done(function(plugins) {
-        if (plugins.length)
-          self.triggerMethod(plugins, 'plugins', funcName, options);
-      });
-      this.getAllWidgets().done(function(widgets) {
-        if (widgets.length)
-          self.triggerMethod(widgets, 'widgets', funcName, options);
-      });
-      this.triggerMethod(
-        this.getBeeHive().getAllServices(),
-        'BeeHive:services',
-        funcName,
-        options
-      );
-      this.triggerMethod(
-        this.getBeeHive().getAllObjects(),
-        'BeeHive:objects',
-        funcName,
-        options
-      );
-    },
-
-    triggerMethod: function(objects, msg, funcName, options) {
-      var self = this;
-      var rets = _.map(objects, function(el) {
-        var obj = el[1];
-        if (funcName in obj) {
-          if (self.debug) {
-            console.log(
-              'application.triggerMethod: ' +
-                msg +
-                ': ' +
-                el[0] +
-                '.' +
-                funcName +
-                '()'
-            );
-          }
-          obj[funcName].call(obj, options);
-        } else if (_.isFunction(funcName)) {
-          if (self.debug) {
-            console.log(
-              'application.triggerMethod: ' +
-                msg +
-                ': ' +
-                el[0] +
-                ' customCallback()'
-            );
-          }
-          funcName.call(obj, msg + ':' + el[0], options);
-        }
-      });
-      return rets;
-    },
-  });
-
-  // give it subclassing functionality
-  Application.extend = Backbone.Model.extend;
-  export default Application.extend(ApiAccess);
-
+// give it subclassing functionality
+Application.extend = Backbone.Model.extend;
+export default Application.extend(ApiAccess);

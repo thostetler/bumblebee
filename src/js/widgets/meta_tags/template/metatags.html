@@ -1,49 +1,50 @@
-<meta name="og:type" content="article" data-highwire="true">
-<meta name="twitter:card" content="summary" data-highwire="true">
+<meta content="article" data-highwire="true" name="og:type">
+<meta content="summary" data-highwire="true" name="twitter:card">
 
-<meta name="citation_title" content="{{title}}" data-highwire="true">
-<meta name="og:title" content="{{title}}" data-highwire="true">
-<meta name="twitter:title" content="{{title}}" data-highwire="true">
+<meta content="{{title}}" data-highwire="true" name="citation_title">
+<meta content="{{title}}" data-highwire="true" name="og:title">
+<meta content="{{title}}" data-highwire="true" name="twitter:title">
 
-<meta name="og:url" content="{{url}}" data-highwire="true">
-<meta name="twitter:url" content="{{url}}" data-highwire="true">
-<meta name="citation_abstract_html_url" content="{{url}}" data-highwire="true">
+<meta content="{{url}}" data-highwire="true" name="og:url">
+<meta content="{{url}}" data-highwire="true" name="twitter:url">
+<meta content="{{url}}" data-highwire="true" name="citation_abstract_html_url">
 
-<meta name="og:image" content="https://ui.adsabs.harvard.edu/styles/img/transparent_logo.svg" data-highwire="true">
-<meta name="twitter:image" content="https://ui.adsabs.harvard.edu/styles/img/transparent_logo.svg" data-highwire="true">
+<meta content="https://ui.adsabs.harvard.edu/styles/img/transparent_logo.svg" data-highwire="true" name="og:image">
+<meta content="https://ui.adsabs.harvard.edu/styles/img/transparent_logo.svg" data-highwire="true" name="twitter:image">
 
 {{#if abstract}}
-<meta name="og:description" content="{{abstract}}" data-highwire="true">
-<meta name="twitter:description" content="{{abstract}}" data-highwire="true">
+<meta content="{{abstract}}" data-highwire="true" name="og:description">
+<meta content="{{abstract}}" data-highwire="true" name="twitter:description">
 {{/if}}
 {{#each author}}
-<meta name="citation_author" content="{{this.name}}" data-highwire="true">
-<meta xmlns="http://www.w3.org/1999/xhtml" name="citation_author_institution" content="{{this.aff}}" data-highwire="true">
+<meta content="{{this.name}}" data-highwire="true" name="citation_author">
+<meta content="{{this.aff}}" data-highwire="true" name="citation_author_institution"
+      xmlns="http://www.w3.org/1999/xhtml">
 {{/each}}
 {{#if page}}
-<meta name="citation_firstpage" content="{{page}}" data-highwire="true">
+<meta content="{{page}}" data-highwire="true" name="citation_firstpage">
 {{/if}}
 {{#if pubdate}}
-<meta name="citation_publication_date" content="{{pubdate}}" data-highwire="true">
+<meta content="{{pubdate}}" data-highwire="true" name="citation_publication_date">
 {{/if}}
 {{#if pub}}
-<meta name="citation_journal_title" content="{{pub_raw}}" data-highwire="true">
+<meta content="{{pub_raw}}" data-highwire="true" name="citation_journal_title">
 {{/if}}
 {{#if volume}}
-<meta name="citation_volume" content="{{volume}}" data-highwire="true">
+<meta content="{{volume}}" data-highwire="true" name="citation_volume">
 {{/if}}
 {{#if issue}}
-<meta name="citation_issue" content="{{issue}}" data-highwire="true">
+<meta content="{{issue}}" data-highwire="true" name="citation_issue">
 {{/if}}
 {{#if doi}}
-<meta name="citation_doi" content="{{doi}}" data-highwire="true">
+<meta content="{{doi}}" data-highwire="true" name="citation_doi">
 {{/if}}
 {{#if issn}}
-<meta name="citation_issn" content="{{issn}}" data-highwire="true">
+<meta content="{{issn}}" data-highwire="true" name="citation_issn">
 {{/if}}
 {{#each keyword}}
-<meta name="citation_keywords" content="{{this}}" data-highwire="true">
+<meta content="{{this}}" data-highwire="true" name="citation_keywords">
 {{/each}}
 {{#if pdfUrl}}
-<meta name="citation_pdf_url" content="{{pdfUrl}}" data-highwire="true">
+<meta content="{{pdfUrl}}" data-highwire="true" name="citation_pdf_url">
 {{/if}}

@@ -7,189 +7,174 @@
  * and react on them
  */
 
-import _ from 'underscore';
-import $ from 'jquery';
 import Cache from 'cache';
-import GenericModule from 'js/components/generic_module';
-import ApiRequest from 'js/components/api_request';
-import ApiResponse from 'js/components/api_response';
-import ApiQueryUpdater from 'js/components/api_query_updater';
 import ApiFeedback from 'js/components/api_feedback';
+import GenericModule from 'js/components/generic_module';
 import PubSubKey from 'js/components/pubsub_key';
 import Dependon from 'js/mixins/dependon';
-  var ErrorMediator = GenericModule.extend({
-    initialize: function(options) {
-      this._cache = this._getNewCache(options.cache);
-      this.debug = options.debug || false;
-      this._handlers = {};
-      this.app = null; // reference to the main application
-    },
+import _ from 'underscore';
 
-    _getNewCache: function(options) {
-      return new Cache(
-        _.extend(
-          {
-            maximumSize: 150,
-            expiresAfterWrite: 60 * 30, // 30 mins
-          },
-          _.isObject(options) ? options : {}
-        )
-      );
-    },
+var ErrorMediator = GenericModule.extend({
+  initialize: function(options) {
+    this._cache = this._getNewCache(options.cache);
+    this.debug = options.debug || false;
+    this._handlers = {};
+    this.app = null; // reference to the main application
+  },
 
-    /**
-     * Starts listening on the PubSub
-     *
-     * @param beehive - the full access instance; we excpect PubSub to be
-     *    present
-     */
-    activate: function(beehive, app) {
-      if (!app)
-        throw new Error('This controller absolutely needs access to the app');
+  _getNewCache: function(options) {
+    return new Cache(
+      _.extend(
+        {
+          maximumSize: 150,
+          expiresAfterWrite: 60 * 30, // 30 mins
+        },
+        _.isObject(options) ? options : {}
+      )
+    );
+  },
 
-      this.setBeeHive(beehive);
-      this.setApp(app);
-      var pubsub = this.getPubSub();
-      pubsub.subscribe(pubsub.FEEDBACK, _.bind(this.receiveFeedback, this));
-    },
+  /**
+   * Starts listening on the PubSub
+   *
+   * @param beehive - the full access instance; we excpect PubSub to be
+   *    present
+   */
+  activate: function(beehive, app) {
+    if (!app) throw new Error('This controller absolutely needs access to the app');
 
-    /**
-     * This method receives ApiFeedback objects (usually from the API)
-     * and decides what to do with them.
-     *
-     * @param apiFeedback
-     * @param senderKey - if present, identifies the widget that made
-     *                    the request
-     */
-    receiveFeedback: function(apiFeedback, senderKey) {
-      if (this.debug)
-        console.log(
-          '[EM]: received feedback:',
-          apiFeedback.toJSON(),
-          senderKey ? senderKey.getId() : null
-        );
+    this.setBeeHive(beehive);
+    this.setApp(app);
+    var pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.FEEDBACK, _.bind(this.receiveFeedback, this));
+  },
 
-      var componentKey = this._getCacheKey(apiFeedback, senderKey);
-      var entry = this._retrieveCacheEntry(componentKey);
-      if (!entry) {
-        entry = this.createNewCacheEntry(componentKey);
-        this._cache.put(componentKey, entry);
+  /**
+   * This method receives ApiFeedback objects (usually from the API)
+   * and decides what to do with them.
+   *
+   * @param apiFeedback
+   * @param senderKey - if present, identifies the widget that made
+   *                    the request
+   */
+  receiveFeedback: function(apiFeedback, senderKey) {
+    if (this.debug) console.log('[EM]: received feedback:', apiFeedback.toJSON(), senderKey ? senderKey.getId() : null);
+
+    var componentKey = this._getCacheKey(apiFeedback, senderKey);
+    var entry = this._retrieveCacheEntry(componentKey);
+    if (!entry) {
+      entry = this.createNewCacheEntry(componentKey);
+      this._cache.put(componentKey, entry);
+    }
+
+    var handler = this.getFeedbackHandler(apiFeedback, entry);
+    if (handler) {
+      if (handler.execute && handler.execute(apiFeedback, entry)) {
+        return;
       }
-
-      var handler = this.getFeedbackHandler(apiFeedback, entry);
-      if (handler) {
-        if (handler.execute && handler.execute(apiFeedback, entry)) {
-          return;
-        }
-        if (handler.call(this, apiFeedback, entry)) {
-          return;
-        }
+      if (handler.call(this, apiFeedback, entry)) {
+        return;
       }
+    }
 
-      this.handleFeedback(apiFeedback, entry);
-    },
+    this.handleFeedback(apiFeedback, entry);
+  },
 
-    removeFeedbackHandler: function(name) {
-      if (name.toString() in this._handlers)
-        delete this._handlers[name.toString()];
-    },
+  removeFeedbackHandler: function(name) {
+    if (name.toString() in this._handlers) delete this._handlers[name.toString()];
+  },
 
-    addFeedbackHandler: function(code, func) {
-      if (!code && !_.isNumber(code))
-        throw new Error('first argument must be code or code:string or string');
-      if (!_.isFunction(func))
-        throw new Error('second argument must be executable');
-      this._handlers[code.toString()] = func;
-    },
+  addFeedbackHandler: function(code, func) {
+    if (!code && !_.isNumber(code)) throw new Error('first argument must be code or code:string or string');
+    if (!_.isFunction(func)) throw new Error('second argument must be executable');
+    this._handlers[code.toString()] = func;
+  },
 
-    getFeedbackHandler: function(apiFeedback, entry) {
-      var keys = [
-        apiFeedback.code + ':' + entry.id,
-        entry.id,
-        apiFeedback.code ? apiFeedback.code.toString() : Date.now(),
-      ];
-      for (var i = 0; i < keys.length; i++) {
-        if (keys[i] in this._handlers) {
-          return this._handlers[keys[i]];
-        }
+  getFeedbackHandler: function(apiFeedback, entry) {
+    var keys = [
+      apiFeedback.code + ':' + entry.id,
+      entry.id,
+      apiFeedback.code ? apiFeedback.code.toString() : Date.now(),
+    ];
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i] in this._handlers) {
+        return this._handlers[keys[i]];
       }
-    },
+    }
+  },
 
-    _retrieveCacheEntry: function(componentKey) {
-      return this._cache.getSync(componentKey);
-    },
+  _retrieveCacheEntry: function(componentKey) {
+    return this._cache.getSync(componentKey);
+  },
 
-    /**
-     * Creates a unique, cleaned key from the request and the apiQuery
-     * @param apiFeedback
-     *    instance of {ApiFeedback}
-     * @param senderKey
-     *    string or instance of {PubSubKey}
-     */
-    _getCacheKey: function(apiFeedback, senderKey) {
-      if (!apiFeedback) throw new Error('ApiFeedback cannot be empty');
-      if (apiFeedback.getSenderKey()) return apiFeedback.getSenderKey();
-      if (senderKey) {
-        if (senderKey instanceof PubSubKey) {
-          return senderKey.getId();
-        }
-        if (_.isString(senderKey)) {
-          return senderKey;
-        }
+  /**
+   * Creates a unique, cleaned key from the request and the apiQuery
+   * @param apiFeedback
+   *    instance of {ApiFeedback}
+   * @param senderKey
+   *    string or instance of {PubSubKey}
+   */
+  _getCacheKey: function(apiFeedback, senderKey) {
+    if (!apiFeedback) throw new Error('ApiFeedback cannot be empty');
+    if (apiFeedback.getSenderKey()) return apiFeedback.getSenderKey();
+    if (senderKey) {
+      if (senderKey instanceof PubSubKey) {
+        return senderKey.getId();
       }
-
-      var req = apiFeedback.getApiRequest();
-      if (req) {
-        return req.url();
+      if (_.isString(senderKey)) {
+        return senderKey;
       }
-      throw new Error(
-        'We cannot identify the origin (recipient) of this feedback'
-      );
-    },
+    }
 
-    createNewCacheEntry: function(componentKey) {
-      return {
-        waiting: 0,
-        max: 0,
-        errors: 0,
-        counter: 0,
-        created: Date.now(),
-        id: componentKey,
-      };
-    },
+    var req = apiFeedback.getApiRequest();
+    if (req) {
+      return req.url();
+    }
+    throw new Error('We cannot identify the origin (recipient) of this feedback');
+  },
 
-    /**
-     * This is a default feedback handling; it executes only IFF
-     * it was not handled by specific handlers.
-     *
-     * @param apiFeedback
-     * @param entry
-     */
-    handleFeedback: function(apiFeedback, entry) {
-      var c = ApiFeedback.CODES;
+  createNewCacheEntry: function(componentKey) {
+    return {
+      waiting: 0,
+      max: 0,
+      errors: 0,
+      counter: 0,
+      created: Date.now(),
+      id: componentKey,
+    };
+  },
 
-      entry.counter += 1;
+  /**
+   * This is a default feedback handling; it executes only IFF
+   * it was not handled by specific handlers.
+   *
+   * @param apiFeedback
+   * @param entry
+   */
+  handleFeedback: function(apiFeedback, entry) {
+    var c = ApiFeedback.CODES;
 
-      switch (apiFeedback.code) {
-        case c.ALL_FINE:
-          entry.errors = 0;
-          break;
-        case c.KEEP_WAITING:
-          entry.waiting += entry.started;
-          break;
-        case c.SERVER_ERROR:
-          break;
-        case c.ALERT:
-          this.getApp()
-            .getController('AlertsController')
-            .onAlert(apiFeedback, entry);
-          break;
-        default:
-      }
-    },
-  });
+    entry.counter += 1;
 
-  _.extend(ErrorMediator.prototype, Dependon.BeeHive, Dependon.App);
+    switch (apiFeedback.code) {
+      case c.ALL_FINE:
+        entry.errors = 0;
+        break;
+      case c.KEEP_WAITING:
+        entry.waiting += entry.started;
+        break;
+      case c.SERVER_ERROR:
+        break;
+      case c.ALERT:
+        this.getApp()
+          .getController('AlertsController')
+          .onAlert(apiFeedback, entry);
+        break;
+      default:
+    }
+  },
+});
 
-  export default ErrorMediator;
+_.extend(ErrorMediator.prototype, Dependon.BeeHive, Dependon.App);
 
+export default ErrorMediator;

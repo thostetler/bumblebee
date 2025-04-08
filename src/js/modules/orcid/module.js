@@ -18,69 +18,65 @@
  *
  */
 
-import Backbone from 'backbone';
-import _ from 'underscore';
 import GenericModule from 'js/components/generic_module';
 import OrcidApi from 'js/modules/orcid/orcid_api';
-  var OrcidModule = GenericModule.extend({
-    activate: function(beehive) {
-      var config = beehive.getObject('DynamicConfig');
-      if (!config) {
-        throw new Error('DynamicConfig is not available to Orcid module');
-      }
+import _ from 'underscore';
 
-      var redirectUrlBase =
-        config.orcidRedirectUrlBase || location.protocol + '//' + location.host;
-      var orcidClientId = config.orcidClientId;
-      var orcidApiEndpoint = config.orcidApiEndpoint;
-      var orcidLoginEndpoint = config.orcidLoginEndpoint;
+var OrcidModule = GenericModule.extend({
+  activate: function(beehive) {
+    var config = beehive.getObject('DynamicConfig');
+    if (!config) {
+      throw new Error('DynamicConfig is not available to Orcid module');
+    }
 
-      if (!orcidClientId || !orcidApiEndpoint) {
-        throw new Error(
-          'Missing configuration for ORCID module: orcidApiEndpoint, orcidClientId'
-        );
-      }
+    var redirectUrlBase = config.orcidRedirectUrlBase || location.protocol + '//' + location.host;
+    var orcidClientId = config.orcidClientId;
+    var orcidApiEndpoint = config.orcidApiEndpoint;
+    var orcidLoginEndpoint = config.orcidLoginEndpoint;
 
-      // TODO:rca - clean up this
-      var opts = {
-        redirectUrlBase: redirectUrlBase,
-        apiEndpoint: orcidApiEndpoint,
-        clientId: orcidClientId,
-        worksUrl: orcidApiEndpoint + '/{0}/orcid-works',
-        loginUrl:
-          orcidLoginEndpoint +
-          '?scope=/orcid-profile/read-limited%20/orcid-works/create%20/orcid-works/update&response_type=code&access_type=offline' +
-          '&show_login=true' +
-          '&client_id=' +
-          orcidClientId,
-        exchangeTokenUrl: orcidApiEndpoint + '/exchangeOAuthCode',
-      };
+    if (!orcidClientId || !orcidApiEndpoint) {
+      throw new Error('Missing configuration for ORCID module: orcidApiEndpoint, orcidClientId');
+    }
 
-      _.extend(config, { Orcid: opts });
-
-      this.activateDependencies(beehive);
-    },
-
-    activateDependencies: function(beehive) {
-      var orcidApi = beehive.getService('OrcidApi');
-
-      if (orcidApi) {
-        // already activated
-        return;
-      }
-
-      orcidApi = new OrcidApi();
-      orcidApi.activate(beehive);
-      beehive.addService('OrcidApi', orcidApi);
-    },
-  });
-
-  export default function() {
-    return {
-      activate: function(beehive) {
-        var om = new OrcidModule();
-        om.activate(beehive);
-      },
+    // TODO:rca - clean up this
+    var opts = {
+      redirectUrlBase: redirectUrlBase,
+      apiEndpoint: orcidApiEndpoint,
+      clientId: orcidClientId,
+      worksUrl: orcidApiEndpoint + '/{0}/orcid-works',
+      loginUrl:
+        orcidLoginEndpoint +
+        '?scope=/orcid-profile/read-limited%20/orcid-works/create%20/orcid-works/update&response_type=code&access_type=offline' +
+        '&show_login=true' +
+        '&client_id=' +
+        orcidClientId,
+      exchangeTokenUrl: orcidApiEndpoint + '/exchangeOAuthCode',
     };
-  };
 
+    _.extend(config, { Orcid: opts });
+
+    this.activateDependencies(beehive);
+  },
+
+  activateDependencies: function(beehive) {
+    var orcidApi = beehive.getService('OrcidApi');
+
+    if (orcidApi) {
+      // already activated
+      return;
+    }
+
+    orcidApi = new OrcidApi();
+    orcidApi.activate(beehive);
+    beehive.addService('OrcidApi', orcidApi);
+  },
+});
+
+export default function() {
+  return {
+    activate: function(beehive) {
+      var om = new OrcidModule();
+      om.activate(beehive);
+    },
+  };
+}

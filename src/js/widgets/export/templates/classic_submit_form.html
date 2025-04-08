@@ -1,6 +1,7 @@
-<form action="http://adsabs.harvard.edu/cgi-bin/nph-abs_connect" target="_blank" rel="noreferrer noopener" method="post" class="hidden">
-    <input type="hidden" name="nr_to_return" value="{{exportLimit}}"/>
-    {{#each bibcode}}
-    <input type="hidden" name="bibcode" value="{{this}}"/>
-    {{/each}}
+<form action="http://adsabs.harvard.edu/cgi-bin/nph-abs_connect" class="hidden" method="post" rel="noreferrer noopener"
+      target="_blank">
+  <input name="nr_to_return" type="hidden" value="{{exportLimit}}" />
+  {{#each bibcode}}
+  <input name="bibcode" type="hidden" value="{{this}}" />
+  {{/each}}
 </form>

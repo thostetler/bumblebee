@@ -1,25 +1,20 @@
+import actions from 'js/react/MyAdsDashboard/actions/index';
 import ClassicLoginForm from 'js/react/MyAdsDashboard/components/ClassicLoginForm.jsx';
 import { connect } from 'react-redux';
-import actions from 'js/react/MyAdsDashboard/actions/index';
-  const mapStateToProps = ({ requests }) => ({
-    classicMirrorsRequest: requests.FETCH_CLASSIC_MIRRORS,
-    loginClassicRequest: requests.LOGIN_CLASSIC,
-    loginClassicCheckRequest: requests.LOGIN_CLASSIC_CHECK,
-  });
 
-  const {
-    goTo,
-    fetchClassicMirrors,
-    loginClassic,
-    loginClassicCheck,
-  } = actions;
+const mapStateToProps = ({ requests }) => ({
+  classicMirrorsRequest: requests.FETCH_CLASSIC_MIRRORS,
+  loginClassicRequest: requests.LOGIN_CLASSIC,
+  loginClassicCheckRequest: requests.LOGIN_CLASSIC_CHECK,
+});
 
-  const actionCreators = {
-    goTo,
-    fetchClassicMirrors,
-    loginClassic,
-    loginClassicCheck,
-  };
+const { goTo, fetchClassicMirrors, loginClassic, loginClassicCheck } = actions;
 
-  export default connect(mapStateToProps, actionCreators)(ClassicLoginForm);
+const actionCreators = {
+  goTo,
+  fetchClassicMirrors,
+  loginClassic,
+  loginClassicCheck,
+};
 
+export default connect(mapStateToProps, actionCreators)(ClassicLoginForm);

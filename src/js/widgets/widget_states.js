@@ -1,10 +1,8 @@
+var States = {
+  READY: 0,
+  LOADING: 1,
+  IDLE: 2,
+  FAILED: 3,
+};
 
-  var States = {
-    READY: 0,
-    LOADING: 1,
-    IDLE: 2,
-    FAILED: 3,
-  };
-
-  export default States;
-
+export default States;

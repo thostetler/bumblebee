@@ -1,44 +1,42 @@
+const actions = {
+  LINK_CLICKED: '[ui] LINK_CLICKED',
+  SET_LOADING: '[ui] SET_LOADING',
+  SET_ITEMS: '[ui] SET_ITEMS',
+  SET_HAS_ERROR: '[ui] SET_HAS_ERROR',
+  RESET: '[ui] RESET',
+};
 
-  const actions = {
-    LINK_CLICKED: '[ui] LINK_CLICKED',
-    SET_LOADING: '[ui] SET_LOADING',
-    SET_ITEMS: '[ui] SET_ITEMS',
-    SET_HAS_ERROR: '[ui] SET_HAS_ERROR',
-    RESET: '[ui] RESET',
-  };
+const initialState = {
+  loading: true,
+  items: [],
+  hasError: false,
+};
 
-  const initialState = {
-    loading: true,
-    items: [],
-    hasError: false,
-  };
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actions.SET_LOADING:
+      return { ...state, loading: action.result };
+    case actions.SET_ITEMS:
+      return { ...state, items: action.result };
+    case actions.SET_HAS_ERROR:
+      return { ...state, hasError: action.result, loading: false };
+    case actions.RESET:
+      return initialState;
+    default:
+      return state;
+  }
+};
 
-  const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case actions.SET_LOADING:
-        return { ...state, loading: action.result };
-      case actions.SET_ITEMS:
-        return { ...state, items: action.result };
-      case actions.SET_HAS_ERROR:
-        return { ...state, hasError: action.result, loading: false };
-      case actions.RESET:
-        return initialState;
-      default:
-        return state;
-    }
-  };
+// action creators
+const handleLinkClick = (result) => ({ type: actions.LINK_CLICKED, result });
+const setError = (result) => ({ type: actions.SET_HAS_ERROR, result });
+const reset = () => ({ type: actions.RESET });
 
-  // action creators
-  const handleLinkClick = (result) => ({ type: actions.LINK_CLICKED, result });
-  const setError = (result) => ({ type: actions.SET_HAS_ERROR, result });
-  const reset = () => ({ type: actions.RESET });
-
-  export default {
-    reducer,
-    initialState,
-    actions,
-    handleLinkClick,
-    setError,
-    reset,
-  };
-
+export default {
+  reducer,
+  initialState,
+  actions,
+  handleLinkClick,
+  setError,
+  reset,
+};

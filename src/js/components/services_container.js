@@ -2,93 +2,86 @@
  * Created by rchyla on 3/18/14.
  */
 
-import Facade from 'js/components/facade';
 import GenericModule from 'js/components/generic_module';
 import Hardened from 'js/mixins/hardened';
 import _ from 'underscore';
-  var Services = GenericModule.extend({
-    initialize: function(options) {
-      this._services = _.has(options, 'services')
-        ? _.clone(options.services)
-        : {};
-    },
 
-    activate: function() {
-      var args = arguments;
-      _.each(_.values(this._services), function(service) {
-        // _.keys() preserves access order
-        if (_.isObject(service) && 'activate' in service) {
-          service.activate.apply(service, args);
-        }
-      });
-    },
+var Services = GenericModule.extend({
+  initialize: function(options) {
+    this._services = _.has(options, 'services') ? _.clone(options.services) : {};
+  },
 
-    destroy: function() {
-      for (var service in this._services) {
-        this.remove(service);
+  activate: function() {
+    var args = arguments;
+    _.each(_.values(this._services), function(service) {
+      // _.keys() preserves access order
+      if (_.isObject(service) && 'activate' in service) {
+        service.activate.apply(service, args);
       }
-    },
+    });
+  },
 
-    add: function(name, service) {
-      if (this._services.hasOwnProperty(name)) {
-        throw new Error(
-          'The service: ' + name + ' is already registered, remove it first!'
-        );
+  destroy: function() {
+    for (var service in this._services) {
+      this.remove(service);
+    }
+  },
+
+  add: function(name, service) {
+    if (this._services.hasOwnProperty(name)) {
+      throw new Error('The service: ' + name + ' is already registered, remove it first!');
+    }
+    if (!(name && service) || !_.isString(name)) {
+      throw new Error('The key must be a string and the service is an object');
+    }
+    this._services[name] = service;
+  },
+
+  remove: function(name, service) {
+    if (this._services.hasOwnProperty(name)) {
+      var s = this._services[name];
+      if ('destroy' in s) {
+        s.destroy();
       }
-      if (!(name && service) || !_.isString(name)) {
-        throw new Error(
-          'The key must be a string and the service is an object'
-        );
+      delete this._services[name];
+      return s;
+    }
+    return null;
+  },
+
+  has: function(name) {
+    return this._services.hasOwnProperty(name);
+  },
+
+  get: function(name) {
+    return this._services[name];
+  },
+
+  getAll: function() {
+    return _.pairs(this._services);
+  },
+});
+
+_.extend(Services.prototype, Hardened, {
+  /*
+   * A simple facade, we'll expose only services that
+   * have 'getHardenedMethod' (ie. they know to protect
+   * themselves)
+   */
+  getHardenedInstance: function() {
+    var iface = {};
+    var s;
+    for (var service in this._services) {
+      s = this._services[service];
+      if (_.isObject(s) && 'getHardenedInstance' in s) {
+        iface[service] = true;
       }
-      this._services[name] = service;
-    },
+    }
+    var newContainer = new this.constructor({
+      services: this._getHardenedInstance(iface, this._services),
+    });
+    return this._getHardenedInstance({ get: true, has: true }, newContainer);
+  },
+});
 
-    remove: function(name, service) {
-      if (this._services.hasOwnProperty(name)) {
-        var s = this._services[name];
-        if ('destroy' in s) {
-          s.destroy();
-        }
-        delete this._services[name];
-        return s;
-      }
-      return null;
-    },
-
-    has: function(name) {
-      return this._services.hasOwnProperty(name);
-    },
-
-    get: function(name) {
-      return this._services[name];
-    },
-
-    getAll: function() {
-      return _.pairs(this._services);
-    },
-  });
-
-  _.extend(Services.prototype, Hardened, {
-    /*
-     * A simple facade, we'll expose only services that
-     * have 'getHardenedMethod' (ie. they know to protect
-     * themselves)
-     */
-    getHardenedInstance: function() {
-      var iface = {};
-      var s;
-      for (var service in this._services) {
-        s = this._services[service];
-        if (_.isObject(s) && 'getHardenedInstance' in s) {
-          iface[service] = true;
-        }
-      }
-      var newContainer = new this.constructor({
-        services: this._getHardenedInstance(iface, this._services),
-      });
-      return this._getHardenedInstance({ get: true, has: true }, newContainer);
-    },
-  });
-
-  export default Services;
-
+export default Services;

@@ -1,24 +1,24 @@
-import _ from 'underscore';
 import $ from 'jquery';
-  var PageManagerMixin = {
-    getWidgetsFromTemplate: function(template, isDebug) {
-      var widgets = {};
-      var widgetTargets = $(template).find('[data-widget]');
-      if (widgetTargets.length > 0) {
-        _.each(widgetTargets, function(widgetTarget) {
-          var widgetName = widgetTarget.getAttribute('data-widget');
-          var isDebug = widgetTarget.getAttribute('data-debug');
+import _ from 'underscore';
 
-          if (isDebug && isDebug == 'true' && !isDebug) {
-            return;
-          }
+var PageManagerMixin = {
+  getWidgetsFromTemplate: function(template, isDebug) {
+    var widgets = {};
+    var widgetTargets = $(template).find('[data-widget]');
+    if (widgetTargets.length > 0) {
+      _.each(widgetTargets, function(widgetTarget) {
+        var widgetName = widgetTarget.getAttribute('data-widget');
+        var isDebug = widgetTarget.getAttribute('data-debug');
 
-          widgets[widgetName] = widgetTarget;
-        });
-      }
-      return widgets;
-    },
-  };
+        if (isDebug && isDebug == 'true' && !isDebug) {
+          return;
+        }
 
-  export default PageManagerMixin;
+        widgets[widgetName] = widgetTarget;
+      });
+    }
+    return widgets;
+  },
+};
 
+export default PageManagerMixin;

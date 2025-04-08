@@ -1,274 +1,252 @@
-import { uniqueId } from 'underscore';
-import React from 'react';
-import {
-    Form,
-    FormControl,
-    Button,
-    FormGroup,
-    Tooltip,
-    OverlayTrigger,
-    Alert,
-    InputGroup,
-  } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-  const initialState = {
-    text: '',
-    type: '',
-    valid: true,
-    error: '',
-    entries: [],
-  };
-  class CitationsEntry extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        ...initialState,
-        ...props.initialState,
-      };
+import React from 'react';
+import { Alert, Button, FormControl, FormGroup, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { uniqueId } from 'underscore';
 
-      if (props.initialState.entries && props.initialState.entries.length > 0) {
-        // initialize array of entries with some ids
-        this.state.entries = props.initialState.entries.map((e) => ({
-          ...e,
-          id: uniqueId(),
-        }));
-      }
+const initialState = {
+  text: '',
+  type: '',
+  valid: true,
+  error: '',
+  entries: [],
+};
 
-      this.inputRef = null;
+class CitationsEntry extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...initialState,
+      ...props.initialState,
+    };
+
+    if (props.initialState.entries && props.initialState.entries.length > 0) {
+      // initialize array of entries with some ids
+      this.state.entries = props.initialState.entries.map((e) => ({
+        ...e,
+        id: uniqueId(),
+      }));
     }
 
-    removeEntry(id) {
-      const { entries } = this.state;
-      const idx = entries.findIndex((entry) => entry.id === id);
-      if (idx >= 0) {
-        this.setState(
-          {
-            entries: [...entries.slice(0, idx), ...entries.slice(idx + 1)],
-          },
-          () => {
-            const { entries } = this.state;
-            const { entriesUpdated } = this.props;
-            entriesUpdated(entries);
-          }
-        );
-      }
-    }
+    this.inputRef = null;
+  }
 
-    addEntry() {
-      const { type, text, entries } = this.state;
-
-      // check if entry is valid first
-      if (this.isValid()) {
-        const formattedText =
-          type === 'ORCiD'
-            ? text
-                .replace(/-/g, '')
-                .match(/\d{3}[X\d]/g)
-                .join('-')
-            : text;
-
-        this.setState(
-          {
-            entries: [
-              ...entries,
-              {
-                id: uniqueId(),
-                text: formattedText,
-                type: type,
-              },
-            ],
-            text: '',
-            type: '',
-          },
-          () => {
-            // refocus on input, call updated callback
-            const { entries } = this.state;
-            const { entriesUpdated } = this.props;
-            this.inputRef.focus();
-            entriesUpdated(entries);
-          }
-        );
-      }
-    }
-
-    /**
-     * Detects the type of entry from the text the user typed in
-     */
-    detectType() {
-      const { text } = this.state;
-      let type = '';
-      if (text.match(/^\d/)) {
-        type = 'ORCiD';
-      } else if (text.length > 0) {
-        type = 'Name';
-      }
-      this.setState({
-        type,
-      });
-    }
-
-    isValid() {
-      const { text, type, entries } = this.state;
-
-      let valid = true;
-      let error = '';
-
-      if (
-        type === 'ORCiD' &&
-        !text.match(/^\d{4}-?\d{4}-?\d{4}-?\d{3}[X\d]$/)
-      ) {
-        // orcid formatting is off
-        valid = false;
-        error = 'ORCiD must in the format: 9999-9999-9999-9999';
-      } else if (entries.some((e) => e.text === text)) {
-        // there are duplicate(s)
-        valid = false;
-        error = 'Already in the list!';
-      } else if (text.length === 0) {
-        valid = false;
-      }
-
-      this.setState({ valid, error });
-      return valid;
-    }
-
-    render() {
-      const { entries, valid, type, text, error } = this.state;
-
-      return (
-        <div style={{ marginBottom: '50px' }}>
-          <table className="table">
-            <thead>
-              <tr>
-                <th id="author-heading">Author (name or ORCiD)</th>
-                <th id="type-heading">Type</th>
-                <th id="action-heading">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {entries.length <= 0 && (
-                <tr>
-                  <td colSpan="3">
-                    <Alert style={{ marginBottom: 0 }} className="text-center">
-                      No entries! Add a new entry below
-                    </Alert>
-                  </td>
-                </tr>
-              )}
-              {entries.map(({ text, type, id }) => (
-                <Entry
-                  text={text}
-                  type={type}
-                  onRemove={() => this.removeEntry(id)}
-                />
-              ))}
-            </tbody>
-          </table>
-          <div style={{ borderTop: 'solid 1px gray', padding: '1em 0' }}>
-            <div className="col-xs-10">
-              <FormGroup validationState={valid ? null : 'error'}>
-                <InputGroup>
-                  <FormControl
-                    type="text"
-                    name="author"
-                    id="author-input"
-                    aria-labelledby="author-heading"
-                    placeholder="Huchra, J. or 1111-2222-3333-4444"
-                    value={text}
-                    inputRef={(ref) => {
-                      this.inputRef = ref;
-                    }}
-                    onChange={(e) => {
-                      this.setState(
-                        {
-                          text: e.target.value,
-                          valid: true,
-                          error: '',
-                        },
-                        () => {
-                          this.detectType();
-                        }
-                      );
-                    }}
-                  />
-                  <InputGroup.Addon>{type}</InputGroup.Addon>
-                </InputGroup>
-                {!valid && <small className="text-danger">{error}</small>}
-              </FormGroup>
-            </div>
-            <div className="col-xs-2">
-              <Button
-                type="button"
-                onClick={() => this.addEntry()}
-                aria-labelledby="action-heading"
-              >
-                Add
-              </Button>
-            </div>
-          </div>
-        </div>
+  removeEntry(id) {
+    const { entries } = this.state;
+    const idx = entries.findIndex((entry) => entry.id === id);
+    if (idx >= 0) {
+      this.setState(
+        {
+          entries: [...entries.slice(0, idx), ...entries.slice(idx + 1)],
+        },
+        () => {
+          const { entries } = this.state;
+          const { entriesUpdated } = this.props;
+          entriesUpdated(entries);
+        }
       );
     }
   }
 
-  CitationsEntry.propTypes = {
-    entriesUpdated: () => {},
-    initialState: PropTypes.shape({
-      entries: PropTypes.array,
-    }),
-  };
+  addEntry() {
+    const { type, text, entries } = this.state;
 
-  CitationsEntry.defaultProps = {
-    initialState: {},
-    entriesUpdated: [],
-  };
+    // check if entry is valid first
+    if (this.isValid()) {
+      const formattedText =
+        type === 'ORCiD'
+          ? text
+              .replace(/-/g, '')
+              .match(/\d{3}[X\d]/g)
+              .join('-')
+          : text;
 
-  const getWarning = (text, type) => {
-    if (type === 'Name' && !text.match(/^[^,]*,[^,]*$/)) {
-      return "Author names should be formatted as 'Last, First M'";
+      this.setState(
+        {
+          entries: [
+            ...entries,
+            {
+              id: uniqueId(),
+              text: formattedText,
+              type: type,
+            },
+          ],
+          text: '',
+          type: '',
+        },
+        () => {
+          // refocus on input, call updated callback
+          const { entries } = this.state;
+          const { entriesUpdated } = this.props;
+          this.inputRef.focus();
+          entriesUpdated(entries);
+        }
+      );
     }
-    return null;
-  };
+  }
 
-  const Entry = ({ text, type, onRemove }) => {
-    const warning = getWarning(text, type);
+  /**
+   * Detects the type of entry from the text the user typed in
+   */
+  detectType() {
+    const { text } = this.state;
+    let type = '';
+    if (text.match(/^\d/)) {
+      type = 'ORCiD';
+    } else if (text.length > 0) {
+      type = 'Name';
+    }
+    this.setState({
+      type,
+    });
+  }
+
+  isValid() {
+    const { text, type, entries } = this.state;
+
+    let valid = true;
+    let error = '';
+
+    if (type === 'ORCiD' && !text.match(/^\d{4}-?\d{4}-?\d{4}-?\d{3}[X\d]$/)) {
+      // orcid formatting is off
+      valid = false;
+      error = 'ORCiD must in the format: 9999-9999-9999-9999';
+    } else if (entries.some((e) => e.text === text)) {
+      // there are duplicate(s)
+      valid = false;
+      error = 'Already in the list!';
+    } else if (text.length === 0) {
+      valid = false;
+    }
+
+    this.setState({ valid, error });
+    return valid;
+  }
+
+  render() {
+    const { entries, valid, type, text, error } = this.state;
 
     return (
-      <tr>
-        <td>
-          {text}
-          {warning && (
-            <OverlayTrigger
-              placement="right"
-              overlay={<Tooltip id="warning-tooltip">{warning}</Tooltip>}
-            >
-              <small className="text-warning" style={{ marginLeft: '1rem' }}>
-                <i className="fa fa-exclamation-triangle" aria-hidden="true" />
-              </small>
-            </OverlayTrigger>
-          )}
-        </td>
-        <td>{type}</td>
-        <td>
-          <Button bsSize="sm" bsStyle="default" onClick={onRemove}>
-            Remove
-          </Button>
-        </td>
-      </tr>
+      <div style={{ marginBottom: '50px' }}>
+        <table className="table">
+          <thead>
+            <tr>
+              <th id="author-heading">Author (name or ORCiD)</th>
+              <th id="type-heading">Type</th>
+              <th id="action-heading">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {entries.length <= 0 && (
+              <tr>
+                <td colSpan="3">
+                  <Alert style={{ marginBottom: 0 }} className="text-center">
+                    No entries! Add a new entry below
+                  </Alert>
+                </td>
+              </tr>
+            )}
+            {entries.map(({ text, type, id }) => (
+              <Entry text={text} type={type} onRemove={() => this.removeEntry(id)} />
+            ))}
+          </tbody>
+        </table>
+        <div style={{ borderTop: 'solid 1px gray', padding: '1em 0' }}>
+          <div className="col-xs-10">
+            <FormGroup validationState={valid ? null : 'error'}>
+              <InputGroup>
+                <FormControl
+                  type="text"
+                  name="author"
+                  id="author-input"
+                  aria-labelledby="author-heading"
+                  placeholder="Huchra, J. or 1111-2222-3333-4444"
+                  value={text}
+                  inputRef={(ref) => {
+                    this.inputRef = ref;
+                  }}
+                  onChange={(e) => {
+                    this.setState(
+                      {
+                        text: e.target.value,
+                        valid: true,
+                        error: '',
+                      },
+                      () => {
+                        this.detectType();
+                      }
+                    );
+                  }}
+                />
+                <InputGroup.Addon>{type}</InputGroup.Addon>
+              </InputGroup>
+              {!valid && <small className="text-danger">{error}</small>}
+            </FormGroup>
+          </div>
+          <div className="col-xs-2">
+            <Button type="button" onClick={() => this.addEntry()} aria-labelledby="action-heading">
+              Add
+            </Button>
+          </div>
+        </div>
+      </div>
     );
-  };
+  }
+}
 
-  Entry.propTypes = {
-    onRemove: PropTypes.func,
-    text: PropTypes.string,
-    type: PropTypes.string,
-  };
+CitationsEntry.propTypes = {
+  entriesUpdated: () => {},
+  initialState: PropTypes.shape({
+    entries: PropTypes.array,
+  }),
+};
 
-  Entry.defaultProps = {
-    text: '',
-    type: '',
-    onRemove: () => {},
-  };
+CitationsEntry.defaultProps = {
+  initialState: {},
+  entriesUpdated: [],
+};
 
-  export default CitationsEntry;
+const getWarning = (text, type) => {
+  if (type === 'Name' && !text.match(/^[^,]*,[^,]*$/)) {
+    return "Author names should be formatted as 'Last, First M'";
+  }
+  return null;
+};
 
+const Entry = ({ text, type, onRemove }) => {
+  const warning = getWarning(text, type);
+
+  return (
+    <tr>
+      <td>
+        {text}
+        {warning && (
+          <OverlayTrigger placement="right" overlay={<Tooltip id="warning-tooltip">{warning}</Tooltip>}>
+            <small className="text-warning" style={{ marginLeft: '1rem' }}>
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+            </small>
+          </OverlayTrigger>
+        )}
+      </td>
+      <td>{type}</td>
+      <td>
+        <Button bsSize="sm" bsStyle="default" onClick={onRemove}>
+          Remove
+        </Button>
+      </td>
+    </tr>
+  );
+};
+
+Entry.propTypes = {
+  onRemove: PropTypes.func,
+  text: PropTypes.string,
+  type: PropTypes.string,
+};
+
+Entry.defaultProps = {
+  text: '',
+  type: '',
+  onRemove: () => {},
+};
+
+export default CitationsEntry;

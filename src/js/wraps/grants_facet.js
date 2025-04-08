@@ -1,74 +1,74 @@
-import FacetFactory from 'js/widgets/facet/factory';
 import analytics from 'analytics';
-  export default function() {
-    var widget = FacetFactory.makeHierarchicalCheckboxFacet({
-      facetField: 'grant_facet_hier',
-      facetTitle: 'Grants',
-      logicOptions: {
-        single: ['limit to', 'exclude'],
-        multiple: ['or', 'exclude'],
-      },
-    });
+import FacetFactory from 'js/widgets/facet/factory';
 
-    widget.handleLogicalSelection = function(operator) {
-      var q = this.getCurrentQuery();
-      var paginator = this.findPaginator(q).paginator;
-      var conditions = this.queryUpdater.removeTmpEntry(q, 'SelectedItems');
+export default function() {
+  var widget = FacetFactory.makeHierarchicalCheckboxFacet({
+    facetField: 'grant_facet_hier',
+    facetTitle: 'Grants',
+    logicOptions: {
+      single: ['limit to', 'exclude'],
+      multiple: ['or', 'exclude'],
+    },
+  });
 
-      // XXX:rca - hack ; this logic is triggerd multiple times
-      // we need to prevent that
+  widget.handleLogicalSelection = function(operator) {
+    var q = this.getCurrentQuery();
+    var paginator = this.findPaginator(q).paginator;
+    var conditions = this.queryUpdater.removeTmpEntry(q, 'SelectedItems');
 
-      if (conditions && _.keys(conditions).length > 0) {
-        conditions = _.values(conditions);
-        _.each(conditions, function(c, i, l) {
-          l[i] = 'grant:"' + c.title + '"';
-        });
+    // XXX:rca - hack ; this logic is triggerd multiple times
+    // we need to prevent that
 
-        q = q.clone();
+    if (conditions && _.keys(conditions).length > 0) {
+      conditions = _.values(conditions);
+      _.each(conditions, function(c, i, l) {
+        l[i] = 'grant:"' + c.title + '"';
+      });
 
-        var fieldName = 'fq_grant';
+      q = q.clone();
 
-        if (operator == 'and' || operator == 'limit to') {
-          this.queryUpdater.updateQuery(q, fieldName, 'limit', conditions);
-        } else if (operator == 'or') {
-          this.queryUpdater.updateQuery(q, fieldName, 'expand', conditions);
-        } else if (operator == 'exclude') {
-          if (q.get(fieldName)) {
-            this.queryUpdater.updateQuery(q, fieldName, 'exclude', conditions);
-          } else {
-            conditions.unshift('*:*');
-            this.queryUpdater.updateQuery(q, fieldName, 'exclude', conditions);
-          }
-        }
+      var fieldName = 'fq_grant';
 
-        var fq = '{!type=aqp cache=false cost=150 v=$' + fieldName + '}';
-        var fqs = q.get('fq');
-        if (!fqs) {
-          q.set('fq', [fq]);
+      if (operator == 'and' || operator == 'limit to') {
+        this.queryUpdater.updateQuery(q, fieldName, 'limit', conditions);
+      } else if (operator == 'or') {
+        this.queryUpdater.updateQuery(q, fieldName, 'expand', conditions);
+      } else if (operator == 'exclude') {
+        if (q.get(fieldName)) {
+          this.queryUpdater.updateQuery(q, fieldName, 'exclude', conditions);
         } else {
-          var i = _.indexOf(fqs, fq);
-          if (i == -1) {
-            fqs.push(fq);
-          }
-          q.set('fq', fqs);
+          conditions.unshift('*:*');
+          this.queryUpdater.updateQuery(q, fieldName, 'exclude', conditions);
         }
-        q.unset('facet.prefix');
-        q.unset('facet');
-        this.dispatchNewQuery(paginator.cleanQuery(q));
-
-        analytics(
-          'send',
-          'event',
-          'interaction',
-          'facet-applied',
-          JSON.stringify({
-            name: this.facetField,
-            logic: operator,
-            conditions: conditions,
-          })
-        );
       }
-    };
-    return widget;
-  };
 
+      var fq = '{!type=aqp cache=false cost=150 v=$' + fieldName + '}';
+      var fqs = q.get('fq');
+      if (!fqs) {
+        q.set('fq', [fq]);
+      } else {
+        var i = _.indexOf(fqs, fq);
+        if (i == -1) {
+          fqs.push(fq);
+        }
+        q.set('fq', fqs);
+      }
+      q.unset('facet.prefix');
+      q.unset('facet');
+      this.dispatchNewQuery(paginator.cleanQuery(q));
+
+      analytics(
+        'send',
+        'event',
+        'interaction',
+        'facet-applied',
+        JSON.stringify({
+          name: this.facetField,
+          logic: operator,
+          conditions: conditions,
+        })
+      );
+    }
+  };
+  return widget;
+}

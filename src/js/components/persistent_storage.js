@@ -1,99 +1,99 @@
-import _ from 'underscore';
 import GenericModule from 'js/components/generic_module';
 import Mixins from 'js/mixins/dependon';
-import PersistJS from 'persist-js';
 import module from 'module';
-  var namespace = module.config().namespace || '';
+import PersistJS from 'persist-js';
+import _ from 'underscore';
 
-  var LocalStorage = GenericModule.extend({
-    constructor: function(opts) {
-      opts = opts || {};
-      this._store = this.createStore(namespace + (opts.name || ''));
-    },
+var namespace = module.config().namespace || '';
 
-    createStore: function(name) {
-      return this._createStore(name);
-    },
+var LocalStorage = GenericModule.extend({
+  constructor: function(opts) {
+    opts = opts || {};
+    this._store = this.createStore(namespace + (opts.name || ''));
+  },
 
-    _createStore: function(name) {
-      var s = new PersistJS.Store(name, {
-        about: 'This is bumblebee persistent storage',
-        defer: true,
-      });
-      var keys = s.get('#keys');
-      if (!keys) {
-        s.set('#keys', '{}');
-      } else {
-        try {
-          keys = JSON.parse(keys);
-          if (!_.isObject(keys)) {
-            s.set('#keys', '{}');
-          }
-        } catch (e) {
+  createStore: function(name) {
+    return this._createStore(name);
+  },
+
+  _createStore: function(name) {
+    var s = new PersistJS.Store(name, {
+      about: 'This is bumblebee persistent storage',
+      defer: true,
+    });
+    var keys = s.get('#keys');
+    if (!keys) {
+      s.set('#keys', '{}');
+    } else {
+      try {
+        keys = JSON.parse(keys);
+        if (!_.isObject(keys)) {
           s.set('#keys', '{}');
         }
-      }
-      return s;
-    },
-
-    set: function(key, value) {
-      this._checkKey(key);
-      if (!_.isString(value)) {
-        value = JSON.stringify(value);
-      }
-      this._store.set(key, value);
-      this._setKey(key);
-    },
-
-    get: function(key) {
-      this._checkKey(key);
-      var v = this._store.get(key);
-      if (!v) return v;
-      try {
-        return JSON.parse(v);
       } catch (e) {
-        return v;
+        s.set('#keys', '{}');
       }
-    },
+    }
+    return s;
+  },
 
-    remove: function(key) {
-      this._checkKey(key);
-      this._store.remove(key);
-      this._delKey(key);
-    },
+  set: function(key, value) {
+    this._checkKey(key);
+    if (!_.isString(value)) {
+      value = JSON.stringify(value);
+    }
+    this._store.set(key, value);
+    this._setKey(key);
+  },
 
-    clear: function() {
-      var keys = this.get('#keys');
-      for (var k in keys) {
-        this._store.remove(k);
-      }
-      this._store.set('#keys', '{}');
-    },
+  get: function(key) {
+    this._checkKey(key);
+    var v = this._store.get(key);
+    if (!v) return v;
+    try {
+      return JSON.parse(v);
+    } catch (e) {
+      return v;
+    }
+  },
 
-    keys: function() {
-      return JSON.parse(this._store.get('#keys'));
-    },
+  remove: function(key) {
+    this._checkKey(key);
+    this._store.remove(key);
+    this._delKey(key);
+  },
 
-    _setKey: function(key) {
-      var keys = this.keys() || {};
-      keys[key] = 1;
-      this._store.set('#keys', JSON.stringify(keys));
-    },
+  clear: function() {
+    var keys = this.get('#keys');
+    for (var k in keys) {
+      this._store.remove(k);
+    }
+    this._store.set('#keys', '{}');
+  },
 
-    _delKey: function(key) {
-      var keys = this.keys() || {};
-      delete keys[key];
-      this._store.set('#keys', JSON.stringify(keys));
-    },
+  keys: function() {
+    return JSON.parse(this._store.get('#keys'));
+  },
 
-    _checkKey: function(key) {
-      if (!_.isString(key)) {
-        throw new Error('key must be string, received: ' + key);
-      }
-    },
-  });
+  _setKey: function(key) {
+    var keys = this.keys() || {};
+    keys[key] = 1;
+    this._store.set('#keys', JSON.stringify(keys));
+  },
 
-  _.extend(LocalStorage.prototype, Mixins.BeeHive);
+  _delKey: function(key) {
+    var keys = this.keys() || {};
+    delete keys[key];
+    this._store.set('#keys', JSON.stringify(keys));
+  },
 
-  export default LocalStorage;
+  _checkKey: function(key) {
+    if (!_.isString(key)) {
+      throw new Error('key must be string, received: ' + key);
+    }
+  },
+});
 
+_.extend(LocalStorage.prototype, Mixins.BeeHive);
+
+export default LocalStorage;
