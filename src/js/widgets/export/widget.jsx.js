@@ -10,10 +10,8 @@ import BaseWidget from 'js/widgets/base/base_widget';
 import reducers from 'js/widgets/export/reducers/index';
 import actions from 'js/widgets/export/actions/index';
 import App from 'js/widgets/export/containers/App.jsx';
-import ApiQuery from 'js/components/api_query';
-import ApiTargets from 'js/components/api_targets';
-import ApiFeedback from 'js/components/api_feedback';
 import config from 'js/widgets/config';
+
   var View = Backbone.View.extend({
     /**
      * Initialize the view

@@ -1,37 +1,35 @@
 import ExportWidget from 'js/widgets/export/widget.jsx';
-import ApiQuery from 'js/components/api_query';
-import JsonResponse from 'js/components/json_response';
-  var Widget = ExportWidget.extend({
-    initialize: function(options) {
-      // other widgets can send us data through page manager
-      this.on('page-manager-message', function(event, data) {
-        if (event === 'broadcast-payload') {
-          this.ingestBroadcastedPayload(data);
-        }
-      });
-      ExportWidget.prototype.initialize.call(this, options);
-    },
 
-    activate: function(beehive) {
-      this.setBeeHive(beehive);
-      _.bindAll(this, 'setCurrentQuery', 'processResponse');
-      var pubsub = this.getPubSub();
-      pubsub.subscribe(pubsub.DELIVERING_RESPONSE, this.processResponse);
-      ExportWidget.prototype.activate.call(this, beehive);
-    },
-
-    ingestBroadcastedPayload: function(bibcode) {
-      if (bibcode) {
-        this.bibcode = bibcode;
+const Widget = ExportWidget.extend({
+  initialize: function(options) {
+    // other widgets can send us data through page manager
+    this.on('page-manager-message', function(event, data) {
+      if (event === 'broadcast-payload') {
+        this.ingestBroadcastedPayload(data);
       }
-    },
+    });
+    ExportWidget.prototype.initialize.call(this, options);
+  },
 
-    setSubView: function(format) {
-      if (this.bibcode && format) {
-        this.renderWidgetForListOfBibcodes([this.bibcode], { format: format });
-      }
-    },
-  });
+  activate: function(beehive) {
+    this.setBeeHive(beehive);
+    _.bindAll(this, 'setCurrentQuery', 'processResponse');
+    var pubsub = this.getPubSub();
+    pubsub.subscribe(pubsub.DELIVERING_RESPONSE, this.processResponse);
+    ExportWidget.prototype.activate.call(this, beehive);
+  },
 
-  export default Widget;
+  ingestBroadcastedPayload: function(bibcode) {
+    if (bibcode) {
+      this.bibcode = bibcode;
+    }
+  },
 
+  setSubView: function(format) {
+    if (this.bibcode && format) {
+      this.renderWidgetForListOfBibcodes([this.bibcode], { format: format });
+    }
+  },
+});
+
+export default Widget;
