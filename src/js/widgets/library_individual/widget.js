@@ -1,5 +1,5 @@
-import ContainerTemplate from 'hbs!js/widgets/library_individual/templates/layout-container';
-import LoadingTemplate from 'hbs!js/widgets/library_individual/templates/loading-library';
+import ContainerTemplate from 'js/widgets/library_individual/templates/layout-container.html';
+import LoadingTemplate from 'js/widgets/library_individual/templates/loading-library.html';
 import BaseWidget from 'js/widgets/base/base_widget';
 import HeaderView from 'js/widgets/library_individual/views/library_header';
 import AdminView from 'js/widgets/library_individual/views/manage_permissions';

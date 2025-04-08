@@ -14,7 +14,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-define(['js/widgets/base/base_widget', 'js/components/api_query', 'js/components/api_query_updater', 'hbs!js/widgets/classic_form/form', 'js/widgets/paper_search_form/topterms', 'analytics', 'js/widgets/sort/widget.jsx', 'js/widgets/sort/redux/modules/sort-app'], function (BaseWidget, ApiQuery, ApiQueryUpdater, FormTemplate, AutocompleteData, analytics, SortWidget, SortActions) {
+define(['js/widgets/base/base_widget', 'js/components/api_query', 'js/components/api_query_updater', 'js/widgets/classic_form/form.html', 'js/widgets/paper_search_form/topterms', 'analytics', 'js/widgets/sort/widget.jsx', 'js/widgets/sort/redux/modules/sort-app'], function (BaseWidget, ApiQuery, ApiQueryUpdater, FormTemplate, AutocompleteData, analytics, SortWidget, SortActions) {
   // for autocomplete
   function split(val) {
     return val.split(/,\s*/);

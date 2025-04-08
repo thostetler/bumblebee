@@ -1,4 +1,4 @@
-import legendTemplate from 'hbs!js/widgets/facet/graph-facet/templates/year-graph-legend';
+import legendTemplate from 'js/widgets/facet/graph-facet/templates/year-graph-legend.html';
 import BaseGraphView from 'js/widgets/facet/graph-facet/base_graph';
 import Marionette from 'marionette';
 import 'jquery-ui';

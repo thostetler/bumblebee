@@ -8,7 +8,7 @@
  *
  * TODO: it needs to react on browser-back/forward
  */
-define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_query', 'js/components/pubsub_events', 'hbs!js/widgets/filter_visualizer/templates/widget-view', 'hbs!js/widgets/filter_visualizer/templates/item-view', 'js/components/api_feedback', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiQuery, PubSubEvents, WidgetTemplate, ItemTemplate, ApiFeedback, Dependon) {
+define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_query', 'js/components/pubsub_events', 'js/widgets/filter_visualizer/templates/widget-view.html', 'js/widgets/filter_visualizer/templates/item-view.html', 'js/components/api_feedback', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiQuery, PubSubEvents, WidgetTemplate, ItemTemplate, ApiFeedback, Dependon) {
   // Model
   var KeyValue = Backbone.Model.extend({}); // Collection of data
 

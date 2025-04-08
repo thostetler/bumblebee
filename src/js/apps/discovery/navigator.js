@@ -3,7 +3,7 @@
  * the application) - this is a companion to the 'router'
  */
 
-import OrcidModalTemplate from 'hbs!js/apps/discovery/templates/orcid-modal-template';
+import OrcidModalTemplate from 'js/apps/discovery/templates/orcid-modal-template.html';
 import $ from 'jquery';
 import ApiFeedback from 'js/components/api_feedback';
 import ApiQuery from 'js/components/api_query';

@@ -1,4 +1,4 @@
-define(['marionette', 'js/widgets/base/base_widget', 'js/components/api_response', 'js/components/json_response', 'js/components/api_request', 'js/components/api_query', 'js/mixins/dependon', 'hbs!js/widgets/citation_helper/templates/citation_helper_template', 'bootstrap', 'js/components/api_feedback', 'js/components/api_targets', 'analytics'], function (Marionette, BaseWidget, ApiResponse, JsonResponse, ApiRequest, ApiQuery, Dependon, CitationHelperTemplate, bs, ApiFeedback, ApiTargets, analytics) {
+define(['marionette', 'js/widgets/base/base_widget', 'js/components/api_response', 'js/components/json_response', 'js/components/api_request', 'js/components/api_query', 'js/mixins/dependon', 'js/widgets/citation_helper/templates/citation_helper_template.html', 'bootstrap', 'js/components/api_feedback', 'js/components/api_targets', 'analytics'], function (Marionette, BaseWidget, ApiResponse, JsonResponse, ApiRequest, ApiQuery, Dependon, CitationHelperTemplate, bs, ApiFeedback, ApiTargets, analytics) {
   var Model = Backbone.Model.extend({
     defaults: {
       items: [],

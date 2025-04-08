@@ -14,7 +14,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-define(['underscore', 'marionette', 'hbs!js/widgets/preferences/templates/application', 'js/widgets/config'], function (_, Marionette, ApplicationTemplate, config) {
+define(['underscore', 'marionette', 'js/widgets/preferences/templates/application.html', 'js/widgets/config'], function (_, Marionette, ApplicationTemplate, config) {
   var DEFAULTS = {
     numAuthors: {
       initialOptions: _.range(1, 11).concat(['all']),

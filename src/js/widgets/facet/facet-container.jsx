@@ -1,5 +1,5 @@
 import Dropdown from 'js/widgets/facet/facet-dropdown.jsx';
-import { getActiveFacets } from 'js/widgets/facet/reducers';
+import reducer from 'js/widgets/facet/reducers';
 import ToggleList from 'js/widgets/facet/toggle_list.jsx';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -71,7 +71,7 @@ ContainerComponent.propTypes = {
 const mapStateToProps = (state) => {
   return {
     reduxState: state,
-    activeFacets: getActiveFacets(state, state.state.selected),
+    activeFacets: reducer.getActiveFacets(state, state.state.selected),
   };
 };
 

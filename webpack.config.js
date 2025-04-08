@@ -42,8 +42,8 @@ module.exports = {
           partialResolver: function (partial, cb) {
             cb(null, path.join(__dirname, 'src', `${partial}.html`));
           },
-          knownHelpers: ['compare']
-        }
+          knownHelpers: ['compare'],
+        },
       },
       {
         test: /\.(js|jsx|tsx|ts|jsx\.js)$/,

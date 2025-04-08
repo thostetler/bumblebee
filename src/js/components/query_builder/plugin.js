@@ -8,7 +8,7 @@
  *
  */
 
-import RuleTemplate from 'hbs!js/components/query_builder/templates/rule_template';
+import RuleTemplate from 'js/components/query_builder/templates/rule_template.html';
 import $ from 'jquery';
 import ApiQuery from 'js/components/api_query';
 import GenericModule from 'js/components/generic_module';

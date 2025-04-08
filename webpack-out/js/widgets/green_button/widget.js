@@ -1,7 +1,7 @@
 /**
  * A widget for the internal ADS Deployment
  */
-define(['underscore', 'jquery', 'backbone', 'marionette', 'bootstrap', 'js/components/api_query', 'js/components/api_request', 'js/components/api_response', 'js/components/api_feedback', 'js/components/alerts', 'js/widgets/base/base_widget', 'hbs!js/widgets/green_button/templates/widget-view', 'hbs!js/widgets/green_button/templates/item-view', 'hbs!js/widgets/green_button/templates/empty-view'], function (_, $, Backbone, Marionette, Bootstrap, ApiQuery, ApiRequest, ApiResponse, ApiFeedback, Alerts, BaseWidget, WidgetTemplate, ItemTemplate, EmptyTemplate) {
+define(['underscore', 'jquery', 'backbone', 'marionette', 'bootstrap', 'js/components/api_query', 'js/components/api_request', 'js/components/api_response', 'js/components/api_feedback', 'js/components/alerts', 'js/widgets/base/base_widget', 'js/widgets/green_button/templates/widget-view.html', 'js/widgets/green_button/templates/item-view.html', 'js/widgets/green_button/templates/empty-view.html'], function (_, $, Backbone, Marionette, Bootstrap, ApiQuery, ApiRequest, ApiResponse, ApiFeedback, Alerts, BaseWidget, WidgetTemplate, ItemTemplate, EmptyTemplate) {
   var Environment = Backbone.Model.extend({
     defaults: {
       msg: undefined

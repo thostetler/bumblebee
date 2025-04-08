@@ -473,11 +473,11 @@ define(['hbs/handlebars', 'hbs/underscore', 'hbs/json2'], function (Handlebars, 
 
               config.hbs._loadedDeps = config.hbs._loadedDeps || {};
 
-              deps[i] = "hbs!"+partialPath;
+              deps[i] = ""+partialPath;
             }
           }
 
-          depStr = deps.join("', '");
+          depStr = deps.join(".html', '");
 
           helps = helps.concat((metaObj && metaObj.helpers) ? metaObj.helpers : []);
           helpDepStr = disableHelpers ?
@@ -560,7 +560,7 @@ define(['hbs/handlebars', 'hbs/underscore', 'hbs/json2'], function (Handlebars, 
           var configHbs = config.hbs || {};
           var options = _.extend(configHbs.compileOptions || {}, { originalKeyFallback: configHbs.originalKeyFallback });
           var prec = precompile( text, mapping, options);
-          var tmplName = "'hbs!" + name + "',";
+          var tmplName = "'" + name + ".html',";
 
           if(depStr) depStr = ", '"+depStr+"'";
 

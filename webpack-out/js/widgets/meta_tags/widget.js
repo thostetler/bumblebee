@@ -2,7 +2,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-define(['jquery', 'backbone', 'underscore', 'js/widgets/base/base_widget', 'hbs!js/widgets/meta_tags/template/metatags', 'js/mixins/link_generator_mixin'], function ($, Backbone, _, BaseWidget, metatagsTemplate, LinkGenerator) {
+define(['jquery', 'backbone', 'underscore', 'js/widgets/base/base_widget', 'js/widgets/meta_tags/template/metatags.html', 'js/mixins/link_generator_mixin'], function ($, Backbone, _, BaseWidget, metatagsTemplate, LinkGenerator) {
   var View = Backbone.View.extend({
     destroy: function destroy() {
       this.remove();

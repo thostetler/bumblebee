@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/preferences/templates/openurl', 'bootstrap', 'select2'], function (Marionette, OpenURLTemplate, Bootstrap, Select2) {
+define(['marionette', 'js/widgets/preferences/templates/openurl.html', 'bootstrap', 'select2'], function (Marionette, OpenURLTemplate, Bootstrap, Select2) {
   var OpenURLView = Marionette.ItemView.extend({
     template: OpenURLTemplate,
     className: 'panel panel-default s-form-container',

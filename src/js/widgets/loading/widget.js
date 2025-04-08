@@ -3,7 +3,7 @@
  */
 
 import Backbone from 'backbone';
-import loadingTemplate from 'hbs!js/widgets/loading/loading-template';
+import loadingTemplate from 'js/widgets/loading/loading-template.html';
 import BaseWidget from 'js/widgets/base/base_widget';
 import Marionette from 'marionette';
 import 'bootstrap';

@@ -6,7 +6,7 @@
  *
  * It also listens to DELIVERING_RESPONSE event
  */
-define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_response', 'hbs!js/widgets/api_response/templates/widget-view', 'js/components/pubsub_events', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiResponse, WidgetTemplate, PubSubEvents, Dependon) {
+define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_response', 'js/widgets/api_response/templates/widget-view.html', 'js/components/pubsub_events', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiResponse, WidgetTemplate, PubSubEvents, Dependon) {
   var Model = Backbone.Model.extend({});
   var WidgetView = Marionette.ItemView.extend({
     template: WidgetTemplate,

@@ -1,9 +1,9 @@
 /**
  * Created by alex on 5/12/14.
  */
-import innerTemplate from 'hbs!js/widgets/tabs/templates/tabs_inner';
-import outerTemplate from 'hbs!js/widgets/tabs/templates/tabs_outer';
-import titleTemplate from 'hbs!js/widgets/tabs/templates/tabs_title';
+import innerTemplate from 'js/widgets/tabs/templates/tabs_inner.html';
+import outerTemplate from 'js/widgets/tabs/templates/tabs_outer.html';
+import titleTemplate from 'js/widgets/tabs/templates/tabs_title.html';
 import Marionette from 'marionette';
 import _ from 'underscore';
 

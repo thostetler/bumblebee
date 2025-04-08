@@ -1,5 +1,5 @@
-import TOCTemplate from 'hbs!js/wraps/abstract_page_manager/abstract-nav';
-import PageManagerTemplate from 'hbs!js/wraps/abstract_page_manager/abstract-page-layout';
+import TOCTemplate from 'js/wraps/abstract_page_manager/abstract-nav.html';
+import PageManagerTemplate from 'js/wraps/abstract_page_manager/abstract-page-layout.html';
 import PageManagerView from 'js/page_managers/three_column_view';
 import PageManagerController from 'js/page_managers/toc_controller';
 import utils from 'utils';

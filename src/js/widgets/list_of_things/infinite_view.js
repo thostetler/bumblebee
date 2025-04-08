@@ -5,8 +5,8 @@
  *
  */
 
-import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/expanding-item-template';
-import ResultsContainerTemplate from 'hbs!js/widgets/list_of_things/templates/expanding-results-container-template';
+import ItemTemplate from 'js/widgets/list_of_things/templates/expanding-item-template.html';
+import ResultsContainerTemplate from 'js/widgets/list_of_things/templates/expanding-results-container-template.html';
 import Marionette from 'marionette';
 
 var ItemView = Marionette.ItemView.extend({

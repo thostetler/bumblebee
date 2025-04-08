@@ -1,4 +1,4 @@
-import OrcidModalTemplate from 'hbs!js/widgets/preferences/templates/orcid-form-submit-modal';
+import OrcidModalTemplate from 'js/widgets/preferences/templates/orcid-form-submit-modal.html';
 import ApiFeedback from 'js/components/api_feedback';
 import BaseWidget from 'js/widgets/base/base_widget';
 import ApplicationView from 'js/widgets/preferences/views/application';

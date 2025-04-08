@@ -1,11 +1,11 @@
 import analytics from 'analytics';
 import 'backbone-validation';
-import ContainerTemplate from 'hbs!js/widgets/authentication/templates/container';
-import LogInTemplate from 'hbs!js/widgets/authentication/templates/log-in';
-import RegisterTemplate from 'hbs!js/widgets/authentication/templates/register';
-import ResendVerificationEmail from 'hbs!js/widgets/authentication/templates/resend-verification-email';
-import ResetPassword1Template from 'hbs!js/widgets/authentication/templates/reset-password-1';
-import ResetPassword2Template from 'hbs!js/widgets/authentication/templates/reset-password-2';
+import ContainerTemplate from 'js/widgets/authentication/templates/container.html';
+import LogInTemplate from 'js/widgets/authentication/templates/log-in.html';
+import RegisterTemplate from 'js/widgets/authentication/templates/register.html';
+import ResendVerificationEmail from 'js/widgets/authentication/templates/resend-verification-email.html';
+import ResetPassword1Template from 'js/widgets/authentication/templates/reset-password-1.html';
+import ResetPassword2Template from 'js/widgets/authentication/templates/reset-password-2.html';
 import User from 'js/components/user';
 import FormFunctions from 'js/mixins/form_view_functions';
 import BaseWidget from 'js/widgets/base/base_widget';

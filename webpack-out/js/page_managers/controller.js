@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'marionette', 'hbs!js/page_managers/templates/results-page-layout', 'hbs!js/page_managers/templates/results-control-row', 'js/widgets/base/base_widget', 'js/page_managers/three_column_view', 'js/page_managers/view_mixin', 'js/mixins/dependon'], function ($, _, Marionette, pageTemplate, controlRowTemplate, BaseWidget, ThreeColumnView, PageManagerViewMixin, Dependon) {
+define(['jquery', 'underscore', 'marionette', 'js/page_managers/templates/results-page-layout.html', 'js/page_managers/templates/results-control-row.html', 'js/widgets/base/base_widget', 'js/page_managers/three_column_view', 'js/page_managers/view_mixin', 'js/mixins/dependon'], function ($, _, Marionette, pageTemplate, controlRowTemplate, BaseWidget, ThreeColumnView, PageManagerViewMixin, Dependon) {
   var PRIORITY_WIDGETS = ['ShowAbstract'];
   var PageManagerController = BaseWidget.extend({
     initialize: function initialize(options) {

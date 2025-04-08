@@ -1,4 +1,4 @@
-define(['js/page_managers/toc_controller', 'js/page_managers/three_column_view', 'hbs!js/wraps/user_settings_page_manager/user-settings-layout', 'hbs!js/wraps/user_settings_page_manager/user_nav'], function (PageManagerController, PageManagerView, PageManagerTemplate, TOCTemplate) {
+define(['js/page_managers/toc_controller', 'js/page_managers/three_column_view', 'js/wraps/user_settings_page_manager/user-settings-layout.html', 'js/wraps/user_settings_page_manager/user_nav.html'], function (PageManagerController, PageManagerView, PageManagerTemplate, TOCTemplate) {
   var PageManager = PageManagerController.extend({
     TOCTemplate: TOCTemplate,
     createView: function createView(options) {

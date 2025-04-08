@@ -1,7 +1,7 @@
 import analytics from "analytics";
 import bowser from "bowser";
-import OptionDropdownTemplate from "hbs!js/widgets/search_bar/templates/option-dropdown";
-import SearchBarTemplate from "hbs!js/widgets/search_bar/templates/search_bar_template";
+import OptionDropdownTemplate from "js/widgets/search_bar/templates/option-dropdown.html";
+import SearchBarTemplate from "js/widgets/search_bar/templates/search_bar_template.html";
 import ApiFeedback from "js/components/api_feedback";
 import ApiQuery from "js/components/api_query";
 import QueryValidator from "js/components/query_validator";
@@ -12,15 +12,7 @@ import quickFieldDesc from "js/widgets/search_bar/quick-field-desc";
 import oldMatcher from "libs/select2/matcher";
 import Marionette from "marionette";
 import _ from "underscore";
-import { render
-
-:
-renderAutocomplete, autocompleteSource;
-:
-autocompleteArray;
-}
-from;
-"js/widgets/search_bar/autocomplete";
+import autocomplete from './autocomplete';
 
 /**
  * The default databases to filter by if the user has not set any in their preferences
@@ -175,7 +167,7 @@ var SearchBarView = Marionette.ItemView.extend({
 
     const $input = this.$("input.q");
     this.$input = $input;
-    renderAutocomplete($input);
+    autocomplete.renderAutocomplete($input);
 
     this.$("[data-toggle=\"tooltip\"]").tooltip();
   },
@@ -468,7 +460,7 @@ var SearchBarView = Marionette.ItemView.extend({
     this.trigger("start_search", newQuery);
 
     // let analytics know what type of query it was
-    fields = _.chain(autocompleteArray)
+    fields = _.chain(autocomplete.autocompleteArray)
     .pluck("value")
     .map(function(b) {
       var m = b.match(/\w+:|\w+\(/);

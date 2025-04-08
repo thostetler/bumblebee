@@ -1,5 +1,5 @@
-import orcidTemplate from 'hbs!js/widgets/preferences/templates/orcid';
-import orcidNameRowTemplate from 'hbs!js/widgets/preferences/templates/orcid-name-row-template';
+import orcidTemplate from 'js/widgets/preferences/templates/orcid.html';
+import orcidNameRowTemplate from 'js/widgets/preferences/templates/orcid-name-row-template.html';
 import Marionette from 'marionette';
 
 var OrcidView = Marionette.ItemView.extend({

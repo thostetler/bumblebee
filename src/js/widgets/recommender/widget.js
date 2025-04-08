@@ -1,5 +1,5 @@
 import analytics from 'bootstrap';
-import RecommenderTemplate from 'hbs!js/widgets/recommender/templates/recommender_template';
+import RecommenderTemplate from 'js/widgets/recommender/templates/recommender_template.html';
 import ApiRequest from 'js/components/api_request';
 import ApiTargets from 'js/components/api_targets';
 import BaseWidget from 'js/widgets/base/base_widget';

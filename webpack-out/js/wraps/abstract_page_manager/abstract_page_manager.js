@@ -1,4 +1,4 @@
-define(['js/page_managers/toc_controller', 'js/page_managers/three_column_view', 'hbs!js/wraps/abstract_page_manager/abstract-page-layout', 'hbs!js/wraps/abstract_page_manager/abstract-nav', 'utils', 'analytics'], function (PageManagerController, PageManagerView, PageManagerTemplate, TOCTemplate, utils) {
+define(['js/page_managers/toc_controller', 'js/page_managers/three_column_view', 'js/wraps/abstract_page_manager/abstract-page-layout.html', 'js/wraps/abstract_page_manager/abstract-nav.html', 'utils', 'analytics'], function (PageManagerController, PageManagerView, PageManagerTemplate, TOCTemplate, utils) {
   var PageManager = PageManagerController.extend({
     persistentWidgets: ['SearchWidget', 'ShowAbstract', 'ShowCitations', 'ShowToc', 'ShowReferences', 'tocWidget'],
     TOCTemplate: TOCTemplate,

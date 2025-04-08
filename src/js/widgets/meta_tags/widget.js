@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import metatagsTemplate from 'hbs!js/widgets/meta_tags/template/metatags';
+import metatagsTemplate from 'js/widgets/meta_tags/template/metatags.html';
 import $ from 'jquery';
 import LinkGenerator from 'js/mixins/link_generator_mixin';
 import BaseWidget from 'js/widgets/base/base_widget';

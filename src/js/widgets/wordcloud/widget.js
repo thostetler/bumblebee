@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import d3 from 'd3';
-import SelectedListTemplate from 'hbs!js/widgets/wordcloud/templates/selected-list-template';
-import WordCloudTemplate from 'hbs!js/widgets/wordcloud/templates/wordcloud-template';
+import SelectedListTemplate from 'js/widgets/wordcloud/templates/selected-list-template.html';
+import WordCloudTemplate from 'js/widgets/wordcloud/templates/wordcloud-template.html';
 import $ from 'jquery';
 import ApiFeedback from 'js/components/api_feedback';
 import 'jquery-ui';

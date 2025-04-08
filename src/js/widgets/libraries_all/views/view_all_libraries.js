@@ -1,9 +1,9 @@
-import ErrorTemplate from 'hbs!js/widgets/libraries_all/templates/error-libraries';
-import LibraryContainer from 'hbs!js/widgets/libraries_all/templates/libraries-list-container';
-import LibraryItem from 'hbs!js/widgets/libraries_all/templates/library-item';
-import LoadingTemplate from 'hbs!js/widgets/libraries_all/templates/loading-libraries';
-import NoLibrariesTemplate from 'hbs!js/widgets/libraries_all/templates/no-libraries';
-import NoResultTemplate from 'hbs!js/widgets/libraries_all/templates/no-result';
+import ErrorTemplate from 'js/widgets/libraries_all/templates/error-libraries.html';
+import LibraryContainer from 'js/widgets/libraries_all/templates/libraries-list-container.html';
+import LibraryItem from 'js/widgets/libraries_all/templates/library-item.html';
+import LoadingTemplate from 'js/widgets/libraries_all/templates/loading-libraries.html';
+import NoLibrariesTemplate from 'js/widgets/libraries_all/templates/no-libraries.html';
+import NoResultTemplate from 'js/widgets/libraries_all/templates/no-result.html';
 import Marionette from 'marionette';
 
 var LibraryItemView = Marionette.ItemView.extend({

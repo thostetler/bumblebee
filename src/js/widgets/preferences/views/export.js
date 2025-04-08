@@ -1,4 +1,4 @@
-import ExportTemplate from 'hbs!js/widgets/preferences/templates/export';
+import ExportTemplate from 'js/widgets/preferences/templates/export.html';
 import config from 'js/widgets/config';
 import Marionette from 'marionette';
 import _ from 'underscore';

@@ -1,4 +1,4 @@
-define(['js/page_managers/toc_controller', 'js/page_managers/toc_widget', 'js/page_managers/three_column_view', 'hbs!js/wraps/libraries_page_manager/libraries-page-layout', 'hbs!js/wraps/libraries_page_manager/libraries-nav'], function (TOCController, TOCView, PageManagerView, PageManagerTemplate, TOCTemplate) {
+define(['js/page_managers/toc_controller', 'js/page_managers/toc_widget', 'js/page_managers/three_column_view', 'js/wraps/libraries_page_manager/libraries-page-layout.html', 'js/wraps/libraries_page_manager/libraries-nav.html'], function (TOCController, TOCView, PageManagerView, PageManagerTemplate, TOCTemplate) {
   var PageManager = TOCController.extend({
     TOCTemplate: TOCTemplate,
     TOCEvents: {

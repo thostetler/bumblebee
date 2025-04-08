@@ -3,8 +3,8 @@
  */
 
 import Backbone from 'backbone';
-import ItemTemplate from 'hbs!js/widgets/api_query/templates/item-view';
-import WidgetTemplate from 'hbs!js/widgets/api_query/templates/widget-view';
+import ItemTemplate from 'js/widgets/api_query/templates/item-view.html';
+import WidgetTemplate from 'js/widgets/api_query/templates/widget-view.html';
 import $ from 'jquery';
 import ApiQuery from 'js/components/api_query';
 import PubSubEvents from 'js/components/pubsub_events';

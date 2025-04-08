@@ -13,8 +13,8 @@
  */
 
 import Backbone from 'backbone';
-import ItemTemplate from 'hbs!js/widgets/breadcrumb/templates/item-view';
-import WidgetTemplate from 'hbs!js/widgets/breadcrumb/templates/widget-view';
+import ItemTemplate from 'js/widgets/breadcrumb/templates/item-view.html';
+import WidgetTemplate from 'js/widgets/breadcrumb/templates/widget-view.html';
 import ApiQuery from 'js/components/api_query';
 import Dependon from 'js/mixins/dependon';
 import Marionette from 'marionette';

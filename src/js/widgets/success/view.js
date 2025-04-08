@@ -1,4 +1,4 @@
-import SuccessTemplate from 'hbs!js/widgets/success/success_template';
+import SuccessTemplate from 'js/widgets/success/success_template.html';
 import Marionette from 'marionette';
 
 var SuccessView = Marionette.ItemView.extend({

@@ -3,7 +3,7 @@
  */
 import Backbone from 'backbone';
 import Clipboard from 'clipboard';
-import abstractTemplate from 'hbs!js/widgets/abstract/templates/abstract_template';
+import abstractTemplate from 'js/widgets/abstract/templates/abstract_template.html';
 import $ from 'jquery';
 import ApiRequest from 'js/components/api_request';
 import ApiTargets from 'js/components/api_targets';

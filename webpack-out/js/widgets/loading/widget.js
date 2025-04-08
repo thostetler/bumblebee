@@ -1,7 +1,7 @@
 /**
  * Created by alex on 7/24/14.
  */
-define(['marionette', 'backbone', 'js/widgets/base/base_widget', 'hbs!js/widgets/loading/loading-template', 'bootstrap'], function (Marionette, Backbone, BaseWidget, loadingTemplate) {
+define(['marionette', 'backbone', 'js/widgets/base/base_widget', 'js/widgets/loading/loading-template.html', 'bootstrap'], function (Marionette, Backbone, BaseWidget, loadingTemplate) {
   var LoadingModel = Backbone.Model.extend({});
   var LoadingView = Marionette.ItemView.extend({
     initialize: function initialize(options) {

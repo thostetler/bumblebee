@@ -1,5 +1,5 @@
 import analytics from 'analytics';
-import ItemTemplate from 'hbs!js/widgets/list_of_things/templates/item-template';
+import ItemTemplate from 'js/widgets/list_of_things/templates/item-template.html';
 import Marionette from 'marionette';
 import MathJax from 'mathjax';
 

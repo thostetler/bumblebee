@@ -3,7 +3,7 @@
  * and display details
  *
  */
-define(['js/widgets/list_of_things/widget', 'js/widgets/abstract/widget', 'js/mixins/add_stable_index_to_collection', 'js/mixins/link_generator_mixin', 'js/mixins/formatter', 'hbs!js/widgets/results/templates/container-template', 'js/mixins/papers_utils', 'js/mixins/expose_metadata', 'js/modules/orcid/extension', 'js/mixins/dependon', 'js/components/api_feedback'], function (ListOfThingsWidget, AbstractWidget, PaginationMixin, LinkGenerator, Formatter, ContainerTemplate, PapersUtilsMixin, MetadataMixin, OrcidExtension, Dependon, ApiFeedback) {
+define(['js/widgets/list_of_things/widget', 'js/widgets/abstract/widget', 'js/mixins/add_stable_index_to_collection', 'js/mixins/link_generator_mixin', 'js/mixins/formatter', 'js/widgets/results/templates/container-template.html', 'js/mixins/papers_utils', 'js/mixins/expose_metadata', 'js/modules/orcid/extension', 'js/mixins/dependon', 'js/components/api_feedback'], function (ListOfThingsWidget, AbstractWidget, PaginationMixin, LinkGenerator, Formatter, ContainerTemplate, PapersUtilsMixin, MetadataMixin, OrcidExtension, Dependon, ApiFeedback) {
   var ResultsWidget = ListOfThingsWidget.extend({
     initialize: function initialize() {
       ListOfThingsWidget.prototype.initialize.apply(this, arguments); // now adjusting the List Model

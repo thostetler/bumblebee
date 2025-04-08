@@ -1,4 +1,4 @@
-import LibraryHeaderTemplate from 'hbs!js/widgets/library_individual/templates/library-header';
+import LibraryHeaderTemplate from 'js/widgets/library_individual/templates/library-header.html';
 import Marionette from 'marionette';
 
 var LibraryTitleModel = Backbone.Model.extend({

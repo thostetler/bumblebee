@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import queryInfoTemplate from 'hbs!js/widgets/query_info/query_info_template';
+import queryInfoTemplate from 'js/widgets/query_info/query_info_template.html';
 import FormatMixin from 'js/mixins/formatter';
 import BaseWidget from 'js/widgets/base/base_widget';
 import Marionette from 'marionette';

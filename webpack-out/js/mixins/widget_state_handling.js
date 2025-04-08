@@ -4,7 +4,7 @@
  * 'view_states')
  *
  */
-define(['underscore', 'jquery', 'js/widgets/widget_states', 'hbs!js/widgets/base/templates/loading-template', 'hbs!js/widgets/base/templates/loading-template-small'], function (_, $, WidgetStates, LoadingTemplate, LoadingTemplateSmall) {
+define(['underscore', 'jquery', 'js/widgets/widget_states', 'js/widgets/base/templates/loading-template.html', 'js/widgets/base/templates/loading-template-small.html'], function (_, $, WidgetStates, LoadingTemplate, LoadingTemplateSmall) {
   /**
    * This function tries hard to grab the topmost container (view)
    * of the widget (just using some probable locations)

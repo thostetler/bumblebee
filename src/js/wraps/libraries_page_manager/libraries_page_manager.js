@@ -1,5 +1,5 @@
-import TOCTemplate from 'hbs!js/wraps/libraries_page_manager/libraries-nav';
-import PageManagerTemplate from 'hbs!js/wraps/libraries_page_manager/libraries-page-layout';
+import TOCTemplate from 'js/wraps/libraries_page_manager/libraries-nav.html';
+import PageManagerTemplate from 'js/wraps/libraries_page_manager/libraries-page-layout.html';
 import PageManagerView from 'js/page_managers/three_column_view';
 import TOCController from 'js/page_managers/toc_controller';
 

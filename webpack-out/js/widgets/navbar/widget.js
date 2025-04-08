@@ -1,4 +1,4 @@
-define(['underscore', 'marionette', 'js/widgets/base/base_widget', 'hbs!js/widgets/navbar/template/navbar', 'hbs!js/widgets/navbar/template/feedback', 'js/components/api_query_updater', 'js/components/api_query', 'js/components/api_request', 'js/components/api_targets', 'utils', 'bootstrap'], function (_, Marionette, BaseWidget, NavBarTemplate, FeedbackTemplate, ApiQueryUpdater, ApiQuery, ApiRequest, ApiTargets, utils) {
+define(['underscore', 'marionette', 'js/widgets/base/base_widget', 'js/widgets/navbar/template/navbar.html', 'js/widgets/navbar/template/feedback.html', 'js/components/api_query_updater', 'js/components/api_query', 'js/components/api_request', 'js/components/api_targets', 'utils', 'bootstrap'], function (_, Marionette, BaseWidget, NavBarTemplate, FeedbackTemplate, ApiQueryUpdater, ApiQuery, ApiRequest, ApiTargets, utils) {
   var NavView;
   var NavModel;
   var NavWidget;

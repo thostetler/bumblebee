@@ -1,4 +1,4 @@
-import OpenURLTemplate from 'hbs!js/widgets/preferences/templates/openurl';
+import OpenURLTemplate from 'js/widgets/preferences/templates/openurl.html';
 import Marionette from 'marionette';
 
 var OpenURLView = Marionette.ItemView.extend({

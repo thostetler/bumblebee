@@ -1,5 +1,5 @@
-import controlRowTemplate from 'hbs!js/page_managers/templates/results-control-row';
-import pageTemplate from 'hbs!js/page_managers/templates/results-page-layout';
+import controlRowTemplate from 'js/page_managers/templates/results-control-row.html';
+import pageTemplate from 'js/page_managers/templates/results-page-layout.html';
 import Marionette from 'marionette';
 import _ from 'underscore';
 import 'js/widgets/base/base_widget';

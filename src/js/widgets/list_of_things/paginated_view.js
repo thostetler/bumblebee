@@ -5,10 +5,10 @@
 
 import analytics from "analytics";
 import Backbone from "backbone";
-import EmptyViewTemplate from "hbs!js/widgets/list_of_things/templates/empty-view-template";
-import ErrorViewTemplate from "hbs!js/widgets/list_of_things/templates/error-view-template";
-import ResultsContainerTemplate from "hbs!js/widgets/list_of_things/templates/results-container-template";
-import loadingTemplate from "hbs!js/wraps/widget/loading/template";
+import EmptyViewTemplate from "js/widgets/list_of_things/templates/empty-view-template.html";
+import ErrorViewTemplate from "js/widgets/list_of_things/templates/error-view-template.html";
+import ResultsContainerTemplate from "js/widgets/list_of_things/templates/results-container-template.html";
+import loadingTemplate from "js/wraps/widget/loading/template.html";
 import ItemView from "js/widgets/list_of_things/item_view";
 import Marionette from "marionette";
 import MathJax from "mathjax";

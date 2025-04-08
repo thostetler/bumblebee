@@ -12,4 +12,3 @@ export default function createStore(config) {
   var store = _.assign({}, _.cloneDeep(Reducer.defaultState), config);
   return Redux.createStore(Reducer, store, Redux.applyMiddleware(Thunk.default));
 }
-export default createStore;

@@ -1,4 +1,4 @@
-import PageManagerTemplate from 'hbs!js/page_managers/templates/authentication-page-layout';
+import PageManagerTemplate from 'js/page_managers/templates/authentication-page-layout.html';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/one_column_view';
 

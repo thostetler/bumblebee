@@ -46,7 +46,7 @@ const STATIC_FIELDS = {
  * @param {string} options.linkServer base url to use for generating link
  * @returns {string} the openUrl url
  */
-const getOpenUrl = (options) => {
+export default function getOpenUrl(options) {
   const { metadata, linkServer = '' } = options || {};
 
   const { page, doi, doctype, bibcode, author, issue, volume, pub, year, title, issn, isbn } = metadata || {};
@@ -116,8 +116,4 @@ const getOpenUrl = (options) => {
     });
 
   return encodeURI(openUrl + fields.join('&'));
-};
-
-export default {
-  getOpenUrl,
 };

@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/alerts/templates/modal_template'], function (Marionette, ModalTemplate) {
+define(['marionette', 'js/widgets/alerts/templates/modal_template.html'], function (Marionette, ModalTemplate) {
   var ModalView = Marionette.ItemView.extend({
     id: '#alert-modal-content',
     template: ModalTemplate,

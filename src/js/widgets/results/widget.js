@@ -4,7 +4,7 @@
  *
  */
 
-import ContainerTemplate from 'hbs!js/widgets/results/templates/container-template';
+import ContainerTemplate from 'js/widgets/results/templates/container-template.html';
 import PaginationMixin from 'js/mixins/add_stable_index_to_collection';
 import Dependon from 'js/mixins/dependon';
 import MetadataMixin from 'js/mixins/expose_metadata';

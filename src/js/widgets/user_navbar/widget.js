@@ -1,4 +1,4 @@
-import NavTemplate from 'hbs!js/widgets/user_navbar/nav_template';
+import NavTemplate from 'js/widgets/user_navbar/nav_template.html';
 import Dependon from 'js/mixins/dependon';
 import Marionette from 'marionette';
 

@@ -1,4 +1,4 @@
-define(['js/page_managers/controller', 'js/page_managers/three_column_view', 'hbs!js/page_managers/templates/results-page-layout', 'js/mixins/side_bar_manager', 'jquery', 'utils'], function (PageManagerController, PageManagerView, PageManagerTemplate, SideBarManagerMixin, $, utils) {
+define(['js/page_managers/controller', 'js/page_managers/three_column_view', 'js/page_managers/templates/results-page-layout.html', 'js/mixins/side_bar_manager', 'jquery', 'utils'], function (PageManagerController, PageManagerView, PageManagerTemplate, SideBarManagerMixin, $, utils) {
   var PageManager = PageManagerController.extend({
     initialize: function initialize() {
       var _this = this;

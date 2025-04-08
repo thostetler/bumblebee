@@ -1,5 +1,5 @@
-import legendTemplate from 'hbs!js/widgets/facet/graph-facet/templates/h-index-graph-legend';
-import sliderWindowTemplate from 'hbs!js/widgets/facet/graph-facet/templates/h-index-slider-window';
+import legendTemplate from 'js/widgets/facet/graph-facet/templates/h-index-graph-legend.html';
+import sliderWindowTemplate from 'js/widgets/facet/graph-facet/templates/h-index-slider-window.html';
 import BaseGraphView from 'js/widgets/facet/graph-facet/base_graph';
 import Marionette from 'marionette';
 

@@ -1,4 +1,4 @@
-define(['marionette', 'js/components/api_query', 'js/widgets/base/base_widget', 'js/widgets/library_individual/views/library_header', 'js/widgets/library_individual/views/manage_permissions', 'hbs!js/widgets/library_individual/templates/layout-container', 'hbs!js/widgets/library_individual/templates/loading-library'], function (Marionette, ApiQuery, BaseWidget, HeaderView, AdminView, ContainerTemplate, LoadingTemplate) {
+define(['marionette', 'js/components/api_query', 'js/widgets/base/base_widget', 'js/widgets/library_individual/views/library_header', 'js/widgets/library_individual/views/manage_permissions', 'js/widgets/library_individual/templates/layout-container.html', 'js/widgets/library_individual/templates/loading-library.html'], function (Marionette, ApiQuery, BaseWidget, HeaderView, AdminView, ContainerTemplate, LoadingTemplate) {
   var LoadingView = Marionette.ItemView.extend({
     template: LoadingTemplate
   });

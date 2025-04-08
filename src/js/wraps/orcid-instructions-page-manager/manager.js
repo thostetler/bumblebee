@@ -1,4 +1,4 @@
-import PageManagerTemplate from 'hbs!js/wraps/orcid-instructions-page-manager/orcid-instructions';
+import PageManagerTemplate from 'js/wraps/orcid-instructions-page-manager/orcid-instructions.html';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/one_column_view';
 

@@ -1,4 +1,4 @@
-import PageManagerTemplate from 'hbs!js/wraps/error_page_manager/404';
+import PageManagerTemplate from 'js/wraps/error_page_manager/404.html';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/one_column_view';
 import utils from 'utils';

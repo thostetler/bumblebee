@@ -1,15 +1,12 @@
 import GenericModule from 'js/components/generic_module';
 import Mixins from 'js/mixins/dependon';
-import module from 'module';
 import PersistJS from 'persist-js';
 import _ from 'underscore';
 
-var namespace = module.config().namespace || '';
-
-var LocalStorage = GenericModule.extend({
+const LocalStorage = GenericModule.extend({
   constructor: function(opts) {
     opts = opts || {};
-    this._store = this.createStore(namespace + (opts.name || ''));
+    this._store = this.createStore(opts.name || '');
   },
 
   createStore: function(name) {

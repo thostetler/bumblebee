@@ -3,7 +3,7 @@
  * and display details
  *
  */
-define(['underscore', 'js/widgets/list_of_things/widget', 'js/widgets/base/base_widget', 'js/mixins/add_stable_index_to_collection', 'js/mixins/link_generator_mixin', 'js/mixins/formatter', 'hbs!js/modules/orcid/widget/templates/container-template', 'js/mixins/papers_utils', 'js/components/api_query', 'js/components/api_feedback', 'js/components/json_response', 'hbs!js/modules/orcid/widget/templates/empty-template', 'js/modules/orcid/extension', 'js/modules/orcid/bio'], function (_, ListOfThingsWidget, BaseWidget, PaginationMixin, LinkGenerator, Formatter, ContainerTemplate, PapersUtilsMixin, ApiQuery, ApiFeedback, JsonResponse, EmptyViewTemplate, OrcidExtension, OrcidBio) {
+define(['underscore', 'js/widgets/list_of_things/widget', 'js/widgets/base/base_widget', 'js/mixins/add_stable_index_to_collection', 'js/mixins/link_generator_mixin', 'js/mixins/formatter', 'js/modules/orcid/widget/templates/container-template.html', 'js/mixins/papers_utils', 'js/components/api_query', 'js/components/api_feedback', 'js/components/json_response', 'js/modules/orcid/widget/templates/empty-template.html', 'js/modules/orcid/extension', 'js/modules/orcid/bio'], function (_, ListOfThingsWidget, BaseWidget, PaginationMixin, LinkGenerator, Formatter, ContainerTemplate, PapersUtilsMixin, ApiQuery, ApiFeedback, JsonResponse, EmptyViewTemplate, OrcidExtension, OrcidBio) {
   var ResultsWidget = ListOfThingsWidget.extend({
     initialize: function initialize(options) {
       ListOfThingsWidget.prototype.initialize.apply(this, arguments);

@@ -5,7 +5,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /**
  * Created by alex on 5/19/14.
  */
-define(['marionette', 'js/components/api_request', 'js/components/api_targets', 'clipboard', 'backbone', 'jquery', 'underscore', 'cache', 'js/widgets/base/base_widget', 'hbs!js/widgets/abstract/templates/abstract_template', 'js/components/api_query', 'js/mixins/link_generator_mixin', 'js/mixins/papers_utils', 'mathjax', 'bootstrap', 'utils', 'analytics'], function (Marionette, ApiRequest, ApiTargets, Clipboard, Backbone, $, _, Cache, BaseWidget, abstractTemplate, ApiQuery, LinkGeneratorMixin, PapersUtils, MathJax, Bootstrap, utils, analytics) {
+define(['marionette', 'js/components/api_request', 'js/components/api_targets', 'clipboard', 'backbone', 'jquery', 'underscore', 'cache', 'js/widgets/base/base_widget', 'js/widgets/abstract/templates/abstract_template.html', 'js/components/api_query', 'js/mixins/link_generator_mixin', 'js/mixins/papers_utils', 'mathjax', 'bootstrap', 'utils', 'analytics'], function (Marionette, ApiRequest, ApiTargets, Clipboard, Backbone, $, _, Cache, BaseWidget, abstractTemplate, ApiQuery, LinkGeneratorMixin, PapersUtils, MathJax, Bootstrap, utils, analytics) {
   var MAX_AUTHORS = 20;
   var AbstractModel = Backbone.Model.extend({
     defaults: function defaults() {

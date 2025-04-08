@@ -408,11 +408,7 @@ handlers[ApiFeedback.CODES.API_REQUEST_ERROR] = function(feedback) {
     this._tmp.api_failures = this._tmp.api_failures || {};
     this._tmp.api_failures[n] = this._tmp.api_failures[n] || 0;
     this._tmp.api_failures[n] += 1;
-    var numErr = this._tmp.api_failures[n];
-  } else if (!feedback.beVerbose) return;
-
-  // we'll not show messages until search cycle is over
-  if (!this._tmp.cycle_started)
+  }
 };
 
 handlers[ApiFeedback.CODES.QUERY_ASSISTANT] = function(feedback) {

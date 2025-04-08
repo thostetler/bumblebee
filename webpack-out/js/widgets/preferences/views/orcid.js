@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/preferences/templates/orcid', 'hbs!js/widgets/preferences/templates/orcid-name-row-template'], function (Marionette, orcidTemplate, orcidNameRowTemplate) {
+define(['marionette', 'js/widgets/preferences/templates/orcid.html', 'js/widgets/preferences/templates/orcid-name-row-template.html'], function (Marionette, orcidTemplate, orcidNameRowTemplate) {
   var OrcidView = Marionette.ItemView.extend({
     template: orcidTemplate,
     className: 'panel panel-default s-form-container',

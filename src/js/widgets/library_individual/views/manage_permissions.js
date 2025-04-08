@@ -1,6 +1,6 @@
-import MakePublicTemplate from 'hbs!js/widgets/library_individual/templates/make-public';
-import ManagePermissionsContainer from 'hbs!js/widgets/library_individual/templates/manage-permissions-container';
-import transferOwnershipModal from 'hbs!js/widgets/library_individual/templates/transfer-ownership-modal';
+import MakePublicTemplate from 'js/widgets/library_individual/templates/make-public.html';
+import ManagePermissionsContainer from 'js/widgets/library_individual/templates/manage-permissions-container.html';
+import transferOwnershipModal from 'js/widgets/library_individual/templates/transfer-ownership-modal.html';
 import Marionette from 'marionette';
 import LibraryCollaboratorsComponent from 'reactify!js/react/BumblebeeWidget?LibraryCollaborators';
 

@@ -8,7 +8,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * The main 'navigation' endpoints (the part executed inside
  * the application) - this is a companion to the 'router'
  */
-define(['jquery', 'backbone', 'underscore', 'js/components/navigator', 'js/components/api_feedback', 'js/components/api_query_updater', 'js/components/json_response', 'js/components/api_query', 'js/components/api_request', 'js/components/api_targets', 'hbs!404', 'hbs!js/apps/discovery/templates/orcid-modal-template', 'js/mixins/api_access', 'react-redux'], function ($, Backbone, _, Navigator, ApiFeedback, ApiQueryUpdater, JsonResponse, ApiQuery, ApiRequest, ApiTargets, ErrorTemplate, OrcidModalTemplate, ApiAccessMixin, ReactRedux) {
+define(['jquery', 'backbone', 'underscore', 'js/components/navigator', 'js/components/api_feedback', 'js/components/api_query_updater', 'js/components/json_response', 'js/components/api_query', 'js/components/api_request', 'js/components/api_targets', '404.html', 'js/apps/discovery/templates/orcid-modal-template.html', 'js/mixins/api_access', 'react-redux'], function ($, Backbone, _, Navigator, ApiFeedback, ApiQueryUpdater, JsonResponse, ApiQuery, ApiRequest, ApiTargets, ErrorTemplate, OrcidModalTemplate, ApiAccessMixin, ReactRedux) {
   var NavigatorService = Navigator.extend({
     start: function start(app) {
       /**

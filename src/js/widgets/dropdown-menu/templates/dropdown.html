@@ -1,16 +1,13 @@
 <!-- Single button -->
-<button aria-expanded="false" class="btn {{btnType}} dropdown-toggle" data-toggle="dropdown" type="button">
-  <i class="{{iconClass}}"></i>
-  <h2>{{dropdownTitle}}</h2> <span class="caret"></span>
+<button type="button" class="btn {{btnType}} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+  <i class="{{iconClass}}"></i> <h2>{{dropdownTitle}}</h2> <span class="caret"></span>
 </button>
 <div class="dropdown-menu {{#if pullRight}}pull-right{{/if}}" role="menu">
   {{#if selectedOption }}
   {{#if selectedPapers}}
   <div class="s-divider-bottom">
-    <label><input checked class="papers" onlySelected type="radio" {{ {{#if }}/if}} name="papers-{{dropdownTitle}}"
-      value="selected"/> selected papers</label>
-    <label><input checked class="papers" onlySelected}} type="radio" {{ {{#unless/unless}}
-      name="papers-{{dropdownTitle}}" value="all"/> all papers</label>
+    <label><input class="papers" type="radio" {{#if onlySelected }} checked {{/if}} name="papers-{{dropdownTitle}}" value="selected"/> selected papers</label>
+    <label><input class="papers" type="radio" {{#unless onlySelected}} checked {{/unless}} name="papers-{{dropdownTitle}}" value="all"/> all papers</label>
   </div>
   {{/if}}
   {{/if}}

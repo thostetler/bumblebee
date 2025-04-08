@@ -1,4 +1,4 @@
-import FacetGraphTemplate from 'hbs!js/widgets/facet/graph-facet/templates/graph';
+import FacetGraphTemplate from 'js/widgets/facet/graph-facet/templates/graph.html';
 import $ from 'jquery';
 import Marionette from 'marionette';
 

@@ -1,4 +1,4 @@
-import FooterTemplate from 'hbs!js/widgets/footer/footer';
+import FooterTemplate from 'js/widgets/footer/footer.html';
 import Marionette from 'marionette';
 
 var Footer = Marionette.ItemView.extend({

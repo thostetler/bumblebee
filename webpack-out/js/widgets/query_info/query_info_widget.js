@@ -1,4 +1,4 @@
-define(['marionette', 'backbone', 'underscore', 'js/components/api_request', 'js/components/api_query', 'js/widgets/base/base_widget', 'hbs!js/widgets/query_info/query_info_template', 'js/mixins/formatter', 'bootstrap', 'js/components/api_feedback'], function (Marionette, Backbone, _, ApiRequest, ApiQuery, BaseWidget, queryInfoTemplate, FormatMixin, Bootstrap, ApiFeedback) {
+define(['marionette', 'backbone', 'underscore', 'js/components/api_request', 'js/components/api_query', 'js/widgets/base/base_widget', 'js/widgets/query_info/query_info_template.html', 'js/mixins/formatter', 'bootstrap', 'js/components/api_feedback'], function (Marionette, Backbone, _, ApiRequest, ApiQuery, BaseWidget, queryInfoTemplate, FormatMixin, Bootstrap, ApiFeedback) {
   var QueryModel = Backbone.Model.extend({
     defaults: {
       selected: 0,

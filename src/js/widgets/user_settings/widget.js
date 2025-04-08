@@ -1,8 +1,8 @@
 import 'backbone.stickit';
-import TokenTemplate from 'hbs!js/widgets/user_settings/templates/api_key';
-import EmailTemplate from 'hbs!js/widgets/user_settings/templates/change_email';
-import PasswordTemplate from 'hbs!js/widgets/user_settings/templates/change_password';
-import DeleteAccountTemplate from 'hbs!js/widgets/user_settings/templates/delete_account';
+import TokenTemplate from 'js/widgets/user_settings/templates/api_key.html';
+import EmailTemplate from 'js/widgets/user_settings/templates/change_email.html';
+import PasswordTemplate from 'js/widgets/user_settings/templates/change_password.html';
+import DeleteAccountTemplate from 'js/widgets/user_settings/templates/delete_account.html';
 import FormFunctions from 'js/mixins/form_view_functions';
 import BaseWidget from 'js/widgets/base/base_widget';
 import SuccessView from 'js/widgets/success/view';

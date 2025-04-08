@@ -1,5 +1,5 @@
-import { getOpenUrl } from 'js/mixins/openurl_generator';
 import _ from 'underscore';
+import openUrlGenerator from 'js/mixins/openurl_generator';
 
 const GATEWAY_BASE_URL = '/link_gateway/';
 
@@ -494,7 +494,7 @@ const _processLinkData = function(data) {
     //   - the user HAS a library link server
     if (identifier && linkServer && countOpenUrls < 1) {
       fullTextSources.push({
-        url: getOpenUrl({ metadata: data, linkServer }),
+        url: openUrlGenerator({ metadata: data, linkServer }),
         openUrl: true,
         type: 'INSTITUTION',
         shortName: 'My Institution',

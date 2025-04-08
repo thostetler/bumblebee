@@ -1,4 +1,4 @@
-import CitationHelperTemplate from 'hbs!js/widgets/citation_helper/templates/citation_helper_template';
+import CitationHelperTemplate from 'js/widgets/citation_helper/templates/citation_helper_template.html';
 import ApiQuery from 'js/components/api_query';
 import ApiRequest from 'js/components/api_request';
 import ApiResponse from 'js/components/api_response';

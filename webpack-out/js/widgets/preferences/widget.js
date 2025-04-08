@@ -1,4 +1,4 @@
-define(['underscore', 'marionette', 'js/widgets/base/base_widget', 'js/widgets/preferences/views/openurl', 'js/widgets/preferences/views/orcid', 'js/widgets/preferences/views/application', 'js/widgets/preferences/views/export', 'js/components/api_feedback', 'hbs!js/widgets/preferences/templates/orcid-form-submit-modal'], function (_, Marionette, BaseWidget, OpenURLView, OrcidView, ApplicationView, ExportView, ApiFeedback, OrcidModalTemplate) {
+define(['underscore', 'marionette', 'js/widgets/base/base_widget', 'js/widgets/preferences/views/openurl', 'js/widgets/preferences/views/orcid', 'js/widgets/preferences/views/application', 'js/widgets/preferences/views/export', 'js/components/api_feedback', 'js/widgets/preferences/templates/orcid-form-submit-modal.html'], function (_, Marionette, BaseWidget, OpenURLView, OrcidView, ApplicationView, ExportView, ApiFeedback, OrcidModalTemplate) {
   var PreferencesModel = Backbone.Model.extend({
     defaults: function defaults() {
       return {

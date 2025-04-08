@@ -8,7 +8,7 @@
  */
 
 import Backbone from 'backbone';
-import WidgetTemplate from 'hbs!js/widgets/api_response/templates/widget-view';
+import WidgetTemplate from 'js/widgets/api_response/templates/widget-view.html';
 import $ from 'jquery';
 import ApiResponse from 'js/components/api_response';
 import PubSubEvents from 'js/components/pubsub_events';

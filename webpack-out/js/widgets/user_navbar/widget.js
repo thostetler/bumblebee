@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/user_navbar/nav_template', 'js/mixins/dependon'], function (Marionette, NavTemplate, Dependon) {
+define(['marionette', 'js/widgets/user_navbar/nav_template.html', 'js/mixins/dependon'], function (Marionette, NavTemplate, Dependon) {
   var NavModel = Backbone.Model.extend({
     defaults: function defaults() {
       return {

@@ -1,4 +1,4 @@
-import ApplicationTemplate from 'hbs!js/widgets/preferences/templates/application';
+import ApplicationTemplate from 'js/widgets/preferences/templates/application.html';
 import Marionette from 'marionette';
 import _ from 'underscore';
 

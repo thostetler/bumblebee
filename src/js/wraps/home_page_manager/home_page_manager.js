@@ -1,5 +1,5 @@
-import TOCTemplate from 'hbs!js/wraps/home_page_manager/home-nav';
-import PageManagerTemplate from 'hbs!js/wraps/home_page_manager/home-page-layout';
+import TOCTemplate from 'js/wraps/home_page_manager/home-nav.html';
+import PageManagerTemplate from 'js/wraps/home_page_manager/home-page-layout.html';
 import PageManagerView from 'js/page_managers/three_column_view';
 import PageManagerController from 'js/page_managers/toc_controller';
 

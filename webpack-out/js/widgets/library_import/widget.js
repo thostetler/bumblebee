@@ -1,4 +1,4 @@
-define(['js/widgets/base/base_widget', 'js/components/api_request', 'js/components/api_targets', 'hbs!js/widgets/library_import/templates/tab-container', 'hbs!js/widgets/library_import/templates/import-view-labs', 'hbs!js/widgets/library_import/templates/import-view-classic', 'hbs!js/widgets/library_import/templates/success-template', 'bootstrap'], function (BaseWidget, ApiRequest, ApiTargets, TabContainerTemplate, ADS2ImportView, ClassicImportView, SuccessTemplate, Bootstrap) {
+define(['js/widgets/base/base_widget', 'js/components/api_request', 'js/components/api_targets', 'js/widgets/library_import/templates/tab-container.html', 'js/widgets/library_import/templates/import-view-labs.html', 'js/widgets/library_import/templates/import-view-classic.html', 'js/widgets/library_import/templates/success-template.html', 'bootstrap'], function (BaseWidget, ApiRequest, ApiTargets, TabContainerTemplate, ADS2ImportView, ClassicImportView, SuccessTemplate, Bootstrap) {
   /* config vars */
   var CLASSIC = 'classic'; // this is used in the template for the name param -- is sent to server
   // 'twopointoh' is the name used on the server

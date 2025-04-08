@@ -4,8 +4,8 @@
  *
  */
 
-import ContainerTemplate from 'hbs!js/modules/orcid/widget/templates/container-template';
-import EmptyViewTemplate from 'hbs!js/modules/orcid/widget/templates/empty-template';
+import ContainerTemplate from 'js/modules/orcid/widget/templates/container-template.html';
+import EmptyViewTemplate from 'js/modules/orcid/widget/templates/empty-template.html';
 import ApiFeedback from 'js/components/api_feedback';
 import ApiQuery from 'js/components/api_query';
 import JsonResponse from 'js/components/json_response';

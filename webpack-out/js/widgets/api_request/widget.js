@@ -1,7 +1,7 @@
 /**
  * Created by rchyla on 3/19/14.
  */
-define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_request', 'js/components/api_query', 'js/components/pubsub_events', 'hbs!js/widgets/api_request/templates/widget-view', 'hbs!js/widgets/api_request/templates/item-view', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiRequest, ApiQuery, PubSubEvents, WidgetTemplate, ItemTemplate, Dependon) {
+define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_request', 'js/components/api_query', 'js/components/pubsub_events', 'js/widgets/api_request/templates/widget-view.html', 'js/widgets/api_request/templates/item-view.html', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiRequest, ApiQuery, PubSubEvents, WidgetTemplate, ItemTemplate, Dependon) {
   // Model
   var KeyValue = Backbone.Model.extend({}); // Collection of data
 

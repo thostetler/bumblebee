@@ -7,7 +7,7 @@
  * that has methods 'getQTree', then it will parse query input automatically.
  *
  */
-define(['underscore', 'bootstrap', 'jquery', 'jquery-querybuilder', 'js/components/generic_module', 'js/components/query_builder/rules_translator', 'js/components/api_query', 'hbs!js/components/query_builder/templates/group_template', 'hbs!js/components/query_builder/templates/rule_template', 'js/mixins/dependon'], function (_, Bootstrap, $, jQueryQueryBuilderPlugin, GenericModule, RulesTranslator, ApiQuery, GroupTemplate, RuleTemplate, Dependon) {
+define(['underscore', 'bootstrap', 'jquery', 'jquery-querybuilder', 'js/components/generic_module', 'js/components/query_builder/rules_translator', 'js/components/api_query', 'js/components/query_builder/templates/group_template.html', 'js/components/query_builder/templates/rule_template.html', 'js/mixins/dependon'], function (_, Bootstrap, $, jQueryQueryBuilderPlugin, GenericModule, RulesTranslator, ApiQuery, GroupTemplate, RuleTemplate, Dependon) {
   var QueryBuilder = GenericModule.extend({
     initialize: function initialize(options) {
       this._rules = null;

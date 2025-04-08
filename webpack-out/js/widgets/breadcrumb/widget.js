@@ -11,7 +11,7 @@
  *
  * TODO: it needs to react on browser-back/forward
  */
-define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_query', 'js/components/pubsub_events', 'hbs!js/widgets/breadcrumb/templates/widget-view', 'hbs!js/widgets/breadcrumb/templates/item-view', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiQuery, PubSubEvents, WidgetTemplate, ItemTemplate, Dependon) {
+define(['underscore', 'jquery', 'backbone', 'marionette', 'js/components/api_query', 'js/components/pubsub_events', 'js/widgets/breadcrumb/templates/widget-view.html', 'js/widgets/breadcrumb/templates/item-view.html', 'js/mixins/dependon'], function (_, $, Backbone, Marionette, ApiQuery, PubSubEvents, WidgetTemplate, ItemTemplate, Dependon) {
   // Model
   var KeyValue = Backbone.Model.extend({}); // Collection of data
 

@@ -1,4 +1,4 @@
-import FormTemplate from 'hbs!js/widgets/paper_search_form/form';
+import FormTemplate from 'js/widgets/paper_search_form/form.html';
 import $ from 'jquery';
 import ApiQuery from 'js/components/api_query';
 import ApiRequest from 'js/components/api_request';

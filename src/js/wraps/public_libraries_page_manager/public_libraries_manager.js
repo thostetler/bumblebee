@@ -1,4 +1,4 @@
-import PageManagerTemplate from 'hbs!js/wraps/public_libraries_page_manager/public-libraries-page-layout';
+import PageManagerTemplate from 'js/wraps/public_libraries_page_manager/public-libraries-page-layout.html';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/one_column_view';
 

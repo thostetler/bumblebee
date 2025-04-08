@@ -1,4 +1,4 @@
-import template from 'hbs!js/wraps/abstract_page_library_add/template';
+import template from 'js/wraps/abstract_page_library_add/template.html';
 import BaseWidget from 'js/widgets/base/base_widget';
 import QueryInfoWidget from 'js/widgets/query_info/query_info_widget';
 

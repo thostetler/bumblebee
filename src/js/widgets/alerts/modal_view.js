@@ -1,4 +1,4 @@
-import ModalTemplate from 'hbs!js/widgets/alerts/templates/modal_template';
+import ModalTemplate from 'js/widgets/alerts/templates/modal_template.html';
 import Marionette from 'marionette';
 
 var ModalView = Marionette.ItemView.extend({

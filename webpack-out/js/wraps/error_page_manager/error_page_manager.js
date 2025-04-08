@@ -1,4 +1,4 @@
-define(['js/page_managers/controller', 'js/page_managers/one_column_view', 'hbs!js/wraps/error_page_manager/404', 'utils'], function (PageManagerController, PageManagerView, PageManagerTemplate, utils) {
+define(['js/page_managers/controller', 'js/page_managers/one_column_view', 'js/wraps/error_page_manager/404.html', 'utils'], function (PageManagerController, PageManagerView, PageManagerTemplate, utils) {
   var initialState = {
     error: {
       message: 'Page Not Found'

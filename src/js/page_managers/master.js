@@ -9,8 +9,8 @@
  *
  * */
 
-import AriaAnnouncementTemplate from "hbs!js/page_managers/templates/aria-announcement";
-import MasterPageManagerTemplate from "hbs!js/page_managers/templates/master-page-manager";
+import AriaAnnouncementTemplate from "js/page_managers/templates/aria-announcement.html";
+import MasterPageManagerTemplate from "js/page_managers/templates/master-page-manager.html";
 import Dependon from "js/mixins/dependon";
 import PageManagerController from "js/page_managers/controller";
 import Marionette from "marionette";

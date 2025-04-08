@@ -10,8 +10,8 @@
  */
 
 import Backbone from 'backbone';
-import ItemTemplate from 'hbs!js/widgets/filter_visualizer/templates/item-view';
-import WidgetTemplate from 'hbs!js/widgets/filter_visualizer/templates/widget-view';
+import ItemTemplate from 'js/widgets/filter_visualizer/templates/item-view.html';
+import WidgetTemplate from 'js/widgets/filter_visualizer/templates/widget-view.html';
 import $ from 'jquery';
 import ApiFeedback from 'js/components/api_feedback';
 import ApiQuery from 'js/components/api_query';

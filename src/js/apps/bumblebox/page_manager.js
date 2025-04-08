@@ -1,4 +1,4 @@
-import PageManagerTemplate from 'hbs!js/apps/bumblebox/templates/embedded-page';
+import PageManagerTemplate from 'js/apps/bumblebox/templates/embedded-page.html';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/one_column_view';
 

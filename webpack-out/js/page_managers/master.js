@@ -8,7 +8,7 @@
  * should the managers be inserted.
  *
  * */
-define(['js/widgets/base/base_widget', 'js/components/generic_module', 'js/page_managers/controller', 'hbs!js/page_managers/templates/aria-announcement', 'hbs!js/page_managers/templates/master-page-manager', 'marionette', 'js/mixins/dependon'], function (BaseWidget, GenericModule, PageManagerController, AriaAnnouncementTemplate, MasterPageManagerTemplate, Marionette, Dependon) {
+define(['js/widgets/base/base_widget', 'js/components/generic_module', 'js/page_managers/controller', 'js/page_managers/templates/aria-announcement.html', 'js/page_managers/templates/master-page-manager.html', 'marionette', 'js/mixins/dependon'], function (BaseWidget, GenericModule, PageManagerController, AriaAnnouncementTemplate, MasterPageManagerTemplate, Marionette, Dependon) {
   var WidgetData = Backbone.Model.extend({
     defaults: function defaults() {
       return {

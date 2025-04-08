@@ -1,4 +1,4 @@
-define(['underscore', 'marionette', 'hbs!js/page_managers/templates/results-page-layout', 'hbs!js/page_managers/templates/results-control-row', 'js/widgets/base/base_widget'], function (_, Marionette, pageTemplate, controlRowTemplate) {
+define(['underscore', 'marionette', 'js/page_managers/templates/results-page-layout.html', 'js/page_managers/templates/results-control-row.html', 'js/widgets/base/base_widget'], function (_, Marionette, pageTemplate, controlRowTemplate) {
   /*
    * keeps track of the open/closed state of the three columns
    * */

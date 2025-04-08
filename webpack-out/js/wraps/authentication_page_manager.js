@@ -1,4 +1,4 @@
-define(['js/page_managers/controller', 'js/page_managers/one_column_view', 'hbs!js/page_managers/templates/authentication-page-layout'], function (PageManagerController, PageManagerView, PageManagerTemplate) {
+define(['js/page_managers/controller', 'js/page_managers/one_column_view', 'js/page_managers/templates/authentication-page-layout.html'], function (PageManagerController, PageManagerView, PageManagerTemplate) {
   var PageManager = PageManagerController.extend({
     createView: function createView(options) {
       options = options || {};

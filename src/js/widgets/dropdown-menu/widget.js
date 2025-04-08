@@ -1,5 +1,5 @@
-import dropdownTemplate from 'hbs!js/widgets/dropdown-menu/templates/dropdown';
-import dropdownItemTemplate from 'hbs!js/widgets/dropdown-menu/templates/dropdown-item';
+import dropdownTemplate from 'js/widgets/dropdown-menu/templates/dropdown.html';
+import dropdownItemTemplate from 'js/widgets/dropdown-menu/templates/dropdown-item.html';
 import BaseWidget from 'js/widgets/base/base_widget';
 import Marionette from 'marionette';
 /*

@@ -12,7 +12,7 @@
  * 5. a controller that handles requesting and recieving data from pubsub and initializing everything
  *
  */
-define(['marionette', 'backbone', 'utils', 'js/components/api_request', 'js/components/api_query', 'js/components/api_feedback', 'js/widgets/base/base_widget', 'hbs!js/widgets/list_of_things/templates/item-template', 'hbs!js/widgets/list_of_things/templates/results-container-template', 'js/mixins/add_stable_index_to_collection', 'js/widgets/list_of_things/model', 'js/widgets/list_of_things/paginated_view'], function (Marionette, Backbone, utils, ApiRequest, ApiQuery, ApiFeedback, BaseWidget, ItemTemplate, ResultsContainerTemplate, PaginationMixin, PaginatedCollection, PaginatedView) {
+define(['marionette', 'backbone', 'utils', 'js/components/api_request', 'js/components/api_query', 'js/components/api_feedback', 'js/widgets/base/base_widget', 'js/widgets/list_of_things/templates/item-template.html', 'js/widgets/list_of_things/templates/results-container-template.html', 'js/mixins/add_stable_index_to_collection', 'js/widgets/list_of_things/model', 'js/widgets/list_of_things/paginated_view'], function (Marionette, Backbone, utils, ApiRequest, ApiQuery, ApiFeedback, BaseWidget, ItemTemplate, ResultsContainerTemplate, PaginationMixin, PaginatedCollection, PaginatedView) {
   var ListOfThingsWidget = BaseWidget.extend({
     initialize: function initialize(options) {
       var _this = this;

@@ -1,5 +1,5 @@
 import analytics from 'analytics';
-import FormTemplate from 'hbs!js/widgets/classic_form/form';
+import FormTemplate from 'js/widgets/classic_form/form.html';
 import ApiQuery from 'js/components/api_query';
 import ApiQueryUpdater from 'js/components/api_query_updater';
 import BaseWidget from 'js/widgets/base/base_widget';

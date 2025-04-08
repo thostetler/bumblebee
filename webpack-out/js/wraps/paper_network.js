@@ -1,4 +1,4 @@
-define(['marionette', 'js/widgets/network_vis/network_widget', 'js/components/api_query_updater', 'hbs!js/wraps/templates/paper-network-data', 'hbs!js/wraps/templates/paper-network-container', 'hbs!js/widgets/network_vis/templates/not-enough-data-template', 'hbs!js/wraps/templates/paper-network-link-data', 'js/components/api_targets', 'bootstrap'], function (Marionette, NetworkWidget, ApiQueryUpdater, GroupDataTemplate, ContainerTemplate, NotEnoughDataTemplate, LinkDataTemplate, ApiTargets, bs) {
+define(['marionette', 'js/widgets/network_vis/network_widget', 'js/components/api_query_updater', 'js/wraps/templates/paper-network-data.html', 'js/wraps/templates/paper-network-container.html', 'js/widgets/network_vis/templates/not-enough-data-template.html', 'js/wraps/templates/paper-network-link-data.html', 'js/components/api_targets', 'bootstrap'], function (Marionette, NetworkWidget, ApiQueryUpdater, GroupDataTemplate, ContainerTemplate, NotEnoughDataTemplate, LinkDataTemplate, ApiTargets, bs) {
   var options = {};
   options.endpoint = ApiTargets.SERVICE_PAPER_NETWORK;
   options.networkType = 'paper';

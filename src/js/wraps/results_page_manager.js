@@ -1,4 +1,4 @@
-import PageManagerTemplate from 'hbs!js/page_managers/templates/results-page-layout';
+import PageManagerTemplate from 'js/page_managers/templates/results-page-layout.html';
 import $ from 'jquery';
 import SideBarManagerMixin from 'js/mixins/side_bar_manager';
 import PageManagerController from 'js/page_managers/controller';

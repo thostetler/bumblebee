@@ -1,4 +1,4 @@
-define(['d3', 'marionette', 'js/widgets/base/base_widget', 'js/components/api_request', 'hbs!js/widgets/bubble_chart/templates/container', 'hbs!js/widgets/bubble_chart/templates/tooltip', 'js/components/api_targets', 'js/components/api_query_updater', 'js/components/api_query'], function (d3, Marionette, BaseWidget, ApiRequest, ContainerTemplate, TooltipTemplate, ApiTargets, ApiQueryUpdater, ApiQuery) {
+define(['d3', 'marionette', 'js/widgets/base/base_widget', 'js/components/api_request', 'js/widgets/bubble_chart/templates/container.html', 'js/widgets/bubble_chart/templates/tooltip.html', 'js/components/api_targets', 'js/components/api_query_updater', 'js/components/api_query'], function (d3, Marionette, BaseWidget, ApiRequest, ContainerTemplate, TooltipTemplate, ApiTargets, ApiQueryUpdater, ApiQuery) {
   var BubbleModel = Backbone.Model.extend({
     initialize: function initialize(options) {
       var _this = this;

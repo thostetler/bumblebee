@@ -4,7 +4,7 @@
  * ( **** NOT CURRENTLY USED ANYWHERE *** )
  *
  */
-define(['marionette', 'backbone', 'hbs!js/widgets/list_of_things/templates/expanding-item-template', 'hbs!js/widgets/list_of_things/templates/expanding-results-container-template'], function (Marionette, Backbone, ItemTemplate, ResultsContainerTemplate) {
+define(['marionette', 'backbone', 'js/widgets/list_of_things/templates/expanding-item-template.html', 'js/widgets/list_of_things/templates/expanding-results-container-template.html'], function (Marionette, Backbone, ItemTemplate, ResultsContainerTemplate) {
   var ItemView = Marionette.ItemView.extend({
     // should it be hidden initially?
     className: function className() {

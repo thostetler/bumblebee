@@ -1,4 +1,4 @@
-define(['js/widgets/facet/graph-facet/base_graph', 'hbs!js/widgets/facet/graph-facet/templates/h-index-graph-legend', 'hbs!js/widgets/facet/graph-facet/templates/h-index-slider-window', 'marionette'], function (BaseGraphView, legendTemplate, sliderWindowTemplate, Marionette) {
+define(['js/widgets/facet/graph-facet/base_graph', 'js/widgets/facet/graph-facet/templates/h-index-graph-legend.html', 'js/widgets/facet/graph-facet/templates/h-index-slider-window.html', 'marionette'], function (BaseGraphView, legendTemplate, sliderWindowTemplate, Marionette) {
   var HIndexGraphView = BaseGraphView.extend({
     legendTemplate: legendTemplate,
     xAxisClassName: 'h-index-x-axis-title',

@@ -1,5 +1,5 @@
-import PageManagerTemplate from 'hbs!js/wraps/landing_page_manager/landing-page-layout';
-import TOCTemplate from 'hbs!js/wraps/landing_page_manager/landing-page-nav';
+import PageManagerTemplate from 'js/wraps/landing_page_manager/landing-page-layout.html';
+import TOCTemplate from 'js/wraps/landing_page_manager/landing-page-nav.html';
 import PageManagerView from 'js/page_managers/one_column_view';
 import PageManagerController from 'js/page_managers/toc_controller';
 

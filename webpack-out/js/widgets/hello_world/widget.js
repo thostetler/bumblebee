@@ -40,7 +40,7 @@ define([// here we are importing using symbolic names, e.g. 'underscore' - this 
 'test/mocha/js/widgets/test_json/test1', // and example response (to give to widget)
 // 'hbs!' is 'handlebars' template pre-processor, it will load the file and give you
 // executable template
-'hbs!js/widgets/hello_world/templates/layout'], function ( // all of the following names must correspond to the import above
+'js/widgets/hello_world/templates/layout.html'], function ( // all of the following names must correspond to the import above
 _, $, Backbone, Marionette, ApiQuery, ApiRequest, ApiResponse, BaseWidget, MinimalPubSub, TestData, WidgetTemplate) {
   /**
    * Model is a very useful thing, it has methods to save, load, and query itself.

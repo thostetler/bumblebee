@@ -1,4 +1,4 @@
-define(['marionette', 'js/widgets/base/base_widget', 'hbs!js/widgets/dropdown-menu/templates/dropdown', 'hbs!js/widgets/dropdown-menu/templates/dropdown-item'], function (Marionette, BaseWidget, dropdownTemplate, dropdownItemTemplate) {
+define(['marionette', 'js/widgets/base/base_widget', 'js/widgets/dropdown-menu/templates/dropdown.html', 'js/widgets/dropdown-menu/templates/dropdown-item.html'], function (Marionette, BaseWidget, dropdownTemplate, dropdownItemTemplate) {
   /*
    *
    * To use this widget to generate a dropdown list,

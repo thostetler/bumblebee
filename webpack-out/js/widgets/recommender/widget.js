@@ -1,4 +1,4 @@
-define(['marionette', 'js/components/api_query', 'js/components/api_targets', 'js/components/api_request', 'js/widgets/base/base_widget', 'hbs!js/widgets/recommender/templates/recommender_template', 'bootstrap', 'analytics'], function (Marionette, ApiQuery, ApiTargets, ApiRequest, BaseWidget, RecommenderTemplate, analytics) {
+define(['marionette', 'js/components/api_query', 'js/components/api_targets', 'js/components/api_request', 'js/widgets/base/base_widget', 'js/widgets/recommender/templates/recommender_template.html', 'bootstrap', 'analytics'], function (Marionette, ApiQuery, ApiTargets, ApiRequest, BaseWidget, RecommenderTemplate, analytics) {
   var RecommenderView = Marionette.ItemView.extend({
     initialize: function initialize() {
       this.listenTo(this.collection, 'reset', this.render);

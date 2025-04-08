@@ -1,4 +1,4 @@
-define(['underscore', 'jquery', 'js/widgets/base/base_widget', 'js/components/api_query', 'js/components/api_request', 'js/components/api_targets', 'hbs!js/widgets/paper_search_form/form', 'js/widgets/paper_search_form/topterms'], function (_, $, BaseWidget, ApiQuery, ApiRequest, ApiTargets, FormTemplate, AutocompleteData) {
+define(['underscore', 'jquery', 'js/widgets/base/base_widget', 'js/components/api_query', 'js/components/api_request', 'js/components/api_targets', 'js/widgets/paper_search_form/form.html', 'js/widgets/paper_search_form/topterms'], function (_, $, BaseWidget, ApiQuery, ApiRequest, ApiTargets, FormTemplate, AutocompleteData) {
   var renderAutoCompleteItem = function renderAutoCompleteItem(ul, item) {
     var re = new RegExp('(' + this.term + ')', 'i');
     var label = item.label.replace(re, '<span class="ui-state-highlight">$1</span>');

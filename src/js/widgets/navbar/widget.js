@@ -1,5 +1,5 @@
-import FeedbackTemplate from 'hbs!js/widgets/navbar/template/feedback';
-import NavBarTemplate from 'hbs!js/widgets/navbar/template/navbar';
+import FeedbackTemplate from 'js/widgets/navbar/template/feedback.html';
+import NavBarTemplate from 'js/widgets/navbar/template/navbar.html';
 import ApiQuery from 'js/components/api_query';
 import ApiQueryUpdater from 'js/components/api_query_updater';
 import ApiRequest from 'js/components/api_request';

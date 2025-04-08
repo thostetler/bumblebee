@@ -1,4 +1,4 @@
-import BannerTemplate from 'hbs!js/widgets/alerts/templates/page_top_alert';
+import BannerTemplate from 'js/widgets/alerts/templates/page_top_alert.html';
 import Marionette from 'marionette';
 
 var AlertView = Marionette.ItemView.extend({

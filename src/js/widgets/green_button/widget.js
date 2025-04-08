@@ -3,9 +3,9 @@
  */
 
 import Backbone from 'backbone';
-import EmptyTemplate from 'hbs!js/widgets/green_button/templates/empty-view';
-import ItemTemplate from 'hbs!js/widgets/green_button/templates/item-view';
-import WidgetTemplate from 'hbs!js/widgets/green_button/templates/widget-view';
+import EmptyTemplate from 'js/widgets/green_button/templates/empty-view.html';
+import ItemTemplate from 'js/widgets/green_button/templates/item-view.html';
+import WidgetTemplate from 'js/widgets/green_button/templates/widget-view.html';
 import $ from 'jquery';
 import Alerts from 'js/components/alerts';
 import ApiFeedback from 'js/components/api_feedback';

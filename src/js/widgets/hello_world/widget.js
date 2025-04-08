@@ -21,12 +21,12 @@
  */
 
 import Backbone from "backbone";
-import WidgetTemplate from "hbs!js/widgets/hello_world/templates/layout";
+import WidgetTemplate from "js/widgets/hello_world/templates/layout.html";
 import ApiQuery from "js/components/api_query";
 import BaseWidget from "js/widgets/base/base_widget";
 import Marionette from "marionette";
 /**
- * define() is a 'require.js' thing - it defines a model; the signature is:
+ * define() is a .html'require.js' thing - it defines a model; the signature is:
  *  define(['list', 'of', 'imports'], function(my, foo, bar) {return something})
  */
 import _ from "underscore";

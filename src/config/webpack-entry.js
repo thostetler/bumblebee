@@ -10,12 +10,6 @@
 import Router from 'router';
 import Application from 'js/components/application';
 import DiscoveryBootstrap from 'js/mixins/discovery_bootstrap';
-import ApiAccess from 'js/mixins/api_access';
-import ApiFeedback from 'js/components/api_feedback';
-import analytics from 'analytics';
-
-// Import configuration
-import config from 'config/discovery.config';
 
 // Import all controllers
 import FeedbackMediator from 'js/wraps/discovery_mediator';
@@ -75,15 +69,15 @@ import PaperSearchForm from 'js/widgets/paper_search_form/widget';
 import Results from 'js/widgets/results/widget';
 import QueryInfo from 'js/widgets/query_info/query_info_widget';
 import QueryDebugInfo from 'js/widgets/api_query/widget';
-import ExportWidget from 'js/widgets/export/widget';
-import Sort from 'js/widgets/sort/widget';
+import ExportWidget from 'js/widgets/export/widget.jsx';
+import Sort from 'js/widgets/sort/widget.jsx';
 import ExportDropdown from 'js/wraps/export_dropdown';
 import VisualizationDropdown from 'js/wraps/visualization_dropdown';
 import AuthorNetwork from 'js/wraps/author_network';
 import PaperNetwork from 'js/wraps/paper_network';
 import ConceptCloud from 'js/widgets/wordcloud/widget';
 import BubbleChart from 'js/widgets/bubble_chart/widget';
-import AuthorAffiliationTool from 'js/widgets/author_affiliation_tool/widget';
+import AuthorAffiliationTool from 'js/widgets/author_affiliation_tool/widget.jsx';
 
 // Create a static configuration object that matches the structure expected by the Application class
 const staticConfig = {
@@ -155,8 +149,8 @@ const staticConfig = {
     PaperNetwork,
     ConceptCloud,
     BubbleChart,
-    AuthorAffiliationTool
-  }
+    AuthorAffiliationTool,
+  },
 };
 
 // Initialize the application

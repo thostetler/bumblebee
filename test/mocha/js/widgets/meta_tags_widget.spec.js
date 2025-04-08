@@ -5,7 +5,7 @@ define([
   'js/widgets/meta_tags/widget',
   'js/widgets/base/base_widget',
   'js/bugutils/minimal_pubsub',
-  'hbs!js/widgets/meta_tags/template/metatags',
+  'js/widgets/meta_tags/template/metatags.html',
 ], function(
   _,
   $,

@@ -10,7 +10,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-define(['underscore', 'marionette', 'hbs!js/widgets/preferences/templates/export', 'js/widgets/config'], function (_, Marionette, ExportTemplate, config) {
+define(['underscore', 'marionette', 'js/widgets/preferences/templates/export.html', 'js/widgets/config'], function (_, Marionette, ExportTemplate, config) {
   var DEFAULTS = {
     exportFormat: {
       initialOptions: _.map(config.export.formats, 'label'),

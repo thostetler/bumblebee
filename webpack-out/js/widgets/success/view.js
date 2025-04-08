@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/success/success_template'], function (Marionette, SuccessTemplate) {
+define(['marionette', 'js/widgets/success/success_template.html'], function (Marionette, SuccessTemplate) {
   var SuccessView = Marionette.ItemView.extend({
     initialize: function initialize(options) {
       _.extend(this, options);
