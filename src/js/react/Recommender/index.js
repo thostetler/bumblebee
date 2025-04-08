@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/Recommender/components/App.jsx',
+  'js/react/Recommender/components/App.jsx',
   'js/react/WithBackboneView',
   'js/react/configureStore',
   'js/react/Recommender/middleware',

@@ -1,7 +1,7 @@
 define([
   'react-redux',
-  'es6!js/widgets/orcid-selector/redux/modules/orcid-selector-app',
-  'es6!js/widgets/orcid-selector/components/orcid-selector-app.jsx',
+  'js/widgets/orcid-selector/redux/modules/orcid-selector-app',
+  'js/widgets/orcid-selector/components/orcid-selector-app.jsx',
 ], function(ReactRedux, actions, OrcidSelectorApp) {
   // actions
   const { sendEvent } = actions;

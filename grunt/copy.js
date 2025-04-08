@@ -7,11 +7,11 @@ module.exports = function(grunt) {
   return {
     libs: {
       files: [
-        // requirejs
-        {
-          src: 'node_modules/requirejs/require.js',
-          dest: 'src/libs/require.js',
-        },
+        // requirejs, custom build
+        // {
+        //   src: 'node_modules/requirejs/require.js',
+        //   dest: 'src/libs/require.js',
+        // },
 
         // react-bootstrap
         {

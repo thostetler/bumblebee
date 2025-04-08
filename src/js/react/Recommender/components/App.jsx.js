@@ -4,8 +4,8 @@ define([
   'prop-types',
   'react-redux',
   'js/react/Recommender/actions',
-  'es6!js/react/Recommender/components/RecommendedList.jsx',
-  'es6!js/react/Recommender/components/SearchExamples.jsx',
+  'js/react/Recommender/components/RecommendedList.jsx',
+  'js/react/Recommender/components/SearchExamples.jsx',
 ], function (
   React,
   {Nav, NavItem},

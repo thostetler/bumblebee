@@ -2,7 +2,7 @@ define([
   'react',
   'prop-types',
   'react-bootstrap',
-  'es6!js/react/MyAdsFreeform/components/CollapsePanel.jsx',
+  'js/react/MyAdsFreeform/components/CollapsePanel.jsx',
   'js/react/MyAdsFreeform/containers/SaveQueryForm',
 ], function(React, PropTypes, { Alert }, CollapsePanel, SaveQueryForm) {
   const Message = ({ children, show, type, ...otherProps }) => {

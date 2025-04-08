@@ -1,9 +1,7 @@
 define([
   'marionette',
   'hbs!js/widgets/library_individual/templates/library-header',
-  'moment',
-  'bootstrap',
-], function(Marionette, LibraryHeaderTemplate, moment, Bootstrap) {
+], function(Marionette, LibraryHeaderTemplate) {
   var LibraryTitleModel = Backbone.Model.extend({
     initialize: function(vals, options) {
       options = options || {};
@@ -64,11 +62,16 @@ define([
       this.$('[data-toggle="tooltip"]').tooltip();
     },
 
-    formatDate: function(d) {
-      return moment
-        .utc(d)
-        .local()
-        .format('MMM D YYYY, h:mma');
+    formatDateUTC: function(d) {
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: 'UTC',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      }).format(new Date(d));
     },
 
     serializeData: function() {

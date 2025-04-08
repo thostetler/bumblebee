@@ -5,8 +5,8 @@ define([
   'hbs!js/widgets/classic_form/form',
   'js/widgets/paper_search_form/topterms',
   'analytics',
-  'es6!js/widgets/sort/widget.jsx',
-  'es6!js/widgets/sort/redux/modules/sort-app',
+  'js/widgets/sort/widget.jsx',
+  'js/widgets/sort/redux/modules/sort-app',
 ], function(
   BaseWidget,
   ApiQuery,

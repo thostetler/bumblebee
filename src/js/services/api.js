@@ -9,7 +9,6 @@ define([
   'js/components/api_feedback',
   'js/mixins/hardened',
   'js/mixins/api_access',
-  'moment',
 ], function(
   _,
   $,
@@ -21,7 +20,6 @@ define([
   ApiFeedback,
   Hardened,
   ApiAccess,
-  Moment
 ) {
   var Api = GenericModule.extend({
     url: '/api/1/', // usually overriden during app bootstrap

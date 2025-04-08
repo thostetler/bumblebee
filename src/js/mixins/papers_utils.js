@@ -1,10 +1,5 @@
-define(['underscore', 'jquery-ui', 'jquery', 'moment'], function(
-  _,
-  $ui,
-  $,
-  moment
-) {
-  var Utils = {
+define(['underscore'], function(_) {
+  return {
     /**
      * Receives the  ISO8601 date string (actually, browsers will be able to parse
      * range of date strings, but you should be careful and not count on that!)
@@ -20,54 +15,36 @@ define(['underscore', 'jquery-ui', 'jquery', 'moment'], function(
      * @returns {*}
      */
     formatDate: function(dateString, options = {}) {
-      const { format = 'YYYY/MM', missing: missingOpts = {} } = options;
+      const { format = 'YYYY/MM' } = options;
 
-      const missing = {
-        day: 'YYYY/MM',
-        month: 'YYYY',
-        dayAndMonth: 'YYYY',
-        ...missingOpts,
-      };
-
-      // break apart date
       const regex = /^(?<year>\d{4})-(?<month>\d{2}|00)-(?<day>\d{2}|00)$/;
       const match = dateString.match(regex);
 
-      if (match) {
-        const { year, month, day } = match.groups;
-        const monthMissing = month === '00';
-        const dayMissing = day === '00';
+      if (!match) return null;
 
-        const date = [
-          Number.parseInt(year, 10),
+      const { year, month, day } = match.groups;
+      const monthMissing = month === '00';
+      const dayMissing = day === '00';
 
-          // months are zero-based, everything else is one-based
-          monthMissing ? 0 : Number.parseInt(month, 10) - 1,
-          dayMissing ? 1 : Number.parseInt(day, 10),
-        ];
+      const y = parseInt(year, 10);
+      const m = monthMissing ? 0 : parseInt(month, 10) - 1;
+      const d = dayMissing ? 1 : parseInt(day, 10);
 
-        const utc = moment.utc(date);
+      const date = new Date(Date.UTC(y, m, d));
+      if (_.isNaN(date.getTime())) return y.toString();
 
-        if (!utc.isValid()) {
-          // if for some reason the parsed date is invalid, and assuming the year is always there, use that
-          return year;
-        }
+      // Determine the output based on missing parts
+      if (monthMissing && dayMissing) return y.toString();
+      if (monthMissing) return y.toString();
+      if (dayMissing) return `${y}/${(m + 1).toString().padStart(2, '0')}`;
 
-        if (monthMissing && dayMissing) {
-          return utc.format(missing.dayAndMonth);
-        }
-        if (monthMissing) {
-          return utc.format(missing.month);
-        }
-        if (dayMissing) {
-          return utc.format(missing.day);
-        }
-
-        return utc.format(format);
+      // Full format (only 'YYYY/MM' supported for now)
+      if (format === 'YYYY/MM') {
+        return `${y}/${(m + 1).toString().padStart(2, '0')}`;
       }
 
-      // if the regex doesn't match, return a null value
-      return null;
+      // Fallback: return ISO date
+      return date.toISOString().split('T')[0];
     },
 
     shortenAbstract: function(abs, maxLen) {
@@ -107,26 +84,18 @@ define(['underscore', 'jquery-ui', 'jquery', 'moment'], function(
         data.allAuthorFormatted = _.map(data.author, format);
       }
 
-      data.formattedDate =
-        data.formattedDate ||
-        (data.pubdate ? this.formatDate(data.pubdate) : undefined);
-      data.shortAbstract = data.abstract
-        ? this.shortenAbstract(data.abstract)
-        : undefined;
+      data.formattedDate = data.formattedDate || (data.pubdate ? this.formatDate(data.pubdate) : undefined);
+      data.shortAbstract = data.abstract ? this.shortenAbstract(data.abstract) : undefined;
       data.details = data.details || {
         shortAbstract: data.shortAbstract,
         pub: data.pub,
         abstract: data.abstract,
       };
-      data.num_citations = data['[citations]']
-        ? data['[citations]'].num_citations
-        : undefined;
+      data.num_citations = data['[citations]'] ? data['[citations]'].num_citations : undefined;
       data.identifier = data.bibcode ? data.bibcode : data.identifier;
 
       // make sure undefined doesn't become "undefined"
-      data.encodedIdentifier = _.isUndefined(data.identifier)
-        ? data.identifier
-        : encodeURIComponent(data.identifier);
+      data.encodedIdentifier = _.isUndefined(data.identifier) ? data.identifier : encodeURIComponent(data.identifier);
 
       if (data.pubdate || data.shortAbstract) {
         data.popover = true;
@@ -137,6 +106,4 @@ define(['underscore', 'jquery-ui', 'jquery', 'moment'], function(
       return data;
     },
   };
-
-  return Utils;
 });

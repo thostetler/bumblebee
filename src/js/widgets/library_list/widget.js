@@ -18,8 +18,8 @@ define([
   'js/mixins/add_secondary_sort',
   'bootstrap',
   'hbs!js/wraps/widget/loading/template',
-  'es6!js/widgets/sort/widget.jsx',
-  'es6!js/widgets/sort/redux/modules/sort-app',
+  'js/widgets/sort/widget.jsx',
+  'js/widgets/sort/redux/modules/sort-app',
 ], function(
   Marionette,
   DefaultItemView,

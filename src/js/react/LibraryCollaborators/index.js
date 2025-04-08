@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/LibraryCollaborators/components/Dashboard.jsx',
+  'js/react/LibraryCollaborators/components/Dashboard.jsx',
   'js/react/WithBackboneView',
   'js/react/configureStore',
   'react-redux',

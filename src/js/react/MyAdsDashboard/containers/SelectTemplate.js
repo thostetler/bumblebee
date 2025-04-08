@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/SelectTemplate.jsx',
+  'js/react/MyAdsDashboard/components/SelectTemplate.jsx',
   'react-redux',
   'js/react/MyAdsDashboard/actions/index'
 ], function(

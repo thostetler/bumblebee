@@ -1,4 +1,4 @@
-define(['underscore', 'es6!js/widgets/associated/redux/modules/api', 'es6!js/widgets/associated/redux/modules/ui'], function(
+define(['underscore', 'js/widgets/associated/redux/modules/api', 'js/widgets/associated/redux/modules/ui'], function(
   _,
   api,
   ui

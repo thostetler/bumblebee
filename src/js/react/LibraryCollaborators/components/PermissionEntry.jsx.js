@@ -3,7 +3,7 @@ define([
   'prop-types',
   'react-bootstrap',
   'js/react/LibraryCollaborators/constants',
-  'es6!js/react/LibraryCollaborators/components/ManageButton.jsx',
+  'js/react/LibraryCollaborators/components/ManageButton.jsx',
 ], function(
   React,
   PropTypes,

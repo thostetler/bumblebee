@@ -1942,6 +1942,7 @@ var requirejs, require, define;
                 node.addEventListener('load', context.onScriptLoad, false);
                 node.addEventListener('error', context.onScriptError, false);
             }
+            console.log('requirejs', { node, url , context, _: this })
             node.src = url;
 
             //Calling onNodeCreated after all properties on the node have been

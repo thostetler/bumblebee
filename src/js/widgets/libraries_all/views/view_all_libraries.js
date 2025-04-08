@@ -6,7 +6,6 @@ define([
   'hbs!js/widgets/libraries_all/templates/loading-libraries',
   'hbs!js/widgets/libraries_all/templates/error-libraries',
   'hbs!js/widgets/libraries_all/templates/no-result',
-  'moment',
 ], function(
   Marionette,
   LibraryContainer,
@@ -15,15 +14,19 @@ define([
   LoadingTemplate,
   ErrorTemplate,
   NoResultTemplate,
-  moment
 ) {
   var LibraryItemView = Marionette.ItemView.extend({
     // time is returned from library endpoint as utc time, but without info that it is utc
     formatDate: function(d) {
-      return moment
-        .utc(d)
-        .local()
-        .format('MMM D YYYY, h:mma');
+      const date = new Date(d + 'Z'); // ensure it's parsed as UTC
+      return new Intl.DateTimeFormat(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      }).format(date);
     },
 
     serializeData: function() {

@@ -8,7 +8,7 @@ define([
   'react',
   'react-dom',
   'react-redux',
-  'es6!js/widgets/facet/facet-container.jsx',
+  'js/widgets/facet/facet-container.jsx',
   'js/widgets/facet/actions',
   'js/widgets/facet/reducers',
   'js/widgets/facet/create_store',

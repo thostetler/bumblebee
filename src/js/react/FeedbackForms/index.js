@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/FeedbackForms/components/App.jsx',
+  'js/react/FeedbackForms/components/App.jsx',
   'js/react/WithBackboneView',
   'js/react/configureStore',
   'react-redux',

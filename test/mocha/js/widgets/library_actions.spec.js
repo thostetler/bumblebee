@@ -1,5 +1,5 @@
 define([
-  'es6!js/widgets/library_actions/widget.jsx',
+  'js/widgets/library_actions/widget.jsx',
   'js/bugutils/minimal_pubsub'
 ], function (Widget, MinSub) {
 

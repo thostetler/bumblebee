@@ -1,4 +1,4 @@
-define(['es6!js/widgets/associated/redux/modules/api', 'es6!js/widgets/associated/redux/modules/ui'], function(api, ui) {
+define(['js/widgets/associated/redux/modules/api', 'js/widgets/associated/redux/modules/ui'], function(api, ui) {
   const { LINK_CLICKED } = ui.actions;
 
   const { SEND_ANALYTICS } = api.actions;

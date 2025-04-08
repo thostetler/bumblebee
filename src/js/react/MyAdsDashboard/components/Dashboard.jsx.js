@@ -1,13 +1,17 @@
 define([
   'underscore',
   'react',
-  'es6!js/react/MyAdsDashboard/components/TemplatePill.jsx',
-  'moment',
-  'es6!js/react/MyAdsDashboard/components/ActionsDropdown.jsx',
+  'js/react/MyAdsDashboard/components/TemplatePill.jsx',
+  'js/react/MyAdsDashboard/components/ActionsDropdown.jsx',
   'prop-types',
-], function(_, React, TemplatePill, moment, ActionsDropdown, PropTypes) {
+], function(_, React, TemplatePill, ActionsDropdown, PropTypes) {
+
   const getFriendlyDateString = (dateStr) => {
-    return moment(dateStr).format('lll');
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(date);
   };
 
   const SortableHeader = ({ children, onClick, direction, active }) => {
@@ -192,9 +196,9 @@ define([
           const leftVal = left[prop];
           const rightVal = right[prop];
           if (prop === 'updated') {
-            return moment(dir === 'asc' ? leftVal : rightVal).diff(
-              dir === 'asc' ? rightVal : leftVal
-            );
+            const leftDate = new Date(leftVal).getTime();
+            const rightDate = new Date(rightVal).getTime();
+            return dir === 'asc' ? leftDate - rightDate : rightDate - leftDate;
           }
 
           if (leftVal < rightVal) {

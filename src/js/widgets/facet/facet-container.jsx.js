@@ -2,8 +2,8 @@ define([
   'react',
   'react-redux',
   'prop-types',
-  'es6!js/widgets/facet/toggle_list.jsx',
-  'es6!js/widgets/facet/facet-dropdown.jsx',
+  'js/widgets/facet/toggle_list.jsx',
+  'js/widgets/facet/facet-dropdown.jsx',
   'js/widgets/facet/reducers',
 ], function(
   React,

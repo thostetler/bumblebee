@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/Dashboard.jsx',
+  'js/react/MyAdsDashboard/components/Dashboard.jsx',
   'react-redux',
   'js/react/MyAdsDashboard/actions/index',
   'js/react/MyAdsDashboard/constants',

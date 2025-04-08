@@ -1,8 +1,8 @@
 define([
   'underscore',
   'react-redux',
-  'es6!js/widgets/associated/redux/modules/ui',
-  'es6!js/widgets/associated/components/app.jsx',
+  'js/widgets/associated/redux/modules/ui',
+  'js/widgets/associated/components/app.jsx',
 ], function(_, ReactRedux, ui, App) {
   // actions
   const { handleLinkClick } = ui;

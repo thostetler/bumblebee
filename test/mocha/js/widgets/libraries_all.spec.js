@@ -1,8 +1,7 @@
 define([
   'js/widgets/libraries_all/widget',
   'js/bugutils/minimal_pubsub',
-  'moment',
-], function(LibrariesWidget, MinSub, moment) {
+], function(LibrariesWidget, MinSub) {
   describe('Libraries Home Widget (UI Widget)', function() {
     afterEach(function() {
       $('#test').empty();

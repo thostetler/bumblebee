@@ -182,24 +182,25 @@
 
     // eslint-disable-next-line no-restricted-syntax
     for (const loader of loaders) {
-      loader()
-        .then(() => {
-          deleteCookie(COOKIE_NAME);
-        })
-        .catch((e) => {
-          log(`Attempt ${retries}: ${loader.name} failed`, e);
-          showAppErrorMessage(`Failed to load. Refreshing... (attempt ${retries}/${MAX_RETRIES})`);
-          setTimeout(() => {
-            // only reload if the user is seeing the loading splash screen
-            if (document.getElementById('loading-screen-title')) {
-              // If all loaders fail, update the retry count and reload the page
-              setCookie(COOKIE_NAME, retries + 1, 5);
-              window.location.reload();
-            }
-          }, 5000);
-        });
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        await loader();
+        deleteCookie(COOKIE_NAME);
+        return;
+      } catch (e) {
+        log(`Attempt ${retries}: ${loader.name} failed`, e);
+      }
     }
 
+    showAppErrorMessage(`Failed to load. Refreshing... (attempt ${retries}/${MAX_RETRIES})`);
+    setTimeout(() => {
+      // only reload if the user is seeing the loading splash screen
+      if (document.getElementById('loading-screen-title')) {
+        // If all loaders fail, update the retry count and reload the page
+        setCookie(COOKIE_NAME, retries + 1, 5);
+        window.location.reload();
+      }
+    }, 5000);
   };
 
   /**
