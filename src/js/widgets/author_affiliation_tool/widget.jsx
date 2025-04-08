@@ -1,19 +1,19 @@
-import Backbone from "backbone";
-import $ from "jquery";
-import ApiQuery from "js/components/api_query";
-import ApiRequest from "js/components/api_request";
-import ApiTargets from "js/components/api_targets";
-import actions from "js/widgets/author_affiliation_tool/actions/index";
-import ACTIONS from "js/widgets/author_affiliation_tool/constants/actionNames";
-import App from "js/widgets/author_affiliation_tool/containers/App.jsx";
-import reducers from "js/widgets/author_affiliation_tool/reducers/index";
-import BaseWidget from "js/widgets/base/base_widget";
-import React from "react";
-import ReactDOM from "react-dom";
-import ReactRedux from "react-redux";
-import Redux from "redux";
-import ReduxThunk from "redux-thunk";
-import _ from "underscore";
+import Backbone from 'backbone';
+import $ from 'jquery';
+import ApiQuery from 'js/components/api_query';
+import ApiRequest from 'js/components/api_request';
+import ApiTargets from 'js/components/api_targets';
+import actions from 'js/widgets/author_affiliation_tool/actions/index';
+import ACTIONS from 'js/widgets/author_affiliation_tool/constants/actionNames';
+import App from 'js/widgets/author_affiliation_tool/containers/App.jsx';
+import reducers from 'js/widgets/author_affiliation_tool/reducers/index';
+import BaseWidget from 'js/widgets/base/base_widget';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import Redux from 'redux';
+import ReduxThunk from 'redux-thunk';
+import _ from 'underscore';
 
 /**
  * Main entry point
@@ -25,9 +25,9 @@ var View = Backbone.View.extend({
   },
   render: function() {
     ReactDOM.render(
-      <ReactRedux.Provider store={this.store}>
+      <Provider store={this.store}>
         <App />
-      </ReactRedux.Provider>,
+      </Provider>,
       this.el
     );
     return this;

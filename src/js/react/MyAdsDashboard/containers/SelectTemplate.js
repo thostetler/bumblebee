@@ -1,4 +1,4 @@
-import actions from 'js/react/MyAdsDashboard/actions/index';
+import actions from 'js/react/MyAdsDashboard/actions';
 import SelectTemplate from 'js/react/MyAdsDashboard/components/SelectTemplate.jsx';
 import { connect } from 'react-redux';
 

@@ -7,13 +7,9 @@ import ImportNotificationsForm from "js/react/MyAdsDashboard/containers/ImportNo
 import KeywordForm from "js/react/MyAdsDashboard/containers/KeywordForm";
 import SelectTemplate from "js/react/MyAdsDashboard/containers/SelectTemplate";
 import React from "react";
-import { page
+import constants from "js/react/MyAdsDashboard/constants";
 
-:
-PAGE;
-}
-from;
-"js/react/MyAdsDashboard/constants";
+const { page: PAGE } = constants;
 
 const getComponent = (page) => {
   switch (page) {
@@ -33,6 +29,8 @@ const getComponent = (page) => {
       return <SelectTemplate />;
     case PAGE.IMPORT_NOTIFICATIONS:
       return <ImportNotificationsForm />;
+    default:
+      return <Dashboard/>
   }
 };
 

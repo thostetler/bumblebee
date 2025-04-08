@@ -4,7 +4,7 @@ import Export from 'js/widgets/export/components/Export.jsx';
 import Setup from 'js/widgets/export/components/Setup.jsx';
 import ReactPropTypes from 'prop-types';
 import React from 'react';
-import ReactRedux from 'react-redux';
+import { connect } from 'react-redux';
 import _ from 'underscore';
 
 const {
@@ -17,7 +17,6 @@ const {
   cancelRequest,
   reset,
   downloadFile,
-  getCustomFormats,
 } = actions;
 
 class App extends React.Component {
@@ -42,7 +41,7 @@ class App extends React.Component {
      * send many requests.
      */
     this.updateCount = _.debounce((val) => {
-      dispatch(setCount(parseInt(val)));
+      dispatch(setCount(parseInt(val, 10)));
     }, 500);
 
     this.onCustomFormatChange = _.debounce((val) => {
@@ -310,4 +309,4 @@ const mapStateToProps = (state) => ({
   customFormats: state.exports.customFormats,
 });
 
-export default ReactRedux.connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App);

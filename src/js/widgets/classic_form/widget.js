@@ -6,6 +6,9 @@ import BaseWidget from 'js/widgets/base/base_widget';
 import AutocompleteData from 'js/widgets/paper_search_form/topterms';
 import SortActions from 'js/widgets/sort/redux/modules/sort-app';
 import SortWidget from 'js/widgets/sort/widget.jsx';
+import Marionette from 'backbone.marionette';
+import _ from 'underscore';
+import Backbone from 'backbone';
 
 // for autocomplete
 function split(val) {

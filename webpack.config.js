@@ -96,6 +96,14 @@ module.exports = {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
     }),
+    // Add underscore as a global
+    new webpack.ProvidePlugin({
+      _: 'underscore',
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery',
+    }),
     {
       apply(compiler) {
         compiler.hooks.normalModuleFactory.tap('RewriteHbsPlugin', (nmf) => {

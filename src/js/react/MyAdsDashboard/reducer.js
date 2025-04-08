@@ -1,12 +1,9 @@
 import actions from "js/react/MyAdsDashboard/actions";
 import { combineReducers } from "redux";
-import { page
+import constants from "js/react/MyAdsDashboard/constants";
 
-:
-PAGE;
-}
-from;
-"js/react/MyAdsDashboard/constants";
+const { page: PAGE } = constants;
+
 const {
   SET_NOTIFICATIONS,
   SET_EDITING_NOTIFICATION,

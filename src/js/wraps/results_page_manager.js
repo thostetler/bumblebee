@@ -4,8 +4,9 @@ import SideBarManagerMixin from 'js/mixins/side_bar_manager';
 import PageManagerController from 'js/page_managers/controller';
 import PageManagerView from 'js/page_managers/three_column_view';
 import utils from 'utils';
+import _ from 'lodash';
 
-var PageManager = PageManagerController.extend({
+const PageManager = PageManagerController.extend({
   initialize: function() {
     PageManagerController.prototype.initialize.apply(this, arguments);
     this.resultsTimer = new utils.TimingEvent('all-results-loaded', 'workflow');

@@ -7,7 +7,7 @@ import Row from 'js/widgets/author_affiliation_tool/components/Row.jsx';
 import SelectionButtons from 'js/widgets/author_affiliation_tool/components/SelectionButtons.jsx';
 import ACTIONS from 'js/widgets/author_affiliation_tool/constants/actionNames';
 import React from 'react';
-import ReactRedux from 'react-redux';
+import { connect } from 'react-redux';
 import _ from 'underscore';
 
 const makeOptions = (arr, allVal) =>
@@ -27,7 +27,7 @@ const makeOptions = (arr, allVal) =>
   });
 
 // actions
-const { toggleSelection, toggleAll, reset, doExport, closeWidget, updateYear, updateAuthor, reload } = actions;
+const { toggleSelection, toggleAll, reset, doExport, closeWidget, updateYear, updateAuthor } = actions;
 
 /**
  * Main component
@@ -256,4 +256,4 @@ const mapStateToProps = (state) => ({
   showReload: state.showReload,
 });
 
-export default ReactRedux.connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App);

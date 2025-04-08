@@ -4,7 +4,7 @@
 import ApiTargets from 'js/components/api_targets';
 import config from 'js/widgets/config';
 import actions from 'js/widgets/export/actions/index';
-import Redux from 'redux';
+import { combineReducers } from 'redux';
 import _ from 'underscore';
 
 const {
@@ -236,7 +236,7 @@ const main = (
   }
 };
 
-const appReducer = Redux.combineReducers({
+const appReducer = combineReducers({
   format,
   formats,
   error,

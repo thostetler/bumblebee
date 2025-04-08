@@ -14,7 +14,7 @@ const LocalStorage = GenericModule.extend({
   },
 
   _createStore: function(name) {
-    var s = new PersistJS.Store(name, {
+    var s = PersistJS.Store(name, {
       about: 'This is bumblebee persistent storage',
       defer: true,
     });

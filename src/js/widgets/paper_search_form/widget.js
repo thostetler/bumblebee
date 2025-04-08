@@ -5,6 +5,7 @@ import ApiRequest from 'js/components/api_request';
 import ApiTargets from 'js/components/api_targets';
 import BaseWidget from 'js/widgets/base/base_widget';
 import AutocompleteData from 'js/widgets/paper_search_form/topterms';
+import Marionette from 'marionette';
 import _ from 'underscore';
 
 const renderAutoCompleteItem = function(ul, item) {

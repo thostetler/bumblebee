@@ -1,6 +1,6 @@
-import actions from 'js/react/MyAdsDashboard/actions/index';
+import actions from 'js/react/MyAdsDashboard/actions';
 import Dashboard from 'js/react/MyAdsDashboard/components/Dashboard.jsx';
-import { page } from 'js/react/MyAdsDashboard/constants';
+import constants from 'js/react/MyAdsDashboard/constants';
 import { connect } from 'react-redux';
 
 const mapStateToProps = ({ notifications, requests }) => ({
@@ -31,7 +31,7 @@ const actionCreators = {
   importNotifications,
   runQuery,
   editNotification: (id) => getNotification(id),
-  createNewNotification: () => goTo(page.SELECT_TEMPLATE),
+  createNewNotification: () => goTo(constants.page.SELECT_TEMPLATE),
 };
 
 export default connect(mapStateToProps, actionCreators)(Dashboard);

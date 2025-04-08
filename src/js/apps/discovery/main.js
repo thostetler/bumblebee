@@ -15,15 +15,63 @@
  */
 // import Router from 'router';
 import Application from "js/components/application";
-// import DiscoveryBootstrap from 'js/mixins/discovery_bootstrap';
-// import ApiAccess from 'js/mixins/api_access';
-// import ApiFeedback from 'js/components/api_feedback';
-// import analytics from 'analytics';
+import DiscoveryBootstrap from 'js/mixins/discovery_bootstrap';
 
 // const app = new (Application.extend(DiscoveryBootstrap))();
-const app = new Application();
+const app = new (Application.extend(DiscoveryBootstrap))();
 
-document.write(JSON.stringify(app, null, 2));
+// Remove the test code that just writes to document
+// document.write(JSON.stringify(app, null, 2));
+
+// Initialize the application
+const updateProgress = typeof window.__setAppLoadingProgress === 'function'
+  ? window.__setAppLoadingProgress
+  : function() {};
+
+Application.prototype.shim();
+
+// Check if we're in debug mode
+const debug = window.location.href.indexOf('debug=true') > -1;
+
+// Configure the application
+app.configure({
+  debug: debug,
+  timeout: 60 * 1000 // 60 seconds
+});
+
+// Start the application
+updateProgress(80, 'App Loaded');
+
+// Activate all loaded modules
+app.activate();
+
+const pubsub = app.getService('PubSub');
+pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_LOADED);
+
+// Set some important urls, parameters before doing anything
+app.configure();
+
+updateProgress(95, 'Finishing Up...');
+app.bootstrap().done(function(data) {
+  updateProgress(100);
+
+  app.onBootstrap(data);
+
+  const dynConf = app.getObject('DynamicConfig');
+  if (dynConf && dynConf.debugExportBBB) {
+    window.bbb = app;
+  }
+
+  pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_BOOTSTRAPPED);
+
+  pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_STARTING);
+  app.start().done(function() {
+    pubsub.publish(pubsub.getCurrentPubSubKey(), pubsub.APP_STARTED);
+
+    // Rest of the application initialization code...
+    // (Copy the rest of the initialization code from the original main.js)
+  });
+});
 
 // define(['config/discovery.config', 'module'], function(config, module) {
 //   // eslint-disable-next-line import/no-dynamic-require

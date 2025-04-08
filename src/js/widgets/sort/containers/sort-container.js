@@ -1,6 +1,7 @@
 import SortApp from 'js/widgets/sort/components/sort-app.jsx';
 import actions from 'js/widgets/sort/redux/modules/sort-app';
-import ReactRedux from 'react-redux';
+import { connect } from 'react-redux';
+
 // actions
 const { setSort, setDirection } = actions;
 
@@ -15,4 +16,4 @@ const mapDispatchToProps = (dispatch) => ({
   setDirection: () => dispatch(setDirection()),
 });
 
-export default ReactRedux.connect(mapStateToProps, mapDispatchToProps)(SortApp);
+export default connect(mapStateToProps, mapDispatchToProps)(SortApp);

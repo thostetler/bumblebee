@@ -1,7 +1,7 @@
 import PageManagerController from 'js/page_managers/controller';
 
 const PageManager = PageManagerController.extend({
-  async assemble() {
+  assemble() {
     // noop
   },
 

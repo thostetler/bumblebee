@@ -1,4 +1,4 @@
-import actions from 'js/react/MyAdsDashboard/actions/index';
+import actions from 'js/react/MyAdsDashboard/actions';
 import ClassicLoginForm from 'js/react/MyAdsDashboard/components/ClassicLoginForm.jsx';
 import { connect } from 'react-redux';
 

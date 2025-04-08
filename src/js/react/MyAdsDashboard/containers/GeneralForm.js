@@ -1,6 +1,6 @@
-import actions from 'js/react/MyAdsDashboard/actions/index';
+import actions from 'js/react/MyAdsDashboard/actions';
 import GeneralForm from 'js/react/MyAdsDashboard/components/GeneralForm.jsx';
-import { page } from 'js/react/MyAdsDashboard/constants';
+import constants from 'js/react/MyAdsDashboard/constants';
 import { connect } from 'react-redux';
 
 const mapStateToProps = ({ requests, notifications, editingNotification }) => ({
@@ -17,8 +17,8 @@ const { goTo, updateNotification, getQuery } = actions;
 const actionCreators = {
   updateNotification,
   getQuery,
-  onSuccess: () => goTo(page.DASHBOARD),
-  onCancel: () => goTo(page.DASHBOARD),
+  onSuccess: () => goTo(constants.page.DASHBOARD),
+  onCancel: () => goTo(constants.page.DASHBOARD),
 };
 
 export default connect(mapStateToProps, actionCreators)(GeneralForm);

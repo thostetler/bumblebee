@@ -2,6 +2,7 @@ import ClassicImportView from 'js/widgets/library_import/templates/import-view-c
 import ADS2ImportView from 'js/widgets/library_import/templates/import-view-labs.html';
 import SuccessTemplate from 'js/widgets/library_import/templates/success-template.html';
 import TabContainerTemplate from 'js/widgets/library_import/templates/tab-container.html';
+import Marionette from 'backbone.marionette';
 import ApiRequest from 'js/components/api_request';
 import ApiTargets from 'js/components/api_targets';
 import BaseWidget from 'js/widgets/base/base_widget';
