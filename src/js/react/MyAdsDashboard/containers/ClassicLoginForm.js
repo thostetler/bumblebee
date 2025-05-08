@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/ClassicLoginForm.jsx',
+  'js/react/MyAdsDashboard/components/ClassicLoginForm.jsx',
   'react-redux',
   '../actions',
 ], function(ClassicLoginForm, { connect }, actions) {

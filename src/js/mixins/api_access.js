@@ -1,9 +1,10 @@
 define([
+  '@sentry/browser',
   'underscore',
   'backbone',
   'js/components/api_query',
   'js/components/api_request',
-], function (_, Backbone, ApiQuery, ApiRequest) {
+], function (Sentry, _, Backbone, ApiQuery, ApiRequest) {
   /*
    * this simple mixin contacts the api (getApiAccess), and if the {reconnect: true} option
    * is passed to getApiAccess, will save the relevant data.
@@ -56,11 +57,9 @@ define([
         }),
         {
           done: function (data) {
-            window.getSentry((sentry) => {
-              sentry.setUser({
-                id: data.access_token,
-                anonymous: data.anonymous,
-              });
+            Sentry.setUser({
+              id: data.access_token,
+              anonymous: data.anonymous,
             });
             if (options.reconnect) {
               self.onBootstrap(data);

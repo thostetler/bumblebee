@@ -1,6 +1,6 @@
 define([
-  './base_graph',
-  'hbs!js/widgets/facet/graph-facet/templates/year-graph-legend',
+  'js/widgets/facet/graph-facet/base_graph',
+  'js/widgets/facet/graph-facet/templates/year-graph-legend.hbs',
   'marionette',
   'jquery-ui',
 ], function(BaseGraphView, legendTemplate, Marionette) {

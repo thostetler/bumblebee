@@ -50,7 +50,8 @@ define([
       selectedOption: selectedOption,
       updateLinks: function(userData) {
         var format = userData.defaultExportFormat;
-        var formatVal = _.find(config.export.formats, { label: format }).value;
+        var found = _.find(config.export.formats, (el) => el.label === format);
+        var formatVal = found?.value ?? 'BibTeX';
 
         if (format) {
           var match;

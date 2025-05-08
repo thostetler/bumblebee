@@ -5,7 +5,8 @@ define([
   'react',
   'js/components/api_query',
   'js/components/api_request',
-], function($, _, analytics, React, ApiQuery, ApiRequest) {
+  'bowser',
+], function($, _, analytics, React, ApiQuery, ApiRequest, bowser) {
   const qs = function(key, str, separator) {
     // eslint-disable-next-line no-useless-escape
     const k = key.replace(/[*+?^$.[\]{}()|\\\/]/g, '\\$&'); // escape RegEx meta chars
@@ -56,25 +57,7 @@ define([
 
   // get the current browser information
   const getBrowserInfo = function() {
-    // do this inline, so we only request when necessary
-    const $dd = $.Deferred();
-
-    // reject after 3 seconds
-    const timeoutId = setTimeout(() => {
-      $dd.reject();
-    }, 3000);
-    window.require(
-      ['bowser'],
-      (bowser) => {
-        window.clearTimeout(timeoutId);
-        $dd.resolve(bowser.parse(window.navigator.userAgent));
-      },
-      () => {
-        $dd.reject();
-      }
-    );
-
-    return $dd.promise();
+    return $.Deferred().resolve(bowser.parse(window.navigator.userAgent));
   };
 
   class TimingEvent {
@@ -187,6 +170,13 @@ define([
     return defaultMessage;
   };
 
+  const createCurryHandler = () => {
+    const U = (f) => f(f);
+    return function curry(fn) {
+      return U((r) => (...args) => (args.length < fn.length ? U(r).bind(null, ...args) : fn(...args)));
+    };
+  };
+
   return {
     qs: qs,
     updateHash: updateHash,
@@ -199,5 +189,6 @@ define([
     makeApiQuery: makeApiQuery,
     makeApiRequest: makeApiRequest,
     extractErrorMessageFromAjax,
+    curry: createCurryHandler(),
   };
 });

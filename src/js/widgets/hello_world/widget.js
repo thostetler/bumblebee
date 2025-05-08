@@ -47,7 +47,7 @@ define([
 
   // 'hbs!' is 'handlebars' template pre-processor, it will load the file and give you
   // executable template
-  'hbs!js/widgets/hello_world/templates/layout',
+  'js/widgets/hello_world/templates/layout.hbs',
 ], function(
   // all of the following names must correspond to the import above
   _,

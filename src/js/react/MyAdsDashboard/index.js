@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/App.jsx',
+  'js/react/MyAdsDashboard/components/App.jsx',
   'js/react/WithBackboneView',
   'js/react/configureStore',
   'react-redux',

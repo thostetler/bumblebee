@@ -2,15 +2,13 @@ define([
   'underscore',
   'js/components/generic_module',
   'js/mixins/dependon',
-  'persist-js',
-  'module',
-], function(_, GenericModule, Mixins, PersistJS, module) {
-  var namespace = module.config().namespace || '';
+  'lockr',
+], function(_, GenericModule, Mixins, Lockr) {
 
   var LocalStorage = GenericModule.extend({
     constructor: function(opts) {
       opts = opts || {};
-      this._store = this.createStore(namespace + (opts.name || ''));
+      this._store = this.createStore(opts || '');
     },
 
     createStore: function(name) {
@@ -18,24 +16,21 @@ define([
     },
 
     _createStore: function(name) {
-      var s = new PersistJS.Store(name, {
-        about: 'This is bumblebee persistent storage',
-        defer: true,
-      });
-      var keys = s.get('#keys');
+      Lockr.setPrefix(`bumblebee_${name}_`);
+      var keys = Lockr.get('#keys');
       if (!keys) {
-        s.set('#keys', '{}');
+        Lockr.set('#keys', '{}');
       } else {
         try {
           keys = JSON.parse(keys);
           if (!_.isObject(keys)) {
-            s.set('#keys', '{}');
+            Lockr.set('#keys', '{}');
           }
         } catch (e) {
-          s.set('#keys', '{}');
+          Lockr.set('#keys', '{}');
         }
       }
-      return s;
+      return Lockr;
     },
 
     set: function(key, value) {

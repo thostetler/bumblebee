@@ -5,12 +5,14 @@
  */
 
 define([
+  'marionette',
   './widget',
   'js/mixins/add_stable_index_to_collection',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
   'js/components/api_query',
 ], function(
+  Marionette,
   ListOfThings,
   PaginationMixin,
   LinkGenerator,

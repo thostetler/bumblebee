@@ -1,8 +1,8 @@
 define([
   'js/page_managers/toc_controller',
   'js/page_managers/three_column_view',
-  'hbs!js/wraps/abstract_page_manager/abstract-page-layout',
-  'hbs!js/wraps/abstract_page_manager/abstract-nav',
+  './abstract-page-layout.hbs',
+  './abstract-nav.hbs',
   'utils',
   'analytics',
 ], function(PageManagerController, PageManagerView, PageManagerTemplate, TOCTemplate, utils) {
@@ -167,7 +167,7 @@ define([
         showCount: false,
         isSelected: true,
         category: 'view',
-        alwaysThere: 'true',
+        alwaysThere: true,
         order: 0,
       },
       ShowCitations: {
@@ -217,11 +217,11 @@ define([
         category: 'view',
         order: 7,
       },
-      ShowExportcitation__default: {
+      ShowExportcitation: {
         title: 'Export',
         path: 'exportcitation',
         category: 'export',
-        alwaysThere: 'true',
+        alwaysThere: true,
         order: 8,
       },
     },

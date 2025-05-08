@@ -3,7 +3,7 @@ define([
   'd3',
   'jquery',
   'jquery-ui',
-  'hbs!js/widgets/facet/graph-facet/templates/graph',
+  'js/widgets/facet/graph-facet/templates/graph.hbs',
 ], function(Marionette, d3, $, $ui, FacetGraphTemplate) {
   var ZoomableGraphView = Marionette.ItemView.extend({
     className: 'graph-facet',
@@ -24,6 +24,7 @@ define([
 
       // for citation and reads graph
       this.currentScale = 'linear';
+      _.bindAll(this, 'pulseApplyButton');
       this.on('facet:active', this.pulseApplyButton);
     },
 
@@ -55,7 +56,7 @@ define([
     pulseApplyButton: function() {
       this.$('.apply').addClass('draw-attention-primary-faded');
       // this initiates an animation that lasts for 6 second
-      setTimeout(function() {
+      setTimeout(() => {
         this.$('.apply').removeClass('draw-attention-primary-faded');
       }, 2000);
     },

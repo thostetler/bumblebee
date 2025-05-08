@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'hbs!js/widgets/alerts/templates/page_top_alert',
+  'js/widgets/alerts/templates/page_top_alert.hbs',
 ], function(Marionette, BannerTemplate) {
   var AlertView = Marionette.ItemView.extend({
     tagName: 'span',

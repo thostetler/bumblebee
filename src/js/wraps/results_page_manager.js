@@ -1,17 +1,19 @@
 define([
   'js/page_managers/controller',
   'js/page_managers/three_column_view',
-  'hbs!js/page_managers/templates/results-page-layout',
+  '../page_managers/templates/results-page-layout.hbs',
   'js/mixins/side_bar_manager',
   'jquery',
   'utils',
+  'lodash',
 ], function(
   PageManagerController,
   PageManagerView,
   PageManagerTemplate,
   SideBarManagerMixin,
   $,
-  utils
+  utils,
+  _
 ) {
   var PageManager = PageManagerController.extend({
     initialize: function() {
@@ -158,13 +160,16 @@ define([
 
       // close any drawers
       const actionBtn = ret.$el.find('#results-actions-toggle')[0];
-      actionBtn.innerHTML = '<i class="fa fa-book" alt="open actions" aria-hidden="true"></i> Actions';
-      if (!isLoggedIn) {
-        actionBtn.classList.add('disabled');
-      } else {
-        actionBtn.classList.remove('disabled');
+      if (actionBtn) {
+        actionBtn.innerHTML = '<i class="fa fa-book" title="open actions" aria-hidden="true"></i> Actions';
+        if (!isLoggedIn) {
+          actionBtn.classList.add('disabled');
+        } else {
+          actionBtn.classList.remove('disabled');
+        }
       }
-      ret.$el.find('#query-info-container')[0].classList.remove('show');
+      const queryInfo = ret.$el.find('#query-info-container')[0];
+      if (queryInfo) queryInfo.classList.remove('show');
 
       return ret;
     },
@@ -279,7 +284,7 @@ define([
         });
     },
 
-    broadcastTo: _.curry(function(widgets, event) {
+    broadcastTo: utils.curry(function(widgets, event) {
       var args = arguments;
       var wids = _.pick(this.widgets, widgets);
       _.each(wids, function(w) {

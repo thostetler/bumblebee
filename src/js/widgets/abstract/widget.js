@@ -11,14 +11,11 @@ define([
   'underscore',
   'cache',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/abstract/templates/abstract_template',
+  'js/widgets/abstract/templates/abstract_template.hbs',
   'js/components/api_query',
   'js/mixins/link_generator_mixin',
   'js/mixins/papers_utils',
-  'mathjax',
-  'bootstrap',
   'utils',
-  'analytics',
 ], function(
   Marionette,
   ApiRequest,
@@ -33,10 +30,7 @@ define([
   ApiQuery,
   LinkGeneratorMixin,
   PapersUtils,
-  MathJax,
-  Bootstrap,
   utils,
-  analytics
 ) {
   const MAX_AUTHORS = 20;
 
@@ -286,28 +280,29 @@ define([
       }
     },
 
-    onRender: function() {
+    onRender: function () {
+      // Activate Bootstrap popover
       this.$('.icon-help').popover({
         trigger: 'hover',
         placement: 'right',
         html: true,
-        container: 'body',
+        container: 'body'
       });
 
-      if (MathJax) {
-        MathJax.Hub.Queue([
-          'Typeset',
-          MathJax.Hub,
+      // MathJax v3: typeset title and abstract if MathJax is ready
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        const elements = [
           this.$('.s-abstract-title', this.el).get(0),
-        ]);
-        MathJax.Hub.Queue([
-          'Typeset',
-          MathJax.Hub,
           this.$('.s-abstract-text', this.el).get(0),
-        ]);
+        ].filter(Boolean); // filter out nulls in case selectors fail
+
+        window.MathJax.typesetPromise(elements).catch((err) => {
+          console.error('MathJax typeset failed:', err);
+        });
       }
+
       this.copyBibcode();
-    },
+    }
   });
 
   var AbstractWidget = BaseWidget.extend({

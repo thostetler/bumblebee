@@ -3,7 +3,7 @@ define([
   'backbone',
   'underscore',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/meta_tags/template/metatags',
+  'js/widgets/meta_tags/template/metatags.hbs',
   'js/mixins/link_generator_mixin',
 ], function($, Backbone, _, BaseWidget, metatagsTemplate, LinkGenerator) {
   var View = Backbone.View.extend({
@@ -77,6 +77,7 @@ define([
     },
     updateMetaTags: function(data) {
       data.url = Backbone.history.location.href;
+      data.origin = Backbone.history.location.origin;
 
       var sources = {};
       try {

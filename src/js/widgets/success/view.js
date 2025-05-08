@@ -1,4 +1,4 @@
-define(['marionette', 'hbs!js/widgets/success/success_template'], function(
+define(['marionette', 'js/widgets/success/success_template.hbs'], function(
   Marionette,
   SuccessTemplate
 ) {

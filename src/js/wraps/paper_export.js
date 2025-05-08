@@ -1,8 +1,6 @@
 define([
-  'es6!js/widgets/export/widget.jsx',
-  'js/components/api_query',
-  'js/components/json_response',
-], function(ExportWidget, ApiQuery, JsonResponse) {
+  'js/widgets/export/widget.jsx',
+], function(ExportWidget) {
   var Widget = ExportWidget.extend({
     initialize: function(options) {
       // other widgets can send us data through page manager

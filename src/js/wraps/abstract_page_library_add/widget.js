@@ -1,7 +1,7 @@
 define([
   'js/widgets/query_info/query_info_widget',
   'js/widgets/base/base_widget',
-  'hbs!js/wraps/abstract_page_library_add/template',
+  './template.hbs',
 ], function(QueryInfoWidget, BaseWidget, template) {
   var AbstractLibraryWidget = QueryInfoWidget.extend({
     // flag for functions that send bibs to library
@@ -21,7 +21,7 @@ define([
     // don't need to subscribe to storage paper update, do need to subscribe to display_documents
     activate: function(beehive) {
       this.setBeeHive(beehive);
-      _.bindAll(this);
+      ;
 
       var that = this;
 

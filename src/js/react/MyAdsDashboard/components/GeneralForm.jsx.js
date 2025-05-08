@@ -258,7 +258,7 @@ define([
               </div>
               <div>
                 <img
-                  src="styles/img/myADS.gif"
+                  src="assest/images/myADS.gif"
                   alt="how to edit query on results page"
                   style={{ maxWidth: '800px' }}
                 />

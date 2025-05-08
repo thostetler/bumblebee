@@ -1,13 +1,14 @@
 define([
+  'underscore',
   'marionette',
   'js/components/api_query',
   'js/components/api_targets',
   'js/components/api_request',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/recommender/templates/recommender_template',
-  'bootstrap',
+  'js/widgets/recommender/templates/recommender_template.hbs',
   'analytics',
 ], function(
+  _,
   Marionette,
   ApiQuery,
   ApiTargets,

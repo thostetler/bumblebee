@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/KeywordForm.jsx',
+  'js/react/MyAdsDashboard/components/KeywordForm.jsx',
   'react-redux',
   '../actions',
   '../constants',

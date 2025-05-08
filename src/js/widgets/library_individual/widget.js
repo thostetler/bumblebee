@@ -1,12 +1,14 @@
 define([
+  'backbone',
   'marionette',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  './views/library_header',
-  './views/manage_permissions',
-  'hbs!js/widgets/library_individual/templates/layout-container',
-  'hbs!js/widgets/library_individual/templates/loading-library',
+  'js/widgets/library_individual/views/library_header',
+  'js/widgets/library_individual/views/manage_permissions',
+  'js/widgets/library_individual/templates/layout-container.hbs',
+  'js/widgets/library_individual/templates/loading-library.hbs',
 ], function(
+  Backbone,
   Marionette,
   ApiQuery,
   BaseWidget,
@@ -54,7 +56,7 @@ define([
 
     activate: function(beehive) {
       this.setBeeHive(beehive);
-      _.bindAll(this);
+      ;
       var pubsub = beehive.getService('PubSub');
       pubsub.subscribe(pubsub.LIBRARY_CHANGE, this.onLibraryChange);
       // now that beehive is present, attach event handlers to header view

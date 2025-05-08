@@ -1,4 +1,4 @@
-define(['underscore', 'es6!../modules/api', 'es6!../modules/ui'], function(
+define(['lodash', 'js/widgets/associated/redux/modules/api', 'js/widgets/associated/redux/modules/ui'], function(
   _,
   api,
   ui

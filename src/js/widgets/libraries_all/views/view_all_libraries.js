@@ -1,12 +1,12 @@
 define([
   'marionette',
-  'hbs!js/widgets/libraries_all/templates/libraries-list-container',
-  'hbs!js/widgets/libraries_all/templates/library-item',
-  'hbs!js/widgets/libraries_all/templates/no-libraries',
-  'hbs!js/widgets/libraries_all/templates/loading-libraries',
-  'hbs!js/widgets/libraries_all/templates/error-libraries',
-  'hbs!js/widgets/libraries_all/templates/no-result',
-  'moment',
+  'js/widgets/libraries_all/templates/libraries-list-container.hbs',
+  'js/widgets/libraries_all/templates/library-item.hbs',
+  'js/widgets/libraries_all/templates/no-libraries.hbs',
+  'js/widgets/libraries_all/templates/loading-libraries.hbs',
+  'js/widgets/libraries_all/templates/error-libraries.hbs',
+  'js/widgets/libraries_all/templates/no-result.hbs',
+  'dayjs',
 ], function(
   Marionette,
   LibraryContainer,
@@ -15,12 +15,12 @@ define([
   LoadingTemplate,
   ErrorTemplate,
   NoResultTemplate,
-  moment
+  dayjs
 ) {
   var LibraryItemView = Marionette.ItemView.extend({
     // time is returned from library endpoint as utc time, but without info that it is utc
     formatDate: function(d) {
-      return moment
+      return dayjs
         .utc(d)
         .local()
         .format('MMM D YYYY, h:mma');

@@ -1,8 +1,9 @@
-define(['underscore', 'react', 'react-dom', 'react-redux'], function(
+define(['underscore', 'react', 'react-dom', 'react-redux', 'backbone'], function(
   _,
   React,
   ReactDOM,
-  { Provider }
+  { Provider },
+  Backbone
 ) {
   const WithBackboneView = (component, getStore) => {
     const view = Backbone.View.extend({

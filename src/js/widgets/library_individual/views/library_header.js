@@ -1,9 +1,9 @@
 define([
   'marionette',
-  'hbs!js/widgets/library_individual/templates/library-header',
-  'moment',
-  'bootstrap',
-], function(Marionette, LibraryHeaderTemplate, moment, Bootstrap) {
+  'js/widgets/library_individual/templates/library-header.hbs',
+  'dayjs',
+  'backbone'
+], function(Marionette, LibraryHeaderTemplate, dayjs, Backbone) {
   var LibraryTitleModel = Backbone.Model.extend({
     initialize: function(vals, options) {
       options = options || {};
@@ -65,7 +65,7 @@ define([
     },
 
     formatDate: function(d) {
-      return moment
+      return dayjs
         .utc(d)
         .local()
         .format('MMM D YYYY, h:mma');

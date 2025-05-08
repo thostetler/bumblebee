@@ -1,9 +1,8 @@
 define([
-  'underscore',
   'marionette',
-  'hbs!js/widgets/preferences/templates/export',
+  'js/widgets/preferences/templates/export.hbs',
   'js/widgets/config',
-], function(_, Marionette, ExportTemplate, config) {
+], function(Marionette, ExportTemplate, config) {
   var DEFAULTS = {
     exportFormat: {
       initialOptions: _.map(config.export.formats, 'label'),

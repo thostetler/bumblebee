@@ -1,4 +1,4 @@
-define([], function () {
+define(['@sentry/browser'], function (Sentry) {
   /*
    * Set of targets
    * each has a set of hooks which coorespond to the event label passed
@@ -36,7 +36,7 @@ define([], function () {
    */
   var sendEvent = function (url) {
     window.fetch(url, { method: 'GET' }).catch((error) => {
-      window.getSentry().captureMessage('Failed to send analytics event', {
+      Sentry.captureMessage('Failed to send analytics event', {
         extra: { url, error: error.message },
       });
     });

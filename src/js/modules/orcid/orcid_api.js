@@ -38,8 +38,8 @@
  */
 
 define([
-  'underscore',
-  'bootstrap',
+  'lodash',
+  'bootstrap-sass',
   'jquery',
   'backbone',
   'js/components/generic_module',

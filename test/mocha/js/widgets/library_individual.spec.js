@@ -1,8 +1,7 @@
 define([
   'js/widgets/library_individual/widget',
   'js/bugutils/minimal_pubsub',
-  'moment',
-], function(LibraryWidget, MinSub, moment) {
+], function(LibraryWidget, MinSub) {
   describe('Library Widget (library_individual.spec.js)', function() {
     var stubLibraryMetadata = [
       {

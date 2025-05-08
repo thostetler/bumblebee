@@ -5,8 +5,9 @@ define([
   'js/components/api_query',
   'js/components/api_request',
   'js/components/api_targets',
-  'hbs!js/widgets/paper_search_form/form',
-  './topterms',
+  'js/widgets/paper_search_form/form.hbs',
+  'js/widgets/paper_search_form/topterms',
+  'marionette',
 ], function(
   _,
   $,
@@ -15,7 +16,8 @@ define([
   ApiRequest,
   ApiTargets,
   FormTemplate,
-  AutocompleteData
+  AutocompleteData,
+  Marionette
 ) {
   const renderAutoCompleteItem = function(ul, item) {
     const re = new RegExp('(' + this.term + ')', 'i');

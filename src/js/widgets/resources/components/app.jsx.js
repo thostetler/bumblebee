@@ -108,25 +108,25 @@ define(['underscore', 'react', 'prop-types'], function(_, React, PropTypes) {
   };
 
   // Main View
-  const App = (props) => (
+  const App = ({ dataProducts, fullTextSources, hasError, loading, noResults, onLinkClick }) => (
     <div>
-      {props.loading && <Loading />}
-      {props.noResults && !props.loading && <NoResults />}
-      {!props.loading && !props.hasError && (
+      {loading && <Loading />}
+      {noResults && !loading && <NoResults />}
+      {!loading && !hasError && (
         <>
           <div className="resources__container">
-            {!_.isEmpty(props.fullTextSources) && (
+            {!_.isEmpty(fullTextSources) && (
               <FullTextLinkList
-                items={props.fullTextSources}
-                onClick={props.onLinkClick}
+                items={fullTextSources}
+                onClick={onLinkClick}
               />
             )}
           </div>
           <div className="resources__container">
-            {!_.isEmpty(props.dataProducts) && (
+            {!_.isEmpty(dataProducts) && (
               <DataProductLinkList
-                items={props.dataProducts}
-                onClick={props.onLinkClick}
+                items={dataProducts}
+                onClick={onLinkClick}
               />
             )}
           </div>
@@ -137,8 +137,8 @@ define(['underscore', 'react', 'prop-types'], function(_, React, PropTypes) {
   App.propTypes = {
     loading: PropTypes.bool,
     noResults: PropTypes.bool,
-    fullTextSources: PropTypes.array,
-    dataProducts: PropTypes.array,
+    fullTextSources: PropTypes.arrayOf(PropTypes.string),
+    dataProducts: PropTypes.arrayOf(PropTypes.string),
     onLinkClick: PropTypes.func,
     hasError: PropTypes.string,
   };

@@ -7,7 +7,7 @@ define([
   './views/application',
   './views/export',
   'js/components/api_feedback',
-  'hbs!js/widgets/preferences/templates/orcid-form-submit-modal',
+  'js/widgets/preferences/templates/orcid-form-submit-modal.hbs',
 ], function(
   _,
   Marionette,
@@ -77,7 +77,7 @@ define([
     activate: function(beehive) {
       var that = this;
       this.setBeeHive(beehive);
-      _.bindAll(this);
+
       var pubsub = beehive.getService('PubSub');
       pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, this.handleUserAnnouncement);
       pubsub.subscribe(pubsub.ORCID_ANNOUNCEMENT, this.handleOrcidAnnouncement);

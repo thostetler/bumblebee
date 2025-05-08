@@ -5,10 +5,8 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/query_info/query_info_template',
+  'js/widgets/query_info/query_info_template.hbs',
   'js/mixins/formatter',
-  'bootstrap',
-  'js/components/api_feedback',
 ], function(
   Marionette,
   Backbone,
@@ -18,8 +16,6 @@ define([
   BaseWidget,
   queryInfoTemplate,
   FormatMixin,
-  Bootstrap,
-  ApiFeedback
 ) {
   var QueryModel = Backbone.Model.extend({
     defaults: {
@@ -199,9 +195,8 @@ define([
 
     activate: function(beehive) {
       this.setBeeHive(beehive);
-      _.bindAll(this);
-
       var that = this;
+      _.bindAll(this, ['processResponse', 'handleUserAnnouncement', 'onStoragePaperChange']);
 
       var pubsub = this.getPubSub();
       pubsub.subscribe(pubsub.STORAGE_PAPER_UPDATE, this.onStoragePaperChange);

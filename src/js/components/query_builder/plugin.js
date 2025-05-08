@@ -10,18 +10,16 @@
 
 define([
   'underscore',
-  'bootstrap',
   'jquery',
   'jquery-querybuilder',
   'js/components/generic_module',
   'js/components/query_builder/rules_translator',
   'js/components/api_query',
-  'hbs!js/components/query_builder/templates/group_template',
-  'hbs!js/components/query_builder/templates/rule_template',
+  'js/components/query_builder/templates/group_template.hbs',
+  'js/components/query_builder/templates/rule_template.hbs',
   'js/mixins/dependon',
 ], function(
   _,
-  Bootstrap,
   $,
   jQueryQueryBuilderPlugin,
   GenericModule,

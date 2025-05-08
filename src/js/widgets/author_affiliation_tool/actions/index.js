@@ -1,8 +1,8 @@
 define([
   'underscore',
-  'es6!../models/authorAffiliation',
-  'es6!../constants/actionNames',
-  'filesaver',
+  'js/widgets/author_affiliation_tool/models/authorAffiliation',
+  'js/widgets/author_affiliation_tool/constants/actionNames',
+  'file-saver',
 ], function(_, authorAffiliation, ACTIONS) {
   /**
    * Format the data into something the server will accept
@@ -326,7 +326,7 @@ define([
      * @param {array} data - the raw data from the server
      */
     setAffiliationData: (data) => (dispatch) => {
-      data = _(data)
+      data = _.chain(data)
         .groupBy('authorName')
         .map((affs, author) => authorAffiliation.create(author, affs))
         .value();

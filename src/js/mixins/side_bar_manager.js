@@ -12,7 +12,7 @@ define(['backbone', 'js/components/api_feedback'], function(
     },
   }))();
 
-  var SideBarManager = {
+  return {
     /**
      * Try to get the current sidebar state from user data
      * This will be the value coming from user settings
@@ -20,8 +20,8 @@ define(['backbone', 'js/components/api_feedback'], function(
     _getUpdateFromUserData: function() {
       try {
         var ud = this.getBeeHive()
-          .getObject('User')
-          .getUserData();
+        .getObject('User')
+        .getUserData();
         if (!ud) return false;
         return !ud.defaultHideSidebars
           ? false
@@ -142,6 +142,4 @@ define(['backbone', 'js/components/api_feedback'], function(
       return state.get('show');
     },
   };
-
-  return SideBarManager;
 });

@@ -1,9 +1,10 @@
 define([
+  'backbone',
   'underscore',
   'utils',
   'js/widgets/base/base_widget',
   'js/components/api_query_updater',
-], function(_, utils, BaseWidget, ApiQueryUpdater) {
+], function(Backbone, _, utils, BaseWidget, ApiQueryUpdater) {
   var BaseFacetWidget = BaseWidget.extend({
     initialize: function(options) {
       options = options || {};

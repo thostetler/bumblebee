@@ -5,14 +5,12 @@ define([
   'd3',
   'js/components/api_request',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/wordcloud/templates/wordcloud-template',
-  'hbs!js/widgets/wordcloud/templates/selected-list-template',
+  'js/widgets/wordcloud/templates/wordcloud-template.hbs',
+  'js/widgets/wordcloud/templates/selected-list-template.hbs',
   'js/components/api_targets',
   'js/components/api_query_updater',
   'js/components/api_query',
   'js/components/api_feedback',
-  'jquery-ui',
-  'bootstrap',
   'd3-cloud',
 ], function(
   $,
@@ -26,8 +24,11 @@ define([
   ApiTargets,
   ApiQueryUpdater,
   ApiQuery,
-  ApiFeedback
+  ApiFeedback,
+  d3Cloud
 ) {
+  d3.layout.cloud = d3Cloud;
+
   var helpText =
     '<p>This word cloud allows you to view interesting words from the titles and abstracts of your search results.</p>' +
     '<p> Move the slider towards <strong> Frequent</strong> to view a word cloud that is simply composed of the words that appeared most' +

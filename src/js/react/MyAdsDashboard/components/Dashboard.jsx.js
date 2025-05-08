@@ -1,13 +1,13 @@
 define([
   'underscore',
   'react',
-  'es6!./TemplatePill.jsx',
-  'moment',
-  'es6!./ActionsDropdown.jsx',
+  'js/react/MyAdsDashboard/components/TemplatePill.jsx',
+  'dayjs',
+  'js/react/MyAdsDashboard/components/ActionsDropdown.jsx',
   'prop-types',
-], function(_, React, TemplatePill, moment, ActionsDropdown, PropTypes) {
+], function(_, React, TemplatePill, dayjs, ActionsDropdown, PropTypes) {
   const getFriendlyDateString = (dateStr) => {
-    return moment(dateStr).format('lll');
+    return dayjs(dateStr).format('lll');
   };
 
   const SortableHeader = ({ children, onClick, direction, active }) => {
@@ -44,7 +44,7 @@ define([
   };
 
   /**
-   * @typedef {import('../typedefs.js').Notification} Notification
+   * @typedef {import('js/react/MyAdsDashboard/typedefs.js').Notification} Notification
    */
 
   class MyAdsDashboard extends React.Component {
@@ -192,7 +192,7 @@ define([
           const leftVal = left[prop];
           const rightVal = right[prop];
           if (prop === 'updated') {
-            return moment(dir === 'asc' ? leftVal : rightVal).diff(
+            return dayjs(dir === 'asc' ? leftVal : rightVal).diff(
               dir === 'asc' ? rightVal : leftVal
             );
           }

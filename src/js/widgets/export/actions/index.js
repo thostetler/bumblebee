@@ -6,7 +6,7 @@ define([
   'jquery',
   'js/components/api_query',
   'js/components/api_targets',
-  'filesaver',
+  'file-saver',
 ], function(_, $, ApiQuery, ApiTargets) {
   // set of action names
   const actions = {

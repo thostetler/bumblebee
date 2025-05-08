@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/ArxivForm.jsx',
+  'js/react/MyAdsDashboard/components/ArxivForm.jsx',
   'react-redux',
   '../actions',
   '../constants',

@@ -2,11 +2,12 @@ define([
   'js/widgets/base/base_widget',
   'js/components/api_request',
   'js/components/api_targets',
-  'hbs!js/widgets/library_import/templates/tab-container',
-  'hbs!js/widgets/library_import/templates/import-view-labs',
-  'hbs!js/widgets/library_import/templates/import-view-classic',
-  'hbs!js/widgets/library_import/templates/success-template',
-  'bootstrap',
+  'js/widgets/library_import/templates/tab-container.hbs',
+  'js/widgets/library_import/templates/import-view-labs.hbs',
+  'js/widgets/library_import/templates/import-view-classic.hbs',
+  'js/widgets/library_import/templates/success-template.hbs',
+  'marionette',
+  'backbone'
 ], function(
   BaseWidget,
   ApiRequest,
@@ -15,7 +16,8 @@ define([
   ADS2ImportView,
   ClassicImportView,
   SuccessTemplate,
-  Bootstrap
+  Marionette,
+  Backbone
 ) {
   /* config vars */
 
@@ -212,7 +214,7 @@ define([
 
     activate: function(beehive) {
       this.setBeeHive(beehive);
-      _.bindAll(this);
+      ;
 
       var that = this;
       var pubsub = this.getPubSub();

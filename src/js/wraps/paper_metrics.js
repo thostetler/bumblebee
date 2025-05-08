@@ -26,8 +26,8 @@ define(['js/widgets/metrics/widget', 'js/components/api_feedback'], function(
         }
       };
 
-      this.on('page-manager-message', handlePMMessages);
-      this.on('page-manager-event', handlePMMessages);
+      this.on('page-manager-message', handlePMMessages.bind(this));
+      this.on('page-manager-event', handlePMMessages.bind(this));
 
       MetricsWidget.prototype.initialize.apply(this, arguments);
     },

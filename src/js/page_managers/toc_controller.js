@@ -3,18 +3,18 @@ define([
   'marionette',
   './controller',
   './toc_widget',
+  './toc_widget_collection',
   'analytics',
-], function(_, Marionette, BasicPageManagerController, TOCWidget, analytics) {
+], function(_, Marionette, BasicPageManagerController, TOCWidget, { WidgetCollection }, analytics) {
   /*
    * need to provide a toc template for the toc view when you inherit from this
-   * */
+   */
 
-  var PageManagerController = BasicPageManagerController.extend({
+  const PageManagerController = BasicPageManagerController.extend({
     initialize: function() {
       BasicPageManagerController.prototype.initialize.apply(this, arguments);
 
       // debounce this method to keep from double navigating
-
       if (!window.__BUMBLEBEE_TESTING_MODE__) {
         this.onWidgetSelected = _.debounce(
           _.bind(this.onWidgetSelected, this),
@@ -30,14 +30,11 @@ define([
         );
       }
 
-      return BasicPageManagerController.prototype.createView.call(
-        this,
-        options
-      );
+      return BasicPageManagerController.prototype.createView.call(this, options);
     },
 
     assemble: function(app) {
-      var defer = $.Deferred();
+      const defer = $.Deferred();
 
       if (!this.navConfig) {
         defer.reject(
@@ -53,46 +50,39 @@ define([
         return defer.promise();
       }
 
-      var self = this;
+      const self = this;
+
       BasicPageManagerController.prototype.assemble
-        .apply(this, arguments)
-        .done(function() {
-          var tocTemplate = Marionette.getOption(self, 'TOCTemplate');
+      .apply(this, arguments)
+      .done(function() {
+        const tocTemplate = Marionette.getOption(self, 'TOCTemplate');
 
-          if (self.TOCEvents) {
-            // initiate the TOC view
-            self.widgets.tocWidget = new TOCWidget({
-              template: tocTemplate,
-              events: Marionette.getOption(self, 'TOCEvents'),
-              navConfig: Marionette.getOption(self, 'navConfig'),
-            });
-          } else {
-            // initiate the TOC view
-            self.widgets.tocWidget = new TOCWidget({
-              template: tocTemplate,
-              navConfig: Marionette.getOption(self, 'navConfig'),
-            });
-          }
-
-          // insert the TOC nav view into its slot
-          self.view
-            .$('.nav-container')
-            .append(self.widgets.tocWidget.render().el);
-
-          _.each(
-            _.keys(self.widgets),
-            function(w) {
-              self.listenTo(
-                this.widgets[w],
-                'page-manager-event',
-                _.bind(this.onPageManagerEvent, this, this.widgets[w])
-              );
-              self.broadcast('page-manager-message', 'new-widget', w);
-            },
-            self
-          );
-          defer.resolve();
+        // initiate the TOC view
+        self.widgets.tocWidget = new TOCWidget({
+          template: tocTemplate,
+          collection: new WidgetCollection(),
+          events: self.TOCEvents ? Marionette.getOption(self, 'TOCEvents') : undefined,
+          navConfig: Marionette.getOption(self, 'navConfig'),
         });
+
+        // insert the TOC nav view into its slot
+        self.view.$('.nav-container').append(self.widgets.tocWidget.render().el);
+
+        _.each(
+          _.keys(self.widgets),
+          function(w) {
+            self.listenTo(
+              this.widgets[w],
+              'page-manager-event',
+              _.bind(this.onPageManagerEvent, this, this.widgets[w])
+            );
+            self.broadcast('page-manager-message', 'new-widget', w);
+          },
+          self
+        );
+
+        defer.resolve();
+      });
 
       return defer.promise();
     },
@@ -102,14 +92,12 @@ define([
      * It will discover their 'widgetId' and broadcasts the
      * data via a page-manager-message to all widgets in the
      * collection.
-     *
-     * @param event
-     * @param data
      */
     onPageManagerEvent: function(widget, event, data) {
       data = data || {};
-      var sender = null;
-      var widgetId = null;
+
+      let sender = null;
+      let widgetId = null;
 
       // try to find/identify sender
       if (widget) {
@@ -121,34 +109,37 @@ define([
         });
       }
 
-      if (event == 'widget-ready' && sender !== null) {
+      if (event === 'widget-ready' && sender !== null) {
         data.widgetId = widgetId;
         this.broadcast('page-manager-message', event, data);
-      } else if (event == 'widget-selected') {
+      } else if (event === 'widget-selected') {
         this.onWidgetSelected.apply(this, arguments);
-      } else if (event == 'broadcast-payload') {
+      } else if (event === 'broadcast-payload') {
         this.broadcast('page-manager-message', event, data);
-      } else if (event == 'navigate') {
-        // XXX:rca - why to almost equal events?
+      } else if (event === 'navigate') {
+        // XXX:rca - why two almost equal events?
         this.getPubSub().publish(
           this.getPubSub().NAVIGATE,
           data.navCommand,
           data.sub
         );
-      } else if (event == 'apply-function') {
+      } else if (event === 'apply-function') {
         // XXX:rca - to remove
         data.func.apply(this);
       }
     },
 
     onWidgetSelected: function(widget, event, data) {
-      var bibcode = widget.model.get('bibcode');
-      var target = data.idAttribute.toLowerCase().replace('show', '');
+      const bibcode = widget.model.get('bibcode');
+      const target = data.idAttribute.toLowerCase().replace('show', '');
+
       analytics('send', 'event', 'interaction', 'toc-link-followed', {
         target: target,
         bibcode: bibcode,
       });
+
       this.broadcast('page-manager-message', 'widget-selected', data);
+
       this.getPubSub().publish(
         this.getPubSub().NAVIGATE,
         data.idAttribute,
@@ -159,13 +150,14 @@ define([
     onPageManagerMessage: _.noop,
 
     setActive: function(widgetName, subView) {
-      // now inform the widget of the subView to show
       if (subView && this.widgets[widgetName].setSubView instanceof Function) {
         this.widgets[widgetName].setSubView(subView);
       }
+
       if (subView) {
         widgetName = widgetName + '__' + subView;
       }
+
       this.widgets.tocWidget.collection.selectOne(widgetName);
     },
 

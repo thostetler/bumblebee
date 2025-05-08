@@ -3,12 +3,13 @@
  */
 
 define([
+  '@sentry/browser',
   'backbone',
   'underscore',
   'js/components/api_query',
   'js/mixins/hardened',
   'js/mixins/dependon',
-], function(Backbone, _, ApiQuery, Hardened, Dependon) {
+], function(Sentry, Backbone, _, ApiQuery, Hardened, Dependon) {
   var AppStorage = Backbone.Model.extend({
     activate: function(beehive) {
       this.setBeeHive(beehive);
@@ -49,14 +50,12 @@ define([
       }
 
       // provide this query to sentry
-      window.getSentry((sentry) => {
         const currentQuery = apiQuery.toJSON();
         Object.keys(currentQuery).forEach((key) => {
           if (!key.startsWith('__') || key === 'fq') {
-            sentry.setTag(`query.${key}`, currentQuery[key].join(' | '));
+            Sentry.setTag(`query.${key}`, currentQuery[key].join(' | '));
           }
         });
-      });
     },
 
     setCurrentNumFound: function(numFound) {

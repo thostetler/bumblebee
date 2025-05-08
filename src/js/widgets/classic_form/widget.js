@@ -2,11 +2,14 @@ define([
   'js/widgets/base/base_widget',
   'js/components/api_query',
   'js/components/api_query_updater',
-  'hbs!js/widgets/classic_form/form',
+  'js/widgets/classic_form/form.hbs',
   'js/widgets/paper_search_form/topterms',
   'analytics',
-  'es6!js/widgets/sort/widget.jsx',
-  'es6!js/widgets/sort/redux/modules/sort-app',
+  'js/widgets/sort/widget.jsx',
+  'js/widgets/sort/redux/modules/sort-app',
+  'marionette',
+  'underscore',
+  'backbone'
 ], function(
   BaseWidget,
   ApiQuery,
@@ -15,7 +18,10 @@ define([
   AutocompleteData,
   analytics,
   SortWidget,
-  SortActions
+  SortActions,
+  Marionette,
+  _,
+  Backbone
 ) {
   // for autocomplete
   function split(val) {
@@ -64,7 +70,7 @@ define([
     },
     _makeFqStr: function(data, fullSet) {
       var keys = _.keys(data);
-      var trues = _(data)
+      var trues = _.chain(data)
         .pick(_.identity)
         .keys()
         .value();

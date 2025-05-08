@@ -7,7 +7,6 @@ define([
   'js/components/api_query',
   'js/components/api_request',
   'js/components/pubsub_events',
-  'hbs',
   'js/components/api_targets',
 ], function(
   _,
@@ -15,7 +14,6 @@ define([
   ApiQuery,
   ApiRequest,
   PubSubEvents,
-  HandleBars,
   ApiTargets
 ) {
   var startGlobalHandler = function() {

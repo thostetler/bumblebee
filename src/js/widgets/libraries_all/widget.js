@@ -3,7 +3,8 @@ define([
   'js/widgets/base/base_widget',
   './views/view_all_libraries',
   'utils',
-], function(Marionette, BaseWidget, LibrariesView, utils) {
+  'backbone'
+], function(Marionette, BaseWidget, LibrariesView, utils, Backbone) {
   var LibraryModel = Backbone.Model.extend({
     defaults: function() {
       return {
@@ -108,7 +109,7 @@ define([
 
     activate: function(beehive) {
       this.setBeeHive(beehive);
-      _.bindAll(this);
+      ;
       var ps = this.getPubSub();
       ps.subscribe(ps.LIBRARY_CHANGE, this.updateCollection);
       ps.subscribe(ps.CUSTOM_EVENT, this.onCustomEvent);

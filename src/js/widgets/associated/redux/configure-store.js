@@ -1,9 +1,9 @@
 define([
   'redux',
-  'es6!./modules/api',
-  'es6!./modules/ui',
-  'es6!./middleware/api',
-  'es6!./middleware/ui',
+  'js/widgets/associated/redux/modules/api',
+  'js/widgets/associated/redux/modules/ui',
+  'js/widgets/associated/redux/middleware/api',
+  'js/widgets/associated/redux/middleware/ui',
 ], function(Redux, api, ui, apiMiddleware, uiMiddleware) {
   const { createStore, applyMiddleware, combineReducers } = Redux;
 

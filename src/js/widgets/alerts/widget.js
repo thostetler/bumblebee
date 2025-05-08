@@ -14,8 +14,7 @@ define([
   './modal_view',
   './page_top_alert',
   'jquery',
-  'jquery-ui',
-  'bootstrap',
+  'backbone'
 ], function(
   Marionette,
   BaseWidget,
@@ -25,8 +24,7 @@ define([
   ModalView,
   BannerView,
   $,
-  $ui,
-  bootstrap
+  Backbone
 ) {
   var AlertModel = Backbone.Model.extend({
     defaults: {

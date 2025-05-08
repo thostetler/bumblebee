@@ -32,7 +32,6 @@ define(['react', 'prop-types'], function(React, ReactPropTypes) {
           <label htmlFor="ex-dropdown">Select Export Format</label>
           <select
             className="form-control"
-            autoFocus="true"
             id="ex-dropdown"
             value={format.id}
             onChange={(e) => setFormat(e.target.value)}

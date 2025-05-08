@@ -6,10 +6,10 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/mixins/dependon',
-  'hbs!js/widgets/citation_helper/templates/citation_helper_template',
-  'bootstrap',
+  'js/widgets/citation_helper/templates/citation_helper_template.hbs',
   'js/components/api_feedback',
   'js/components/api_targets',
+  'backbone',
   'analytics',
 ], function(
   Marionette,
@@ -20,10 +20,9 @@ define([
   ApiQuery,
   Dependon,
   CitationHelperTemplate,
-  bs,
   ApiFeedback,
   ApiTargets,
-  analytics
+  Backbone
 ) {
   var Model = Backbone.Model.extend({
     defaults: {

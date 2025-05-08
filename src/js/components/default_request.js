@@ -53,7 +53,7 @@ define([
      * @private
      */
     _validate: function(attributes, options) {
-      _.forOwn(attributes, function(val, attr) {
+      _.each(attributes, function(val, attr) {
         var tempVal = attributes[attr];
 
         if (!(attr in allowedAttrs)) {

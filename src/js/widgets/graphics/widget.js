@@ -1,14 +1,16 @@
 define([
+  'backbone',
   'marionette',
   'js/widgets/base/base_widget',
   'js/components/api_request',
   'js/components/api_response',
   'js/components/api_query',
-  'hbs!js/widgets/graphics/templates/grid',
-  'hbs!js/widgets/graphics/templates/sidebar',
+  'js/widgets/graphics/templates/grid.hbs',
+  'js/widgets/graphics/templates/sidebar.hbs',
   'js/components/api_targets',
   'analytics',
 ], function(
+  Backbone,
   Marionette,
   BaseWidget,
   ApiRequest,

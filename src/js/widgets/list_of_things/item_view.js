@@ -1,13 +1,14 @@
 define([
+  'underscore',
   'marionette',
   'backbone',
   'js/components/api_request',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
+  'js/widgets/list_of_things/templates/item-template.hbs',
   'analytics',
-  'mathjax',
 ], function(
+  _,
   Marionette,
   Backbone,
   ApiRequest,
@@ -15,7 +16,6 @@ define([
   BaseWidget,
   ItemTemplate,
   analytics,
-  MathJax
 ) {
   var ItemView = Marionette.ItemView.extend({
     tagName: 'li',
@@ -45,16 +45,18 @@ define([
       return this;
     },
 
-    onRender: function() {
-      // this is necessary on every render after the initial one, since the
-      // containe rview also calls mathjax initially
-      if (MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
+    onRender: function () {
+      // Re-typeset this element using MathJax v3
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([this.el]).catch((err) => {
+          console.error('MathJax typesetting failed:', err);
+        });
+      }
+
+      // Handle Enter key for abs-redirect-link
       $('>', this.$el).on('keyup', (e) => {
         if (e.which === 13) {
-          $('a.abs-redirect-link', this.$el)
-            .mousedown()
-            .mouseup()
-            .click();
+          $('a.abs-redirect-link', this.$el).mousedown().mouseup().click();
         }
       });
     },

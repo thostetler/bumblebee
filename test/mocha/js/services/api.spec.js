@@ -9,7 +9,6 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/components/api_response',
-  'moment'
 ], function(
   $,
   _,
@@ -17,7 +16,6 @@ define([
   ApiRequest,
   ApiQuery,
   ApiResponse,
-  Moment
   ) {
 
   var __getApi = function (options) {

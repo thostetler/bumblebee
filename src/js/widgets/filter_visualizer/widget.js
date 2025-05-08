@@ -16,8 +16,8 @@ define([
   'marionette',
   'js/components/api_query',
   'js/components/pubsub_events',
-  'hbs!js/widgets/filter_visualizer/templates/widget-view',
-  'hbs!js/widgets/filter_visualizer/templates/item-view',
+  'js/widgets/filter_visualizer/templates/widget-view.hbs',
+  'js/widgets/filter_visualizer/templates/item-view.hbs',
   'js/components/api_feedback',
   'js/mixins/dependon',
 ], function(
@@ -68,7 +68,7 @@ define([
     activate: function(beehive) {
       _.bindAll(this, 'processFeedback', 'onFilterEvent');
       this.setBeeHive(beehive);
-      pubsub = beehive.getService('PubSub');
+      const pubsub = beehive.getService('PubSub');
       pubsub.subscribe(pubsub.FEEDBACK, this.processFeedback);
     },
 
@@ -129,7 +129,6 @@ define([
      */
     processQuery: function(data) {
       var q = data.q;
-      numFound = data.numFound;
 
       var filters = this.extractFilters(q);
       this._saveInfo(q, filters);

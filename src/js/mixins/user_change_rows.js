@@ -1,6 +1,7 @@
-define(['marionette', 'js/components/api_targets'], function(
+define(['marionette', 'js/components/api_targets', 'backbone'], function(
   Marionette,
-  ApiTargets
+  ApiTargets,
+  Backbone
 ) {
   /*
    * use this model as a base for any widget that needs to request

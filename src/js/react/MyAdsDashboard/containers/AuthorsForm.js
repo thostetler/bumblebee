@@ -1,5 +1,5 @@
 define([
-  'es6!js/react/MyAdsDashboard/components/AuthorsForm.jsx',
+  'js/react/MyAdsDashboard/components/AuthorsForm.jsx',
   'react-redux',
   '../actions',
   '../constants',

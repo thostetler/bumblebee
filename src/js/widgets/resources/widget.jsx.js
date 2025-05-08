@@ -1,5 +1,5 @@
 define([
-  'underscore',
+  'lodash',
   'backbone',
   'react',
   'react-dom',
@@ -8,10 +8,10 @@ define([
   'js/components/api_query',
   'js/widgets/base/base_widget',
   'js/mixins/link_generator_mixin',
-  'es6!./redux/configure-store',
-  'es6!./redux/modules/api',
-  'es6!./redux/modules/ui',
-  'es6!./containers/app',
+  'js/widgets/resources/redux/configure-store',
+  'js/widgets/resources/redux/modules/api',
+  'js/widgets/resources/redux/modules/ui',
+  'js/widgets/resources/containers/app',
 ], function (
   _,
   Backbone,

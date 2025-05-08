@@ -3,11 +3,12 @@ define([
   'marionette',
   'js/widgets/base/base_widget',
   'js/components/api_request',
-  'hbs!js/widgets/bubble_chart/templates/container',
-  'hbs!js/widgets/bubble_chart/templates/tooltip',
+  'js/widgets/bubble_chart/templates/container.hbs',
+  'js/widgets/bubble_chart/templates/tooltip.hbs',
   'js/components/api_targets',
   'js/components/api_query_updater',
   'js/components/api_query',
+  'backbone'
 ], function(
   d3,
   Marionette,
@@ -17,7 +18,8 @@ define([
   TooltipTemplate,
   ApiTargets,
   ApiQueryUpdater,
-  ApiQuery
+  ApiQuery,
+  Backbone
 ) {
   var BubbleModel = Backbone.Model.extend({
     initialize: function(options) {

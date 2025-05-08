@@ -1,8 +1,8 @@
 define([
   'react',
   'react-bootstrap',
-  'es6!./AddCollaboratorModal.jsx',
-  'es6!./PermissionList.jsx',
+  'js/react/LibraryCollaborators/components/AddCollaboratorModal.jsx',
+  'js/react/LibraryCollaborators/components/PermissionList.jsx',
   'prop-types',
 ], function(
   React,

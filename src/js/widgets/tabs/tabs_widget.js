@@ -4,14 +4,12 @@
 define([
   'underscore',
   'marionette',
-  'bootstrap',
-  'hbs!js/widgets/tabs/templates/tabs_inner',
-  'hbs!js/widgets/tabs/templates/tabs_outer',
-  'hbs!js/widgets/tabs/templates/tabs_title',
+  'js/widgets/tabs/templates/tabs_inner.hbs',
+  'js/widgets/tabs/templates/tabs_outer.hbs',
+  'js/widgets/tabs/templates/tabs_title.hbs',
 ], function(
   _,
   Marionette,
-  Bootstrap,
   innerTemplate,
   outerTemplate,
   titleTemplate

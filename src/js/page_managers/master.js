@@ -13,10 +13,11 @@ define([
   'js/widgets/base/base_widget',
   'js/components/generic_module',
   'js/page_managers/controller',
-  'hbs!js/page_managers/templates/aria-announcement',
-  'hbs!js/page_managers/templates/master-page-manager',
+  './templates/aria-announcement.hbs',
+  './templates/master-page-manager.hbs',
   'marionette',
   'js/mixins/dependon',
+  'backbone'
 ], function(
   BaseWidget,
   GenericModule,
@@ -24,7 +25,8 @@ define([
   AriaAnnouncementTemplate,
   MasterPageManagerTemplate,
   Marionette,
-  Dependon
+  Dependon,
+  Backbone
 ) {
   var WidgetData = Backbone.Model.extend({
     defaults: function() {

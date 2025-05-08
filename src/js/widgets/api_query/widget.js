@@ -9,8 +9,8 @@ define([
   'marionette',
   'js/components/api_query',
   'js/components/pubsub_events',
-  'hbs!js/widgets/api_query/templates/widget-view',
-  'hbs!js/widgets/api_query/templates/item-view',
+  'js/widgets/api_query/templates/widget-view.hbs',
+  'js/widgets/api_query/templates/item-view.hbs',
   'js/mixins/dependon',
 ], function(
   _,

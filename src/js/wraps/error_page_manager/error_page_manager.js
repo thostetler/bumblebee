@@ -1,7 +1,7 @@
 define([
   'js/page_managers/controller',
   'js/page_managers/one_column_view',
-  'hbs!js/wraps/error_page_manager/404',
+  './404.hbs',
   'utils',
 ], function(
   PageManagerController,

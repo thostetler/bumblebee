@@ -4,13 +4,12 @@ define([
   'js/mixins/form_view_functions',
   'js/widgets/success/view',
   'js/components/api_feedback',
-  'hbs!js/widgets/user_settings/templates/api_key',
-  'hbs!js/widgets/user_settings/templates/change_email',
-  'hbs!js/widgets/user_settings/templates/change_password',
-  'hbs!js/widgets/user_settings/templates/delete_account',
+  'js/widgets/user_settings/templates/api_key.hbs',
+  'js/widgets/user_settings/templates/change_email.hbs',
+  'js/widgets/user_settings/templates/change_password.hbs',
+  'js/widgets/user_settings/templates/delete_account.hbs',
   'backbone-validation',
   'backbone.stickit',
-  'bootstrap',
 ], function(
   Marionette,
   BaseWidget,
@@ -21,7 +20,6 @@ define([
   EmailTemplate,
   PasswordTemplate,
   DeleteAccountTemplate,
-  Bootstrap
 ) {
   var passwordRegex = /(?=.*\d)(?=.*[a-zA-Z]).{5,}/;
 

@@ -1,0 +1,60 @@
+<nav aria-labelledby="customize-settings-label" class="s-settings-nav">
+  <header>
+    <h2 id="customize-settings-label" class="s-nav-top-title">
+      <i class="fa fa-cog" aria-hidden="true"></i> Settings
+    </h2>
+  </header>
+
+  <section aria-labelledby="user-preferences-heading">
+    <h3 id="user-preferences-heading" class="s-nav-header s-view-nav">User Preferences</h3>
+    <ul class="s-nav-list" role="list">
+      {{#each preferences}}
+        <li role="listitem">
+          <a href="#{{this.path}}" data-widget-id="{{this.id}}" class="abstract-nav s-nav {{#if this.isSelected}}s-nav-selected{{/if}}">
+            <span class="s-content">{{this.title}}</span>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section aria-labelledby="notification-settings-heading">
+    <h3 id="notification-settings-heading" class="s-nav-header s-view-nav">Notification Settings</h3>
+    <ul class="s-nav-list" role="list">
+      {{#each notifications}}
+        <li role="listitem">
+          <a href="#{{this.path}}" data-widget-id="{{this.id}}" class="abstract-nav s-nav {{#if this.isSelected}}s-nav-selected{{/if}}">
+            <span class="s-content">
+              {{this.title}}
+              {{#if this.showCount}}
+                <span class="num-items">
+                  {{#if this.numFound}}({{this.numFound}}){{/if}}
+                </span>
+              {{/if}}
+            </span>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section aria-labelledby="account-settings-heading">
+    <h3 id="account-settings-heading" class="s-nav-header s-view-nav">Account Settings</h3>
+    <ul class="s-nav-list" role="list">
+      {{#each settings}}
+        <li role="listitem">
+          <a href="#{{this.path}}" data-widget-id="{{this.id}}" class="abstract-nav s-nav {{#if this.isSelected}}s-nav-selected{{/if}}">
+            <span class="s-content">
+              {{this.title}}
+              {{#if this.showCount}}
+                <span class="num-items">
+                  {{#if this.numFound}}({{this.numFound}}){{/if}}
+                </span>
+              {{/if}}
+            </span>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+</nav>

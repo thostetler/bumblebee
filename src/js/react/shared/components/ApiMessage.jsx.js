@@ -21,8 +21,7 @@ define(['react', 'react-bootstrap', 'prop-types'], function(
         {error && (
           <span>
             <strong>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>{' '}
-              Error:
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" /> Error:
             </strong>{' '}
             {error}
           </span>

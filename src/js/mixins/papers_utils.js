@@ -1,9 +1,9 @@
-define(['underscore', 'jquery-ui', 'jquery', 'moment'], function(
+define(['underscore', 'dayjs', 'dayjs/plugin/utc'], function(
   _,
-  $ui,
-  $,
-  moment
+  dayjs,
+  utc
 ) {
+  dayjs.extend(utc);
   var Utils = {
     /**
      * Receives the  ISO8601 date string (actually, browsers will be able to parse
@@ -42,11 +42,11 @@ define(['underscore', 'jquery-ui', 'jquery', 'moment'], function(
           Number.parseInt(year, 10),
 
           // months are zero-based, everything else is one-based
-          monthMissing ? 0 : Number.parseInt(month, 10) - 1,
+          monthMissing ? 0 : Number.parseInt(month, 0) - 1,
           dayMissing ? 1 : Number.parseInt(day, 10),
         ];
 
-        const utc = moment.utc(date);
+        const utc = dayjs.utc(date);
 
         if (!utc.isValid()) {
           // if for some reason the parsed date is invalid, and assuming the year is always there, use that

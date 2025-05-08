@@ -1,9 +1,11 @@
 define([
+  'backbone',
+  'lodash',
   'marionette',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/dropdown-menu/templates/dropdown',
-  'hbs!js/widgets/dropdown-menu/templates/dropdown-item',
-], function(Marionette, BaseWidget, dropdownTemplate, dropdownItemTemplate) {
+  'js/widgets/dropdown-menu/templates/dropdown.hbs',
+  'js/widgets/dropdown-menu/templates/dropdown-item.hbs',
+], function(Backbone, _, Marionette, BaseWidget, dropdownTemplate, dropdownItemTemplate) {
   /*
    *
    * To use this widget to generate a dropdown list,
@@ -169,9 +171,9 @@ define([
     },
 
     activate: function(beehive) {
-      _.bindAll(this);
       this.setBeeHive(beehive);
       var pubsub = this.getPubSub();
+      _.bindAll(this, ['onStoragePaperChange', 'updateFromUserData']);
       pubsub.subscribe(pubsub.STORAGE_PAPER_UPDATE, this.onStoragePaperChange);
       pubsub.subscribe(pubsub.USER_ANNOUNCEMENT, this.updateFromUserData);
       this.updateFromUserData();

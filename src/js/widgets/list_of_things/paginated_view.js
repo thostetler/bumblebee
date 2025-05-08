@@ -10,17 +10,16 @@ define([
   'js/components/api_request',
   'js/components/api_query',
   'js/widgets/base/base_widget',
-  'hbs!js/widgets/list_of_things/templates/item-template',
-  'hbs!js/widgets/list_of_things/templates/results-container-template',
+  'js/widgets/list_of_things/templates/item-template.hbs',
+  'js/widgets/list_of_things/templates/results-container-template.hbs',
   'js/mixins/link_generator_mixin',
   'js/mixins/add_stable_index_to_collection',
-  'hbs!js/widgets/list_of_things/templates/empty-view-template',
-  'hbs!js/widgets/list_of_things/templates/error-view-template',
-  'hbs!js/widgets/list_of_things/templates/initial-view-template',
-  './item_view',
+  'js/widgets/list_of_things/templates/empty-view-template.hbs',
+  'js/widgets/list_of_things/templates/error-view-template.hbs',
+  'js/widgets/list_of_things/templates/initial-view-template.hbs',
+  'js/widgets/list_of_things/item_view',
   'analytics',
-  'mathjax',
-  'hbs!js/wraps/widget/loading/template',
+  '../../wraps/widget/loading/template.hbs',
 ], function (
   _,
   Marionette,
@@ -37,7 +36,6 @@ define([
   InitialViewTemplate,
   ItemView,
   analytics,
-  MathJax,
   loadingTemplate,
 ) {
   /**
@@ -122,8 +120,12 @@ define([
     },
 
     onRender: function () {
-      if (MathJax) {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el]);
+      if (window.MathJax && window.MathJax.startup) {
+        window.MathJax.startup.promise
+          .then(() => {
+            window.MathJax.typesetPromise([this.el]);
+          })
+          .catch((err) => console.error('MathJax failed to initialize:', err));
       }
     },
 

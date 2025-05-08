@@ -15,7 +15,7 @@ define([
   'js/components/api_response',
   'js/mixins/dependon',
   'js/components/generic_module',
-  'sprintf',
+  'sprintf-js',
   'js/components/api_targets',
 ], function(
   $,

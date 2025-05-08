@@ -10,12 +10,12 @@ define([
   'js/mixins/add_stable_index_to_collection',
   'js/mixins/link_generator_mixin',
   'js/mixins/formatter',
-  'hbs!js/widgets/results/templates/container-template',
+  'js/widgets/results/templates/container-template.hbs',
   'js/mixins/papers_utils',
   'js/mixins/expose_metadata',
   'js/modules/orcid/extension',
   'js/mixins/dependon',
-  'js/components/api_feedback',
+  'lodash',
 ], function(
   ListOfThingsWidget,
   AbstractWidget,
@@ -27,7 +27,7 @@ define([
   MetadataMixin,
   OrcidExtension,
   Dependon,
-  ApiFeedback
+  _
 ) {
   var ResultsWidget = ListOfThingsWidget.extend({
     initialize: function() {

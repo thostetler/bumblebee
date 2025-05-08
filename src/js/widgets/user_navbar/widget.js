@@ -1,6 +1,6 @@
 define([
   'marionette',
-  'hbs!js/widgets/user_navbar/nav_template',
+  'js/widgets/user_navbar/nav_template.hbs',
   'js/mixins/dependon',
 ], function(Marionette, NavTemplate, Dependon) {
   var NavModel = Backbone.Model.extend({
@@ -31,7 +31,7 @@ define([
       this.setBeeHive(beehive);
       var pubsub = beehive.getService('PubSub');
 
-      _.bindAll(this);
+
 
       // custom dispatchRequest function goes here
       pubsub.subscribe(pubsub.PAGE_CHANGE, this.updateCurrentView);

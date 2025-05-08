@@ -13,8 +13,10 @@
  */
 
 define([
+  '@sentry/browser',
   'underscore',
   'jquery',
+  'backbone',
   'cache',
   'js/components/generic_module',
   'js/mixins/dependon',
@@ -22,8 +24,10 @@ define([
   'js/components/transition_catalog',
   'analytics',
 ], function (
+  Sentry,
   _,
   $,
+  Backbone,
   Cache,
   GenericModule,
   Mixins,
@@ -92,15 +96,21 @@ define([
     }, 500),
 
     _onCustomEvent: function (ev, data) {
-      console.log('Custom Event', ev, data);
-
       switch (ev) {
         case 'timing:results-loaded':
-          window.getSentry((sentry) => {
-            const activeSpan = sentry.getActiveSpan().getSpanJSON();
-            const time = new Date().getTime() - activeSpan.start_timestamp * 1000;
-            sentry.setMeasurement('timing.results.shown', time, 'millisecond');
-          });
+          try {
+            const activeSpan = Sentry.getActiveSpan();
+            if (activeSpan && typeof activeSpan.getSpanJSON === 'function') {
+              const { start_timestamp } = activeSpan.getSpanJSON();
+              if (typeof start_timestamp === 'number') {
+                const durationMs = Date.now() - start_timestamp * 1000;
+                Sentry.setMeasurement('timing.results.shown', durationMs, 'millisecond');
+              }
+            }
+          } catch (err) {
+            console.warn('Sentry timing failed:', err);
+          }
+
           break;
         case 'update-document-title':
           this._updateDocumentTitle(data);
@@ -183,9 +193,7 @@ define([
         page_name: pageName,
         clean_route: this._cleanRoute(route),
       });
-      getSentry((sentry) => {
-        sentry.setTag('page.name', pageName);
-      });
+      Sentry.setTag('page.name', pageName);
     }, 300),
 
     /**
@@ -196,6 +204,7 @@ define([
       var self = this;
 
       if (!this.router || !(this.router instanceof Backbone.Router)) {
+        console.error('Navigator must be given "router" instance', this.router);
         defer.reject(new Error("Navigator must be given 'router' instance"));
         return defer.promise();
       }
