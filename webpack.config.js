@@ -6,8 +6,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const OUTPUT_DIR = path.resolve(__dirname, 'dist');
-const CDN_PATH = 'https://ads-assets.pages.dev/';
 const isDev = process.env.NODE_ENV !== 'production';
+const ASSETS_PATH = process.env.LOCAL_BUILD ? '/' : 'https://ads-assets.pages.dev/';
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -29,7 +29,7 @@ module.exports = {
         warnings: false,
         runtimeErrors: true,
       },
-      progress: true
+      progress: true,
     },
   },
   resolve: {
@@ -148,7 +148,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: OUTPUT_DIR,
-    publicPath: isDev ? '/' : CDN_PATH,
+    publicPath: isDev ? '/' : ASSETS_PATH,
     clean: true,
     assetModuleFilename: 'assets/[name][ext][query]',
     charset: true,
@@ -201,7 +201,7 @@ module.exports = {
     new Dotenv({ safe: false }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
-      DEBUG: false
+      DEBUG: false,
     }),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
@@ -233,5 +233,12 @@ module.exports = {
       Buffer: ['buffer', 'Buffer'],
     }),
     new ForkTsCheckerWebpackPlugin(),
+    isDev
+      ? null
+      : new webpack.SourceMapDevToolPlugin({
+          filename: '[file].map[query]',
+          exclude: ['vendor.js', 'vendor.css'],
+        }),
   ],
+  devtool: isDev ? 'eval-source-map' : false,
 };

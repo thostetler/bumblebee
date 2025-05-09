@@ -12,14 +12,11 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "release": "grunt release",
-    "release:sourcemaps": "grunt release && npm run sentry:sourcemaps",
     "start": "NODE_ENV=production APP_DIR=../dist docker compose --project-directory nginx up --build",
     "dev": "NODE_ENV=development webpack serve",
-    "build": "NODE_ENV=production webpack",
-    "test": "grunt --stack test",
-    "test:prod": "grunt --stack test:prod",
-    "test:debug": "grunt --stack test:debug",
+    "build:release": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production LOCAL_BUILD=1 webpack",
+    "upload:assets": "npx wrangler pages deploy dist --project-name=ads-assets --skip-caching --upload-source-maps && pnpm run sentry:sourcemaps",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org adsabs --project bumblebee ./dist && sentry-cli sourcemaps upload --org adsabs --project bumblebee ./dist"
   },
   "browserslist": [
