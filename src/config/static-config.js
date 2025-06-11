@@ -110,6 +110,7 @@ import VisualizationDropdown from '../js/wraps/visualization_dropdown';
 import VizierFacet from '../js/wraps/vizier_facet';
 import DynamicConfig from './dynamic-config';
 import Utils from '../js/utils';
+import PerformanceTracking from '../js/performance-tracking';
 
 const staticConfig = {
   core: {
@@ -129,6 +130,7 @@ const staticConfig = {
       Navigator,
       PersistentStorage,
       PubSub,
+      PerformanceTracking,
     },
     objects: {
       AppStorage,

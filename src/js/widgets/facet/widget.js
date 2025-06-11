@@ -14,6 +14,7 @@ define([
   'js/widgets/facet/reducers',
   'js/widgets/facet/create_store',
   'utils',
+  'js/performance-tracking',
 ], function(
   _,
   Backbone,
@@ -29,7 +30,8 @@ define([
   createActionObject,
   Reducers,
   createStore,
-  utils
+  utils,
+  { performanceEvents}
 ) {
   var FacetContainerView = Backbone.View.extend({
     render: function(store, actions) {
@@ -152,13 +154,9 @@ define([
 
     _dispatchRequest: function(id) {
       var pubsub = this.getPubSub();
-      var that = this;
       var currentQuery = this.getCurrentQuery();
       this.store.dispatch(this.actions.data_requested(id));
-      pubsub.subscribeOnce(pubsub.DELIVERING_RESPONSE, function(apiResponse) {
-        that.store.dispatch(that.actions.data_received(apiResponse.toJSON(), id));
-        that.updateState(that.STATES.IDLE);
-      });
+      console.log('Facet request for id:', id, 'query:', currentQuery.toJSON());
 
       var q = this.customizeQuery(currentQuery);
       var children = id ? this.store.getState().facets[id].children : this.store.getState().children;
@@ -177,6 +175,19 @@ define([
       var req = this.composeRequest(q);
       pubsub.publish(pubsub.DELIVERING_REQUEST, req);
       this.updateState(this.STATES.LOADING);
+
+      pubsub.publish(pubsub.PERF, performanceEvents.FACET_REQUEST_SENT, {
+        id: this.options.facetField,
+        isInitial: offset === 0,
+      });
+      pubsub.subscribeOnce(pubsub.DELIVERING_RESPONSE, (apiResponse) => {
+        this.store.dispatch(this.actions.data_received(apiResponse.toJSON(), id));
+        this.updateState(this.STATES.IDLE);
+        pubsub.publish(pubsub.PERF, performanceEvents.FACET_RESPONSE_RECEIVED, {
+          id: this.options.facetField,
+          isInitial: offset === 0,
+        });
+      });
     },
 
     submitFilter: function(operator) {
@@ -253,6 +264,11 @@ define([
           conditions: conditions,
         })
       );
+      this.getPubSub().publish(this.getPubSub().PERF, performanceEvents.FACET_APPLIED, {
+        id: facetField,
+        logic: operator,
+        conditions: conditions,
+      });
     },
   });
 

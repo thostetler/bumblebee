@@ -162,6 +162,13 @@ define([], function() {
     STORAGE_PAPER_UPDATE: '[User]-Paper-Update',
 
     LIBRARY_CHANGE: '[PubSub]-Library-Change',
+
+    /**
+     * Performance tracking events
+     * These are used to track performance of various operations
+     * and are typically logged to a performance monitoring service
+     */
+    PERF: '[PubSub]-Performance-Event',
   };
 
   return PubSubEvents;

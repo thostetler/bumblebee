@@ -68,6 +68,9 @@ importers:
       backbone.wreqr:
         specifier: 1.4.0
         version: 1.4.0
+      blueimp-md5:
+        specifier: ^2.19.0
+        version: 2.19.0
       bootstrap-sass:
         specifier: ^3.3.7
         version: 3.4.3
@@ -2163,6 +2166,9 @@ packages:
 
   bl@1.2.3:
     resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
+
+  blueimp-md5@2.19.0:
+    resolution: {integrity: sha512-DRQrD6gJyy8FbiE4s+bDoXS9hiW3Vbx5uCdwvcCf3zLHL+Iv7LtGHLpr+GZV8rHG8tK766FGYBwRbu8pELTt+w==}
 
   body-parser@1.13.3:
     resolution: {integrity: sha512-ypX8/9uws2W+CjPp3QMmz1qklzlhRBknQve22Y+WFecHql+qDFfG+VVNX7sooA4Q3+2fdq4ZZj6Xr07gA90RZg==}
@@ -9811,6 +9817,8 @@ snapshots:
       readable-stream: 2.3.8
       safe-buffer: 5.2.1
     optional: true
+
+  blueimp-md5@2.19.0: {}
 
   body-parser@1.13.3:
     dependencies:

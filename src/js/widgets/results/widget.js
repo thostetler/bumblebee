@@ -3,7 +3,6 @@
  * and display details
  *
  */
-
 define([
   'js/widgets/list_of_things/widget',
   'js/widgets/abstract/widget',
@@ -16,6 +15,7 @@ define([
   'js/modules/orcid/extension',
   'js/mixins/dependon',
   'lodash',
+  'js/performance-tracking',
 ], function(
   ListOfThingsWidget,
   AbstractWidget,
@@ -27,7 +27,8 @@ define([
   MetadataMixin,
   OrcidExtension,
   Dependon,
-  _
+  _,
+  { performanceEvents }
 ) {
   var ResultsWidget = ListOfThingsWidget.extend({
     initialize: function() {
@@ -206,6 +207,16 @@ define([
       this.setCurrentQuery(apiQuery);
       this.model.set('loading', true);
       ListOfThingsWidget.prototype.dispatchRequest.call(this, apiQuery);
+      this.getPubSub().publish(this.getPubSub().PERF, performanceEvents.SEARCH_QUERY_SENT, {
+        query: apiQuery,
+        type: 'auto',
+      });
+      this.getPubSub().subscribeOnce(this.getPubSub().DELIVERING_RESPONSE, () => {
+        this.getPubSub().publish(this.getPubSub().PERF, performanceEvents.SEARCH_RESPONSE_RECEIVED, {
+          query: apiQuery,
+          type: 'auto',
+        });
+      });
     },
 
     customizeQuery: function(apiQuery) {

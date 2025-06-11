@@ -18,6 +18,7 @@ define([
   'js/components/query_validator',
   'select2',
   'select2/src/js/select2/compat/matcher',
+  'js/performance-tracking',
 ], function(
   _,
   Marionette,
@@ -37,7 +38,8 @@ define([
   analytics,
   QueryValidator,
   select2,
-  oldMatcher
+  oldMatcher,
+  { performanceEvents }
 ) {
   /**
    * The default databases to filter by if the user has not set any in their preferences
@@ -722,6 +724,7 @@ define([
         this.model.unset('citationCount');
         this.model.unset('citationLabel');
       }
+
     },
 
     defaultQueryArguments: {
@@ -748,6 +751,16 @@ define([
         return;
       }
       BaseWidget.prototype.dispatchRequest.call(this, apiQuery);
+      this.getPubSub(this.getPubSub().PERF, performanceEvents.SEARCH_REQUEST_SENT, {
+        query: apiQuery,
+        type: 'user',
+      });
+      this.getPubSub().subscribeOnce(this.getPubSub().DELIVERING_RESPONSE, () => {
+        this.getPubSub().publish(this.getPubSub().PERF, performanceEvents.SEARCH_RESPONSE_RECIEVED, {
+          query: apiQuery,
+          type: 'user',
+        });
+      });
     },
 
     /*
