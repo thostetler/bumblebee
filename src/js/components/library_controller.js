@@ -183,7 +183,7 @@ define([
           return parsed.error || parsed.message || parsed.msg;
         }
 
-        var trimmed = responseText.trim ? responseText.trim() : responseText;
+        var trimmed = responseText.trim();
         if (trimmed && trimmed.toLowerCase() !== 'undefined') {
           return trimmed;
         }
