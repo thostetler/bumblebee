@@ -184,7 +184,7 @@ define([
         }
 
         var trimmed = responseText.trim();
-        if (trimmed && trimmed.toLowerCase() !== 'undefined') {
+        if (trimmed && trimmed !== 'undefined') {
           return trimmed;
         }
       }
